@@ -1,0 +1,154 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.Wallet.WalletInfo
+@using VDMMutiline.SharedComponent.Constants
+@{
+    Layout = null;
+    var idUser = 0;
+}
+<div class="form-body">
+    @if (Model != null)
+    {
+        idUser = Model.IdUser??0;
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="form-text">
+                <label for="control-label bolder blue">Tên đăng nhập</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-text">
+                <label for="control-label bolder blue"> Email</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="form-text">
+                <label for="control-label bolder blue">  Tên hiển thị</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-text">
+                <label for="control-label bolder blue"> Điện thoại</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="ace-icon fa fa-phone"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.Phone, new { @type = "phone", @class = "form-control input-mask-user", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-text">
+                <label for="control-label bolder blue"> Số dư</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-usd"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.AmountString, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ul class="nav nav-tabs nav-underline no-hover-bg">
+                <li class="nav-item">
+                    <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31" aria-expanded="true">Lịch sử giao dịch</a>
+                </li>
+            </ul>
+            <div class="tab-content px-1 pt-1"  style="        padding-left: 0px !important;
+        padding-right: 0px !important;">
+                <div role="tabpanel" class="tab-pane active" id="tab31"  aria-expanded="true" aria-labelledby="base-tab31">
+                    <div class="table-responsive">
+                        <div class="tableconte">
+                            <table id="dynamic-tablehistorysuser" class="table table-striped table-bordered zero-configuration">
+                                <thead>
+                                    <tr>
+                                        <th>Ngày thực hiện</th>
+                                        <th>Số tiền</th>
+                                        <th>Số chứng từ</th>
+                                        <th>Người tạo</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="clearfix"></div>
+    <div class="form-actions center" style="        margin-top: 15px;
+        text-align: center;">
+        <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+    </div>
+</div>
+<script>
+    $( document ).ready( function () {
+        showpopub();
+         $( "#dynamic-tablehistorysuser" ).dataTable( {
+                "bStateSave": false,
+                "searching": false,
+                "bSort": true,
+                "sPaginationType": "full_numbers",
+                 "serverSide": true,
+                 "processing": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": "@Url.Action("AjaxHistoryByUserLoadList", "Wallet",new {@area="WalletManager" })",
+                "iDisplayLength": 10,
+                "lengthChange": false,
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "UserId", "value": @idUser });
+                },
+                "aoColumns": [
+                    {
+                       "mData": "Datetime",
+                        "mRender": function ( data, type, row ) {
+                            return ( data ) ? _lwfunc.formatDateTime( data ) : "";
+                       },
+                    },
+                    {
+                       "mData": "Amount",
+                       "mRender": function (data, type, row) {
+                           return (data) ? _lwfunc.formatNumber(data) : "";
+                       },
+                    },
+                    { "mData": "NumberOfDocuments" },
+                    { "mData": "CreateUser" },
+                    { "mData": "Note" },
+
+                ],
+                "language": {
+                    "sLoadingRecords": "@Constant.Loaddingdata",
+                    "sProcessing": "@Constant.Loaddingdata",
+                    "lengthMenu": "@Constant.Loaddingdata",
+                    "zeroRecords": "@Constant.zeroRecords",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "((@Constant.Loaddingdata)",
+                    "paginate": {
+                        "next": ">",
+                        "previous": "<",
+                        "first": "<<",
+                        "last": ">>"
+                    }
+            },
+                "initComplete": function ( settings, json ) {
+                closepopub();
+            },
+            "drawCallback": function ( settings ) {
+                closepopub();
+            }
+            });
+    } );
+</script>

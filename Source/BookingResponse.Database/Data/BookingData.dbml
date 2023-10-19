@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Vdm_Mutiline_TGVR" Class="BookingDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=thegioivere.net,8079;Initial Catalog=Vdm_Mutiline_TGVR;Persist Security Info=True;User ID=thegoiverenew" SettingsObjectName="BookingResponse.Database.Properties.Settings" SettingsPropertyName="Vdm_Mutiline_TGVRConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblBookResponseFareData" Member="tblBookResponseFareDatas">
+    <Type Name="tblBookResponseFareData">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FareDataId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BookingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Airline" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Itinerary" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Leg" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Promo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Currency" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="System" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="FareType" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="CacheAge" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Adt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Chd" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Inf" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FareAdt" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FareChd" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FareInf" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TaxAdt" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TaxChd" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TaxInf" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FeeAdt" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FeeChd" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FeeInf" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ServiceFeeAdt" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ServiceFeeChd" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ServiceFeeInf" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TotalNetPrice" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TotalServiceFee" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TotalDiscount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TotalCommission" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TotalPrice" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBookResponseBooking" Member="tblBookResponseBookings">
+    <Type Name="tblBookResponseBooking">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BookingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AutoIssue" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Airline" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BookingCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GdsCode" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Flight" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Route" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ErrorCode" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="BookingImage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ExpiryDt" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ExpiryTime" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ResponseTime" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="System" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Difference" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Session" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBookResponseTicket" Member="tblBookResponseTickets">
+    <Type Name="tblBookResponseTicket">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BookingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Airline" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="TicketNumber" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IssueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BookingCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PassengerName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="BookingFile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TicketImage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TotalPrice" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBookResponseFlight" Member="tblBookResponseFlights">
+    <Type Name="tblBookResponseFlight">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BookingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FareDataId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FlightId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Leg" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Airline" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Operating" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="StartPoint" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EndPoint" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartDt" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EndDt" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FlightNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StopNum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HasDownStop" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Duration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NoRefund" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="GroupClass" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FareClass" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FareBasis" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SeatRemain" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Promo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FlightValue" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBookResponseSegment" Member="tblBookResponseSegments">
+    <Type Name="tblBookResponseSegment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SegmentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FlightId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FareDataId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BookingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Airline" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MarketingAirline" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OperatingAirline" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StartPoint" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EndPoint" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartTm" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EndTm" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FlightNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Duration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Seat" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Plane" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StartTerminal" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EndTerminal" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="HasStop" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="StopPoint" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StopTime" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DayChange" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="StopOvernight" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ChangeStation" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ChangeAirport" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastItem" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="HandBaggage" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="AllowanceBaggage" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBookResponse" Member="tblBookResponses">
+    <Type Name="tblBookResponse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BookingId" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ErrorCode" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ErrorValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ErrorField" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Language" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RequestJson" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ResponseJson" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SourceSite" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,185 @@
+﻿@model VDMMutiline.SharedComponent.Params.AspNetUsersParam
+@{
+    Layout = null;
+    ViewBag.Title = "Quản lý tài khoản";
+    ViewBag.Description = "Thêm/ sửa tài khoản";
+}
+
+@using (Html.BeginForm("Create", "SysTaikhoan", new { @area = "Sys" }, FormMethod.Post, new { @data_parsley_validate = "", @class = "form-horizontal", enctype = "multipart/form-data", id = "frCreateSysTaikhoan", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.AspNetUsersInfo.Id)
+
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 label-control">Tài khoản</label>
+                    <div class="col-md-8">
+                        @(Model.Id <= 0 ? Html.TextBoxFor(x => x.AspNetUsersInfo.UserName, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                                                                                                                                                                                                                : Html.TextBoxFor(x => x.AspNetUsersInfo.UserName, new { @Required = "Required", @readonly = "readonly", @class = "form-control", @placeholder = "" }))
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 label-control">Họ và tên</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.AspNetUsersInfo.DisplayName, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 label-control">Email</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.AspNetUsersInfo.Email, new { @Required = "", @class = "form-control", @placeholder = "", @type = "email" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 label-control">Điện thoại</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.AspNetUsersInfo.PhoneNumber, new { @Required = "", @class = "form-control", @placeholder = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-md-2 label-control">Địa chỉ</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.AspNetUsersInfo.Location, new { @Required = "", @class = "form-control", @placeholder = "" })
+                    </div>
+                </div>
+            </div>
+            @if (Model.Id <= 0)
+            {
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Mật khẩu</label>
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.AspNetUsersInfo.Password, new { @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Xác nhận mật khẩu</label>
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.AspNetUsersInfo.ConfirmPassword, new { @required = "required", @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-md-2 label-control"></label>
+                    <div class="col-md-10">
+                        @if (Model.AspNetUsersInfo.IsIssueTicket == null)
+                        {
+                            Model.AspNetUsersInfo.IsIssueTicket = false;
+                        }
+                        @Html.CheckBox("AspNetUsersInfo.IsIssueTicket", Model.AspNetUsersInfo.IsIssueTicket == true, new { @class = "icheckboxcs" })
+                        <label for="remember-me">Cho phép xuất vé</label>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên miền 1</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.UrlDomain1, new {  @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên miền 2</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.UrlDomain2, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên miền 3</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.UrlDomain3, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Facebook</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.Facebook, new {  @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Twitter</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.Twitter, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Twitter</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.AspNetUsersInfo.Google, new {  @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Avatar</label>
+                <div class="col-md-10">
+                    <input type="file" name="Thumbinput" class="actFile" />
+                    @if (!string.IsNullOrEmpty(Model.AspNetUsersInfo.Avatar))
+                    {
+                        <img src="@Model.AspNetUsersInfo.Avatar" style="height: 100px; width: 100px;" />
+                    }
+                    @Html.HiddenFor(x => x.AspNetUsersInfo.Avatar)
+                </div>
+            </div>
+        </div>*@
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-md-2 label-control">Có quyền</label>
+                    <div class="col-md-10">
+                        <div class="checkedcontrol">
+
+                            @foreach (var item in Model.AspNetGroupsInfos)
+                            {
+
+                                <div class="col-md-6">
+
+                                    @if (Model.AspNetUserGroupsInfos.Any(z => z.GroupId == item.Id))
+                                    {
+                                        @Html.CheckBox("group_" + item.Id, true, new { @class = "icheckboxcs" })
+                                    }
+                                    else
+                                    {
+                                        @Html.CheckBox("group_" + item.Id, false, new { @class = "icheckboxcs" })
+                                    }
+                                    <label for="companyName">@item.Name</label>
+                                </div>
+
+                            }
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,304 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.BK_BookingInfo
+@using VDMMutiline.Dao
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.SharedComponent.Constants
+@{
+    var rowIndex = 0;
+    VDMMutiline.Core.Models.VDMUser userinfor = null;
+    userinfor = (VDMMutiline.Core.Models.VDMUser)ViewBag.userinfor;
+}
+@functions
+{
+    private List<BK_TicketInfo> GetListByBooking(int id)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(id);
+    }
+}
+<h4 class="form-section"><i class="icon-paper-plane"></i> Thông tin chuyến bay</h4>
+<div class="form-group row">
+    <table class="booking table table-striped table-bordered zero-configuration">
+        <thead>
+            <tr>
+                <th class="sort-numeric">Hãng</th>
+                <th>Hạng vé</th>
+                <th>Số hiệu</th>
+                <th>Từ</th>
+                <th>đến</th>
+                <th>Ngày</th>
+                <th>Thời gian</th>
+                <th>Giá vé</th>
+                <th style="width:190px">Đổi giá</th>
+                <th style="width: 155px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                var daoticket = new BK_TicketDao();
+                rowIndex = 0;
+                var listGetListByBooking = GetListByBooking(Model.ID);
+                var indexchieudi = 0;
+                var indexchieuve = 0;
+                foreach (var item in listGetListByBooking)
+                {
+
+                    var lidetial = daoticket.GetDetailByTicket(item.ID);
+                    foreach (var items in lidetial)
+                    {
+
+                        rowIndex++;
+                        <tr class="gradeA">
+                            <td><img class="nav-user-photo" style="width: 50px; height: 30px;" src="@(UIUty.GetImagebyHang(items.airlineCode))" /></td>
+                            <td>@items.Class</td>
+                            <td>@items.flight</td>
+                            <td>@items.FromCity</td>
+                            <td>@items.ToCity</td>
+                            <td>@(items.StartDate.HasValue ? items.StartDate.Value.ToString("dd/MM/yyyy") : "")</td>
+                            <td>@(items.StartDate.HasValue ? items.StartDate.Value.ToString("HH:mm") : "")</td>
+                            <td>@(item.Price.HasValue ? item.Price.Value.ToString("n0") : "")</td>
+                            <td>
+                                @{
+                                    if (VDMMutiline.Ultilities.Station.CheckQuocTe(Model.FromCity, Model.ToCity))
+                                    {
+                                        if (rowIndex == 1)
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="number" id="@string.Format("gia{0}", items.ID)" style="width: 95px;" value="@item.Price" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a onclick="updategia('@item.ID', '@string.Format("#gia{0}", items.ID)')" class="btn btn-sm btn-success actiontable"><i class="ace-icon fa fa-check"></i>Đổi giá</a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.TypeID == Constant.Typeve.LuotDi)
+                                        {
+                                            if (indexchieudi == 0)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="number" id="@string.Format("gia{0}", items.ID)" style="width: 95px;" value="@item.Price" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a onclick="updategia('@item.ID', '@string.Format("#gia{0}", items.ID)')" class="btn btn-sm btn-success actiontable"><i class="ace-icon fa fa-check"></i>Đổi giá</a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else if (item.TypeID == Constant.Typeve.LuotVe)
+                                        {
+                                            if (indexchieuve == 0)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="number" id="@string.Format("gia{0}", items.ID)" style="width: 95px;" value="@item.Price" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a onclick="updategia('@item.ID', '@string.Format("#gia{0}", items.ID)')" class="btn btn-sm btn-success actiontable"><i class="ace-icon fa fa-check"></i>Đổi giá</a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+                                    }
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <div class="action-buttons">
+                                        @if (VDMMutiline.Core.GetlistCommon.CheckGroupUser(18, userinfor.Id))
+                                        {
+                                            if (listGetListByBooking.Count > 1)
+                                            {
+                                                <a href="@Url.Action("deletevechitiet", "QuanLyVeDaDat", new {bookingid = @Model.ID, ticketid = @items.ID})" class=" btn btn-sm btn-danger actiontable"><i class="ace-icon fa fa-trash-o bigger-130"></i>xóa</a>
+                                            }
+                                            <a onclick="$('#@string.Format("DoiNgayGioBay{0}", items.ID)').modal('show')" class="btn btn-sm btn-warning actiontable"><i class="ace-icon fa fa-save "></i>Cập nhập</a>
+
+                                            <div class="modal fade text-left" id="@string.Format("DoiNgayGioBay{0}", items.ID)" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-dark white">
+                                                            <h4 class="modal-title white" id="myModalLabel17">Cập nhập ngày giờ bay</h4>
+                                                            <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @using (Html.BeginForm("Capnhapgiobay", "QuanLyVeDaDat", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @data_parsley_validate = "", id = "frCreate", @role = "form" }))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <input type="hidden" name="bookingid" value="@Model.ID" />
+                                                                <input type="hidden" name="ticketid" value="@items.ID" />
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left"> Giờ khỏi hành </label>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("ngaybatdau{0}", items.ID)" id="@string.Format("datepicker{0}", items.ID)" class="form-control ">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input name="@string.Format("giobatdau{0}", items.ID)" type="text" id="@string.Format("timepicker{0}", items.ID)" class="form-control ">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left"> Giờ kết thúc </label>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("ngaykethuc{0}", items.ID)" id="@string.Format("datepickerkt{0}", items.ID)" class="form-control ">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("giokethuc{0}", items.ID)" id="@string.Format("timepickerkt{0}", items.ID)" class="form-control ">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Điểm đi </label>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("CapnhapFromCity{0}", items.ID)" id="@string.Format("CapnhapFromCity{0}", items.ID)" value="@items.FromCity" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Điểm đến </label>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("CapnhapToCity{0}", items.ID)" id="@string.Format("CapnhapToCity{0}", items.ID)" value="@items.ToCity" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Hãng </label>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("CapnhapairlineCode{0}", items.ID)" id="@string.Format("CapnhapairlineCode{0}", items.ID)" value="@items.airlineCode" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Số hiệu </label>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("Capnhapflight{0}", items.ID)" id="@string.Format("Capnhapflight{0}", items.ID)" value="@items.flight" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Hạng vé </label>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="@string.Format("CapnhapClass{0}", items.ID)" id="@string.Format("CapnhapClass{0}", items.ID)" value="@items.Class" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <script type="text/javascript">
+                                                                                jQuery(function($) {
+                                                                                    $(
+                                                                                            "#@string.Format("timepicker{0}", items.ID)")
+                                                                                        .timepicker({
+                                                                                            minuteStep: 1,
+                                                                                            showSeconds: false,
+                                                                                            showMeridian: false,
+                                                                                            defaultTime: false,
+                                                                                            format: "HH:mm",
+                                                                                        }).timepicker("setTime",
+                                                                                            "@items.StartDate.Value.ToString("HH:mm")");
+                                                                                    $(
+                                                                                            "#@string.Format("timepickerkt{0}", items.ID)")
+                                                                                        .timepicker({
+                                                                                            minuteStep: 1,
+                                                                                            showSeconds: false,
+                                                                                            showMeridian: false,
+                                                                                            defaultTime: false,
+                                                                                            format: "HH:mm",
+                                                                                        }).timepicker("setTime",
+                                                                                            "@items.EndDate.Value.ToString("HH:mm")");
+                                                                                    $(
+                                                                                            "#@string.Format("datepickerkt{0}", items.ID)")
+                                                                                        .datepicker({
+                                                                                            showOtherMonths: true,
+                                                                                            selectOtherMonths: false,
+                                                                                            format: 'dd/mm/yyyy',
+                                                                                        }).datepicker("setDate",
+                                                                                            "@items.EndDate.Value.ToString("dd/MM/yyyy")");
+                                                                                    $(
+                                                                                            "#@string.Format("datepicker{0}", items.ID)")
+                                                                                        .datepicker({
+                                                                                            showOtherMonths: true,
+                                                                                            selectOtherMonths: false,
+                                                                                            format: 'dd/mm/yyyy',
+                                                                                        }).datepicker("setDate",
+                                                                                            "@items.StartDate.Value.ToString("dd/MM/yyyy")");
+
+
+                                                                                });
+                                                                </script>
+                                                                <div class="modal-footer text-left">
+                                                                    <button type="submit" class="btn btn-info"><i class="ace-icon fa fa-check bigger-110"></i>Cập nhập</button>
+                                                                </div>
+                                                            }
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                        if (item.TypeID == Constant.Typeve.LuotDi)
+                        {
+                            indexchieudi++;
+                        }
+                        else if (item.TypeID == Constant.Typeve.LuotVe)
+                        {
+                            indexchieuve++;
+                        }
+                    }
+
+
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    function updategia(idve, controlid) {
+            var sotien = $(controlid).val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateGia", "QuanLyVeDaDat")',
+                data: addRequestVerificationToken({ "veid": idve, "sotien": sotien }),
+                cache: false,
+                success: function(data) {
+                    window.location = window.location.href;
+                },
+                error: function(ex) {
+                    var r = jQuery.parseJSON(ex.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+        }
+</script>

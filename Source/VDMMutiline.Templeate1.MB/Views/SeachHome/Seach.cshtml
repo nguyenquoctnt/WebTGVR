@@ -1,0 +1,1570 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@{
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+    var commonstyle = CommonUI.GetlistTempleate(19, CurentUser.Id);
+    var bg = CommonUI.Getsettingtempleatebykey(commonstyle, "{container_background_image_mb}");
+    if (string.IsNullOrEmpty(bg))
+    {
+        bg = "/Content/VDM/img/paris.jpg";
+    }
+}
+
+@Html.Action("HeaderDetail", "Control")
+<link href="/Content/VDM/css/cusstite.css" rel="stylesheet" />
+
+<style>
+    ul.nav.nav-tabs.seach li {
+        width: 33.33%;
+    }
+
+    body {
+        height: 100vh;
+    }
+
+    .hidden1.bgSelect {
+        height: 100%;
+    }
+</style>
+<div class="hidden1 bgSelect" style="        margin-top: 40px;
+        display: block;
+        background-image: url(@bg);
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;">
+    <div>
+        <div class="row  top  " style="">
+            <div class="col-xs-12 cb">
+                <ul class="nav nav-tabs seach">
+                    <li class="active">
+                        <a data-toggle="tab" href="#home">
+                            <span>
+                                <img src="/Content/VDM/img/baynoidia_03.png" alt="">
+                                <img class="active" src="/Content/VDM/img/icon-noidia.png" alt="">
+                            </span>
+                            Bay nội địa
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#home">
+                            <span>
+                                <img src="/Content/VDM/img/bayquocte_02.png" alt="">
+                                <img class="active" src="/Content/VDM/img/bayquocte_over_03.png" alt="">
+                            </span>
+                            Bay quốc tế
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#check-ve">
+                            <span>
+                                <img src="/Content/VDM/img/icon-checkve.png" alt="">
+                                <img class="active" src="/Content/VDM/img/checkve_over_03.png" alt="">
+                            </span>
+                            Check vé
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content seach">
+                    <div id="home" class="tab-pane fade in active">
+                        @using (Html.BeginForm("Seach", "SeachHome", FormMethod.Post, new { onsubmit = "submitseachome()", @data_parsley_validate = "", id = "frCreateSeachHomde", @role = "form" }))
+                        {
+                            <div class="row bgSelect1" style="        margin-bottom: 10px">
+                                <div class=" col-xs-6 cd kh " onclick="selectedRoundclick()">
+                                    <input id="rbtRoundWay" type="radio" name="ItineraryTypecheck" checked="" value="2"><span style="        font-size: 18px;
+        font-weight: 600;">Khứ hồi</span>
+                                </div>
+                                <div class="col-xs-6 cd mc selectway" onclick="selectedOneclick()">
+                                    <input id="rdbOneWay" type="radio" name="ItineraryTypecheck" value="1"><span style="        font-size: 18px;
+        font-weight: 600;">Một chiều</span>
+                                </div>
+                                <input id="ItineraryType" name="ItineraryType" type="hidden" value="1" />
+                            </div>
+
+                            <div id="lblDepartureAirport" onclick="Chondiemdi();">
+                                <div class="item-form">
+                                    <div class="col-12" style="        padding-left: 0px;
+        padding-right: 0px">
+                                        <input type="hidden" name="hdfStartPoint" id="hdfStartPoint" value="SGN">
+                                        <input name="txtDeparture" style="        display: none" readonly="readonly" required="" type="text" id="txtDeparture" class="border2" value="Hồ Chí Minh - (SGN)" placeholder="Điểm đi" autocomplete="off">
+                                        <div id="get-diemdi" class="no-click-form">
+                                            Hồ Chí Minh - (SGN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div onclick="Chondiemden();">
+                                <div class="item-form">
+
+                                    <div class="col-12" style="        padding-left: 0px;
+        padding-right: 0px">
+                                        <input type="hidden" name="hdfEndPoint" id="hdfEndPoint" value="HAN">
+                                        <input name="txtArrival" style="        display: none;
+        margin-right: 5px" readonly="readonly" required type="text" id="txtArrival" value="Hà Nội - (HAN)" class="border2" placeholder="" autocomplete="off">
+                                        <div id="get-diemden" class="no-click-form">Hà Nội - (HAN)</div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="item-form">
+                                <div class="col-6" style="        padding-left: 0px;">
+                                    <div id="get-ngdi" class="no-click-form no-small" style="        padding-left: 41px;
+        padding-right: 0px;
+        font-size: 10px;">
+                                        <input name="txtDepartureDate" style="        border: none;
+        height: 30px;
+        width: 100%;
+        font-size: 16px;
+        text-align: center;" readonly="readonly" placeholder="NGÀY ĐI" required type="text" id="txtDepartureDate" class='datepicker' class="border">
+                                    </div>
+                                </div>
+                                <div id="showDate" style="        display: none">
+                                    <div style="        padding-right: 0px" class="col-6 return-date-ticket">
+                                        <div id="get-ngve" class="no-click-form no-small" style="        padding-left: 41px;
+        padding-right: 0px;
+        font-size: 10px;">
+                                            <input name="txtReturnDate" readonly="readonly" style="        border: none;
+        height: 30px;
+        width: 100%;
+        font-size: 16px;
+        text-align: center;" required type="text" id="txtReturnDate" class='datepicker' placeholder="NGÀY VỀ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="item-form">
+                                <div class="col-4" style="        padding-left: 0px">
+                                    <div id="get-nglon" class="no-click-form" style="        padding-left: 40px;
+        padding-right: 0px;
+        text-align: center;">
+                                        <select name="ddlAdult" id="ddlAdult" class="PaxDropDown" data-parsley-id="9063">
+                                            <option selected="selected" value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+
+                                    </div>
+                                    <p style="font-size: 13px;">ADT(12+)</p>
+                                </div>
+                                <div class="col-4">
+                                    <div id="get-trem" class="no-click-form" style="        padding-left: 40px;
+        padding-right: 0px;
+        text-align: center;">
+                                        <select name="ddlChild" id="ddlChild" class="PaxDropDown">
+                                            <option selected="selected" value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+
+                                    </div>
+                                    <p style="font-size: 13px;"> CHD (2-11)</p>
+                                </div>
+                                <div class="col-4" style="        padding-right: 0px">
+                                    <div id="get-embe" class="no-click-form" style="        padding-left: 40px;
+        padding-right: 0px;
+        text-align: center;">
+                                        <select name="ddlInfant" id="ddlInfant" class="PaxDropDown">
+                                            <option selected="selected" value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+
+                                    </div>
+                                    <p style="font-size: 13px;">INF (<2)</p>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="item-form">
+                                <span class="hotline-hn general-font" style="        display: inline-flex;
+        margin-top: 10px;">
+                                    <input id="placeBody_flightSearch_ckbCheapest" type="checkbox" name="checktimvere" data-parsley-multiple="ctl00placeBodyflightSearchckbCheapest" data-parsley-id="2047">
+                                    <label for="placeBody_flightSearch_ckbCheapest" style="        color: #fff;"> Tìm vé rẻ nhất</label>
+                                </span><span class="help-block" id="parsley-id-multiple-ctl00placeBodyflightSearchckbCheapest"></span>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="item-form item-form-submit">
+                                <input type="submit" value="Tìm vé" id="btnOk" name="btnOk">
+                            </div>
+                        }
+                    </div>
+
+                    <div id="check-ve" class="tab-pane fade">
+
+                        <p>Tra thông tin vé đã đặt!</p>
+                        @using (Html.BeginForm("Index", "KiemTraVe", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_validate = "", id = "flightSearch", @role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="item-form">
+                                <div class="col-12">
+                                    <span id="field-check-code" class="no-form no-click-form">
+                                        <input id="check-code" name="check_code_ticket" type="text" placeholder="Mã số đơn đặt hàng">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div style="        margin-top: 20px;
+        padding: 10px;" class="item-form item-form-submit">
+                                <input type="submit" value="Tra cứu vé" name="check_submit">
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div id="footer">
+            <div class="box-bottom-footer">
+                <div class="container parent-inline">
+                    <div class="item-inline support">
+                        <ul class="socials">
+                            @*<li class="fbs">
+                                    <a target="_blank" href="http://facebook.com/congtyve"></a>
+                                </li>
+                                <li class="tws">
+                                    <a target="_blank" href="https://twitter.com/venetvn"></a>
+                                </li>
+                                <li class="gplus">
+                                    <a target="_blank" href="http://googleplus.com"></a>
+                                </li>
+                                <li class="yts">
+                                    <a target="_blank" href="http://gmail.com"></a>
+                                </li>*@
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="item-inline information-footer">
+            <p class="copyright" style="        color: #fff">Copyright © 2017 - 2018 by @UIUty.GetsettingByKey(setting, "PRT_COMPANY_NAME")</p>
+        </div>
+
+    </div>
+</div>
+<div style="        z-index: 5;
+        margin: 1px;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        z-index: 500;
+        padding-top: 5px;
+        left: -1px;
+        top: -3px;
+        display: none" class="listCity ui-dialog-content ui-widget-content"
+     id="list-departure" title="Chọn điểm khởi hành">
+    <div style="        overflow-y: auto;
+        background-color: #C2E3F1;
+        border-bottom: 1px solid #aaaaaa;
+        line-height: 0px;
+        border: 1px solid #aaa;">
+        <div style="        float: left;
+        padding: 20px 0px 0px 10px;
+        font-size: 17px;">
+            Lựa chọn thành phố đi
+        </div>
+        <div style="        float: right;
+        text-align: right;">
+            <input type="button" value="Quay lại" style="        padding: 15px;
+        border: 1px solid;
+        margin: 4px;
+        border-radius: 5px;" class="log3" id="Close_Di">
+        </div>
+    </div>
+    <div class="domestic-col-departure">
+        <input type="hidden" id="select-city-tagclass" />
+        <div style="        padding: 10px;
+        border: 1px solid #aaa;" class="title2">
+            <span class="title" style="        font-size: 18px;">QUỐC TẾ</span>
+            <input id="txtStartPointSearch1" class="form-control" placeholder="Tìm theo mã thành phố, hoặc mã quốc gia..... " />
+        </div>
+        <div class="title2">
+            <div class="title seachpl">Việt Nam</div>
+            <ul style="        padding: 0px;">
+
+                <li class="seachpl" onclick="addGeoAirPort_Go('HAN','Hà Nội')">
+                    Hà Nội (HAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HPH','Hải Phòng')">
+                    Hải Phòng (HPH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DIN','Điện Biên Phủ')">
+                    Điện Biên Phủ (DIN)
+                </li>
+
+                <li class="seachpl" onclick="addGeoAirPort_Go('SGN','Hồ Chí Minh')">
+                    Hồ Chí Minh (SGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PQC','Phú Quốc')">
+                    Phú Quốc (PQC)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VCS','Côn Đảo')">
+                    Côn Đảo (VCS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VCA','Cần Thơ')">
+                    Cần Thơ (VCA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CAH','Cà Mau')">
+                    Cà Mau (CAH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VKG','Rạch Giá')">
+                    Rạch Giá (VKG)
+                </li>
+
+                <li class="seachpl" onclick="addGeoAirPort_Go('DAD','Đà Nẵng')">
+                    Đà Nẵng (DAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CXR','Nha Trang')">
+                    Nha Trang (CXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DLI','Đà Lạt')">
+                    Đà Lạt (DLI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VII','Vinh')">
+                    Vinh (VII)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HUI','Huế')">
+                    Huế (HUI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('THD','Thanh Hóa')">
+                    Thanh Hóa (THD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BMV','Ban Mê Thuật')">
+                    Ban Mê Thuật (BMV)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PXU','Pleiku')">
+                    Pleiku (PXU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('UIH','Quy Nhơn')">
+                    Quy Nhơn (UIH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VDH','Đồng Hới')">
+                    Đồng Hới (VDH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('TBB','Tuy Hòa')">
+                    Tuy Hòa (TBB)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VCL','Chu Lai')">
+                    Chu Lai (VCL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VDO',' Vân Đồn')">
+                    Vân Đồn (VDO)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Điểm đến nổi bật</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('HAN','Hà Nội')">
+                    Hà Nội (HAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SGN','Hồ Chí Minh')">
+                    Hồ Chí Minh (SGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DAD','Đà Nẵng')">
+                    Đà Nẵng (DAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CXR','Nha Trang')">
+                    Nha Trang (CXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HKG','Hồng Kông')">
+                    Hồng Kông (HKG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MFM','Macau')">Macau (MFM)</li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SHA','Thượng Hải')">
+                    Thượng Hải (SHA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CAN','Quảng Châu')">
+                    Quảng Châu (CAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('TPE','Đài Bắc')">
+                    Đài Bắc (TPE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ICN','Seoul')">
+                    Seoul (ICN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PUS','Pusan')">
+                    Pusan (PUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NRT','Tokyo Narita')">
+                    Tokyo Narita (NRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NGO','Nagoya')">
+                    Nagoya (NGO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SIN','Singapore')">
+                    Singapore (SIN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BKK','Băng Cốc')">
+                    Băng Cốc (BKK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MNL','Manila')">
+                    Manila (MNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LON','London')">
+                    London (LON)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PAR','Paris')">
+                    Paris (PAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SYD','Sydney')">
+                    Sydney (SYD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('FRA','Frankfurt')">
+                    Frankfurt (FRA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('JFK','New York')">
+                    New York (JFK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LAX','Los Angeles')">
+                    Los Angeles (LAX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('YVR','Vancouver')">
+                    Vancouver (YVR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VDO',' Vân Đồn')">
+                    Vân Đồn (VDO)
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Á</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('BJS','Bắc Kinh')">
+                    Bắc Kinh (BJS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CTU','Thành Đô')">
+                    Thành Đô (CTU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CAN','Quảng Châu')">
+                    Quảng Châu (CAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SHA','Thượng Hải')">
+                    Thượng Hải (SHA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HKG','Hồng Kông')">
+                    Hồng Kông (HKG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('TPE','Đài Bắc')">
+                    Đài Bắc (TPE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('KHH','Cao Hùng')">
+                    Cao Hùng (KHH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ICN','Seoul')">
+                    Seoul (ICN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PUS','Pusan')">
+                    Pusan (PUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('FUK','Fukuoka')">
+                    Fukuoka (FUK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NGO','Nagoya')">
+                    Nagoya (NGO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('OSA','Osaka')">
+                    Osaka (OSA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HND','Tokyo Haneda')">
+                    Tokyo Haneda (HND)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NRT','Tokyo Narita')">
+                    Tokyo Narita (NRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LPQ','Luông pra băng')">
+                    Luông pra băng (LPQ)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PNH','Phnôm Pênh')">
+                    Phnôm Pênh (PNH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('REP','Siem Reap')">
+                    Siem Reap (REP)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VTE','Viên Chăn')">
+                    Viên Chăn (VTE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BKK','Băng Cốc')">
+                    Băng Cốc (BKK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('KUL','Kuala Lumpur')">
+                    Kuala Lumpur KUL()
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MNL','Manila')">
+                    Manila (MNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SIN','Singapore')">
+                    Singapore (SIN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('RGN','Yangon')">
+                    Yangon (RGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('JKT','Jakarta')">
+                    Jakarta (JKT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DPS','Denpasar Bali')">
+                    Denpasar Bali (DPS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BOM','Mumbai')">
+                    Mumbai (BOM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DEL','Delhi')">
+                    Delhi (DEL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('KTM','Kathmandu')">
+                    Kathmandu (KTM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('IST','Istanbul')">
+                    Istanbul (IST)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DXB','Dubai')">
+                    Dubai (DXB)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Âu</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('AMS','Amsterdam')">
+                    Amsterdam (AMS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BCN','Barcelona')">
+                    Barcelona (BCN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('FRA','Frankfurt')">
+                    Frankfurt (FRA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('GVA','Geneva')">
+                    Geneva (GVA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LON','London')">
+                    London (LON)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LYS','Lyon')">
+                    Lyon (LYS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MAD','Madrid')">
+                    Madrid (MAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MRS','Mác-xây')">
+                    Mác-xây (MRS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MPL','Montpellier')">
+                    Montpellier (MPL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MOW','Mát-xờ-cơ-va')">
+                    Mát-xờ-cơ-va (MOW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NCE','Nice')">
+                    Nice (NCE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PAR','Paris')">
+                    Paris (PAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PRG','Praha')">
+                    Praha (PRG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ROM','Rome')">
+                    Rome (ROM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('TLS','Toulouse')">
+                    Toulouse (TLS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('VIE','Viên')">
+                    Viên (VIE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CPH','Copenhagen')">
+                    Copenhagen (CPH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('OSL','Oslo')">
+                    Oslo (OSL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ZRH','Zurich')">
+                    Zurich (ZRH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BCN','Barcelona')">
+                    Barcelona (BCN)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Mỹ</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('ATL','Atlanta')">
+                    Atlanta (ATL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('AUS','Austin')">
+                    Austin (AUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BOS','Boston')">
+                    Boston (BOS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CHI','Chicago')">
+                    Chicago (CHI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DFW','Dallas')">
+                    Dallas (DFW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DEN','Denver')">
+                    Denver (DEN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HNL','Honolulu')">
+                    Honolulu (HNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LAX','Los Angeles')">
+                    Los Angeles (LAX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MIA','Miami')">
+                    Miami (MIA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MSP','Minneapolis')">
+                    Minneapolis (MSP)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('JFK','New York')">
+                    New York (JFK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PHL','Philadelphia')">
+                    Philadelphia (PHL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PDX','Portland (Oregon)')">
+                    Portland (Oregon) (PDX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SFO','San Francisco')">
+                    San Francisco (SFO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('SEA','Seattle')">
+                    Seattle (SEA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('STL','St Louis')">
+                    St Louis (STL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('YVR','Vancouver')">
+                    Vancouver (YVR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('WAS','Washington')">
+                    Washington (WAS)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Đại Dương</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('SYD','Sydney')">
+                    Sydney (SYD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MEL','Men-bơn')">
+                    Men-bơn (MEL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DRW','Darwin')">
+                    Darwin (DRW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('OOL','Gold Coast')">
+                    Gold Coast (OOL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ADL','Adelaide')">
+                    Adelaide (ADL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CNS','Cairns')">
+                    Cairns (CNS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HBA','Hobart')">
+                    Hobart (HBA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PER','Perth')">
+                    Perth (PER)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NAN','Nadi')">
+                    Nadi (NAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('AKL','Auckland')">
+                    Auckland (AKL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('WLG','Wellington')">
+                    Wellington (WLG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DUD','Dunedin')">
+                    Dunedin (DUD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('BNE','Brisbane')">
+                    Brisbane (BNE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CBR','Canberra')">
+                    Canberra (CBR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('PPT','Papeete')">
+                    Papeete (PPT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MEL','Men-bơn')">
+                    Men-bơn (MEL)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Phi</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_Go('NBO','Cairo')">
+                    Cairo (CAI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LXR','Luxor')">
+                    Luxor (LXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LOS','Lagos')">
+                    Lagos (LOS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ADD','Addis Ababa')">
+                    Addis Ababa (ADD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CAS','Casablanca')">
+                    Casablanca (CAS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('HRE','Harare')">
+                    Harare (HRE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MPM','Maputo')">
+                    Maputo (MPM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('JNB','Johannesburg')">
+                    Johannesburg (JNB)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LAD','Luanda')">
+                    Luanda (LAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('KRT','Khartoum')">
+                    Khartoum (KRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DUR','Durban')">
+                    Durban (DUR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('YAO','Yaounde')">
+                    Yaounde (YAO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DLA','Douala')">
+                    Douala (DLA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('CPT','Cape Town')">
+                    Cape Town (CPT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('MRU','Mauritius')">
+                    Mauritius (MRU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ACC','Accra')">
+                    Accra (ACC)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('TUN','Tuynidi')">
+                    Tuynidi (TUN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('GBE','Gaborone')">
+                    Gaborone (GBE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('FNA','Freetown')">
+                    Freetown (FNA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('NBO','Nairobi')">
+                    Nairobi (NBO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('DAR','Dar es Salaam')">
+                    Dar es Salaam (DAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ALG','Alger')">
+                    Alger (ALG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('LUN','Lusaka')">
+                    Lusaka (LUN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('FIH','Kinshasa')">
+                    Kinshasa (FIH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_Go('ABJ','Abidjan')">
+                    Abidjan (ABJ)
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div style="        z-index: 5;
+        margin: 1px;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        z-index: 500;
+        padding-top: 5px;
+        left: -1px;
+        top: -3px;
+        display: none" class="listCity ui-dialog-content ui-widget-content"
+     id="list-arrival" title="Chọn điểm khởi hành">
+
+    <div style="        overflow-y: auto;
+        background-color: #C2E3F1;
+        border-bottom: 1px solid #aaaaaa;
+        line-height: 0px;">
+        <div style="        float: left;
+        padding: 20px 0px 0px 10px;
+        font-size: 17px;">
+            Lựa chọn thành phố đến
+        </div>
+        <div style="        float: right;
+        text-align: right;">
+            <input type="button" value="Quay lại" style="        padding: 15px;
+        border: 1px solid;
+        margin: 4px;
+        border-radius: 5px;" class="log3" id="Close_Den">
+        </div>
+    </div>
+    <div class="domestic-col-arrival">
+        <input type="hidden" id="select-city-tagclass2" />
+        <div style="        padding: 10px;
+        border: 1px solid #aaa;" class="title2">
+            <span class="title" style="        font-size: 18px;">QUỐC TẾ</span>
+            <input id="txtEndPointSearch1" class="form-control" placeholder="Tìm theo mã thành phố, hoặc mã quốc gia..... " />
+        </div>
+        <div class="title2">
+            <div class="title seachpl">Việt Nam</div>
+            <ul style="        padding: 0px;">
+
+                <li class="seachpl" onclick="addGeoAirPort_To('HAN','Hà Nội')">
+                    Hà Nội (HAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HPH','Hải Phòng')">
+                    Hải Phòng (HPH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DIN','Điện Biên Phủ')">
+                    Điện Biên Phủ (DIN)
+                </li>
+
+                <li class="seachpl" onclick="addGeoAirPort_To('SGN','Hồ Chí Minh')">
+                    Hồ Chí Minh (SGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PQC','Phú Quốc')">
+                    Phú Quốc (PQC)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VCS','Côn Đảo')">
+                    Côn Đảo (VCS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VCA','Cần Thơ')">
+                    Cần Thơ (VCA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CAH','Cà Mau')">
+                    Cà Mau (CAH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VKG','Rạch Giá')">
+                    Rạch Giá (VKG)
+                </li>
+
+                <li class="seachpl" onclick="addGeoAirPort_To('DAD','Đà Nẵng')">
+                    Đà Nẵng (DAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CXR','Nha Trang')">
+                    Nha Trang (CXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DLI','Đà Lạt')">
+                    Đà Lạt (DLI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VII','Vinh')">
+                    Vinh (VII)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HUI','Huế')">
+                    Huế (HUI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('THD','Thanh Hóa')">
+                    Thanh Hóa (THD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BMV','Ban Mê Thuật')">
+                    Ban Mê Thuật (BMV)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PXU','Pleiku')">
+                    Pleiku (PXU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('UIH','Quy Nhơn')">
+                    Quy Nhơn (UIH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VDH','Đồng Hới')">
+                    Đồng Hới (VDH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('TBB','Tuy Hòa')">
+                    Tuy Hòa (TBB)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VCL','Chu Lai')">
+                    Chu Lai (VCL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VDO',' Vân Đồn')">
+                    Vân Đồn (VDO)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Điểm đến nổi bật</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('HAN','Hà Nội')">
+                    Hà Nội (HAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SGN','Hồ Chí Minh')">
+                    Hồ Chí Minh (SGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DAD','Đà Nẵng')">
+                    Đà Nẵng (DAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CXR','Nha Trang')">
+                    Nha Trang (CXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HKG','Hồng Kông')">
+                    Hồng Kông (HKG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MFM','Macau')">Macau (MFM)</li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SHA','Thượng Hải')">
+                    Thượng Hải (SHA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CAN','Quảng Châu')">
+                    Quảng Châu (CAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('TPE','Đài Bắc')">
+                    Đài Bắc (TPE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ICN','Seoul')">
+                    Seoul (ICN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PUS','Pusan')">
+                    Pusan (PUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NRT','Tokyo Narita')">
+                    Tokyo Narita (NRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NGO','Nagoya')">
+                    Nagoya (NGO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SIN','Singapore')">
+                    Singapore (SIN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BKK','Băng Cốc')">
+                    Băng Cốc (BKK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MNL','Manila')">
+                    Manila (MNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LON','London')">
+                    London (LON)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PAR','Paris')">
+                    Paris (PAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SYD','Sydney')">
+                    Sydney (SYD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('FRA','Frankfurt')">
+                    Frankfurt (FRA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('JFK','New York')">
+                    New York (JFK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LAX','Los Angeles')">
+                    Los Angeles (LAX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('YVR','Vancouver')">
+                    Vancouver (YVR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VDO',' Vân Đồn')">
+                    Vân Đồn (VDO)
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Á</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('BJS','Bắc Kinh')">
+                    Bắc Kinh (BJS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CTU','Thành Đô')">
+                    Thành Đô (CTU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CAN','Quảng Châu')">
+                    Quảng Châu (CAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SHA','Thượng Hải')">
+                    Thượng Hải (SHA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HKG','Hồng Kông')">
+                    Hồng Kông (HKG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('TPE','Đài Bắc')">
+                    Đài Bắc (TPE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('KHH','Cao Hùng')">
+                    Cao Hùng (KHH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ICN','Seoul')">
+                    Seoul (ICN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PUS','Pusan')">
+                    Pusan (PUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('FUK','Fukuoka')">
+                    Fukuoka (FUK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NGO','Nagoya')">
+                    Nagoya (NGO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('OSA','Osaka')">
+                    Osaka (OSA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HND','Tokyo Haneda')">
+                    Tokyo Haneda (HND)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NRT','Tokyo Narita')">
+                    Tokyo Narita (NRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LPQ','Luông pra băng')">
+                    Luông pra băng (LPQ)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PNH','Phnôm Pênh')">
+                    Phnôm Pênh (PNH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('REP','Siem Reap')">
+                    Siem Reap (REP)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VTE','Viên Chăn')">
+                    Viên Chăn (VTE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BKK','Băng Cốc')">
+                    Băng Cốc (BKK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('KUL','Kuala Lumpur')">
+                    Kuala Lumpur KUL()
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MNL','Manila')">
+                    Manila (MNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SIN','Singapore')">
+                    Singapore (SIN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('RGN','Yangon')">
+                    Yangon (RGN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('JKT','Jakarta')">
+                    Jakarta (JKT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DPS','Denpasar Bali')">
+                    Denpasar Bali (DPS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BOM','Mumbai')">
+                    Mumbai (BOM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DEL','Delhi')">
+                    Delhi (DEL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('KTM','Kathmandu')">
+                    Kathmandu (KTM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('IST','Istanbul')">
+                    Istanbul (IST)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DXB','Dubai')">
+                    Dubai (DXB)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Âu</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('AMS','Amsterdam')">
+                    Amsterdam (AMS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BCN','Barcelona')">
+                    Barcelona (BCN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('FRA','Frankfurt')">
+                    Frankfurt (FRA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('GVA','Geneva')">
+                    Geneva (GVA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LON','London')">
+                    London (LON)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LYS','Lyon')">
+                    Lyon (LYS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MAD','Madrid')">
+                    Madrid (MAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MRS','Mác-xây')">
+                    Mác-xây (MRS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MPL','Montpellier')">
+                    Montpellier (MPL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MOW','Mát-xờ-cơ-va')">
+                    Mát-xờ-cơ-va (MOW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NCE','Nice')">
+                    Nice (NCE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PAR','Paris')">
+                    Paris (PAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PRG','Praha')">
+                    Praha (PRG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ROM','Rome')">
+                    Rome (ROM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('TLS','Toulouse')">
+                    Toulouse (TLS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('VIE','Viên')">
+                    Viên (VIE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CPH','Copenhagen')">
+                    Copenhagen (CPH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('OSL','Oslo')">
+                    Oslo (OSL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ZRH','Zurich')">
+                    Zurich (ZRH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BCN','Barcelona')">
+                    Barcelona (BCN)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Mỹ</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('ATL','Atlanta')">
+                    Atlanta (ATL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('AUS','Austin')">
+                    Austin (AUS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BOS','Boston')">
+                    Boston (BOS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CHI','Chicago')">
+                    Chicago (CHI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DFW','Dallas')">
+                    Dallas (DFW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DEN','Denver')">
+                    Denver (DEN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HNL','Honolulu')">
+                    Honolulu (HNL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LAX','Los Angeles')">
+                    Los Angeles (LAX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MIA','Miami')">
+                    Miami (MIA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MSP','Minneapolis')">
+                    Minneapolis (MSP)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('JFK','New York')">
+                    New York (JFK)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PHL','Philadelphia')">
+                    Philadelphia (PHL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PDX','Portland (Oregon)')">
+                    Portland (Oregon) (PDX)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SFO','San Francisco')">
+                    San Francisco (SFO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('SEA','Seattle')">
+                    Seattle (SEA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('STL','St Louis')">
+                    St Louis (STL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('YVR','Vancouver')">
+                    Vancouver (YVR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('WAS','Washington')">
+                    Washington (WAS)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Đại Dương</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('SYD','Sydney')">
+                    Sydney (SYD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MEL','Men-bơn')">
+                    Men-bơn (MEL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DRW','Darwin')">
+                    Darwin (DRW)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('OOL','Gold Coast')">
+                    Gold Coast (OOL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ADL','Adelaide')">
+                    Adelaide (ADL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CNS','Cairns')">
+                    Cairns (CNS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HBA','Hobart')">
+                    Hobart (HBA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PER','Perth')">
+                    Perth (PER)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NAN','Nadi')">
+                    Nadi (NAN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('AKL','Auckland')">
+                    Auckland (AKL)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('WLG','Wellington')">
+                    Wellington (WLG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DUD','Dunedin')">
+                    Dunedin (DUD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('BNE','Brisbane')">
+                    Brisbane (BNE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CBR','Canberra')">
+                    Canberra (CBR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('PPT','Papeete')">
+                    Papeete (PPT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MEL','Men-bơn')">
+                    Men-bơn (MEL)
+                </li>
+            </ul>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="title2">
+            <div class="title seachpl">Châu Phi</div>
+            <ul style="        padding: 0px;">
+                <li class="seachpl" onclick="addGeoAirPort_To('NBO','Cairo')">
+                    Cairo (CAI)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LXR','Luxor')">
+                    Luxor (LXR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LOS','Lagos')">
+                    Lagos (LOS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ADD','Addis Ababa')">
+                    Addis Ababa (ADD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CAS','Casablanca')">
+                    Casablanca (CAS)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('HRE','Harare')">
+                    Harare (HRE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MPM','Maputo')">
+                    Maputo (MPM)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('JNB','Johannesburg')">
+                    Johannesburg (JNB)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LAD','Luanda')">
+                    Luanda (LAD)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('KRT','Khartoum')">
+                    Khartoum (KRT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DUR','Durban')">
+                    Durban (DUR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('YAO','Yaounde')">
+                    Yaounde (YAO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DLA','Douala')">
+                    Douala (DLA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('CPT','Cape Town')">
+                    Cape Town (CPT)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('MRU','Mauritius')">
+                    Mauritius (MRU)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ACC','Accra')">
+                    Accra (ACC)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('TUN','Tuynidi')">
+                    Tuynidi (TUN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('GBE','Gaborone')">
+                    Gaborone (GBE)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('FNA','Freetown')">
+                    Freetown (FNA)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('NBO','Nairobi')">
+                    Nairobi (NBO)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('DAR','Dar es Salaam')">
+                    Dar es Salaam (DAR)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ALG','Alger')">
+                    Alger (ALG)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('LUN','Lusaka')">
+                    Lusaka (LUN)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('FIH','Kinshasa')">
+                    Kinshasa (FIH)
+                </li>
+                <li class="seachpl" onclick="addGeoAirPort_To('ABJ','Abidjan')">
+                    Abidjan (ABJ)
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div id="SeachHome_popup" style="        display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+
+    </div>
+</div>
+
+
+<script src="/Content/Scripts/jquery-1.9.1.js"></script>
+<script src="/Content/Scripts/jquery-ui-1.10.3.custom.js"></script>
+<script src="/Content/Scripts/ui.datepicker.lunar.min.js"></script>
+<script src="/Content/Scripts/select2.min.js"></script>
+<link href="/Content/Styles/select2.css" rel="stylesheet" />
+<script>
+
+    var $list_departure = $("#list-departure");
+    var $list_arrival = $("#list-arrival");
+    var $txtDeparture = $("[id$=txtDeparture]");
+    var $txtArrival = $("[id$=txtArrival]");
+    function SearchAutoCompleteStartPoint1() {
+        $("#txtStartPointSearch1").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPointSearch1").val(),
+                   success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#hdfStartPoint').val(ui.item.value);
+                $("#txtDeparture").val(ui.item.labeldisplay);
+                $('#txtStartPointSearch1').val('');
+                $('#list-departure').css('display', 'none');
+                $('#get-diemdi').text(ui.item.labeldisplay);
+                $('#list-departure').hide();
+            },
+            minLength: 3
+        });
+    }
+    function addGeoAirPort_Go(code, name) {
+        $("#txtDeparture").val(name);
+        $('#hdfStartPoint').val(code);
+        $("#get-diemdi").text(name);
+
+        $('#list-departure').hide();
+
+    }
+    function SearchAutoCompleteEndPoint1() {
+        $("#txtEndPointSearch1").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointSearch1").val(),
+                    dataType: "json",
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+
+                $('#hdfEndPoint').val(ui.item.value);
+                $("#txtArrival").val(ui.item.labeldisplay);
+
+                $('#get-diemden').text(ui.item.labeldisplay);
+
+
+                $('#list-arrival').hide();
+
+
+
+            },
+             minLength: 3
+        });
+    }
+    function addGeoAirPort_To(code, name) {
+        $("#txtEndPoint").val(name);
+        $('#hdfEndPoint').val(code);
+        $("#get-diemden").text(name);
+        $('#list-arrival').hide();
+    }
+</script>
+<script>
+    function addDays( date, days ) {
+        var result = new Date( date );
+        result.setDate( date.getDate() + days );
+        return result;
+    }
+    $( document ).ready( function () {
+        var mdate = new Date();
+        var depart = $( "#txtDepartureDate" ).val();
+        if ( depart != "" ) {
+            var dsplit = depart.split( "/" );
+            mdate = new Date( dsplit[2], dsplit[1] - 1, dsplit[0] );
+        }
+        var d = new Date();
+        var datenew = new Date();
+
+        var strDate = $.datepicker.formatDate( 'dd/mm/yy', d );
+        var strDepartureDat = $.datepicker.formatDate( 'dd/mm/yy', addDays( datenew, 3 ) );
+        var strReturnDate = $.datepicker.formatDate( 'dd/mm/yy', addDays( datenew, 6 ) );
+        $( "#txtDepartureDate" ).val( strDepartureDat );
+        $( "#txtReturnDate" ).val( strReturnDate );
+
+
+
+
+        //selectedRoundclick();
+        SearchAutoCompleteStartPoint1();
+        SearchAutoCompleteEndPoint1();
+    } );
+    function selectedOneclick() {
+        $( '#showDate' ).hide();
+        $( '#txtReturnDate' ).removeAttr( "required" );
+
+        $( ".mc" ).addClass( "selectway" );
+        $( ".kh" ).removeClass( "selectway" );
+        $( "#ItineraryType" ).val( "1" );
+    }
+    function selectedRoundclick() {
+        $( "#showDate" ).show();
+        $( ".kh" ).addClass( "selectway" );
+        $( '#txtReturnDate' ).attr( "required", "required" );
+        $( ".mc" ).removeClass( "selectway" );
+        $( "#ItineraryType" ).val( "2" );
+    }
+
+    var $list_departure = $( "#list-departure" );
+    var $list_arrival = $( "#list-arrival" );
+    var $txtDeparture = $( "[id$=txtDeparture]" );
+    var $txtArrival = $( "[id$=txtArrival]" );
+
+    $( "[id$=txtDepartureDate]" ).datepickerlunar( {
+        numberOfMonths: 2,
+        showButtonPanel: true,
+        dateFormat: 'dd/mm/yy',
+        minDate: new Date(),
+        defaultDate: new Date(),
+        showWeek: false,
+        firstDay: 1,
+        tieude: 'Chọn ngày đi',
+        beforeShow: function () {
+
+        },
+        onClose: function ( selectedDate ) {
+            //$("[id$=txtReturnDate]").datepickerlunar("option", "minDate", $(this).datepickerlunar("getDate"));
+        },
+        onSelect: function ( selectedDate ) {
+            var dsplit = selectedDate.split( "/" );
+            var m2date = new Date( dsplit[2], dsplit[1] - 1, dsplit[0] );
+            $( "#txtReturnDate" ).datepickerlunar( "option", "minDate", m2date );
+            var display = $( "#showDate" ).css( "display" );
+            if ( display == "none" ) {
+
+            }
+            else {
+                $( "#txtReturnDate" ).datepickerlunar( "option", "minDate", m2date );
+                setTimeout( function () {
+                    $( "#txtReturnDate" ).datepickerlunar( 'show' );
+                }, 16 );
+            }
+        }
+
+    } );
+    $( "[id$=txtReturnDate]" ).datepickerlunar( {
+        numberOfMonths: 2,
+        showButtonPanel: true,
+        dateFormat: 'dd/mm/yy',
+        minDate: -0,
+        defaultDate: new Date(),
+        showWeek: false,
+        firstDay: 1,
+        tieude: 'Chọn ngày về',
+
+    } );
+
+    function Chondiemdi() {
+        var $list_departure = $( "#list-departure" );
+        var $list_arrival = $( "#list-arrival" );
+        $list_arrival.hide();
+        $list_departure.show();
+    }
+    function Chondiemden() {
+        var $list_departure = $( "#list-departure" );
+        var $list_arrival = $( "#list-arrival" );
+        $list_departure.hide();
+        $list_arrival.show();
+
+    }
+
+</script>

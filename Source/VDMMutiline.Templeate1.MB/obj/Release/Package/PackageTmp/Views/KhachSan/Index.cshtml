@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Khách sạn";
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+}
+@Html.Action("HeaderDetail", "Control")
+<div class="hidden1 bgSelect" style="margin-top: 46px;">
+    <div class="row  top log logfix" style="">
+        <div class="col-xs-12 cb1 "style="    width: 100%;    padding-left: 0;">
+           Khách sạn
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="contentdetail">
+        <div class="row bgSelect1 news detail">
+            <iframe id="iframe-hotel" src="https://hotels.ebk.vn?tab=hotel" scrolling="no" style="width: 100%; transition: height 0.35s ease-out 0s;" onload="window.addEventListener?window.addEventListener('message',function(e){var t=document.getElementById('iframe-hotel'),h=e.data.hotel;h&amp;&amp;t.height!=h.height&amp;&amp;(t.height=h.height)},!1):window.attachEvent('onmessage',function(e){var t=document.getElementById('iframe-hotel'),h=e.data.hotel;h&amp;&amp;t.height!=h.height&amp;&amp;(t.height=h.height)});" height="600px"></iframe>
+        </div>
+    </div>
+</div>

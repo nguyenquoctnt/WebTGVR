@@ -1,0 +1,311 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@using VDMMutiline.Biz
+@using Microsoft.AspNet.Identity
+@using VDMMutiline.Core
+@using Microsoft.AspNet.Identity.Owin
+@model List<VDMMutiline.SharedComponent.EntityInfo.SysCategoryInfo>
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    Layout = null;
+    var common = CommonUI.GetlistTempleate(16);
+}
+@functions{
+    private TblArticleInfo GetinfoArtical(int? id)
+    {
+        var param = new TblArticleParam { Id = id ?? 0 };
+        var biz = new TblArticleBiz();
+        biz.SetupDisplayForm(param);
+        return param.TblArticleInfo;
+    }
+}
+<style>
+@Html.Raw( CommonUI.Customcss())
+</style>
+
+
+<style>
+    .topRightLinks {
+        width: 300px;
+    }
+
+    #user-menu {
+        z-index: 99999999;
+    }
+
+        #user-menu ul {
+            text-align: left;
+            display: inline;
+            margin: 0;
+            padding: 15px 4px 17px 0;
+            list-style: none;
+            -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        }
+
+            #user-menu ul li {
+                font: bold 12px/18px sans-serif;
+                display: inline-block;
+                margin-right: -4px;
+                position: relative;
+                padding: 15px 20px;
+                background: #fff;
+                cursor: pointer;
+                -webkit-transition: all 0.2s;
+                -moz-transition: all 0.2s;
+                -ms-transition: all 0.2s;
+                -o-transition: all 0.2s;
+                transition: all 0.2s;
+            }
+
+                #user-menu ul li:hover {
+                    background: #555;
+                    color: #fff;
+                }
+
+                #user-menu ul li a:hover {
+                    color: #fff;
+                }
+
+                #user-menu ul li ul {
+                    padding: 0;
+                    position: absolute;
+                    top: 48px;
+                    left: 0;
+                    width: 150px;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                    display: none;
+                    opacity: 0;
+                    visibility: hidden;
+                    -webkit-transiton: opacity 0.2s;
+                    -moz-transition: opacity 0.2s;
+                    -ms-transition: opacity 0.2s;
+                    -o-transition: opacity 0.2s;
+                    -transition: opacity 0.2s;
+                }
+
+                    #user-menu ul li ul li {
+                        background: #555;
+                        display: block;
+                        color: #fff;
+                        text-shadow: 0 -1px 0 #000;
+                    }
+
+                        #user-menu ul li ul li:hover {
+                            background: #666;
+                        }
+
+                #user-menu ul li:hover a {
+                    color: #fff;
+                }
+
+                #user-menu ul li ul li a {
+                    color: #fff;
+                }
+
+
+                #user-menu ul li:hover ul {
+                    display: block;
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+    #main-menu {
+        background-color: transparent;
+    }
+
+    .list-group-item {
+        background-color: transparent;
+        border: none;
+    }
+
+    a.list-group-item {
+        color: #000;
+        border: 1px solid #4c4c4c;
+    }
+
+        a.list-group-item:hover,
+        a.list-group-item:focus {
+            background-color: transparent;
+        }
+
+        a.list-group-item.active,
+        a.list-group-item.active:hover,
+        a.list-group-item.active:focus {
+            color: #000;
+            background-color: transparent;
+            border: 1px solid #4c4c4c;
+        }
+
+    .list-group-item:first-child,
+    .list-group-item:last-child {
+        border-radius: 0;
+    }
+
+    .list-group-level1 .list-group-item {
+        padding-left: 30px;
+    }
+
+    .list-group-level2 .list-group-item {
+        padding-left: 60px;
+    }
+</style>
+<div id="menu" class="row" style="        display: none;">
+    <div class="col-xs-11 menu">
+        <div class="row login">
+            @if (Request.IsAuthenticated)
+            {
+                <a class='uppercase' href="@Url.Action("Index","QuanLyVeDaDat")">@CurentUser.UserName</a>
+                <span> &nbsp; &nbsp;| &nbsp; &nbsp;</span>
+                <a href="/Account/LogOff">Đăng xuất</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Register", "Account", new { Area = "" })"> Đăng ký </a>
+                <span> &nbsp; &nbsp;| &nbsp; &nbsp;</span>
+                <a href="@Url.Action("Login", "Account", new { Area = "" })"> Đăng nhập </a>
+
+            }
+        </div>
+        <div class="row" style="        padding: 18px 24px 13px;">
+        </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="row home home1">
+                <a href="@Url.Action("Index","QuanLyVeDaDat")">Quản lý vé</a>
+
+            </div>
+            <div class="row home home1">
+                <a href="@Url.Action("ChangePassword", "Account", new { @area = "" })">Đổi mật khẩu</a>
+
+            </div>
+
+        }
+    <div id="main-menu" class="list-group">
+        <a href="#" class="list-group-item"><img src="/Content/Images/home.png" /> Trang chủ</a>
+        <a class="list-group-item" href="/SeachHome/Seach"><img src="/Content/Images/datve1.png" /> Đặt vé</a>
+        <a class="list-group-item" href="@Url.Action("Index","KhachSan")"><img src="/Content/Images/datve1.png" /> Đặt khách sạn</a>
+        @foreach (var item in Model.Where(z => z.ParentId == null).OrderBy(z => z.Thutu))
+        {
+            var liparentlv1 = Model.Where(z => z.ParentId == item.Id);
+            if (liparentlv1.Count() == 0)
+            {
+                if (item.IsContend != true)
+                {
+                    if (!string.IsNullOrEmpty(item.UrlConten))
+                    {
+
+                        <a href="@item.UrlConten" class="list-group-item"><img src="/Content/Images/nhuongve1.png" /> @item.TenHienthi</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "FontEndnew", new { ChuyenMuc=item.SEOUrl})" class="list-group-item"><img src="/Content/Images/nhuongve1.png" /> @item.TenHienthi</a>
+                    }
+
+                }
+                else
+                {
+
+                    var objs = GetinfoArtical(item.IdContend);
+                    var url = "#";
+                    if (objs != null)
+                    {
+                        url = Url.Action("ChiTiet", "FontEndnew", new { key = objs.SEOUrl });
+                    }
+                    <a href="@url" class="list-group-item"><img src="/Content/Images/nhuongve1.png" /> @item.TenHienthi</a>
+                }
+            }
+            else
+            {
+                <a href="#@string.Format("sub-menu{0}",item.Id)" class="list-group-item " data-toggle="collapse" data-parent="#main-menu">
+                    <img src="/Content/Images/nhuongve1.png" />  @item.TenHienthi
+                    <span class="caret">
+                    </span>
+                </a>
+                <div class="collapse list-group-level1" id="@string.Format("sub-menu{0}",item.Id)">
+                    @foreach (var itemlv1 in liparentlv1.OrderBy(z => z.Thutu))
+                    {
+                        var liparent2 = Model.Where(z => z.ParentId == itemlv1.Id).OrderBy(z => z.Thutu);
+                        if (liparent2.Count() == 0)
+                        {
+                            if (itemlv1.IsContend != true)
+                            {
+                                if (!string.IsNullOrEmpty(itemlv1.UrlConten))
+                                {
+                                    <a href="@itemlv1.UrlConten" class="list-group-item" data-parent="#@string.Format("sub-menu{0}",item.Id)">@itemlv1.TenHienthi</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Index", "FontEndnew", new { ChuyenMuc=itemlv1.SEOUrl})" class="list-group-item" data-parent="#@string.Format("sub-menu{0}",item.Id)">@itemlv1.TenHienthi</a>
+                                }
+
+                            }
+                            else
+                            {
+                                var objs = GetinfoArtical(itemlv1.IdContend);
+                                var url = "#";
+                                if (objs != null)
+                                {
+                                    url = Url.Action("ChiTiet", "FontEndnew", new { key = objs.SEOUrl });
+                                }
+                                <a href="@url" class="list-group-item" data-parent="#@string.Format("sub-menu{0}",item.Id)">@itemlv1.TenHienthi</a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="#@string.Format("sub-sub-menu{0}",itemlv1.Id)" class="list-group-item" data-toggle="collapse" data-parent="#sub-menu">@itemlv1.TenHienthi<span class="caret"></span></a>
+                            <div class="collapse list-group-level2" id="@string.Format("sub-sub-menu{0}",itemlv1.Id)">
+                                @foreach (var itemlv2 in liparent2)
+                                {
+                                    if (itemlv2.IsContend != true)
+                                    {
+                                        if (!string.IsNullOrEmpty(itemlv2.UrlConten))
+                                        {
+                                            <a href="@itemlv2.UrlConten" class="list-group-item" data-parent="#@string.Format("sub-sub-menu{0}",itemlv1.Id)">@itemlv2.TenHienthi</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Index", "FontEndnew", new { ChuyenMuc=itemlv2.SEOUrl})" class="list-group-item" data-parent="#@string.Format("sub-sub-menu{0}",itemlv1.Id)">@itemlv2.TenHienthi</a>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        var objs = GetinfoArtical(itemlv2.IdContend);
+                                        var url = "#";
+                                        if (objs != null)
+                                        {
+                                            url = Url.Action("ChiTiet", "FontEndnew", new { key = objs.SEOUrl });
+                                        }
+                                        <a href="@url" class="list-group-item" data-parent="#@string.Format("sub-sub-menu{0}",itemlv1.Id)">@itemlv2.TenHienthi</a>
+                                    }
+                                }
+
+
+                            </div>
+
+                        }
+                    }
+                </div>
+
+            }
+        }
+        <a class="list-group-item" href="@Url.Action("Index","About")"><img src="/Content/Images/datve1.png" /> Phản hồi</a>
+
+    </div>
+    </div>
+
+
+
+
+</div>
+

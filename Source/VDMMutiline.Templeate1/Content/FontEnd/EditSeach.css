@@ -1,0 +1,106 @@
+﻿@media (max-width:768px) {
+    .SelectCityBox .SelectCityBoxContent {
+        overflow-y: scroll !important;
+        height: 500px !important;
+    }
+
+    .SelectCityBox {
+        left: 0px !important;
+        display: none;
+        width: 100% !important;
+        height: auto;
+        position: fixed !important;
+        top: 75px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 8000;
+    }
+
+        .SelectCityBox .SelectCityBoxContent {
+            width: 750px;
+            margin: auto;
+            padding: 5px;
+            height: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+    .ui-datepicker.ui-datepicker-multi {
+        width: auto;
+        margin-left: -20px;
+        z-index: 15000;
+        position: fixed;
+        top: 0px !important;
+        left: 20px !important;
+        right: 10px !important;
+        width: 100% !important;
+    }
+
+    .ui-datepicker-multi-2 .ui-datepicker-group {
+        width: 100% !important;
+    }
+    #sp-step  {
+        display: none !important;
+    }
+    .SelectDate {
+        display: none !important;
+    }
+    div#SeachInfo {
+        margin-top: 17px;
+        margin-right: 13px;
+    }
+    .Select {
+        display: block !important;
+    }
+    a.select-button {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .contact-address {
+        width: 100% !important;
+    }
+    .ItineraryBox-Direct .ItineraryBox-Direct-Picture img {
+        height: 5px !important;
+    }
+    .ItineraryBox-Depart .City, .ItineraryBox-Arrival .City {
+        color: #577f9f;
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: bold;
+    }
+    div#contend {
+        margin-left: 7px;
+        margin-right: -7px;
+        margin-top: 10px;
+    }
+    .placeholder.gender {
+        width: 100%;
+    }
+    .placeholder .control-intro {
+        display: block !important;
+    }
+    .TextBox {
+        width: 100% !important;
+    }
+    .placeholder.first-name {
+        width: 100%;
+        padding-left: 0px !important;
+        margin-left: 0px !important;
+    }
+    .ButtonGreen {
+        border: 1px solid #34740e;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-family: arial, helvetica, sans-serif;
+        padding: 5px 10px 5px 10px;
+        text-decoration: none;
+        display: inline-block;
+        text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+        font-weight: bold;
+        color: #FFFFFF;
+        background-color: #4ba614;
+        background-image: linear-gradient(to bottom, #4ba614, #008c00);
+    }
+}

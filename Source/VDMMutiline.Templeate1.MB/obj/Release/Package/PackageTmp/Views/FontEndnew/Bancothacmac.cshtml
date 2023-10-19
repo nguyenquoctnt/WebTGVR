@@ -1,0 +1,79 @@
+﻿@using WebProject.Dao
+@using WebProject.SharedComponent.Constants
+@using WebProject.SharedComponent.EntityInfo
+@using WebProject.SharedComponent.Params
+@using WebProject.Ultilities
+@model WebProject.SharedComponent.EntityInfo.TinTucInfo
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+@functions
+{
+    private List<TinTucInfo> Getkhuyenmai()
+    {
+        var model = new TinTucParam { TinTucInfos = null };
+        var filter = new TinTucFilter
+        {
+            Search = string.Empty
+        };
+        var param = new TinTucParam { TinTucFilter = filter, type = Constant.TinTucType.Khuyenmai, Take = 4 };
+        var biz = new TinTucDao();
+        biz.TinTucHot(param);
+        return param.TinTucInfos;
+    }
+}
+@section Header{
+
+
+    @if (Model != null)
+    {
+        <title>@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tieude)</title>
+        <meta name="title" content="@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tieude)">
+        <meta name="keywords" content="@(!string.IsNullOrEmpty(Model.SEOKey) ? Model.SEOKey : Model.Tieude)">
+        <meta name="description" content="@(!string.IsNullOrEmpty(Model.SEODes) ? Model.SEODes : Model.Mota)">
+        <meta property="og:description" content="@(!string.IsNullOrEmpty(Model.SEODes) ? Model.SEODes : Model.Mota)">
+        <meta property="og:title" content="@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tieude)">
+
+    }
+}
+<div class="services w3l wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+    <div class="container">
+        <div class="grid_3 grid_5">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <div class="title-h1">
+                    <h3 class="tieude-vh">@Model.Tieude</h3>
+                </div>
+                <div class='clear detail-head'>
+                    <div class='detail-date left'>
+                        Ngày tạo: @(Model.Ngaytao.HasValue ? Model.Ngaytao.Value.ToString("dd/MM/yyyy HH:mm") : "")
+                    </div>
+                    @*<div class='detail-social right'>
+                            <div class="addthis_inline_share_toolbox_s5l0" addthis:url="@Request.Url" addthis:title="@Model.Tieude" data-media="@Model.Anh"></div>
+                        </div>*@
+                </div>
+                <div class='detail-news clear'>
+                    <div class='clear'>
+                        @Html.Raw(Model.Noidung)
+                    </div>
+                </div>
+                <hr />
+                <div id='comments'>
+                    <div class="fb-comments" data-width="100%" data-href="@Request.Url" data-numposts="5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=631942543575730";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+

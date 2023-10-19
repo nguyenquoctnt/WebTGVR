@@ -1,0 +1,394 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@model VDMMutiline.SharedComponent.Params.BK_BookingParam
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+@functions
+{
+    private string GetGioiTinhKhachHang(string gioitinh, int? type)
+    {
+        if (type == Constant.TypePassenger.EmBe)
+        {
+            return "inf";
+        }
+        else if (type == Constant.TypePassenger.TreEm)
+        {
+            if (gioitinh == Constant.Gender.Female)
+                return "MISS";
+            if (gioitinh == Constant.Gender.Male)
+                return "MSTR";
+        }
+        else
+        {
+            if (gioitinh == Constant.Gender.Female)
+                return "MS";
+            if (gioitinh == Constant.Gender.Male)
+                return "MR";
+        }
+        return "";
+
+    }
+
+}
+<style>
+
+    .row.bbot.btop {
+        padding-left: 15px;
+    }
+
+    .el-bill {
+        padding: 10px;
+    }
+    p {
+    margin-bottom: 0px;
+}
+</style>
+
+<div class="page-title box-sizing">
+    <h2>Tra cứu vé đã đặt</h2>
+</div>
+@using (Html.BeginForm("Index", "KiemTraVe", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_validate = "", id = "flightSearch", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class='detail-news clear'>
+        <div class="clear">
+            <div class="input-title">
+                Mã đặt chỗ
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(z => z.Code, new { @required = "Required", @class = "form-control", @name = "tieude", @style = "width: 99%" })
+
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" name="Save" style="        height: 34px;padding-top: 2px;" value="Đăng ký">Tìm kiếm </button>
+                </div>
+            </div>
+
+        </div>
+        @if (Model.BookingInfo != null)
+        {
+            var listPassenger = new List<BK_PassengerInfo>();
+            var codedi = "";
+            var daoticket = new BK_TicketDao();
+            var daoPassenger = new BK_PassengerDao();
+            var listTicket = daoticket.GetListByBooking(Model.BookingInfo.ID);
+            var ticketinfo = daoticket.GetListByBooking(Model.BookingInfo.ID).FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotDi);
+            string codedipg = "";
+            string codeve = "";
+
+            <div class="clear">
+                <h4 style="        color: #E7432A;
+        font-size: 14px;
+        padding-top: 10px;
+        padding-bottom: 10px;">
+                    Chuyến bay của bạn
+                </h4>
+                <div class="col-md-4">
+
+                    <div class="input-title">
+                        <div class="row hk  ">
+                            <span class="">MÃ ĐẶT CHỖ </span>
+                        </div>
+                        <div class="addp">
+                            <div class="row bbot btop" style="        border: none;
+        padding-bottom: 0px;
+        padding-top: 5px;">
+                                <p>
+                                    <b style="        color: #E7432A;"> @Model.BookingInfo.BookCode</b>
+                                </p>
+                                <p>
+                                    <span>Hãng vận chuyển:</span>
+                                    @foreach (var item in listTicket)
+                                    {
+                                        if (item.TypeID == Constant.Typeve.LuotDi)
+                                        {
+                                            codedi = item.Code;
+                                            <span> <img style="        width: 45px" src="@UIUty.GetImagebyHang(item.Code)" /></span>
+                                        }
+                                        else if (codedi != item.Code)
+                                        {
+                                            <span> - <img style="        width: 45px" src="@UIUty.GetImagebyHang(item.Code)" /></span>
+                                        }
+                                    }
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-title">
+                        <div class="row hk  " style="        border-bottom: 1px solid #f4f4f4;        padding-top: 12px;        padding-bottom: 0px;">
+                            <span class="">THÔNG TIN HÀNH KHÁCH </span>
+                        </div>
+                        <div class="addp">
+                            <div class="row bbot btop" style="        border: none;        padding-bottom: 0px;        padding-top: 5px;">
+                                <p>
+                                    @if (ticketinfo != null)
+                                    {
+                                        var paramPassenger = new BK_PassengerParam { BookingID = Model.BookingInfo.ID, Veid = ticketinfo.ID };
+                                        daoPassenger.GetbyBooking(paramPassenger);
+                                        listPassenger = paramPassenger.BK_PassengerInfos;
+                                        foreach (var bkPassengerInfo in listPassenger)
+                                        {
+
+                                        <p>
+                                            <b> @(Utility.ConvertToUnsign(bkPassengerInfo.FirstName + " " + bkPassengerInfo.Name).ToUpper() + GetGioiTinhKhachHang(bkPassengerInfo.Sex, bkPassengerInfo.TypeID)) </b>
+                                        </p>
+                                    }
+                                }
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-title">
+                            <div class="row hk  " >
+                                <span class="">THÔNG TIN HÀNH LÝ </span>
+                            </div>
+                            <div class="addp">
+                                <div class="row bbot btop" >
+                                    <p>
+                                        @if (ticketinfo != null)
+                                        {
+                                            var paramPassenger = new BK_PassengerParam { BookingID = Model.BookingInfo.ID, Veid = ticketinfo.ID };
+                                            daoPassenger.GetbyBooking(paramPassenger);
+                                            listPassenger = paramPassenger.BK_PassengerInfos;
+                                            foreach (var bkPassengerInfo in listPassenger)
+                                            {
+                                                string hanhlydi = "";
+                                                string hanhlyve = "";
+                                                if (codedipg == "VN")
+                                                {
+                                                    hanhlydi = "20";
+                                                }
+                                                else
+                                                {
+                                                    hanhlydi = (!string.IsNullOrEmpty(bkPassengerInfo.BaggageDepartValue)
+                                                        ? bkPassengerInfo.BaggageDepartValue
+                                                        : "0");
+                                                }
+                                                if (!string.IsNullOrEmpty(codeve))
+                                                {
+                                                    if (codeve == "VN")
+                                                    {
+                                                        hanhlyve = "20";
+                                                    }
+                                                    else
+                                                    {
+                                                        hanhlyve = (!string.IsNullOrEmpty(bkPassengerInfo.BaggageReturnValue)
+                                                            ? bkPassengerInfo.BaggageReturnValue
+                                                            : "0");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    hanhlyve = "0";
+                                                }
+                                                var hanhly = "";
+                                                hanhly = listTicket.Count > 1 ? string.Format("({0}kg - {1}kg)", hanhlydi, hanhlyve) : string.Format("({0}kg)", hanhlydi);
+                                            <p>
+                                                <b> @(Utility.ConvertToUnsign(bkPassengerInfo.FirstName + " " + bkPassengerInfo.Name).ToUpper() + hanhly) </b>
+                                            </p>
+                                        }
+                                    }
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-title">
+                                <div class="row hk  " >
+                                    <span class="">TÌNH TRẠNG VÉ </span>
+                                </div>
+                                <div class="addp">
+                                    <div class="row bbot btop" >
+                                        <p>
+                                            <b style="        color: #E7432A;">
+                                                @(Model.BookingInfo.Status == Constant.StatusVe.DangGiuCho ? "Chờ thanh toán"
+                                                      : Utility.GetDictionaryValue(Constant.StatusVe.dctName, Model.BookingInfo.Status))
+                                            </b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @foreach (var itemticket in listTicket)
+                            {
+                                var lidetial = daoticket.GetDetailByTicket(itemticket.ID);
+
+                                <div class="input-title">
+                                    <div class="row hk  " >
+                                        <span class="">@(itemticket.TypeID == Constant.Typeve.LuotDi ? "CHUYẾN BAY ĐI" : "CHUYẾN BAY VỀ") </span>
+                                    </div>
+                                    <div class="addp">
+                                        <div class="row bbot btop" >
+                                            <p>
+                                                <b style="        color: #505050;">CHUYẾN BAY</b>
+                                            </p>
+
+
+                                            <table style="        line-height: 25px;        width: 100%;">
+                                                <tbody>
+                                                    @foreach (var item in lidetial)
+                                                    {
+                                                        <tr>
+                                                            <td style="font-size: 12px;        width: 70px;        color: #fb7604;">
+                                                                <b>@item.flight</b>
+                                                            </td>
+                                                            <td style="        font-size: 11px;        width: 70px;">
+                                                                @(item.StartDate.HasValue ? item.StartDate.Value.ToString("dd/MM") : "")
+                                                            </td>
+                                                            <td style="        font-size: 11px;        width: 70px;">
+                                                                @(item.StartDate.HasValue ? item.StartDate.Value.ToString("HH:mm") : "")
+                                                            </td>
+                                                            <td style="        font-size: 11px;        width: 70px;">
+                                                                <b>@item.FromCity</b>
+                                                            </td>
+                                                            <td style="        font-size: 11px;">
+                                                                <img src="/Content/plane.png" style="        width: 25px;        height: 10px;        padding-left: 5px;        padding-right: 5px;" />
+                                                            </td>
+                                                            <td style="        font-size: 11px;        width: 70px;">
+                                                                <b>@item.ToCity</b>
+                                                            </td>
+                                                            <td style="        font-size: 11px;        width: 70px;">
+                                                                @(item.EndDate.HasValue ? item.EndDate.Value.ToString("HH:mm") : "")
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                            <div class="input-title">
+                                <div class="row hk  " >
+                                    <span class="">THỜI GIAN BOOK VÉ </span>
+                                </div>
+                                <div class="addp">
+                                    <div class="row bbot btop" style="        border: none;        padding-bottom: 0px;        padding-top: 5px;">
+                                        <p>
+                                            @if (Model.BookingInfo.CreatedDate.HasValue)
+                                            {
+                                                <b> Booking At : @(Model.BookingInfo.CreatedDate.Value.Day + Utility.MonthName(Model.BookingInfo.CreatedDate.Value.Month) + Model.BookingInfo.CreatedDate.Value.Year) </b>
+                                            }
+                                        </p>
+                                        <p>
+                                            @if (Model.BookingInfo.HoldToDate.HasValue)
+                                            {
+                                                <b> cfmed on : @(Model.BookingInfo.HoldToDate.Value.Day + Utility.MonthName(Model.BookingInfo.HoldToDate.Value.Month) + Model.BookingInfo.HoldToDate.Value.Year) </b>
+                                            }
+                                        </p>
+                                        <p>
+                                            @*@if (Model.BookingInfo.UserId == Constant.KL)
+                                                {*@
+                                            <b> bk by : @Model.BookingInfo.Email - @Model.BookingInfo.Phone</b>
+                                            @*}
+                                                else
+                                                {
+                                                    var obj = GetSeting(Model.BookingInfo.UserId);
+                                                    if (obj != null)
+                                                    {
+                                                        var EMAIL = obj.FirstOrDefault(z => z.Key == "PRT_EMAIL");
+                                                        var dienthoaisetting = obj.FirstOrDefault(z => z.Key == "PRT_PHONE");
+                                                        <b> bk by : @(EMAIL != null ? EMAIL.Value : "") - @(dienthoaisetting != null ? dienthoaisetting.Value : "")</b>
+                                                    }
+                                                }*@
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-title">
+                                <div class="row hk  " >
+                                    <span class="">THÔNG TIN XUẤT HÓA ĐƠN </span>
+                                </div>
+                                <div class="addp">
+                                    <div class="row bbot btop" >
+                                        @if (!string.IsNullOrEmpty(Model.BookingInfo.xhdtencongty))
+                                        {
+                                            <p>
+                                                <b>Công ty: @Model.BookingInfo.xhdtencongty</b>
+                                            </p>
+                                        }
+                                        @if (!string.IsNullOrEmpty(Model.BookingInfo.xhddiachi))
+                                        {
+                                            <p>
+                                                <b>Địa chỉ: @Model.BookingInfo.xhddiachi</b>
+                                            </p>
+                                        }
+                                        @if (!string.IsNullOrEmpty(Model.BookingInfo.xhdvat))
+                                        {
+                                            <p>
+                                                <b>MST: @Model.BookingInfo.xhdvat</b>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @*<div class="input-title">
+                                <div class="row hk  " >
+                                    <span class="">THÔNG TIN VOUCHER</span>
+                                </div>
+                                <div class="addp">
+                                    <div class="row bbot btop" >
+                                        @if (!string.IsNullOrEmpty(Model.BookingInfo.DiscountCode))
+                                        {
+                                            <p>
+                                                <b>Vé được xuất bởi voucher: @Model.BookingInfo.DiscountCode mệnh giá (@Model.BookingInfo.DiscountPrice.HasValue?@Model.BookingInfo.DiscountPrice.Value.ToString("n0"):"")</b>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="input-title">
+                                <div class="row hk  " >
+                                    <span class="">GỬI LẠI HÀNH TRÌNH</span>
+                                </div>
+                                <div class="addp">
+                                    <div class="row bbot btop" >
+                                        @*@if (Model.BookingInfo.UserId == Constant.Common.KL)
+                                            {*@
+                                        <p>@Model.BookingInfo.Email</p>
+                                        <br />
+                                        <a class="guilaihanhtrinh"  href="@Url.Action("GuiLaiHanhTrinh", "KiemTraVe", new {code = Model.BookingInfo.BookCode})">Gửi lại hành trình</a>
+                                        @*}
+                                            else
+                                            {
+                                                var obj = GetSeting(Model.BookingInfo.UserId);
+                                                if (obj != null)
+                                                {
+                                                    var EMAIL = obj.FirstOrDefault(z => z.Key == "PRT_EMAIL");
+                                                    <p>@(EMAIL != null ? EMAIL.Value : "")</p>
+                                                    <a style="color: #fff !important; background: #E7432A; padding: 10px;" href="@Url.Action("GuiLaiHanhTrinh", "VedaDat", new {code = Model.BookingInfo.BookCode})">Gửi lại hành trình</a>
+                                                }
+                                            }*@
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="        float: none;        clear: both;        display: table;"></div>
+                    </div>
+
+                }
+                else
+                {
+                    <p style="        color: red">@ViewBag.Erro</p>
+                }
+    </div>
+}
+
+

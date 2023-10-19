@@ -1,0 +1,960 @@
+﻿@using VDMMutiline.Core
+@using VDMMutiline.Core.UI
+@using VDMMutiline.Biz
+@using VDMMutiline.Dao
+@using VDMMutiline.Core.Common
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@model VDMMutiline.SeachAndBook.SeachParam
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+}
+@functions
+{
+    public List<DmTaikhoanNganHangInfo> GetTaiKhoanNganHang()
+    {
+        var param = new DmTaikhoanNganHangParam();
+        var finter = new DmTaikhoanNganHangFilter() { ListUserName = CommonUI.GetparentUserDaiLybyDomain().Select(z => z.UserName).ToList() };
+        param.DmTaikhoanNganHangFilter = finter;
+        var biz = new DmTaikhoanNganHangBiz();
+        biz.Search(param);
+        return param.DmTaikhoanNganHangInfos;
+    }
+    private List<VDMMutiline.SharedComponent.EntityInfo.BK_PassengerInfo> GetbyBooking(int id)
+    {
+        var dao = new BK_PassengerDao();
+        var param = new VDMMutiline.SharedComponent.Params.BK_PassengerParam() { BookingID = id };
+        dao.GetbyBooking(param);
+        return param.BK_PassengerInfos;
+    }
+    private List<BK_TicketInfo> GetListByBooking(int id)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(id);
+    }
+}
+@{
+    decimal tongTienHanhLy = 0;
+    foreach (var items in GetbyBooking(Model.BkBooking.ID).Where(z => z.Typeve == Constant.Typeve.LuotDi))
+    {
+        tongTienHanhLy += UIUty.ChuyenDoiTienTe(items.BaggageDepartPrice.HasValue ? items.BaggageDepartPrice.Value : 0, setting);
+        if (!string.IsNullOrEmpty(items.BaggageReturnID))
+        {
+            tongTienHanhLy += UIUty.ChuyenDoiTienTe(items.BaggageReturnPrice.HasValue ? items.BaggageReturnPrice.Value : 0, setting);
+        }
+    }
+}
+<style>
+    .btn-go {
+        background-color: #E7432A;
+        color: #fff;
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-left: 10px;
+        padding-top: 7px;
+        margin-bottom: 10px;
+    }
+
+    .message-info-ve {
+        color: #000;
+        background: white;
+        clear: left;
+        border-radius: 5px;
+        margin-top: 5px;
+        padding: 10px;
+    }
+
+    .top-head {
+        border-bottom: 3px solid #d4d4d4;
+        margin-bottom: 10px;
+    }
+
+        .top-head:before {
+            background: #CC9933;
+            content: "";
+            height: 3px;
+            position: absolute;
+            width: 10%;
+            z-index: 1;
+            margin-top: 22px;
+        }
+
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .item-menthod {
+        cursor: pointer;
+    }
+
+    .item-menthod {
+        padding: 5px;
+        background-color: #999999;
+        color: #fff;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    .checkboxselect {
+        display: inline-block;
+        float: left;
+        position: absolute;
+        top: 0px;
+        color: #999999;
+        left: -5px;
+        width: 25px;
+        font-size: 12px;
+        background: #f0f0f0;
+        height: 100%;
+    }
+
+        .checkboxselect + div {
+            padding-left: 25px;
+        }
+
+    .img-menthod2 {
+        margin-top: 12px;
+        margin-left: -2px;
+    }
+
+    .item-menthod label {
+        cursor: pointer;
+    }
+
+    .content-menthod {
+        font-size: 13px;
+    }
+
+    .choose-menthod {
+        background-color: #CC9933;
+        color: #4c4b4b;
+    }
+
+    .checkboxselect.active {
+        color: #CC9933;
+    }
+
+    .checkboxselect:before {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 20px;
+        bottom: 0;
+        right: -20px;
+        border-radius: 0 0 0 10px;
+        -moz-border-radius: 0 0 0 10px;
+        -webkit-border-radius: 0 0 0 10px;
+        -webkit-box-shadow: -10px 0 0 0 #f0f0f0;
+        box-shadow: -10px 0 0 0 #f0f0f0;
+    }
+
+    .checkboxselect:after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 20px;
+        bottom: 0;
+        right: -20px;
+        -webkit-border-radius: 10px 0 0 0px;
+        -moz-border-radius: 10px 0 0 0;
+        -webkit-border-radius: 10px 0 0 0;
+        -webkit-box-shadow: -10px 0 0 0 #f0f0f0;
+        box-shadow: -10px 0 0 0 #f0f0f0;
+        top: 0;
+        right: -20px;
+    }
+
+    .checkboxselect.active .fa {
+        padding: 2px 3px;
+    }
+
+    .checkboxselect .fa {
+        top: 35%;
+        position: absolute;
+        border: 2px solid;
+        border-radius: 50%;
+        padding: 7px 7px;
+    }
+
+    div#contend {
+        background: #f0f0f0;
+        padding-top: 0px;
+    }
+
+    #sp-step {
+        display: block;
+        padding: 5px 0;
+        text-align: center;
+        font-size: 0;
+        cursor: default;
+        background-color: transparent;
+        margin: 0px 0;
+    }
+
+    .item-payment {
+        padding: 0px;
+    }
+
+    .line-payment {
+        border-bottom: 1px solid #d4d4d4;
+        border-top: 1px solid #d4d4d4;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .blur {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+
+    .line-payment img {
+        width: 76px;
+        height: 55px;
+    }
+
+    .bank {
+        border-radius: 4px;
+        border: 1px solid #d4d4d4;
+        background: none;
+    }
+
+    .radio {
+        margin-top: 0px !important;
+    }
+</style>
+@Html.Action("HeaderDetail", "Control")
+<div class="hidden1 bgSelect" style="    margin-top: 46px;">
+    <div class="row  top log logfix" style="">
+        <div class="col-xs-12 cb">
+            Thông tin thanh toán
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div id="contend">
+        <div class=" margintop" style="    margin-top: 50px;">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12 t1">
+                    <div class="top-head">
+                        <span class="title">Phương thức thanh toán</span>
+                    </div>
+                    <div data-idhinhthuc="@Constant.Hinhthucthanhtoav2.chuyenkhoan" class="col-md-12 col-sm-12 col-xs-12 item-menthod choose-menthod ttck cursor">
+                        <div class="checkboxselect active">
+                            <i class="fa fa-circle"></i>
+                        </div>
+                        <div class="col-lg-2 col-sm-3 col-xs-2">
+                            <img src="~/Content/ThanhToan/bank-transfer.png" class="img-menthod2" />
+                        </div>
+                        <div class="col-lg-10 col-sm-9 col-xs-10">
+                            <span>
+                                <label>Được giữ chỗ - thanh toán sau</label>
+                            </span><br>
+                            <span class="content-menthod">
+                                Quý khách thanh toán bằng cách chuyển khoản ngân hàng trước thời hạn thanh toán được thông báo qua email.
+                            </span>
+                        </div>
+                    </div>
+                    <div data-idhinhthuc="@Constant.Hinhthucthanhtoav2.Taivanphong" class="col-md-12 col-sm-12 col-xs-12 item-menthod TaiVanPhong cursor">
+                        <div class="checkboxselect">
+                            <i class="fa" style="top:35%;position:absolute"></i>
+                        </div>
+                        <div class="col-lg-2 col-sm-3 col-xs-2">
+                            <img src="/Content/ThanhToan/Thanhtoanvanphong.png" class="img-menthod3" style="width: 30px;height: 50px;margin-left: -2px;" />
+                        </div>
+                        <div class="col-lg-10 col-sm-9 col-xs-10">
+                            <span>
+                                <label>Thanh toán tại văn phòng</label>
+                            </span><br>
+                            <span class="content-menthod"> Quý khách đến trực tiếp văn phòng để thanh toán.</span>
+                        </div>
+                    </div>
+                    <div data-idhinhthuc="@Constant.Hinhthucthanhtoav2.Giaovetannha" class="col-md-12 col-sm-12 col-xs-12 item-menthod GiaoVeTanNha cursor">
+                        <div class="checkboxselect">
+                            <i class="fa" style="top:35%;position:absolute"></i>
+                        </div>
+                        <div class="col-lg-2 col-sm-3 col-xs-2">
+                            <img src="/Content/ThanhToan/Giaovetannha.svg" class="img-menthod3" style="width: 30px;height: 50px;margin-left: -2px;" />
+                        </div>
+                        <div class="col-lg-10 col-sm-9 col-xs-10">
+                            <span>
+                                <label>Giao vé tận nhà</label>
+                            </span><br>
+                            <span class="content-menthod"> Chúng tôi sẽ giao vé tận nơi (phí ship 25k).</span>
+                        </div>
+                    </div>
+                    <div data-idhinhthuc="@Constant.Hinhthucthanhtoav2.VtcPay" class="col-md-12 col-sm-12 col-xs-12 item-menthod VTCPAY cursor">
+                        <div class="checkboxselect">
+                            <i class="fa" style="top:35%;position:absolute"></i>
+                        </div>
+                        <div class="col-lg-2 col-sm-3 col-xs-2">
+                            <img src="/Content/ThanhToan/logo-pay.svg" class="img-menthod3" style="width: 50px;height: 60px;margin-left: -2px;" />
+                        </div>
+                        <div class="col-lg-10 col-sm-9 col-xs-10">
+                            <span>
+                                <label>Thanh toán ngay bằng VTC PAY</label>
+                            </span><br>
+                            <span class="content-menthod">Hỗ trợ thanh toán bằng thẻ ATM và thẻ quốc tế thông qua cổng thanh toán trực tuyến VTC PAY</span>
+                        </div>
+                    </div>
+                    @*<div data-idhinhthuc="@Constant.Hinhthucthanhtoav2.VnPay" class="col-md-12 col-sm-12 col-xs-12 item-menthod VNPAY cursor">
+                            <div class="checkboxselect">
+                                <i class="fa" style="top:35%;position:absolute"></i>
+                            </div>
+                            <div class="col-lg-2 col-sm-3 col-xs-2">
+                                <img src="~/Content/ThanhToan/Vnpaylogo.png" class="img-menthod4" style="width: 50px;margin-left: -4px;margin-top: 25px;" />
+                            </div>
+                            <div class="col-lg-10 col-sm-9 col-xs-10">
+                                <span>
+                                    <label>Thanh toán ngay bằng VN PAY</label>
+                                </span><br>
+                                <span class="content-menthod">Hỗ trợ thanh toán bằng thẻ ATM thông qua cổng thanh toán trực tuyến VN PAY</span>
+                            </div>
+                        </div>*@
+                    <div class="clearfix"></div>
+                    <br>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 t2">
+                    <div class="top-head">
+                        <span class="title">Thông tin thanh toán</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-ttck ">
+                        <div style="border: 1px solid #d4d4d4;border-radius: 4px;padding:5px">
+                            <div>
+                                <p style="padding-left: 5px; padding-right: 5px;">
+                                    <strong>THÔNG TIN CHUYỂN KHOẢN</strong>
+                                </p>
+                                <p class="content-payment">Quý khách chuyển khoản đến một trong những tài khoản sau, với nội dung thanh toán được xác nhận qua email.</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 line-payment">
+                                @{ var idex1 = 0;
+                                    foreach (var item in GetTaiKhoanNganHang())
+                                    {
+                                        <div class="col-md-4 col-sm-6 col-xs-3">
+                                            <div data-name="@item.Nganhang" data-stk="@item.Sotaikhoan" data-chinhanh="@item.ChiNhanh" data-chuthe="@item.Tentaikhoan" class="@item.Nganhang cursor paymenthinhanh @(idex1==0?"":"blur")" bank="@item.Nganhang">
+                                                <img src="@item.Logo" alt="" class="bank @(idex1==0?"border":"")">
+                                                <p class="choose-bank"></p>
+                                            </div>
+                                        </div>
+                                        idex1++;
+                                    }
+                                }
+                            </div>
+                            @{ var idex2 = 0;
+                                foreach (var item in GetTaiKhoanNganHang())
+                                {
+                                    <div class="content-payment-bank @item.Nganhang-info @(idex2==0?"":"hidden")" bank="@item.Nganhang">
+                                        <span><strong>Chủ TK: </strong>@item.Tentaikhoan</span><br>
+                                        <span><strong>Số TK: </strong>@item.Sotaikhoan</span><br>
+                                        <span>@item.ChiNhanh</span><br>
+                                    </div>
+                                    idex2++;
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-TaiVanPhong hidden">
+                        <div style="border: 1px solid #d4d4d4;border-radius: 4px;padding:5px">
+                            <div>
+                                <p style="padding-left: 5px; padding-right: 5px;">
+                                    <strong>THANH TOÁN TẠI VĂN PHÒNG</strong>
+                                </p>
+                                <strong>Văn phòng tại:</strong>
+                                <p>
+                                   @UIUty.GetsettingByKey(setting, "PRT_ADDRESS")
+                                </p>
+                                <p>
+                                    Quý khách có thể thanh toán bằng tiền mặt hoặc cà thẻ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-GiaoVeTanNha hidden">
+                        <div style="border: 1px solid #d4d4d4;border-radius: 4px;padding:5px">
+                            <div>
+                                <p style="padding-left: 5px; padding-right: 5px;">
+                                    <strong>Giao vé tận nhà</strong>
+                                </p>
+                                <p>
+                                    Chúng tôi sẽ giao vé tại địa chỉ của quý khách
+                                </p>
+                                <p>
+                                    @Model.BkBooking.Address
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- menthod-VNPAY-->
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-VNPAY hidden">
+                        <div>
+                            <p style="padding-left: 5px; padding-right: 5px;">
+                                <strong>THANH TOÁN NGAY VN PAY</strong>
+                            </p>
+                            <p class="content-payment"><span>Giao dịch được thực hiện thông qua cổng VN PAY</span></p>
+                            <div style="border-bottom: 1px solid #d4d4d4">
+                                <img src="/Content/ThanhToan/Vnpaylogo.png" alt="" class="img-responsive" style="    width: 100px;display: block; margin: 0 auto; margin-bottom: 10px;">
+                            </div>
+                            <p class="content-payment" style="margin-top: 10px;">Quý khách vui lòng chọn ngân hàng thanh toán. </p>
+                        </div>
+                        <strong>THANH TOÁN BẰNG THẺ QUỐC NỘI</strong>
+                        <div class="col-md-12 col-sm-12 col-xs-12 line-payment" style="padding-left: 0px; padding-right: 0px">
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor  paymenthinhanhVNPAY" bank="VIETCOMBANK">
+                                    <img src="/Content/FontEnd/Bank/Vietcombank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="MBBANK">
+                                    <img src="/Content/FontEnd/Bank/MB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="AGRIBANK">
+                                    <img src="/Content/FontEnd/Bank/Agribank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="BIDV">
+                                    <img src="/Content/FontEnd/Bank/BIDV.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="EXIMBANK">
+                                    <img src="/Content/FontEnd/Bank/Eximbank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="HDBANK">
+                                    <img src="/Content/FontEnd/Bank/HDBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="NAMABANK">
+                                    <img src="/Content/FontEnd/Bank/NamABank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="SACOMBANK">
+                                    <img src="/Content/FontEnd/Bank/Sacombank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="VPBANK">
+                                    <img src="/Content/FontEnd/Bank/VPBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="ACB">
+                                    <img src="/Content/FontEnd/Bank/ACB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="DONGABANK">
+                                    <img src="/Content/FontEnd/Bank/dongabank_logo.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="TPBANK">
+                                    <img src="/Content/FontEnd/Bank/TienPhongBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="NCB">
+                                    <img src="/Content/FontEnd/Bank/ncb_logo.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="OJB">
+                                    <img src="/Content/FontEnd/Bank/Oceanbank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="MSBANK">
+                                    <img src="/Content/FontEnd/Bank/MaritimeBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="OCB">
+                                    <img src="/Content/FontEnd/Bank/ocb_logo.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="SCB">
+                                    <img src="/Content/FontEnd/Bank/SaigonBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="IVB">
+                                    <img src="/Content/FontEnd/Bank/ivb_logo.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="VNMART">
+                                    <img src="/Content/FontEnd/Bank/vnmart_logo.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>THANH TOÁN BẰNG THẺ QUỐC TẾ</strong>
+                        <div class="col-md-12 col-sm-12 col-xs-12 line-payment" style="padding-left: 0px; padding-right: 0px">
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="VISA">
+                                    <img src="/Content/FontEnd/Bank/visa.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="VISA">
+                                    <img src="/Content/FontEnd/Bank/master.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVNPAY" bank="VISA">
+                                    <img src="/Content/FontEnd/Bank/jcb.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- menthod-VTCPAY-->
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-VTCPAY hidden">
+                        <div>
+                            <p style="padding-left: 5px; padding-right: 5px;">
+                                <strong>THANH TOÁN NGAY VTC PAY</strong>
+                            </p>
+                            <p class="content-payment"><span>Giao dịch được thực hiện thông qua cổng VTC PAY</span></p>
+                            <div style="border-bottom: 1px solid #d4d4d4">
+                                <img src="/Content/ThanhToan/logo-pay.svg" alt="" class="img-responsive" style="    width: 100px;display: block; margin: 0 auto; margin-bottom: 10px;">
+                            </div>
+                            <p class="content-payment" style="margin-top: 10px;">Quý khách vui lòng chọn ngân hàng thanh toán. </p>
+                        </div>
+                        <strong>THANH TOÁN BẰNG THẺ QUỐC NỘI</strong>
+                        <div class="col-md-12 col-sm-12 col-xs-12 line-payment" style="padding-left: 0px; padding-right: 0px">
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor paymenthinhanhVTC" bank="Vietcombank">
+                                    <img src="/Content/FontEnd/Bank/Vietcombank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="MB">
+                                    <img src="/Content/FontEnd/Bank/MB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Vietinbank">
+                                    <img src="/Content/FontEnd/Bank/Vietinbank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Agribank">
+                                    <img src="/Content/FontEnd/Bank/Agribank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="BIDV">
+                                    <img src="/Content/FontEnd/Bank/BIDV.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="SHB">
+                                    <img src="/Content/FontEnd/Bank/SHB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="VIB">
+                                    <img src="/Content/FontEnd/Bank/VIB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="MaritimeBank">
+                                    <img src="/Content/FontEnd/Bank/MaritimeBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Eximb">
+                                    <img src="/Content/FontEnd/Bank/Eximbank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="ACB">
+                                    <img src="/Content/FontEnd/Bank/ACB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="HD">
+                                    <img src="/Content/FontEnd/Bank/HDBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="NamABank">
+                                    <img src="/Content/FontEnd/Bank/NamABank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="SaigonBank">
+                                    <img src="/Content/FontEnd/Bank/SaigonBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Sacombank">
+                                    <img src="/Content/FontEnd/Bank/Sacombank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="VietABank">
+                                    <img src="/Content/FontEnd/Bank/VietABank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="VPBank">
+                                    <img src="/Content/FontEnd/Bank/VPBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="SeaABank">
+                                    <img src="/Content/FontEnd/Bank/SeaABank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="PGBank">
+                                    <img src="/Content/FontEnd/Bank/PGBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Navibank">
+                                    <img src="/Content/FontEnd/Bank/Navibank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="GPBank">
+                                    <img src="/Content/FontEnd/Bank/GPBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="BACABANK">
+                                    <img src="/Content/FontEnd/Bank/BACABANK.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Oceanbank">
+                                    <img src="/Content/FontEnd/Bank/Oceanbank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="ABBAN">
+                                    <img src="/Content/FontEnd/Bank/ABBANK.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="LienVietPostBank">
+                                    <img src="/Content/FontEnd/Bank/LienVietPostBank.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="BVB">
+                                    <img src="/Content/FontEnd/Bank/BVB.jpg" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <strong>- QUỐC TẾ</strong>
+                        <div class="col-md-12 col-sm-12 col-xs-12 line-payment" style="padding-left: 0px; padding-right: 0px">
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Visa">
+                                    <img src="/Content/FontEnd/Bank/visa.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="Master">
+                                    <img src="/Content/FontEnd/Bank/master.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-3">
+                                <div class="cursor blur paymenthinhanhVTC" bank="JCB">
+                                    <img src="/Content/FontEnd/Bank/jcb.png" alt="" class="bank border">
+                                    <p class="choose-bank"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-12 col-sm-12 col-xs-12 item-payment menthod-Stripe hidden">
+                            <div>
+                                <p style="padding-left: 5px; padding-right: 5px;">
+                                    <strong>THANH TOÁN NGAY QUA STRIPE</strong>
+                                </p>
+                                <p class="content-payment"><span>Giao dịch được thực hiện thông qua cổng Stripe</span></p>
+                                <div style="border-bottom: 1px solid #d4d4d4">
+                                    <img src="~/Content/hostiso-stripe.png" class="img-responsive" style="    width: 250px;display: block; margin: 0 auto; margin-bottom: 10px;" />
+
+
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="clearfix"></div>
+                    <br>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 t3">
+                    <div class="top-head">
+                        <span class="title">Thông tin hóa đơn</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-info">
+                        <p style=" padding-right: 5px;border-bottom:1px dotted">
+                            <strong>THÔNG TIN KHÁCH HÀNG</strong>
+                        </p>
+                        <div class="content-info">
+                            <div>
+                                <div style="float: left;">@Model.BkBooking.Name</div>
+                                <div style="float: right;">
+                                    <img src="~/Content/ThanhToan/phone.jpg" />
+                                    @Model.BkBooking.Phone
+                                </div>
+                            </div>
+                            <div style="clear: both; padding-top: 5px;">@Model.BkBooking.Email</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 item-info">
+                        <p style=" padding-right: 5px;padding-top:10px; border-bottom:1px dotted">
+                            <strong>HÓA ĐƠN</strong>
+                        </p>
+                        <div class="content-info">
+                            <div class="section1">
+                                <div style="">
+                                    <div style="float: left;">
+                                        <strong>Sản phẩm của chúng tôi</strong>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+
+                                <div style="clear: both"></div>
+                                <div>
+                                    <div style="float: left;">Mã tham chiếu</div>
+                                    <div style="float: right;">@Model.BkBooking.rCode</div>
+                                </div>
+
+                            </div>
+                            <div style="clear: both"></div><br>
+
+                            <div class="section2">
+                                <div style="">
+                                    <div style="float: left;">
+                                        <strong>Chi tiết giá</strong>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div>
+                                    <div style="float: left;">Tổng tiền vé</div>
+                                    @if (Model.BkBooking.TotalPrice > 0)
+                                    {
+                                        <div style="float: right;">@((Model.BkBooking.TotalPrice - (double?)tongTienHanhLy).Value.ToString("n0"))</div>
+                                    }
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div class="section5" style="margin-top: 20px;">
+                                <div class="line-info">
+                                    <div style="float: left;">
+                                        <strong>Phí dịch vụ</strong>
+                                    </div>
+                                    <div style="float: right; " id="service-fee" class="service-fee">@tongTienHanhLy.ToString("n0")</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br>
+                            </div>
+                            <div class="section5" style="margin-top: 20px;">
+                                <div class="line-info">
+                                    <div style="float: left;">
+                                        <strong>Mã giảm giá</strong>
+                                    </div>
+                                    <div style="float: right; " id="service-fee" class="service-fee"></div>
+                                </div>
+                                <div style="clear: both"></div>
+                                <div>
+                                    <div style="float: left;">@Model.BkBooking.DiscountCode</div>
+                                    <div style="float: right;">@(Model.BkBooking.DiscountPrice.HasValue ? Model.BkBooking.DiscountPrice.Value.ToString("n0") : "0")</div>
+                                </div>
+                                <br>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div class="section6" style="margin-top: 20px;">
+                                <div style="border-top: 1px solid;    padding-top: 10px;">
+                                    <div style="float: left;    color: #444;">
+                                        <strong>Tổng tiền cần thanh toán</strong>
+                                    </div>
+                                    <div style="float: right; color: #ff0000; font-size: 16px; font-weight: bold;">
+                                        @(Model.BkBooking.TotalPrice.HasValue ? Model.BkBooking.TotalPrice.Value.ToString("n0") : "0")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 message-info-ve">
+                        Nếu quý khách không nhận được email xác nhận<strong> Giao dịch thành công</strong> sau khi thanh toán, vui lòng liên hệ lại chúng tôi để kiểm tra.
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px; float: right;">
+                        @using (Html.BeginForm("ChonHinhThucThanhToan", "ThanhToan", FormMethod.Post, new { @data_parsley_validate = "", id = "frchonhinhthucthanhtoan", @role = "form" }))
+                        {
+                            <input type="hidden" id="MaDonHang" name="MaDonHang" value="@Model.BkBooking.rCode" />
+                            <input type="hidden" id="IdHinhthucthanhtoan" name="IdHinhthucthanhtoan" value="@Constant.Hinhthucthanhtoav2.chuyenkhoan" />
+                            <input type="hidden" id="SoTaiKhoanChon" name="SoTaiKhoanChon" value="0101001519999">
+                            <input type="hidden" id="NganHangChon" name="NganHangChon" value="Vietcombank">
+                            <input type="hidden" id="ChuTheChon" name="ChuTheChon" value="Nguyễn Sỹ Tùng">
+                            <input type="hidden" id="ChiNhanhChon" name="ChiNhanhChon" value="Vinh - Nghệ An">
+                            <div class="row">
+                                <div>
+                                    <button onclick="submitform()" class="btn btn-go pull-right thanhtoan" style="margin-left: 10px;" type="button">
+                                        <strong>THANH TOÁN</strong> <i class="fa fa-long-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Content/ThanhToan/payment.js"></script>
+<script>
+    function submitform() {
+        $('#frchonhinhthucthanhtoan').submit();
+        @*if ($('#IdHinhthucthanhtoan').val() == '@Constant.Hinhthucthanhtoav2.Stripe') {
+            $('#StripeModal').modal("show");
+            var url = '@Url.Action("Stripe", "ThanhToan", new { madonhang= Model.BkBooking.rCode })';
+            jQuery.ajax({
+                    url: url,
+                type: "GET",
+                success: function (data) {
+                    $('#contenStripeModal').html(data)
+                },
+                error: function (jqXhr, errorCode, error) {
+                    }
+            });
+        }
+        else {
+            $('#frchonhinhthucthanhtoan').submit();
+        }*@
+    }
+</script>
+<div class="modal fade" id="StripeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin thanh toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="contenStripeModal" class="modal-body">
+            </div>
+        </div>
+    </div>
+    <style>
+
+        .modal-header .close {
+            top: 15px;
+            position: absolute;
+            right: 14px;
+        }
+    </style>
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+    function formthanhtoan() {
+        var valiNumber = Stripe.card.validateCardNumber($('#txtCardNumber').val());
+        var valicvc = Stripe.card.validateCVC($('#txtCvc').val());
+        var valiExpiry = Stripe.card.validateExpiry($('#txtExpiryMonth').val(), $('#txtExpiryYear').val());
+        if (valiNumber == false) {
+            $('.payment-errors').text("Số thẻ không hợp lệ.")
+        }
+        else if (valicvc == false) {
+            $('.payment-errors').text("Số CVC không hợp lệ.")
+        }
+        else if (valiExpiry == false) {
+            $('.payment-errors').text("Thời hạn thẻ không hợp lệ.")
+        }
+        else {
+            var formvalidate = $('#frmCharge');
+            formvalidate.parsley().validate()
+            if (formvalidate.parsley().isValid() == true) {
+                jQuery.ajax({
+                    url: '@Url.Action("Stripe", "ThanhToan")',
+                    data: $('#frmCharge').serialize(),
+                    type: "POST",
+                    success: function (datas) {
+                        if (datas.isSuccess === true) {
+                            $("#StripeModal").modal('hide');
+                            window.location.href = datas.urls;
+                        } else {
+
+                        }
+                    },
+                    error: function (jqXhr, errorCode, error) {
+
+                    }
+                });
+            }
+
+        }
+    }
+</script>
+

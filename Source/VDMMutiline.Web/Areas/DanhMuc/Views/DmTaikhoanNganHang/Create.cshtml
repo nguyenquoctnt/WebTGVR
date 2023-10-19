@@ -1,0 +1,63 @@
+﻿@model VDMMutiline.SharedComponent.Params.DmTaikhoanNganHangParam
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "DmTaikhoanNganHang", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateDmTaikhoanNganHang", enctype = "multipart/form-data", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.DmTaikhoanNganHang.Id)
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên tài khoản</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.DmTaikhoanNganHang.Tentaikhoan, new { @Required = "Required", @class = "form-control", @placeholder = ""})
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Số tài khoản</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.DmTaikhoanNganHang.Sotaikhoan, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Ngân hàng</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.DmTaikhoanNganHang.Nganhang, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Chi nhánh</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.DmTaikhoanNganHang.ChiNhanh, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Logo</label>
+                <div class="col-md-8">
+                    <input type="file" name="Imageimput" class="actFile" />
+                    <br />
+                    @if (!string.IsNullOrEmpty(Model.DmTaikhoanNganHang.Logo))
+                    {
+                        <img src="@Model.DmTaikhoanNganHang.Logo" style="height: 100px; width: 100px;" />
+                    }
+                    @Html.HiddenFor(x => x.DmTaikhoanNganHang.Logo)
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,59 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.Core.Helper;
+@model VDMMutiline.SharedComponent.Params.TblThanhvienParam
+@{
+    Layout = null;
+}
+@foreach (var item in Model.TblThanhvienInfos)
+{
+    <div class="itemdiv memberdiv">
+        <div class="user">
+            <img alt="@item.TenThanhvien" src="@(item.Avatar ?? "/content/images/avatars/avatar2.png")">
+        </div>
+
+        <div class="body">
+            <div class="name">
+                <a href="@Url.Action("Detail","TblThanhvien",new {@area="",@id=item.Id })">@item.TenThanhvien</a>
+            </div>
+            @*<div class="time">
+                    <i class="ace-icon fa fa-clock-o"></i>
+                    <span class="green">20 min</span>
+                </div>*@
+            <div>
+                <span class="label label-warning label-sm">@EnumerableHelper.GetDictionaryValue(Constant.TrangthaiKichhoat.dctName, item.TrangThai)</span>
+
+                <div class="inline position-relative">
+                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                        <li>
+                            <a href="@Url.Action("Detail","TblThanhvien",new {@area="",@id=item.Id })" class="tooltip-success" data-rel="tooltip" title="Chi tiết" data-original-title="Approve">
+                                <span class="green">
+                                    <i class="ace-icon fa fa-user bigger-110"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                        @*<li>
+                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Hủy duyệt" data-original-title="Reject">
+                                <span class="orange">
+                                    <i class="ace-icon fa fa-times bigger-110"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Xóa" data-original-title="Delete">
+                                <span class="red">
+                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                </span>
+                            </a>
+                        </li>*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

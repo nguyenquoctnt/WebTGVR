@@ -1,0 +1,6 @@
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Release.DEV\SleevesUp.Common.Serialization.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Release.DEV\SleevesUp.Common.Serialization.pdb
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Release.DEV\SleevesUp.Common.Serialization.csprojResolveAssemblyReference.cache
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Release.DEV\SleevesUp.Common.Serialization.csproj.CoreCompileInputs.cache
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Release.DEV\SleevesUp.Common.Serialization.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Release.DEV\SleevesUp.Common.Serialization.pdb

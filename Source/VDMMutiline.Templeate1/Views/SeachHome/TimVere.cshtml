@@ -1,0 +1,2456 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@model VDMMutiline.SeachAndBook.SeachParam
+@{
+    Layout = null;
+}
+@functions
+{
+
+    private ApiClient.Models.Airport getbycode(string code)
+    {
+        return Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+    private List<VDMMutiline.SeachAndBook.VeThangareDataInfo> GetChieuDiTHeoNgay(DateTime date)
+    {
+        return Model.DepartureFlightsVeThang.Where(z => z.StartDate.Date == date).OrderBy(z => z.FareAdt).ToList();
+    }
+    private List<VDMMutiline.SeachAndBook.VeThangareDataInfo> GetChieuveTHeoNgay(DateTime date)
+    {
+        return Model.ReturnFlightsVeThang.Where(z => z.StartDate.Date == date).OrderBy(z => z.FareAdt).ToList();
+    }
+}
+@{
+    var index = 0;
+    var indexDepartureFlight = 0;
+    var indexReturnFlightsVeThang = 0;
+
+    var starmountvalue = 0;
+    var staryearvalue = 0;
+    var StartMonthsp = Model.StartMonth.Split('/');
+    if (StartMonthsp.Length > 1)
+    {
+        starmountvalue = int.Parse(StartMonthsp[0]);
+        staryearvalue = int.Parse(StartMonthsp[1]);
+    }
+
+    var endmountvalue = 0;
+    var endyearvalue = 0;
+    var EndMonthsp = Model.EndMonth.Split('/');
+    if (EndMonthsp.Length > 1)
+    {
+        endmountvalue = int.Parse(EndMonthsp[0]);
+        endyearvalue = int.Parse(EndMonthsp[1]);
+    }
+    // chiều đi
+    var dauthang_ngaybatdau = starmountvalue > 0 ? UIUty.GetFirstDayOfMonth(starmountvalue, staryearvalue) : new DateTime();
+    var cuoithang_ngaybatdau = staryearvalue > 0 ? UIUty.GetLastDayOfMonth(starmountvalue, staryearvalue) : new DateTime();
+
+    //chiều về
+    var dauthang_ngayve = endmountvalue > 0 ? UIUty.GetFirstDayOfMonth(endmountvalue, endyearvalue) : new DateTime();
+    var cuoithang_ngayve = endmountvalue > 0 ? UIUty.GetLastDayOfMonth(endmountvalue, endyearvalue) : new DateTime();
+
+    var indexthu = 0;
+    var ngaycuoiccungrow1 = new DateTime();
+    var rowindex = 0;
+
+
+}
+
+<script src="/Content/FontEnd/SeachValue/format.js" type="text/javascript"></script>
+<link href="~/Content/FontEnd/SeachValue/Chart.css" rel="stylesheet" />
+<link href="~/Content/FontEnd/vethang/css/style.css" rel="stylesheet" type="text/css" />
+
+<style>
+
+    .button-blue {
+        width: 159px;
+        height: 28px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #ffffff;
+        padding-left: 10px;
+        cursor: pointer;
+        background: #f1c104;
+        text-align: center;
+        border: none;
+        font-size: 12px;
+    }
+
+    .left {
+        float: left;
+        display: block;
+    }
+
+    .radio {
+        display: block;
+        float: left;
+    }
+
+    .right {
+        float: right;
+        display: block;
+    }
+
+    #seach-box {
+        background: #292929;
+        display: block;
+        width: 442px;
+        margin-top: 0px;
+    }
+
+    #search-head {
+        height: 45px;
+        width: 100%;
+        border-bottom: 1px dotted #ffffff;
+    }
+
+    #search-title {
+        color: #ffffff;
+        margin-top: 13px;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+
+    #search-type span {
+        cursor: pointer;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #search-type {
+        clear: both;
+    }
+
+    #search-body {
+        padding: 15px;
+        color: #ffffff;
+    }
+
+        #search-body table {
+        }
+
+        #search-body input[type='text'] {
+            font-size: 16px;
+        }
+
+    input[type='text'] {
+        font-size: 18px;
+        padding: 2px;
+        border: 1px solid #E6E6E6;
+        height: 32px;
+    }
+
+    #search-body input[type='text'] {
+        width: 190px;
+    }
+
+    select {
+        border: none;
+        margin: 0 auto;
+        font-size: 14px;
+        padding: 3px;
+        text-align: center;
+        height: 32px;
+        border: 1px solid #E9E7E8;
+        color: #000;
+    }
+
+    #search-body #passenger td {
+        width: 135px;
+    }
+
+    #search-footer {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+
+
+    .subLP_tvtt {
+        width: 100%;
+        border: solid 1px #e5eaf1;
+        border-radius: 5px;
+        height: 298px;
+    }
+
+        .subLP_tvtt h3 {
+            font-size: 20px;
+            height: 53px;
+            line-height: 45px;
+            background: #f1f1f1;
+            background: #f1f1f1 url(/Abay/Calendar/Images/BG_dachon.png) repeat-x;
+            color: #143a83;
+            padding: 0px 10px;
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: solid 1px #e5eaf1;
+            font-weight: bold;
+        }
+
+    .giabanchon_kq {
+        font-size: 12px;
+        color: #143a83;
+        margin: 6px 0px 6px 0px;
+    }
+
+    .subLP_tvtt h3 span.img_icon_Dachon {
+        background: url(/Content/DachonIcon.png) no-repeat center left;
+        padding: 12px 10px 10px 40px;
+        line-height: 50px;
+    }
+
+    .giabanchon_kq .chang_tvtt {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 30px;
+    }
+
+    .subLP_tvtt h3 {
+        font-size: 20px;
+        height: 53px;
+        line-height: 45px;
+        background: #f1f1f1;
+        color: #143a83;
+        padding: 0px 10px;
+        border-radius: 5px 5px 0px 0px;
+        border-bottom: solid 1px #e5eaf1;
+        font-weight: bold;
+        margin-top: 0px;
+    }
+
+    .main {
+        min-height: 400px;
+        background: #Fff;
+    }
+
+    .giabanchon_kq td {
+        padding: 3px 5px;
+    }
+
+    .btn_tieptuc_css {
+        margin: 10px 0px;
+    }
+
+    .Chuthich_timvetheothang {
+        margin: 10px 0px 10px 15px;
+        float: left;
+        width: 640px
+    }
+
+        .Chuthich_timvetheothang .chuthich {
+            font-size: 14px;
+            color: #143a83;
+            font-weight: bold
+        }
+
+        .Chuthich_timvetheothang td {
+            vertical-align: middle !important;
+            height: 30px;
+            font-size: 12px;
+            font-weight: normal;
+            color: #444;
+            padding: 0px 5px
+        }
+
+            .Chuthich_timvetheothang td i {
+                font-style: italic
+            }
+
+    .with_height {
+        width: 30px;
+        height: 23px;
+    }
+
+    .giathapnhat {
+        background: #dcedfc;
+        border-radius: 5px;
+        border: solid 1px #143a83;
+        display: block
+    }
+
+        .giathapnhat span.Gia_onBox {
+            color: #143a83;
+            font-weight: bold
+        }
+
+    .giabanchon {
+        background: #fef7e9 !important;
+        border-radius: 5px !important;
+        border: solid 1px #ff943b !important;
+        display: block !important
+    }
+
+        .giabanchon span.Gia_onBox {
+            color: #ef5d13 !important;
+            font-weight: bold !important
+        }
+
+    .giathuong {
+        background: #ffffff;
+        border-radius: 5px;
+        border: solid 1px #d7dce2;
+        display: block
+    }
+
+        .giathuong span.Gia_onBox {
+            color: #143a83;
+            font-weight: normal
+        }
+
+        .giathuong:hover span.Gia_onBox {
+            font-weight: bold
+        }
+
+    .giaan {
+        background: #e5eaf1;
+        border-radius: 5px;
+        border: solid 1px #d7dce2;
+        display: block
+    }
+
+        .giaan:hover {
+            border: solid 1px #d7dce2 !important;
+        }
+
+    .box_top {
+        font: bold 14px/14px sans-serif;
+        background-color: #292929;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 10px 10px 10px;
+        border-radius: 6px 6px 0px 0px;
+    }
+
+    .BasketFlight {
+        font-size: 12px;
+        padding: 0px 10px 10px 10px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .BasketFlightDepart {
+        padding: 5px;
+        width: 50%;
+        border-right: 1px dotted #cacaca;
+        text-align: left;
+    }
+
+    .BasketFlightArrive {
+        padding: 5px;
+        width: 50%;
+        text-align: right;
+    }
+
+    .BasketFlightTime {
+        font-size: 18px;
+    }
+
+
+
+    .monthly-flight img {
+        width: 100px;
+        margin-top: -13px;
+    }
+
+    .vere thead tr {
+        background: #292929;
+        color: #fff;
+    }
+
+    .vere tbody td {
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    .vere tbody td {
+        text-align: center;
+        height: 70px;
+        width: 100px;
+        border: 1px solid #ddd;
+        background: #dcedfc;
+        background-repeat: no-repeat;
+        background-position: center center;
+        vertical-align: middle;
+        font-size: 14px;
+        line-height: 2em;
+    }
+
+        .vere tbody td p {
+            font-size: 14px;
+            margin: 0 !important;
+            color: #EA8114;
+            font-weight: bold;
+        }
+
+        .vere tbody td.vvDayBlank {
+            background: #e5eaf1;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .vere tbody td.vereActive {
+            background: #FFEEB9;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+    .ks_populated.populated {
+        background-color: #FFFFFF;
+        height: 2.4em;
+    }
+
+    .ks_populated .singular.visible {
+        color: #909090;
+        font-weight: 600;
+        padding-left: 20px;
+    }
+</style>
+
+<div id="search-flight-small" style="margin-top: -10px">
+</div>
+<div id="contend" class="main row">
+
+    <div class="container">
+
+
+        <div class="col-md-6">
+            @{ Html.RenderPartial("_PartialSeachContenvere", Model); }
+
+        </div>
+        <div class="col-md-6">
+            <div class="subLP_tvtt" style="margin-top:10px">
+                <h3><span class="img_icon_Dachon">Bạn đã chọn</span></h3>
+                <table width="100%" class="giabanchon_kq">
+                    <tbody>
+                        <tr>
+                            <td width="42%" height="20" align="right">
+                                <span class="chang_tvtt">
+                                    @(getsanbaycode(Model.DepartureAirportCode))
+                                </span>
+                            </td>
+                            <td width="7%" class="imgPlane_right">
+                                <img src="/Content/planeIconTimvetheothang.png" width="20" height="19" style="margin: 0 5px" alt="">
+                            </td>
+                            <td width="51%">
+                                <span class="chang_tvtt">
+                                    @(getsanbaycode(Model.DestinationAirportCode))
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="smallroww_tvtt" align="right">
+                                Đi
+                                <span id="ngaydi" class="chang_tvtt ngaydi"></span>
+                            </td>
+                            <td>&nbsp;</td>
+                            @if (Model.Itinerary > 1)
+                            {
+                                <td>
+                                    Về  <span id="ngayve" class="chang_tvtt ngayve"></span>
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td align="right"><img class="airlinechieudi" id="anhdi" src="" width="49" alt="">   </td>
+                            <td>&nbsp;</td>
+
+                            <td><img class="airlinechieuve" id="anhve" src="" width="49" alt="">    </td>
+                        </tr>
+                        <tr>
+                            <td align="right" class="middleClass">Người bay:  </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <table width="80%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="middleClass">
+                                                @Model.Adult &nbsp;<img src="/Content/Nguoilon.png" class="icon_person" alt="">
+                                            </td>
+                                            @if (Model.Children > 0)
+                                            {
+                                                <td>
+
+                                                    +
+                                                </td>
+                                                <td>
+                                                    @Model.Children &nbsp;
+                                                    <img id="cphSub_UsrUserSelectBox1_imgChild" src="/Content/Treem.png">
+                                                </td>
+                                            }
+                                            @if (Model.Infant > 0)
+                                            {
+                                                <td>
+                                                    +
+                                                </td>
+                                                <td>
+                                                    @Model.Infant &nbsp;
+                                                    <img id="cphSub_UsrUserSelectBox1_imgInfant" src="/Content/Embe.png">
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Tổng giá:  </td>
+                            <td>&nbsp;</td>
+                            <td><b class="big_price" id="totalPrice"></b><b class="big_price"> VNĐ</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @using (Html.BeginForm("TimVere", "SeachHome", FormMethod.Post, new { @onsubmit = "return validateForm()", @id = "formvalueSeachdomtick", @class = "form-horizontal seach", @role = "form" }))
+        {
+            <div class="col-md-12 pLeft0 pright0">
+                @if (Model.DepartureFlightsVeThang.Count > 0)
+                {
+                    var objnameden = getbycode(Model.DestinationAirportCode);
+                    var objnamedi = getbycode(Model.DepartureAirportCode);
+                    <input type="hidden" name="hdfSelectedDepartFlt" id="hdfSelectedDepartFlt" />
+                    <input type="hidden" name="hdfSelectedReturnFlt" id="hdfSelectedReturnFlt" />
+                    <input type="hidden" name="hdhSearchArchiveId" id="hdhSearchArchiveId" />
+                    <input type="hidden" name="hdfItineraryType" id="hdfItineraryType" />
+                    <input type="hidden" name="hdfFareAdtDepart" id="hdfFareAdtDepart" />
+                    <input type="hidden" name="hdfFareChdDepart" id="hdfFareChdDepart" />
+                    <input type="hidden" name="hdfFareInfDepart" id="hdfFareInfDepart" />
+                    <input type="hidden" name="hdfTaxAdtDepart" id="hdfTaxAdtDepart" />
+                    <input type="hidden" name="hdfTaxChdDepart" id="hdfTaxChdDepart" />
+                    <input type="hidden" name="hdfTaxInfDepart" id="hdfTaxInfDepart" />
+                    <input type="hidden" name="hdfFareAdtReturn" id="hdfFareAdtReturn" />
+                    <input type="hidden" name="hdfFareChdReturn" id="hdfFareChdReturn" />
+                    <input type="hidden" name="hdfFareInfReturn" id="hdfFareInfReturn" />
+                    <input type="hidden" name="hdfTaxAdtReturn" id="hdfTaxAdtReturn" />
+                    <input type="hidden" name="hdfTaxChdReturn" id="hdfTaxChdReturn" />
+                    <input type="hidden" name="hdfTaxInfReturn" id="hdfTaxInfReturn" />
+                    <input type="hidden" name="hdhSession" id="hdhSession" />
+                    <input type="hidden" name="hdhCodeReturn" id="hdhCodeReturn" />
+                    <input type="hidden" name="hdhCodeDepart" id="hdhCodeDepart" />
+                    @Html.HiddenFor(z => Model.Itinerary)
+                    @Html.HiddenFor(z => Model.DepartureAirportCode)
+                    @Html.HiddenFor(z => Model.DestinationAirportCode)
+                    @Html.HiddenFor(z => Model.StartMonth)
+                    @Html.HiddenFor(z => Model.EndMonth)
+                    @Html.HiddenFor(z => Model.Adult)
+                    @Html.HiddenFor(z => Model.Children)
+                    @Html.HiddenFor(z => Model.Infant)
+                    @Html.HiddenFor(z => Model.AirlineCode)
+                    <div class="col-md-6 " style="margin-top:20px;padding-left:0px">
+
+                        <table cellspacing="0" cellpadding="0" class="vere vedi">
+                            <thead>
+                                <tr>
+                                    <th align="left" class="vvPrev" style="height:40px;border:none">
+
+
+                                    </th>
+                                    <th align="center" colspan="5" style="height:40px;border:none;text-align: center;"><b style="text-align: center">Chiều đi: @UIUty.getmountday(dauthang_ngaybatdau)</b></th>
+                                    <th align="right" class="vvNext" style="height:40px;border:none;float: right;padding-top: 5px;">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#ebebeb">
+                                    <th style="    text-align: center;    padding: 6px;">T2</th>
+                                    <th style="    text-align: center;    padding: 6px;">T3</th>
+                                    <th style="    text-align: center;    padding: 6px;">T4</th>
+                                    <th style="    text-align: center;    padding: 6px;">T5</th>
+                                    <th style="    text-align: center;    padding: 6px;">T6</th>
+                                    <th style="    text-align: center;    padding: 6px;">T7</th>
+                                    <th style="    text-align: center;    padding: 6px;">CN</th>
+                                </tr>
+                                @for (var i = dauthang_ngaybatdau; i <= cuoithang_ngaybatdau; i = i.AddDays(1))
+                                {
+                                    if (indexthu == 0 || indexthu == 8)
+                                    {
+                                        @Html.Raw("<tr>")
+                                        rowindex++;
+                                    }
+                                    if (i == dauthang_ngaybatdau)
+                                    {
+                                        if (indexthu == 0)
+                                        {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                            @if (i.DayOfWeek == DayOfWeek.Monday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>
+
+                                                        @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 2;
+
+
+                                            }
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                            @if (i.DayOfWeek == DayOfWeek.Tuesday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>            @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 3;
+                                            }
+
+
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+
+                                            @if (i.DayOfWeek == DayOfWeek.Wednesday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>
+                                                        @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 4;
+                                            }
+
+
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+
+                                            @if (i.DayOfWeek == DayOfWeek.Thursday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>           @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 5;
+                                            }
+
+
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                            @if (i.DayOfWeek == DayOfWeek.Friday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>              @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div> }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 6;
+                                            }
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                            @if (i.DayOfWeek == DayOfWeek.Saturday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>         @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 7;
+                                            }
+
+
+                                        </td>
+                                    }
+                                    if (indexthu == 0)
+                                    {
+                                        <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+                                            @if (i.DayOfWeek == DayOfWeek.Sunday)
+                                            {
+                                                var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                                if (obj != null)
+                                                {
+                                                    var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>            @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objnamedi.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objnameden.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div> }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                indexthu = 8;
+                                                ngaycuoiccungrow1 = i;
+                                            }
+
+
+                                        </td>
+                                    }
+                                }
+                                else
+                                {
+
+                                    var obj = GetChieuDiTHeoNgay(i.Date).FirstOrDefault();
+                                    <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+
+                                        @if (obj != null)
+                                        {
+                                            var indexof = Model.DepartureFlightsVeThang.IndexOf(obj);
+                                            <div class="hovershow">
+                                                <div onclick="SelectedDepartFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                    @i.Day
+                                                    <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                </div>            @if (GetChieuDiTHeoNgay(i.Date).Count > 1)
+                                                {
+                                                    <div class="calendar-tooltips depart">
+                                                        @foreach (var item in GetChieuDiTHeoNgay(i.Date).Skip(1))
+                                                        {
+                                                            var indexofdetail = Model.DepartureFlightsVeThang.IndexOf(item);
+                                                            <div>
+                                                                <div class="monthly-fare-header">
+                                                                    <table style="width: 100%">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                    <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                </td>
+                                                                                <td style="width: 50%; text-align: center">
+
+                                                                                    <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                    <span class="monthly-currency">VND</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="monthly-flight-content">
+                                                                    <div class="monthly-flight-summary">
+                                                                        <table style="width: 100%;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="monthly-depart">
+                                                                                        <strong>@objnamedi.AirportName</strong><br>
+                                                                                        <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                    </td>
+                                                                                    <td class="monthly-flight">
+                                                                                        <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                        <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                        <div><span class="span-11">1h 0m</span></div>
+                                                                                    </td>
+                                                                                    <td class="monthly-arrive">
+                                                                                        <strong>@objnameden.AirportName</strong><br>
+                                                                                        <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                    </td>
+                                                                                    <td class="monthly-select">
+                                                                                        <a href="javascript:void(0)" class="monthly-select-button" onclick="SelectedDepartFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                            Chọn
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @i.Day
+                                        }
+                                        @if (i.DayOfWeek == DayOfWeek.Monday)
+                                        {
+                                            indexthu = 2;
+                                        }
+                                        @if (i.DayOfWeek == DayOfWeek.Tuesday)
+                                        { indexthu = 3; }
+                                        @if (i.DayOfWeek == DayOfWeek.Wednesday)
+                                        { indexthu = 4; }
+                                        @if (i.DayOfWeek == DayOfWeek.Thursday)
+                                        { indexthu = 5; }
+                                        @if (i.DayOfWeek == DayOfWeek.Friday)
+                                        { indexthu = 6; }
+                                        @if (i.DayOfWeek == DayOfWeek.Saturday)
+                                        { indexthu = 7; }
+                                        @if (i.DayOfWeek == DayOfWeek.Sunday)
+                                        { indexthu = 8; }
+
+                                    </td>
+                                }
+
+                                if (indexthu == 0 || indexthu == 8)
+                                {
+                                    @Html.Raw("</tr>")
+                                }
+
+                            }
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        if (Model.Itinerary > 1)
+                        {
+                            var objdirt =objnameden ;
+                            var objdenrt = objnamedi;
+                            indexthu = 0;
+                            <div class="col-md-6" style="margin-top:20px">
+
+                                <table cellspacing="0" cellpadding="0" class="vere veve">
+                                    <thead>
+                                        <tr>
+                                            <th align="left" class="vvPrev" style="height:40px;border:none">
+
+
+                                            </th>
+                                            <th align="center" colspan="5" style="height: 40px; border: none; text-align: center;"><b style="text-align: center">Chiều về: @UIUty.getmountday(dauthang_ngayve)</b></th>
+                                            <th align="right" class="vvNext" style="height:40px;border:none;float: right;padding-top: 5px;">
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color: #ebebeb">
+                                            <th style="text-align: center; padding: 6px;">T2</th>
+                                            <th style="text-align: center; padding: 6px;">T3</th>
+                                            <th style="text-align: center; padding: 6px;">T4</th>
+                                            <th style="text-align: center; padding: 6px;">T5</th>
+                                            <th style="text-align: center; padding: 6px;">T6</th>
+                                            <th style="text-align: center; padding: 6px;">T7</th>
+                                            <th style="text-align: center; padding: 6px;">CN</th>
+                                        </tr>
+                                        @for (var i = dauthang_ngayve; i <= cuoithang_ngayve; i = i.AddDays(1))
+                                        {
+                                            if (indexthu == 0 || indexthu == 8)
+                                            {
+                                                @Html.Raw("<tr>")
+                                                rowindex++;
+                                            }
+                                            if (i == dauthang_ngayve)
+                                            {
+                                                if (indexthu == 0)
+                                                {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Monday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>      @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+                                                                </div> }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 2;
+
+
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Tuesday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>         @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 3;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Wednesday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>                 @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+
+                                                                </div> }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 4;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Thursday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>
+                                                                    @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 5;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Friday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>                 @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+
+                                                                </div> }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 6;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Saturday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>                  @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+
+                                                                </div> }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 7;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                            if (indexthu == 0)
+                                            {
+                                                <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+                                                    @{
+                                                        if (i.DayOfWeek == DayOfWeek.Sunday)
+                                                        {
+                                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                                            if (obj != null)
+                                                            {
+                                                                var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                                <div class="hovershow">
+                                                                    <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                                        @i.Day
+                                                                        <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                                    </div>                      @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                                    {
+                                                                        <div class="calendar-tooltips depart">
+                                                                            @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                            {
+                                                                                var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                                <div>
+                                                                                    <div class="monthly-fare-header">
+                                                                                        <table style="width: 100%">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                                        <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                                    </td>
+                                                                                                    <td style="width: 50%; text-align: center">
+
+                                                                                                        <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                                        <span class="monthly-currency">VND</span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="monthly-flight-content">
+                                                                                        <div class="monthly-flight-summary">
+                                                                                            <table style="width: 100%;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="monthly-depart">
+                                                                                                            <strong>@objdirt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-flight">
+                                                                                                            <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                            <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                            <div><span class="span-11">1h 0m</span></div>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-arrive">
+                                                                                                            <strong>@objdenrt.AirportName</strong><br>
+                                                                                                            <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                                        </td>
+                                                                                                        <td class="monthly-select">
+                                                                                                            <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                                Chọn
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @i.Day
+                                                            }
+                                                            indexthu = 8;
+                                                            ngaycuoiccungrow1 = i;
+                                                        }
+                                                    }
+
+                                                </td>
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            var obj = GetChieuveTHeoNgay(i.Date).FirstOrDefault();
+                                            <td class="@((i.Date < DateTime.Now.Date) ? "vvDayBlank" : "")">
+
+                                                @if (obj != null)
+                                                {
+                                                    var indexof = Model.ReturnFlightsVeThang.IndexOf(obj);
+                                                    <div class="hovershow">
+                                                        <div onclick="SelecteReturnFlights('@(UIUty.getnameday(obj.EndDate)+" "+  obj.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(obj.StartDate)+" "+  obj.StartDate.ToString("dd/MM/yyyy"))','@obj.EndDate.ToString("HH:mm")','@obj.StartDate.ToString("HH:mm")','@obj.FlightNumber','@UIUty.GetImagebyHang(obj.Airline)','@obj.StartDate.ToString("dd/MM/yyyy")','@indexof', '@obj.FareAdt' , '@(obj.TaxAdt + obj.FeeAdt)' , '@obj.FareChd' , '@(obj.TaxChd + obj.FeeChd)' , '@obj.FareInf' , '@(obj.TaxInf + obj.FeeInf)' , '@obj.SessionAll' , '@obj.Airline') ">
+                                                            @i.Day
+                                                            <p class="vvFare">@((obj.FareAdt + obj.FeeAdt + obj.TaxAdt).ToString("#,0.#")) <img src="@UIUty.GetImagebyHang(obj.Airline)" width="28px" /></p>
+
+                                                        </div>                   @if (GetChieuveTHeoNgay(i.Date).Count > 1)
+                                                        {
+                                                            <div class="calendar-tooltips depart">
+                                                                @foreach (var item in GetChieuveTHeoNgay(i.Date).Skip(1))
+                                                                {
+                                                                    var indexofdetail = Model.ReturnFlightsVeThang.IndexOf(item);
+                                                                    <div>
+                                                                        <div class="monthly-fare-header">
+                                                                            <table style="width: 100%">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="monthly-airline" style="width: 50%; border-right: 1px dotted #cacaca; text-align: center; font-weight: bold">
+                                                                                            <img alt="Airline" src="@UIUty.GetImagebyHang(item.Airline)">
+                                                                                        </td>
+                                                                                        <td style="width: 50%; text-align: center">
+
+                                                                                            <span class="monthly-price">@((item.FareAdt + item.FeeAdt + item.TaxAdt).ToString("#,0.#"))</span>
+                                                                                            <span class="monthly-currency">VND</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="monthly-flight-content">
+                                                                            <div class="monthly-flight-summary">
+                                                                                <table style="width: 100%;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="monthly-depart">
+                                                                                                <strong>@objdirt.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.StartDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-flight">
+                                                                                                <div><span class="span-11">@item.FlightNumber</span></div>
+                                                                                                <div style="height: 6px"><img src="~/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                                                <div><span class="span-11">1h 0m</span></div>
+                                                                                            </td>
+                                                                                            <td class="monthly-arrive">
+                                                                                                <strong>@objdenrt.AirportName</strong><br>
+                                                                                                <strong class="monthly-flight-time">@(item.EndDate.ToString("HH:mm"))</strong>
+                                                                                            </td>
+                                                                                            <td class="monthly-select">
+                                                                                                <a href="javascript:void(0)" class="monthly-select-button" onclick="SelecteReturnFlights('@(UIUty.getnameday(item.EndDate)+" "+  item.EndDate.ToString("dd/MM/yyyy"))','@(UIUty.getnameday(item.StartDate)+" "+  item.StartDate.ToString("dd/MM/yyyy"))','@item.EndDate.ToString("HH:mm")','@item.StartDate.ToString("HH:mm")','@item.FlightNumber','@UIUty.GetImagebyHang(item.Airline)','@item.StartDate.ToString("dd/MM/yyyy")','@indexofdetail', '@item.FareAdt' , '@(item.TaxAdt + item.FeeAdt)' , '@item.FareChd' , '@(item.TaxChd + item.FeeChd)' , '@item.FareInf' , '@(item.TaxInf + item.FeeInf)' , '@item.SessionAll' , '@item.Airline' ) ">
+                                                                                                    Chọn
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @i.Day
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Monday)
+                                                {
+                                                    indexthu = 2;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Tuesday)
+                                                {
+                                                    indexthu = 3;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Wednesday)
+                                                {
+                                                    indexthu = 4;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Thursday)
+                                                {
+                                                    indexthu = 5;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Friday)
+                                                {
+                                                    indexthu = 6;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Saturday)
+                                                {
+                                                    indexthu = 7;
+                                                }
+                                                @if (i.DayOfWeek == DayOfWeek.Sunday)
+                                                {
+                                                    indexthu = 8;
+                                                }
+
+                                            </td>
+                                        }
+
+                                        if (indexthu == 0 || indexthu == 8)
+                                        {
+                                            @Html.Raw("</tr>")
+                                        }
+
+                                    }
+
+                                        </tbody>
+                                    </table>
+                                </div> }
+                        }
+                        else
+                        {
+                            @*<div class="NormalBox">
+                                    <div class="Title">
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                                    </div>
+                                    <div class="Content">
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>*@
+                        }
+
+                <div class="clear"></div>
+            </div>
+            <div class="col-md-12 pLeft0 pright0">
+                <div class="btn_tieptuc_css">
+                    <div class="Chuthich_timvetheothang" align="center">
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td align="left" class="chuthich">Chú thích:</td>
+                                    <td align="right"><span class="giathapnhat with_height"></span></td>
+                                    <td valign="middle" class="normal-font">Giá thấp nhất</td>
+                                    <td align="right"><span class="giabanchon with_height"></span></td>
+                                    <td>Giá bạn chọn</td>
+                                    <td align="right"><span class="giaan with_height"></span></td>
+                                    <td>Giá không thể chọn</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7"><i>(Sau khi chọn giá, quý khách vui lòng ấn nút Tiếp Tục để tiếp tục đặt vé)</i> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box_top"><div class="fa fa-shopping-cart" style="    padding-right: 10px;"></div>Giỏ hàng cảu bạn</div>
+                <div class="WhiteBox NoTop border-radius-bottom" style="padding-bottom:10px">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div style="    padding: 10px;    border: 1px solid #888888;    margin: 10px;    border-radius: 5px;    box-shadow: 0px 3px 2px 2px rgba(140, 140, 140, 0.71);">
+                                <table style="width:100%;border-bottom: 1px dotted #cacaca;" border="0" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding-right: 5px;width: 170px;padding-bottom: 10px;">
+                                                <span> ✈ Chuyến đi:</span> <span>  <img id="imgDepartAirline" src="" style="height:18px;border-width:0px;"></span>
+                                            </td>
+                                            <td>
+                                                <span id="ctl00_MainContent_lblDepartAirline"></span>
+                                            </td>
+                                            <td style="text-align:right;padding-bottom: 10px;font-weight:bold">
+                                                ✈ <span id="lblDepartFlightNumber"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px dotted #cacaca">
+                                    <table style="width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td class="BasketFlightDepart" valign="top">
+                                                    <div class="BasketFlightTime"><span><b style="padding-right:10px" id="Departstart">@Model.DepartureAirportCode</b></span><div class="fa fa-clock-o"></div> <span id="lblDepartStartTime"></span></div>
+                                                    <span id="lblDepartStartDate" style="font-size:13px;"></span>
+                                                    <div style="font-size:13px;">@(getsanbaycode(Model.DepartureAirportCode))</div>
+                                                </td>
+                                                <td class="BasketFlightArrive" valign="top">
+                                                    <div class="BasketFlightTime"><span><b style="padding-right:10px" id="Endtstart"> @Model.DestinationAirportCode</b></span><div class="fa fa-clock-o"></div> <span id="lblDepartEndTime"></span></div>
+                                                    <span id="lblDepartEndDate" style="font-size:13px;"></span>
+                                                    <div style="font-size:13px;">@(getsanbaycode(Model.DestinationAirportCode))</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.Itinerary > 1)
+                        {
+                            <div class="col-md-6">
+                                <div style="    padding: 10px;    border: 1px solid #888888;    margin: 10px;    border-radius: 5px;    box-shadow: 0px 3px 2px 2px rgba(140, 140, 140, 0.71);">
+                                    <table style="width:100%;border-bottom: 1px dotted #cacaca;" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding-right: 5px;width: 170px;padding-bottom: 10px;">
+                                                    <span> ✈ Chuyến về: </span>  <span>  <img id="imgreturnAirline" src="" style="height:18px;border-width:0px;"></span>
+                                                </td>
+                                                <td></td>
+                                                <td style="text-align:right;padding-bottom: 10px;font-weight:bold">
+                                                    ✈ <span id="lblreturnFlightNumber"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="border-bottom: 1px dotted #cacaca">
+                                        <table style="width:100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="BasketFlightDepart" valign="top">
+                                                        <div class="BasketFlightTime"><span><b style="padding-right:10px" id="Returnstart">@(Model.DestinationAirportCode)</b></span><div class="fa fa-clock-o"></div> <span id="lblReturnStartTime"></span></div>
+                                                        <span id="lblReturnStartDate" style="font-size:11px;"></span>
+                                                        <div style="font-size:13px;">@(getsanbaycode(Model.DestinationAirportCode))</div>
+                                                    </td>
+                                                    <td class="BasketFlightArrive" valign="top">
+                                                        <div class="BasketFlightTime"><b style="padding-right:10px" id="Returnend">@(Model.DepartureAirportCode) </b><div class="fa fa-clock-o"></div> <span id="lblReturnEndTime"></span></div>
+                                                        <span id="lblReturnEndDate" style="font-size:11px;"></span>
+                                                        <div style="font-size:13px;">@(getsanbaycode(Model.DepartureAirportCode))</div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="Pad10 BorderTop BasketPrice" style="padding-top:0px">
+                        <div class="TextTitle">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Summary_fares</div>
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Adults</strong><br>
+                                        <span id="lblTotalAdt">@Model.Adult</span>x(<label id="lblFareAdt" class="ItemPrice">0</label>+<label id="lblTaxAdt" class="ItemPrice">0</label>)
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Total_price</strong><br>
+                                        <label id="lblTotalPriceAdt" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                    </td>
+                                </tr>
+
+                                @if (Model.Children > 0)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Children</strong><br>
+                                            <span id="lblTotalChd">@Model.Children</span>x(<label id="lblFareChd" class="ItemPrice">0</label>+<label id="lblTaxChd" class="ItemPrice">0</label>)
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Total_price</strong><br>
+                                            <label id="lblTotalPriceChd" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                        </td>
+                                    </tr>
+
+                                }
+                                @if (Model.Infant > 0)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Infants</strong><br>
+                                            <span id="lblTotalInf">@Model.Infant</span>x(<label id="lblFareInf" class="ItemPrice">0</label>+<label id="lblTaxInf" class="ItemPrice">0</label>)
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Total_price</strong><br>
+                                            <label id="lblTotalPriceInf" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="Pad10 BorderTop BasketPrice">
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        ∑ <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.GRAND_TOTAL</strong>
+                                    </td>
+                                    <td class="GrandPrice">
+                                        <label id="lblGrandTotal"></label> <span class="Currency"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 mt10" style="    text-align: right;    padding-top: 4px;">
+                        <button length="0" class="ButtonGreen"><span class='inner'><span class='text'> Tiếp tục</span></span></button>
+                    </div>
+                    <div class="Pad10 BorderTop BasketPrice">
+                        <span id="lblMsg" style="color: Red;"></span><br>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+<script>
+    $( '.vedi td' ).each( function () {
+        $( this ).click( function () {
+            $( '.vedi td' ).removeClass( 'vereActive' );
+            $( this ).addClass( 'vereActive' );
+        } );
+
+    } );
+    $( '.veve td' ).each( function () {
+        $( this ).click( function () {
+            $( '.veve td' ).removeClass( 'vereActive' );
+            $( this ).addClass( 'vereActive' );
+        } );
+
+    } );
+</script>
+<script>
+
+    function validateForm() {
+        var check = true;
+        var Itinerary = @Model.Itinerary;
+        if (Itinerary > 1) {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            var ReturnFlt = $("#hdfSelectedReturnFlt").val();
+            if (DepartFlt == "" || ReturnFlt == "") {
+                check = false;
+                ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+
+            }
+        } else {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            if (DepartFlt == "" ) {
+                check = false;
+                ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+            }
+        }
+        return check;
+
+    }
+    function SelectedDepartFlights(lblDepartEndDate,lblDepartStartDate,lblDepartEndTime,lblDepartStartTime,lblDepartFlightNumber,anh,ngay,value, fareAdtDepart, taxAdtDepart, fareChdDepart, taxChdDepart, fareInfDepart, taxInfDepart, hdhSession, CodeDepart) {
+        //Set depart price to hidden field
+
+        $("#hdfFareAdtDepart").val(fareAdtDepart);
+        $("#hdfFareChdDepart").val(fareChdDepart);
+        $("#hdfFareInfDepart").val(fareInfDepart);
+        $("#hdhSession").val(hdhSession);
+        $("#hdfTaxAdtDepart").val(taxAdtDepart);
+        $("#hdfTaxChdDepart").val(taxChdDepart);
+        $("#hdfTaxInfDepart").val(taxInfDepart);
+        $("#hdhCodeDepart").val(CodeDepart);
+        $("#hdfSelectedDepartFlt").val('');
+        $("#hdfSelectedDepartFlt").val(value);
+        fareAdtDepart = Number(fareAdtDepart.replace(",","."));
+        fareChdDepart = Number(fareChdDepart.replace(",", "."));
+        fareInfDepart = Number(fareInfDepart.replace(",", "."));
+
+        taxAdtDepart = Number(taxAdtDepart.replace(",", "."));
+        taxChdDepart = Number(taxChdDepart.replace(",", "."));
+        taxInfDepart = Number(taxInfDepart.replace(",", "."));
+
+        //Get return price from hidden field
+        var fareAdtReturn = Number($("#hdfFareAdtReturn").val().replace(",", "."));
+        var fareChdReturn = Number($("#hdfFareChdReturn").val().replace(",", "."));
+        var fareInfReturn = Number($("#hdfFareInfReturn").val().replace(",", "."));
+
+        var taxAdtReturn = Number($("#hdfTaxAdtReturn").val().replace(",", "."));
+        var taxChdReturn = Number($("#hdfTaxChdReturn").val().replace(",", "."));
+        var taxInfReturn = Number($("#hdfTaxInfReturn").val().replace(",", "."));
+
+        //Calculate sum of depart price and return price
+        var fareAdt = fareAdtDepart + fareAdtReturn;
+        var fareChd = fareChdDepart + fareChdReturn;
+        var fareInf = fareInfDepart + fareInfReturn;
+
+        var taxAdt = taxAdtDepart + taxAdtReturn;
+        var taxChd = taxChdDepart + taxChdReturn;
+        var taxInf = taxInfDepart + taxInfReturn;
+
+        SetPricevethang(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf);
+        $("#ngaydi").text(ngay);
+        $("#anhdi").attr("src", anh);
+        $("#imgDepartAirline").attr("src", anh);
+        $("#lblDepartFlightNumber").text(lblDepartFlightNumber);
+        $("#lblDepartStartTime").text(lblDepartStartTime);
+        $("#lblDepartEndTime").text(lblDepartEndTime);
+        $("#lblDepartStartDate").text(lblDepartStartDate);
+        $("#lblDepartStartDate").text(lblDepartStartDate);
+        $("#lblDepartEndDate").text(lblDepartEndDate);
+
+
+    }
+
+
+    function SetPricevethang(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf) {
+        var adt = Number($("#lblTotalAdt").text());
+        var chd = Number($("#lblTotalChd").text());
+        var inf = Number($("#lblTotalInf").text());
+
+        //Set price for each passenger type
+        $("#lblFareAdt").text(format("#.##0,####", fareAdt));
+        $("#lblFareChd").text(format("#.##0,####", fareChd));
+        $("#lblFareInf").text(format("#.##0,####", fareInf));
+
+        $("#lblTaxAdt").text(format("#.##0,####", taxAdt));
+        $("#lblTaxChd").text(format("#.##0,####", taxChd));
+        $("#lblTaxInf").text(format("#.##0,####", taxInf));
+
+        //Set total price for each passenger type
+        $("#lblTotalPriceAdt").text(format("#.##0,####", adt * (fareAdt + taxAdt)));
+        $("#lblTotalPriceChd").text(format("#.##0,####", chd * (fareChd + taxChd)));
+        $("#lblTotalPriceInf").text(format("#.##0,####", inf * (fareInf + taxInf)));
+
+        //Grand total price
+        var grandTotal = adt * (fareAdt + taxAdt) + chd * (fareChd + taxChd) + inf * (fareInf + taxInf);
+        $("#lblGrandTotal").text(format("#.##0,####", grandTotal));
+        $("#totalPrice").text(format("#.##0,####", grandTotal));
+    }
+    function SelecteReturnFlights(lblDepartEndDate, lblDepartStartDate, lblDepartEndTime, lblDepartStartTime, lblDepartFlightNumber,anh,ngay,value, fareAdtReturn, taxAdtReturn, fareChdReturn, taxChdReturn, fareInfReturn, taxInfReturn, CodeReturn) {
+        //Set depart price to hidden field
+        $("#hdfFareAdtReturn").val(fareAdtReturn);
+        $("#hdfFareChdReturn").val(fareChdReturn);
+        $("#hdfFareInfReturn").val(fareInfReturn);
+
+        $("#hdfTaxAdtReturn").val(taxAdtReturn);
+        $("#hdfTaxChdReturn").val(taxChdReturn);
+        $("#hdfTaxInfReturn").val(taxInfReturn);
+        $("#hdhCodeReturn").val(CodeReturn);
+        fareAdtReturn = Number(fareAdtReturn.replace(",", "."));
+        fareChdReturn = Number(fareChdReturn.replace(",", "."));
+        fareInfReturn = Number(fareInfReturn.replace(",", "."));
+
+        taxAdtReturn = Number(taxAdtReturn.replace(",", "."));
+        taxChdReturn = Number(taxChdReturn.replace(",", "."));
+        taxInfReturn = Number(taxInfReturn.replace(",", "."));
+
+        //Get depart price from hidden field
+        var fareAdtDepart = Number($("#hdfFareAdtDepart").val().replace(",", "."));
+        var fareChdDepart = Number($("#hdfFareChdDepart").val().replace(",", "."));
+        var fareInfDepart = Number($("#hdfFareInfDepart").val().replace(",", "."));
+
+        var taxAdtDepart = Number($("#hdfTaxAdtDepart").val().replace(",", "."));
+        var taxChdDepart = Number($("#hdfTaxChdDepart").val().replace(",", "."));
+        var taxInfDepart = Number($("#hdfTaxInfDepart").val().replace(",", "."));
+
+        //Calculate sum of depart price and return price
+        var fareAdt = fareAdtDepart + fareAdtReturn;
+        var fareChd = fareChdDepart + fareChdReturn;
+        var fareInf = fareInfDepart + fareInfReturn;
+
+        var taxAdt = taxAdtDepart + taxAdtReturn;
+        var taxChd = taxChdDepart + taxChdReturn;
+        var taxInf = taxInfDepart + taxInfReturn;
+        $("#ngayve").text(ngay);
+        $("#anhve").attr("src", anh);
+        SetPricevethang(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf);
+        $("#hdfSelectedReturnFlt").val(value);
+
+
+        $("#imgreturnAirline").attr("src", anh);
+        $("#lblreturnFlightNumber").text(lblDepartFlightNumber);
+        $("#lblReturnStartTime").text(lblDepartStartTime);
+        $("#lblReturnEndTime").text(lblDepartEndTime);
+        $("#lblReturnStartDate").text(lblDepartStartDate);
+        $("#lblReturnEndDate").text(lblDepartEndDate);
+
+
+    }
+    $(function () {
+
+        $(".hovershow").on({
+            mouseenter: function () {
+                $(this).find(".depart").delay(400).show(1);
+            },
+            mouseleave: function () {
+                $(this).find(".depart").hide(0);
+            }
+
+        });
+
+        //$(".hovershow").hover(function () {
+
+
+        //}
+        //    ,function(){
+
+        //    }
+        //);
+    });
+</script>
+
+<script src="/Content/FontEnd/SeachValue/Result.js" type="text/javascript"></script>
+

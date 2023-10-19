@@ -1,0 +1,479 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using VDMMutiline.Dao
+@using VDMMutiline.Ultilities
+@using VDMMutiline.SeachAndBook
+@using VDMMutiline.Core.UI
+@model SeachParam
+@functions{
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+    var index = 0;
+    var indexDepartureFlight = 0;
+    var indexReturnFlights = 0;
+    decimal nguoilon = 0;
+    decimal tongtiennguoilon = 0;
+    decimal treem = 0;
+    decimal tongtientrem = 0;
+    decimal embe = 0;
+    decimal congtienembe = 0;
+    decimal tonggia = 0;
+    string donvi = UIUty.GetDonViTienTe();
+    if (Model.DepartureFlight != null)
+    {
+
+        nguoilon = Model.DepartureFlight.Adt;
+        treem = Model.DepartureFlight.Chd;
+        embe = Model.DepartureFlight.Inf;
+        var PriceAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxInf);
+
+        tongtiennguoilon += (Model.DepartureFlight.Adt * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (Model.DepartureFlight.Chd * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (Model.DepartureFlight.Inf * (PriceInfant + FeeInfant + TaxInfant));
+
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+
+
+
+        tonggia += TotalPrice;
+    }
+    if (Model.ReturnFlight != null)
+    {
+        var PriceAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxInf);
+        tongtiennguoilon += (Model.ReturnFlight.Adt * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (Model.ReturnFlight.Chd * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (Model.ReturnFlight.Inf * (PriceInfant + FeeInfant + TaxInfant));
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+        tonggia = TotalPrice;
+    }
+
+}
+<script src="/Content/Scripts/format.js"></script>
+@Html.Action("HeaderDetail", "Control")
+@using (Html.BeginForm("Bookticket", "SeachHome", FormMethod.Post, new { @onsubmit = "submitbooktrongnuoc()", @data_parsley_validate = "", id = "frCreatebootrongnuoc", @role = "form" }))
+{
+    @Html.HiddenFor(z => z.Itinerary)
+    @Html.HiddenFor(z => z.DepartureAirportCode)
+    @Html.HiddenFor(z => z.DestinationAirportCode)
+    @Html.HiddenFor(z => z.DepartureDate)
+    @Html.HiddenFor(z => z.ReturnDate)
+    @Html.HiddenFor(z => z.Adult)
+    @Html.HiddenFor(z => z.Children)
+    @Html.HiddenFor(z => z.Infant)
+    @Html.HiddenFor(z => z.AirlineCode)
+    <input type="hidden" id="hdfNumbPax" value="@(Model.Adult+Model.Children)">
+    <input type="hidden" id="hdfGrandPrice" value="@tonggia">
+    if (Model.DepartureFlight != null)
+    {
+        @Html.HiddenFor(z => Model.DepartureFlight.SessionAll)
+        @Html.HiddenFor(z => Model.DepartureFlight.SessionId)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareDataId)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareDataIdValue)
+        @Html.HiddenFor(z => Model.DepartureFlight.FlightNumber)
+        @Html.HiddenFor(z => Model.DepartureFlight.StartDate)
+        @Html.HiddenFor(z => Model.DepartureFlight.EndDate)
+        @Html.HiddenFor(z => Model.DepartureFlight.TotalPrice)
+        @Html.HiddenFor(z => Model.DepartureFlight.PriceBefor)
+        @Html.HiddenFor(z => Model.DepartureFlight.StartPoint)
+        @Html.HiddenFor(z => Model.DepartureFlight.EndPoint)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareClass)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareAdt)
+        @Html.HiddenFor(z => Model.DepartureFlight.FeeAdt)
+        @Html.HiddenFor(z => Model.DepartureFlight.TaxAdt)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareChd)
+        @Html.HiddenFor(z => Model.DepartureFlight.FeeChd)
+        @Html.HiddenFor(z => Model.DepartureFlight.TaxChd)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareInf)
+        @Html.HiddenFor(z => Model.DepartureFlight.FeeInf)
+        @Html.HiddenFor(z => Model.DepartureFlight.TaxInf)
+        @Html.HiddenFor(z => Model.DepartureFlight.FlightValue)
+        @Html.HiddenFor(z => Model.DepartureFlight.Airline)
+        @Html.HiddenFor(z => Model.DepartureFlight.ItineraryType)
+        @Html.HiddenFor(z => Model.DepartureFlight.Duration)
+        @Html.HiddenFor(z => Model.DepartureFlight.FareAdtNet)
+        @Html.HiddenFor(z => Model.DepartureFlight.PriceBeforNet)
+        @Html.HiddenFor(z => Model.DepartureFlight.Ishow23KgVN)
+        @Html.HiddenFor(z => Model.DepartureFlight.IsVNJQ)
+        @Html.HiddenFor(z => Model.DepartureFlight.IsVNJQ0Kg)
+        @Html.HiddenFor(z => Model.DepartureFlight.Promo)
+    }
+
+    if (Model.ReturnFlight != null)
+    {
+        @Html.HiddenFor(z => Model.ReturnFlight.SessionAll)
+        @Html.HiddenFor(z => Model.ReturnFlight.SessionId)
+        @Html.HiddenFor(z => Model.ReturnFlight.FlightNumber)
+        @Html.HiddenFor(z => Model.ReturnFlight.StartDate)
+        @Html.HiddenFor(z => Model.ReturnFlight.EndDate)
+        @Html.HiddenFor(z => Model.ReturnFlight.TotalPrice)
+        @Html.HiddenFor(z => Model.ReturnFlight.StartPoint)
+        @Html.HiddenFor(z => Model.ReturnFlight.EndPoint)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareClass)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareAdt)
+        @Html.HiddenFor(z => Model.ReturnFlight.FeeAdt)
+        @Html.HiddenFor(z => Model.ReturnFlight.TaxAdt)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareChd)
+        @Html.HiddenFor(z => Model.ReturnFlight.FeeChd)
+        @Html.HiddenFor(z => Model.ReturnFlight.TaxChd)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareInf)
+        @Html.HiddenFor(z => Model.ReturnFlight.FeeInf)
+        @Html.HiddenFor(z => Model.ReturnFlight.TaxInf)
+        @Html.HiddenFor(z => Model.ReturnFlight.FlightValue)
+        @Html.HiddenFor(z => Model.ReturnFlight.Airline)
+        @Html.HiddenFor(z => Model.ReturnFlight.PriceBefor)
+        @Html.HiddenFor(z => Model.ReturnFlight.ItineraryType)
+        @Html.HiddenFor(z => Model.ReturnFlight.Duration)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareAdtNet)
+        @Html.HiddenFor(z => Model.ReturnFlight.PriceBeforNet)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareDataId)
+        @Html.HiddenFor(z => Model.ReturnFlight.FareDataIdValue)
+        @Html.HiddenFor(z => Model.ReturnFlight.Ishow23KgVN)
+        @Html.HiddenFor(z => Model.ReturnFlight.IsVNJQ)
+        @Html.HiddenFor(z => Model.ReturnFlight.IsVNJQ0Kg)
+        @Html.HiddenFor(z => Model.ReturnFlight.Promo)
+    }
+    <style>
+        .ThongTinItem {
+            overflow: hidden;
+            border-radius: 5px;
+            background-color: #fff;
+            border: solid 1px #d7d7d7;
+            padding: 2%;
+            margin: 5px 0 10px 0;
+            box-shadow: 0 3px 2px #ddd;
+            font-size: 13px;
+        }
+
+        .chieu-di {
+            border-radius: 5px 5px 0 0 !important;
+        }
+
+        .ThongTinItem .line {
+            margin: 3px 0 3px;
+        }
+
+        .line {
+            height: 1px;
+            border-bottom: dotted 1px #d7d7d7;
+            margin: 10px 0;
+        }
+
+        h4.chuyenbay {
+            font-weight: 500 !important;
+            border: none !important;
+            line-height: 1.8;
+        }
+
+        .Column {
+            float: left;
+            font-size: .95em;
+            line-height: 2.1;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .flight-info {
+            display: none;
+        }
+
+        .price-detail {
+            width: 45%;
+            padding: 0 16px 0 0;
+        }
+
+        .Column {
+            float: left;
+            font-size: 16px;
+            line-height: 2.1;
+        }
+
+        .threeCl {
+            float: right;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        .BigPrice {
+            color: #c04413;
+            font-size: 1.1em !important;
+            font-weight: 700;
+        }
+
+        .Column p {
+            margin-bottom: 0px;
+        }
+    </style>
+    <div id="tomtatve">
+        <div class="hidden1 bgSelect" style="margin-bottom: 10px;margin-top: 46px;">
+            <div class="row  top log" style="">
+                <div class="col-xs-12 cb ">
+                    Đặt vé
+                </div>
+            </div>
+            <div class="bgSelect1 pass2" style="font-size: 12px;">
+
+                @if (Model.DepartureFlight != null)
+                {
+                    <div class="ThongTinItem chieu-di" style="margin-top: 0;border-bottom: 0; margin-bottom: 0 !important;">
+                        <div class="line" style="display:none"></div>
+                        <h4 class="chuyenbay">
+                            <span class="Column LeftColumn" style="padding-right: 5px;">
+                                @{
+                                    var diemdiobj = getsanbaycode(Model.DepartureFlight.StartPoint);
+                                    var DiemDenobj = getsanbaycode(Model.DepartureFlight.EndPoint);
+                                }
+                                @(diemdiobj)
+                            </span>
+                            <span class="Column FlyDepart">
+                                <img style="height: 11px;padding-right: 5px;" src="/Content/arrow-right-black.png" alt="">
+                                @DiemDenobj
+                            </span>
+                            <span class="Column" style="float: right;width: 37%;white-space: nowrap;text-align: right;">
+                                @(UIUty.getnameday(Model.DepartureFlight.StartDate))
+                                &nbsp;@Model.DepartureFlight.StartDate.ToString("dd/MM/yyyy")
+                            </span>
+                            <div class="clear"></div>
+                        </h4>
+                        <div class="Column" style="width: 100%;">
+                            <div style="font-weight: bold;">
+                                <table style="float: left;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="vertical-align: middle;">
+                                                <img style="width: 60px;" src="@UIUty.GetImagebyHang(Model.DepartureFlight.Airline)" alt="">
+                                                @if (Model.DepartureFlight.IsVNJQ == true)
+                                                {
+                                            <div class="operated-by-bl">bay Pacific</div>
+                                                }
+
+
+                                            </td>
+                                            <td>
+                                                <span style="padding-left: 10px; display: inline-block;">@Model.DepartureFlight.FlightNumber</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span style="float: right;width: 35%;text-align: right;">@Model.DepartureFlight.StartDate.ToString("HH:mm") - @Model.DepartureFlight.EndDate.ToString("HH:mm")</span>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+                @if (Model.ReturnFlight != null)
+                {
+                    <div id="cphMain_UsrFlightInfo2_pnlInBound">
+                        <style type="text/css">
+                            .chieu-di {
+                                border-radius: 5px 5px 0 0 !important;
+                            }
+                        </style>
+                        <h3 class="TitlewithText flight-info">Chiều về</h3>
+                        <div class="ThongTinItem" style="margin-top: 0;border-top: 1px dashed #d7d7d7; border-radius: 0 0 5px 5px;">
+
+                            <div class="line" style="display:none"></div>
+
+                            <h4 class="chuyenbay">
+                                <span class="Column LeftColumn" style="padding-right: 5px;">
+                                    @{
+                                        var diemdiobj = getsanbaycode(Model.ReturnFlight.StartPoint);
+                                        var DiemDenobj = getsanbaycode(Model.ReturnFlight.EndPoint);
+                                    }
+                                    @(diemdiobj)
+                                </span>
+                                <span class="Column FlyDepart">
+                                    <img style="height: 11px;padding-right: 5px;" src="/Content/arrow-right-black.png" alt="">
+                                    @DiemDenobj
+                                </span>
+                                <span class="Column" style="float: right;width: 37%;white-space: nowrap;text-align: right;">
+                                    @(UIUty.getnameday(Model.ReturnFlight.StartDate))
+                                    &nbsp;@Model.ReturnFlight.StartDate.ToString("dd/MM/yyyy")
+                                </span>
+                                <div class="clear"></div>
+                            </h4>
+                            <div class="Column" style="width: 100%;">
+                                <div style="font-weight: bold;">
+                                    <table style="float: left;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="vertical-align: middle;">
+                                                    <img style="width: 60px;" src="@UIUty.GetImagebyHang(Model.ReturnFlight.Airline)" alt="">
+                                                    @if (Model.ReturnFlight.IsVNJQ == true)
+                                                    {
+                                                <div class="operated-by-bl">bay Pacific</div>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <span style="padding-left: 10px; display: inline-block;">@Model.ReturnFlight.FlightNumber</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <span style="float: right;width: 35%;text-align: right;">@Model.ReturnFlight.StartDate.ToString("HH:mm") - @Model.ReturnFlight.EndDate.ToString("HH:mm")</span>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                }
+                <div class="ThongTinItem price-break-down">
+                    <div class="clear"></div>
+                    <div class="Column price-detail">
+                        Vé người lớn
+                    </div>
+                    <div class="Column twoCl" style="width: 15%">
+                        x @Model.Adult =
+                    </div>
+                    <div class="Column threeCl">
+                        <p>@(tongtiennguoilon.ToString("n0")) vnđ</p>
+                    </div>
+
+
+                    <div class="clear"></div>
+                    @if (Model.Children > 0)
+                    {
+                        <div class="Column price-detail">
+                            Vé trẻ em
+                        </div>
+                        <div class="Column twoCl" style="width: 15%">
+                            x @Model.Children =
+                        </div>
+                        <div class="Column threeCl">
+                            <p>@(tongtientrem.ToString("n0")) vnđ</p>
+                        </div>
+                        <div class="clear"></div>
+                    }
+                    @if (Model.Infant > 0)
+                    {
+                        <div class="Column price-detail">
+                            Vé trẻ sơ sinh
+                        </div>
+                        <div class="Column twoCl" style="width: 15%">
+                            x @Model.Infant =
+                        </div>
+                        <div class="Column threeCl">
+                            <p>@(congtienembe.ToString("n0")) vnđ</p>
+                        </div>
+                        <div class="clear"></div>
+                    }
+                    <div class="Column price-detail">
+                        <p>Tổng giá vé</p>
+                    </div>
+                    <div class="Column threeCl">
+                        <p class="BigPrice">@(tonggia.ToString("n0")) vnđ</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Passenger">
+        <div class="hidden1 bgSelect" style="margin-bottom: 50px;margin-top: 0px;">
+            <div class="row  top log" style="">
+                <div class="col-xs-12 cb ">
+                    THÔNG TIN HÀNH KHÁCH
+                </div>
+            </div>
+            @{
+                Html.RenderPartial("_PartialPassenger", Model);
+            }
+            <div class="hidden1" style="background-color: #f4f4f4;">
+                <div class="row bottom log3">
+                    <button type="submit" value="Đặt chỗ" class="btt" style="color:  #fff;font-size: 0.9em;">HOÀN TẤT ĐẶT CHỖ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div id="bootrongnuoc_popup" style="display: none;background: transparent !important;color: #fff;" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/Popup/loading.gif" />
+        <h4>
+            Vui lòng chờ trong giây lát. Chúng tôi sẽ liên hệ với bạn khi quá trình xác nhận thành công
+            <br />
+            Xin chân thành cảm ơn!
+        </h4>
+    </div>
+</div>
+<script src="/Content/Popup/jquery.bpopup.js"></script>
+<link href="/Content/Popup/Popubcss.css" rel="stylesheet" />
+<script>
+    window.ParsleyConfig = {
+        errorClass: 'has-error'
+        , excluded: 'input[type=hidden]'
+        , trigger: false
+        , animate: true
+        , focus: 'first'
+        , validationMinlength: 3
+        , validators: {}
+        , errorElem: '<span></span>'
+        , errorsWrapper: '<span class="help-block"></span>'
+        , errorTemplate: "<div></div>"
+        , classHandler: function ( el ) {
+            return el.$element.closest( ".form-control" );
+        }
+    };
+</script>
+<script src="/Content/form-parsley/parsley.js"></script>
+<script>
+    window.ParsleyValidator.addValidator( 'FullnameValidate',
+        function ( value ) {
+            var countLenght = value.trim().split( ' ' );
+            if ( countLenght.length > 1 ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }, 32 ).addMessage( 'en', 'FullnameValidate', 'Nhập ít nhất 2 từ.' );
+</script>
+<script type="text/javascript" language="javascript">
+    $( document ).on( 'keypress', function ( e ) {
+        if ( e.which == 13 ) {
+            e.preventDefault();
+        }
+    } );
+    function submitbooktrongnuoc() {
+        var form = $( '#frCreatebootrongnuoc' );
+        if ( form.parsley().isValid() == true ) {
+            $( '#bootrongnuoc_popup' ).bPopup( {
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+            } );
+            return true;
+        }
+        return false;
+    }
+
+</script>

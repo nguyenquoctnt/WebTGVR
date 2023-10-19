@@ -1,0 +1,75 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@model VDMMutiline.SharedComponent.Entities.BK_Order
+@{
+    Layout = null;
+}
+
+<h2 id="form-controls" style="font-weight: 600 !important;color: #000;margin-bottom: 0px;">Gửi yêu cầu</h2>
+@using (Html.BeginForm("Index", "Orderfontend", FormMethod.Post, new { @data_parsley_validate = "", id = "frmyeucaugoilai", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(z => Model.IDtt)
+    @Html.HiddenFor(z => Model.Note)
+    @Html.HiddenFor(z => Model.Dichvu)
+    <div class="form-group" style="margin-bottom: 0px;">
+        <label id="status" style="color:red"></label>
+    </div>
+    <div class="form-group">
+        <label>Họ tên</label>
+        @Html.TextBoxFor(z => Model.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 pLeft0 pright0">
+            <label>Điện thoại</label>
+            @Html.TextBoxFor(z => Model.Phone, new { @Required = "Required", @class = "form-control" })
+        </div>
+        <div class="col-md-6  pright0">
+            <label>Mail</label>
+            @Html.TextBoxFor(z => Model.Mail, new { @Required = "Required", @class = "form-control" })
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="form-group">
+        <label>Số lượng người</label>
+        @Html.TextBoxFor(z => Model.Soluong, new { @Required = "Required", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Địa chỉ</label>
+        @Html.TextAreaFor(z => Model.Diachi, new { @Required = "Required", @class = "form-control" })
+    </div>
+    <a onclick="submitformcombo(this)" class="btn btn-warning">Gửi yêu cầu</a>
+}
+<script>
+    var _lwfunctioncomon = {};
+    _lwfunctioncomon.Ajax = function (url, data, callBackFunction) {
+        jQuery.ajax({
+            url: url,
+            data: data,
+            type: "POST",
+            success: function (data) {
+                callBackFunction(data);
+            },
+            error: function (jqXHR, errorCode, error) {
+                alert("Lỗi không xác định " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+    }
+    function submitformcombo(bt) {
+        var formvalidate = $('#frmyeucaugoilai');
+        formvalidate.parsley().validate()
+        if (formvalidate.parsley().isValid() == true) {
+
+            _lwfunctioncomon.Ajax("@Url.Action("Index", "Orderfontend")", $("#frmyeucaugoilai").serialize(), function (data) {
+                if (data.isSuccess === true) {
+                    $("#Name").val("");
+                    $("#Phone").val("");
+                    $("#Diachi").val("");
+                    $("#Soluong").val("");
+                    bt.prop("disabled", true);
+                }
+                $("#status").text(data.mess);
+            });
+        }
+    }
+</script>
+

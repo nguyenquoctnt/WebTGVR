@@ -1,0 +1,235 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Dao
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@using PagedList.Mvc
+@model VDMMutiline.SharedComponent.Params.BK_BookingParam
+@{
+    VDMMutiline.Core.Models.VDMUser userinfor = null;
+    userinfor = (VDMMutiline.Core.Models.VDMUser)ViewBag.userinfor;
+    ViewBag.Title = "Quản lý vé";
+    ViewBag.Description = "Chuyến bay sắp tới";
+}
+@functions
+{
+    private string ThongTinChuyenBay(BK_TicketInfo TicketInfo)
+    {
+        var obj = TicketInfo;
+        string value = "";
+        if (obj != null)
+        {
+            value = string.Format("{0} {1} {2} {3} {4} {5} {6} ", obj.FlightNo, (obj.StartDate.HasValue ? obj.StartDate.Value.Day.ToString() : "") + UIUty.MonthName(obj.StartDate.HasValue ? obj.StartDate.Value.Month : 0), obj.FromCity, obj.ToCity,
+                obj.StartDate.HasValue ? obj.StartDate.Value.ToString("HH:mm").Replace(":", "") : "",
+                obj.EndDate.HasValue ? obj.EndDate.Value.ToString("HH:mm").Replace(":", "") : "", obj.Class);
+        }
+        return value;
+    }
+    private List<BK_TicketInfo> GetlistTicket(int bookingid)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(bookingid);
+    }
+
+}
+
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            <div class="form form-horizontal" style="margin-bottom: 15px;">
+            </div>
+            <div class="table-responsive">
+                <div class="tableconte">
+                    <table id="dynamic-table" class=" booking table table-striped table-bordered zero-configuration">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Mã đặt chỗ</th>
+                                <th>Giá vé</th>
+                                <th>Thông tin chuyến bay</th>
+                                <th>Điện thoại</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày đặt</th>
+                                <th>Ghi chú</th>
+                                <th style="white-space: nowrap;">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.BookingInfos != null)
+                            {
+                                foreach (var item in (Model.BookingInfos))
+                                {
+                                    <tr class="gradeA">
+                                        <td>
+                                            <a href="@Url.Action("Create", "Booking", new { id = item.ID })">
+                                                @item.rCode
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrWhiteSpace(item.BookCode))
+                                            {
+                                                @item.FailCode
+                                            }
+                                            else
+                                            {
+                                                @item.BookCode
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @{
+                                                var color = "";
+                                                var objthanhtoan = item.PaymentInfo;
+                                                if (objthanhtoan != null)
+                                                {
+                                                    if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.chuyenkhoan)
+                                                    {
+                                                        color = "#0b388e";
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.Giaovetannha)
+                                                    {
+                                                        color = "#f78e0c";
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.Taivanphong)
+                                                    {
+                                                        color = "";
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.VtcPay)
+                                                    {
+                                                        color = "#E7432A";
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.VnPay)
+                                                    {
+                                                        color = "#E7432A";
+                                                    }
+                                                    else
+                                                    {
+                                                        color = "#0b388e";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    color = "#0b388e";
+                                                }
+                                            }
+                                            <span style="color:@color"> @(item.TotalPrice.HasValue ? item.TotalPrice.Value.ToString("n0") : "")</span>
+                                        </td>
+                                        <td style="white-space: nowrap;">
+                                            @{
+                                                var indexticket = 0;
+                                                var lstticket = GetlistTicket(item.ID);
+                                                foreach (var itemTicket in lstticket)
+                                                {
+                                                    @ThongTinChuyenBay(itemTicket) @item.Ways
+                                                    if (indexticket < lstticket.Count - 1 && lstticket.Count > 1)
+                                                    {
+                                                        <br />
+                                                    }
+                                                    indexticket++;
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.Name <br>
+                                            @item.Phone
+                                        </td>
+
+                                        <td>
+                                            <p style="white-space:nowrap;margin-bottom: 0px;">
+                                                @if (item.Status == Constant.StatusVe.DangGiuCho)
+                                                {
+                                                    <div class="badge badge-pill badge-warning">@Utility.GetDictionaryValue(Constant.StatusVe.dctName, item.Status)</div>
+                                                }
+                                                else if (item.Status == Constant.StatusVe.DaXuatVe)
+                                                {
+                                                    <div class="badge badge-pill badge-success">@Utility.GetDictionaryValue(Constant.StatusVe.dctName, item.Status)</div>
+                                                }
+                                                else if (item.Status == Constant.StatusVe.DaHuyVe)
+                                                {
+                                                    <div class="badge badge-pill badge-danger">@Utility.GetDictionaryValue(Constant.StatusVe.dctName, item.Status)</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="badge badge-pill badge-default">@Utility.GetDictionaryValue(Constant.StatusVe.dctName, item.Status)</div>
+                                                }
+                                            </p>
+                                            @(item.CreatedDate.HasValue ? item.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "")
+
+                                        </td>
+                                        <td>
+                                            @{
+                                                var classuser = "";
+                                                string user = "";
+                                                user = item.UserId;
+                                                if (item.UserId == Constant.KL)
+                                                {
+                                                    classuser = "badge badge-success";
+
+                                                }
+                                                else
+                                                {
+                                                    classuser = "badge badge-info";
+                                                }
+
+                                            }
+                                            <span class=" @(classuser)">@user</span>
+                                            <br />
+                                            <span class="badge badge-secondary">@item.SourceSite</span>
+
+                                        </td>
+                                        <td>@item.Note</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <div class=" action-buttons">
+                                                    <a class="btn btn-info btn-float actiontable" title="Cập nhập thông tin" href="@Url.Action("Create", "Booking", new { id = item.ID })">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $( '#dynamic-table' ).DataTable( {
+            "pageLength": 100
+        } );
+} );
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+    div.dataTables_wrapper div.dataTables_filter label {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+    .dataTables_filter input.form-control.input-sm {
+        width: 100%;
+        margin-left: 10px;
+    }
+    .dataTables_info {
+        display: none;
+    }
+</style>

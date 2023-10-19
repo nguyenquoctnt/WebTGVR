@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="Đăng nhập hệ thống">
+    <meta name="author" content="ACT Group">
+    <title>Đăng nhập hệ thống</title>
+    @Styles.Render("~/bundles/logincss")
+
+</head>
+<body class="vertical-layout vertical-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page" data-open="click" data-menu="vertical-menu" data-col="1-column">
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-md-5 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                <div class="card-header border-0">
+                                    <div class="card-title text-center">
+                                        <img src="/Content/imgnew/logo.png" alt="branding logo">
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/loginjs")
+    @RenderSection("scripts", required: false)
+    <script>
+        window.ParsleyConfig = {
+            errorClass: 'has-error'
+            , excluded: 'input[type=hidden]'
+            , trigger: false
+            , animate: true
+            , focus: 'first'
+            , validationMinlength: 3
+            , validators: {}
+            , errorElem: '<span></span>'
+            , errorsWrapper: '<span class="help-block"></span>'
+            , errorTemplate: "<div></div>"
+            , classHandler: function (el) {
+                return el.$element.closest(".form-control");
+            }
+        };
+    </script>
+</body>
+</html>

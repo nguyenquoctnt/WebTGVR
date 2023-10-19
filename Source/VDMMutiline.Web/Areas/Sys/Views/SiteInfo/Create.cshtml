@@ -1,0 +1,86 @@
+﻿@model VDMMutiline.SharedComponent.Params.SiteInfoParam
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("Create", "tblSiteInfo", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateSiteInfo", @role = "form" , enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.tblSiteInfo.Id)
+<div class="form-body">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Tên </label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.tblSiteInfo.SiteName, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Mô tả</label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(x => x.tblSiteInfo.SiteNote, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Dường dẫn site</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.tblSiteInfo.UrlPart, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Dường dẫn mobile</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.tblSiteInfo.UrlPartMobile, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Url Demo</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.tblSiteInfo.UrlDemo, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-4 label-control"></label>
+            <div class="col-md-8">
+                <div class="checkedcontrol">
+                    @if (Model.tblSiteInfo.Actives == null)
+                    {
+                        Model.tblSiteInfo.Actives = false;
+                    }
+                    @Html.CheckBox("tblSiteInfo.Actives", Model.tblSiteInfo.Actives == true, new { @class = "icheckboxcs" })
+                    <label for="SysMenu_IsSystem">Hoạt động</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-4 label-control">Ảnh</label>
+            <div class="col-md-8">
+                <input type="file" name="Thumbinput" class="actFile" />
+                @if (!string.IsNullOrEmpty(Model.tblSiteInfo.ThumPic))
+                {
+                    <img src="@Model.tblSiteInfo.ThumPic" style="height: 100px; width: 100px;" />
+                }
+                @Html.HiddenFor(x => x.tblSiteInfo.ThumPic)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-actions center">
+        <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+        <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+    </div>
+</div>
+
+}
+

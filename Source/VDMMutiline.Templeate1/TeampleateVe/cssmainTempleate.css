@@ -1,0 +1,246 @@
+﻿body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: scrollbar;
+    oveflow-y: scroll;
+    background: url({container_background_image}) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.el-search {
+    color: {home_search_color};
+}
+.el-search a {
+    color: {home_search_color} !important;
+}
+.PointLabel {
+    color: {home_search_color} !important;
+}
+.CalendarLabel {
+    color: {home_search_color} !important;
+}
+.PointTextBox {
+    color: {home_search_color} !important;
+}
+.CalTextBox
+{
+    color: {home_search_color} !important;
+}
+h2.util-heading {
+    color: {home_services_heading_color} !important;
+}
+.news-title a {
+  color: {home_news_heading_color} !important;
+}
+h3.tieude-vh a {
+  color: {home_news_heading_color} !important;
+}
+.book-and-payment-wrap .book-method .heading {
+    
+    background-color:  {home_book_method_heading_color} !important;
+}
+.el-search .tab-container ul.tabs li.active a{
+      background-color:  {home_search_bgcolor} !important;
+      color: {home_search_heading_color} !important;
+}
+#bookingForm {
+    background: {listticket_booking_step_bgcolor} !important;
+    background: linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -o-linear-gradient(bottom, #ffd80c 0%, #bd9d35 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #ffd80c 0%, #bd9d35 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #ffd80c 0%, #bd9d35 100%) !important;
+}
+
+    .box_top {
+    background: {listticket_booking_step_bgcolor} !important;
+    background: linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%)) !important;
+    background-image: -o-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -moz-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%)) !important;
+    background-image: -ms-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+}
+
+/*a.select-button {
+    position: relative;
+    background: {listticket_booking_step_bgcolor} !important;
+    background: linear-gradient(180deg, {listticket_booking_step_bgcolor} 0, {listticket_booking_step_bgcolor}) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, {listticket_booking_step_bgcolor}), color-stop(1, {listticket_booking_step_bgcolor})) !important;
+    background-image: -o-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -moz-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+    background-image: -ms-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, {listticket_booking_step_bgcolor} 100%) !important;
+}
+a.select-button:after {
+   
+    background: {listticket_booking_step_bgcolor} !important;
+   
+    background: linear-gradient(180deg, {listticket_booking_step_bgcolor} 0, #0a175d) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, {listticket_booking_step_bgcolor}), color-stop(1, #0a175d)) !important;
+    background-image: -o-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, #0a175d 100%) !important;
+    background-image: -moz-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, #0a175d 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, #0a175d 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, {listticket_booking_step_bgcolor} 0%, #0a175d 100%) !important;
+}*/
+.Price {
+    color: {listticket_highlight_color} !important;
+}
+td.GrandPrice label {
+    color: {listticket_highlight_color} !important;
+    font-size: 17px;
+}
+td.GrandPrice {
+    text-align: right;
+}
+.submit {
+   
+    background-color: {listticket_highlight_color} !important;
+   
+}
+.ButtonGreen {
+    border: 1px solid {listticket_highlight_color} !important;
+   
+    background-color: {listticket_highlight_color} !important;
+}
+.FareHeader {
+    background-color:{listticket_booking_step_bgcolor} !important;
+}
+
+.book-and-payment-wrap .book-method .list-group .list-group-item .item-icon {
+    background: {home_book_method_heading_color} !important;
+}
+.seach-boxvethang {
+     background-color:  {home_search_bgcolor} !important;
+      color: {home_search_heading_color} !important;
+                                         
+}
+.vere thead tr {
+    background: {home_search_bgcolor} !important;
+    color: {home_search_heading_color} !important;
+}
+.search-titlevethang{
+       color: {home_search_heading_color} !important;
+}
+.search-bodyVthang {
+    color: {home_search_heading_color} !important;
+}
+
+.vere tbody td p, .ItemPrice {
+    color: {listticket_highlight_color} !important;
+}
+footer .social-links .social {
+       background-color:  {home_search_bgcolor} !important;
+      color: {home_search_heading_color} !important;
+}
+button, input[type='submit'] {
+    background: {home_search_bgbutton} !important;
+   color: {home_search_bgTextbutton} !important;
+}
+
+footer .social-links .social .cl-inherit {
+    color:{home_search_heading_color} !important;
+    fill: {home_search_heading_color} !important;
+}
+.SelectCityBox .SelectCityBoxHeader {
+    background-color: {home_search_bgcolor} !important;
+    color: {home_search_heading_color} !important;
+}
+.SelectCityBoxHeader .Close a {
+     color: {home_search_heading_color} !important;
+}
+.search-box-wrapper.style1 .search-tab-content {
+    background: {home_search_bg_Full_color} !important;
+}
+footer {
+    background-color:  {footer_bg_color} !important;
+}
+footer a {
+    color: {footer_text_color} !important;
+}
+.botFoot .info {
+    color: {footer_text_color} !important;
+}
+.menuheader {
+    background: {Menu_BgColor} !important;
+    margin-top: 20px;
+}
+.nav > li > a {
+    border-right: 1px solid {Menu_TextColor} !important;
+    color: {Menu_TextColor} !important;
+}
+.dropdown-menu {
+    background-color: {Menu_BgColor} !important;
+}
+.dropdown-menu > li > a {
+   
+    color: {Menu_TextColor} !important;
+    background-color: transparent !important;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+     background: {Menu_Hover_BGColor} !important;
+     color: {Menu_Hover_Textcolor} !important;
+}
+div#SearchParamDomesticDepart {
+    background: {listticket_DomesticDepart_bgcolor} !important;
+    color: listticket_DomesticDepart_textcolor} !important;
+}
+div#SearchParamDomesticReturn {
+   background: {listticket_DomesticReturn_bgcolor} !important;
+    color: {listticket_DomesticReturn_Textcolor} !important;
+}
+.navbar-nav > li:hover {
+    background: {Menu_Hover_BGColor} !important;
+    color:{Menu_Hover_Textcolor} !important;
+}
+.DepartureFlight a.select-button {
+    background: {listticket_SelectbuttonDomestic_Bgcolor} !important;
+background: linear-gradient(180deg, {listticket_SelectbuttonDomestic_Bgcolor} 0, {listticket_SelectbuttonDomestic_Bgcolor}) !important;
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, {listticket_SelectbuttonDomestic_Bgcolor}), color-stop(1, {listticket_SelectbuttonDomestic_Bgcolor})) !important;
+background-image: -o-linear-gradient(bottom, {listticket_SelectbuttonDomestic_Bgcolor} 0%, {listticket_SelectbuttonDomestic_Bgcolor} 100%) !important;
+background-image: -moz-linear-gradient(bottom, {listticket_SelectbuttonDomestic_Bgcolor} 0%, {listticket_SelectbuttonDomestic_Bgcolor} 100%) !important;
+background-image: -webkit-linear-gradient(bottom, {listticket_SelectbuttonDomestic_Bgcolor} 0%, {listticket_SelectbuttonDomestic_Bgcolor} 100%) !important;
+background-image: -ms-linear-gradient(bottom, {listticket_SelectbuttonDomestic_Bgcolor} 0%, {listticket_SelectbuttonDomestic_Bgcolor} 100%) !important;
+color: {listticket_SelectbuttonDomestic_Textcolor} !important;
+}
+
+#contenReturnFlightFlight a.select-button {
+    background: {listticket_SelectbuttonReturn_Bgcolor} !important;
+background: linear-gradient(180deg, {listticket_SelectbuttonReturn_Bgcolor} 0, {listticket_SelectbuttonReturn_Bgcolor}) !important;
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, {listticket_SelectbuttonReturn_Bgcolor}), color-stop(1, {listticket_SelectbuttonReturn_Bgcolor})) !important;
+background-image: -o-linear-gradient(bottom, {listticket_SelectbuttonReturn_Bgcolor} 0%, {listticket_SelectbuttonReturn_Bgcolor} 100%) !important;
+background-image: -moz-linear-gradient(bottom, {listticket_SelectbuttonReturn_Bgcolor} 0%, {listticket_SelectbuttonReturn_Bgcolor} 100%) !important;
+background-image: -webkit-linear-gradient(bottom, {listticket_SelectbuttonReturn_Bgcolor} 0%, {listticket_SelectbuttonReturn_Bgcolor} 100%) !important;
+background-image: -ms-linear-gradient(bottom, {listticket_SelectbuttonReturn_Bgcolor} 0%, {listticket_SelectbuttonReturn_Bgcolor} 100%) !important;
+color: {listticket_SelectbuttonReturn_Textcolor} !important;
+}
+.selector span.custom-select:before {
+    background: {listticket_booking_step_bgcolor} !important;
+}
+.headerconten {
+    background-color: {header_background_Color} !important;
+    color: {header_Text_Color} !important;
+}
+.SelectCityBox .SelectCityBoxContent {
+    background: {Seach_Point_BgColor} !important;
+}
+.sub-search .sub-search-content .domestic-col ul li.title {
+    color:{Seach_Point_TitleColor} !important;
+}
+.sub-search .sub-search-content .domestic-col ul li a {
+    color: {Seach_Point_TextColor} !important;
+}
+.hk {
+    color: #1b1b1b;
+    font-weight: bold;
+    border-left: 4px solid {Menu_BgColor};
+    padding: 10px 8px;
+}
+.guilaihanhtrinh {
+    color: #fff !important;
+    background: {Menu_BgColor} !important;
+    padding: 10px;
+}

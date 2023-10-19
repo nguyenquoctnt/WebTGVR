@@ -1,0 +1,75 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SharedComponent.EntityInfo.TblArticleInfo
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+@functions
+{
+
+}
+@section Header
+{
+
+    @if (Model != null)
+    {
+        <title>@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tenbai)</title>
+        <meta name="title" content="@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tenbai)">
+        <meta name="keywords" content="@(!string.IsNullOrEmpty(Model.SEOKeyword) ? Model.SEOKeyword : Model.Tenbai)">
+        <meta name="description" content="@(!string.IsNullOrEmpty(Model.SEODescription) ? Model.SEODescription : Model.Mota)">
+        <meta property="og:description" content="@(!string.IsNullOrEmpty(Model.SEODescription) ? Model.SEODescription : Model.Mota)">
+        <meta property="og:title" content="@(!string.IsNullOrEmpty(Model.SEOTitle) ? Model.SEOTitle : Model.Tenbai)">
+
+    }
+}
+@if (Model != null)
+{
+    <div class="page-title box-sizing">
+        <h2>@Model.Tenbai</h2>
+        @if (Model.LoaiBaiviet == Constant.CateType.KhachSan)
+        {
+            <h3 style="font-weight:bold;color:#dba510;font-size: 18px;margin-top: 5px;">Giá : @Model.SEODescription</h3>
+        }
+    </div>
+    <div class="page-content p-static  el-guide detailbaiviet">
+        @Html.Raw(Model.Noidung)
+    </div>
+    if (Model.LoaiBaiviet == Constant.CateType.KhachSan)
+    {
+        @Html.Action("Index", "Orderfontend", new { idtt = Model.Id, titeltt = Model.Tenbai, type = "Khách sạn" })
+    }
+    else
+    {
+        <div class="page-content p-static  el-guide">
+            <div id='comments'>
+                <div class="fb-comments" data-width="100%" data-href="@Request.Url" data-numposts="5"></div>
+            </div>
+        </div>
+    }
+
+
+}
+<style>
+    .pLeft0 {
+        padding-left: 0px;
+    }
+    .detailbaiviet img {
+        width: 100%;
+        height: auto;
+    }
+</style>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=631942543575730";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+

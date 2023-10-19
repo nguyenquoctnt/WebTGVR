@@ -1,0 +1,52 @@
+﻿@model VDMMutiline.SharedComponent.Params.AirlineParam
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Create", "SysAirline", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateSysAirline", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Airline.Id)
+
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Mã</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Airline.Code, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên hiển thị</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Airline.Name, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Hình ảnh</label>
+                <div class="col-md-8">
+                    <input type="file" name="Imageimput" class="actFile" />
+                    <br />
+                    @if (!string.IsNullOrEmpty(Model.Airline.Pictures))
+                    {
+                        <img src="@Model.Airline.Pictures" style="height: 100px; width: 100px;" />
+                    }
+                    @Html.HiddenFor(x => x.Airline.Pictures)
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+
+

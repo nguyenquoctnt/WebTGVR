@@ -1,0 +1,24 @@
+﻿.content-wrap .utilities-wrap {
+    padding-bottom: 20px;
+    background-color: #ffffff;
+}
+
+    .content-wrap .utilities-wrap .util-item {
+        text-align: center;
+    }
+
+        .content-wrap .utilities-wrap .util-item .util-img {
+            max-height: 150px;
+        }
+
+            .content-wrap .utilities-wrap .util-item .util-img img {
+                vertical-align: bottom;
+                display: block;
+                margin: 0 auto;
+                max-width: 100%;
+            }
+
+        .content-wrap .utilities-wrap .util-item .util-heading {
+            font-size: 20px;
+            color: #333333;
+        }

@@ -1,0 +1,274 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@{
+    ViewBag.Title = "Đặt vé Nội địa";
+    ViewBag.Description = "";
+
+}
+<link href="~/Content/SearchTicket/SelectCityBox.css" rel="stylesheet" />
+
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            <div class="form form-horizontal" style="margin-bottom: 15px;">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-8">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="d-inline-block custom-control custom-radio mr-1">
+                                                <input type="radio" id="rdbOneWay"  class="custom-control-input ItineraryRadio " onclick="onOneWay();" onchange="ToggleDatepicker()" name="ItineraryType" checked="checked" value="1">
+                                                <label class="custom-control-label" for="rdbOneWay">Một chiều</label>
+                                            </div>
+                                            <div class="d-inline-block custom-control custom-radio">
+                                                <input type="radio"  class="custom-control-input ItineraryRadio" id="rdbRoundTrip" onclick="onTwoWay();" onchange="ToggleDatepicker()" name="ItineraryType" value="2">
+                                                <label class="custom-control-label" for="rdbRoundTrip">Khứu hồi</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="hidden" name="hdfStartPoint" id="hdfStartPoint" value="SGN">
+                                        <label for="txtStartPoint">Điểm đi</label>
+                                        <input type="text" readonly id="txtStartPoint" class="form-control" name="txtStartPoint">
+                                        <div id="pnStartCity"  class="SelectCityBox ShadowBold" style="">
+                                            <div class="SelectCityBoxHeader">
+                                                Chọn điểm đi
+                                                <div class="Close">
+                                                    <a id="btnCloseStartCity"> Đóng</a>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                            @Html.Partial("~/Views/SeachTicket/_PartialPNstarCity.cshtml")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="hidden" name="hdfEndPoint" id="hdfEndPoint" value="">
+                                        <label for="eventInput1">Điểm đến</label>
+                                        <input type="text"  readonly id="txtEndPoint" class="form-control" name="txtEndPoint">
+                                        <div id="pnEndCity" class="SelectCityBox ShadowBold" style="    right: 0px;">
+                                            <div class="SelectCityBoxHeader">
+                                                Chọn điểm đến
+                                                <div class="Close">
+                                                    <a id="btnCloseEndCity">Đóng</a>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                            @Html.Partial("~/Views/SeachTicket/_PartialPNEndCity.cshtml")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput1">Ngày đi</label>
+                                        <input type="text" required  id="txtDepartureDate" class="form-control" name="txtDepartureDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="divtxtReturnDate">
+                                    <div class="form-group">
+                                        <label for="eventInput1">Ngày về</label>
+                                        <input type="text" required id="txtReturnDate" class="form-control" name="txtReturnDate">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="eventInput1">ADT</label>
+                                        <select name="dllADT" class="form-control">
+                                            <option value="0">0</option>
+                                            <option selected="selected" value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="eventInput1">CHD (2 tuổi - 12 tuổi)</label>
+                                        <select name="dllchd" class="form-control">
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="eventInput1">INF (<2 tuổi)</label>
+                                        <select name="dllInf" class="form-control">
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="eventInput1"> &nbsp;&nbsp;&nbsp;</label>
+                                        <br />
+                                        <button type="submit" class="btn btn-primary">
+                                            Tìm chuyến bay
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Content/SearchTicket/js/jquery-ui-1.10.3.custom.js"></script>
+    <script src="~/Content/SearchTicket/js/ui.datepicker.lunar.min.js"></script>
+    <link href="~/Content/SearchTicket/Picker/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+    <script>
+        function airScript() {
+            $( document.body ).mousedown( function ( event ) {
+                var target = $( event.target );
+                if ( !target.parents().andSelf().is( '#pnStartCity' ) && !target.parents().andSelf().is( '#ui-id-1' ) && !target.parents().andSelf().is( "#txtStartPoint" ) ) { // Clicked outside
+                    $( '#pnStartCity' ).hide( "fast", '' );
+                }
+                if ( !target.parents().andSelf().is( '#pnEndCity' ) && !target.parents().andSelf().is( '#ui-id-2' ) && !target.parents().andSelf().is( "#txtEndPoint" ) ) { // Clicked outside
+                    $( '#pnEndCity' ).hide( "fast", '' );
+                }
+            } );
+
+        }
+        $( document ).ready( function () {
+            airScript();
+            $( '#btnCloseStartCity' ).bind( 'click', function () {
+                $( '#pnStartCity' ).toggle( "fast", '' );
+            } );
+
+            $( '#btnCloseEndCity' ).bind( 'click', function () {
+                $( '#pnEndCity' ).toggle( "fast", '' );
+            } );
+
+            $( "#txtStartPoint" ).bind( 'click', function () {
+                $( '#txtStartPoint' ).val( '' );
+                $( '#pnStartCity' ).toggle( "fast", '' );
+                $( '#pnEndCity' ).hide();
+            } );
+
+            $( "#txtEndPoint" ).bind( 'click', function () {
+                $( '#txtEndPoint' ).val( '' );
+                $( '#pnEndCity' ).toggle( "fast", '' );
+                $( '#pnStartCity' ).hide();
+            } );
+            ToggleDatepicker();
+            ConfigDatePicker();
+        } );
+        function onOneWay() {
+            $( "#rdbOneWay" ).attr( "checked", true );
+        }
+
+        function onTwoWay( e ) {
+            $( "#rdbRoundTrip" ).attr( "checked", true );
+        }
+        function ToggleDatepicker() {
+            var check_value = $( '.ItineraryRadio:checked' ).val();
+            if ( check_value == 1 ) {
+                $( "#divtxtReturnDate" ).attr( 'style', 'visibility: hidden;' );
+                $( "#txtReturnDate" ).removeAttr( "required" );
+            }
+            else {
+                $( "#divtxtReturnDate" ).attr( 'style', 'visibility: visible;' );
+                $( "#divtxtReturnDate" ).datepicker( "option", "minDate", $( "#txtDepartureDate" ).datepicker( "getDate" ) );
+                $( "#txtReturnDate" ).attr( "required", "" );
+            }
+        }
+        function ConfigDatePicker() {
+
+            var mdate = new Date();
+            var depart = $( "#txtDepartureDate" ).val();
+            if ( depart != "" ) {
+                var dsplit = depart.split( "/" );
+                mdate = new Date( dsplit[2], dsplit[1] - 1, dsplit[0] );
+            }
+            var d = new Date();
+            var strDate = $.datepicker.formatDate( 'dd/mm/yy', d );
+            $( "#txtDepartureDate" ).val( strDate );
+            $( "#txtReturnDate" ).val( strDate );
+            $( "#txtDepartureDate" ).datepickerlunar( {
+                numberOfMonths: 2,
+                minDate: "0",
+                maxDate: "+1Y",
+                showAnim: "show",
+                showButtonPanel: true,
+                defaultDate: new Date(),
+                dateFormat: "dd/mm/yy",
+                onSelect: function ( selectedDate ) {
+                    var dsplit = selectedDate.split( "/" );
+                    var m2date = new Date( dsplit[2], dsplit[1] - 1, dsplit[0] );
+                    $( "#txtReturnDate" ).datepickerlunar( "option", "minDate", m2date );
+                    var display = $( "#divtxtReturnDate" ).css( "visibility" );
+                    if ( display == "hidden" ) {
+
+                    }
+                    else {
+                        $( "#txtReturnDate" ).datepickerlunar( "option", "minDate", m2date );
+                        setTimeout( function () {
+                            $( "#txtReturnDate" ).datepickerlunar( 'show' );
+                        }, 16 );
+                    }
+                }
+            } );
+            $( "#txtReturnDate" ).datepickerlunar( {
+                numberOfMonths: 2,
+                showButtonPanel: true,
+                minDate: mdate,
+                maxDate: "+1Y",
+                showAnim: "show",
+                dateFormat: "dd/mm/yy",
+                onSelect: function ( selectedDate ) {
+                }
+            } );
+        };
+    </script>
+
+
+}
+
+
+
+
+

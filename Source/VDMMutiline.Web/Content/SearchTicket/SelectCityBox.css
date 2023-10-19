@@ -1,0 +1,206 @@
+﻿/*SelectCityBox*/
+.SelectCityBox {
+    width: 760px;
+    margin: auto;
+    /*padding-top: 5px;*/
+    background-color: #fff;
+    border-radius: 5px;
+    -moz-border-radius: 0px 0px 5px 5px;
+    display: none;
+    z-index: 5000;
+    position: absolute;
+    color: rgb(113, 113, 113);
+    background: #fff;
+}
+    .SelectCityBox .SelectCityBoxHeader .Close {
+        margin-right: 0px;
+    }
+    .SelectCityBox .SelectCityBoxHeader {
+      line-height: 25px;
+    background-color: #f20000;
+    color: White;
+    font-weight: 700;
+    border-radius: 17px 17px 17px 17px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 4px;
+    padding: 6px;
+    font-size: 16px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cacaca;
+    }
+
+.SelectCityBox .SelectCityBoxHeader .Title{float: left; font-size: 13px;background-color: #717171;white-space: nowrap;height: 25px;line-height: 25px;}
+.SelectCityBox .SelectCityBoxHeader .Close{float: right;
+    margin-right: 15px;
+    font-size: 23px;
+    cursor: pointer;
+    color: #fff !important;}
+
+.SelectCityBox .SelectCityBoxContent
+{
+    width: 100%;
+    margin: auto;
+}
+
+#pnStartCity ul.ul_mien, #pnEndCity ul.ul_mien
+{
+    margin:0px;
+    padding: 0px 0px;
+    list-style:none;
+}
+#pnStartCity ul.ul_mien a:hover,#pnEndCity ul.ul_mien a:hover{color:#717171;}
+#pnStartCity ul.ul_mien li.li_mien, #pnEndCity ul.ul_mien li.li_mien
+{
+    float: left;
+    text-align: left;
+    /*border-bottom: 1px solid #ddd;*/
+    padding: 10px 5px 5px 10px;
+    width: 18%;
+}
+.li_mien{
+    float: none;
+    text-align: left;
+    padding: 10px 5px 5px 0px;
+    line-height: 18px;
+    font-size: 14px;
+}
+.quoc_te
+{
+    background: url('../Seach/Images/quoc_te.jpg') no-repeat 5px 5px;
+}
+.mien_bac
+{
+    background: url('../Seach/Images/mien_bac.jpg') no-repeat 5px 5px;
+}
+.mien_trung
+{
+    background: url('../Seach/Images/mien_trung.jpg') no-repeat 5px 5px;
+}
+.mien_nam
+{
+    background: url('../Seach/Images/mien_nam.jpg') no-repeat 5px 5px;
+}
+
+#pnStartCity ul.ul_mien li.li_mien ul, #pnEndCity ul.ul_mien li.li_mien ul
+{
+    padding:0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    list-style:none;
+}
+#pnStartCity ul.ul_mien li.li_mien ul li, #pnEndCity ul.ul_mien li.li_mien ul li
+{
+    float:none;
+    margin-left:5px;
+    padding: 4px;
+    color:#717171;
+}
+#pnStartCity ul.ul_mien li.li_mien ul li:hover,#pnEndCity ul.ul_mien li.li_mien ul li:hover
+{
+    padding:4px;
+    background-color:#717171;
+    color:#FFF;
+    cursor:pointer;
+}
+.li_mien ul {
+    padding-left: 10px;
+    list-style: none;
+}
+#pnStartCity .sp_mien,#pnEndCity .sp_mien{
+    margin-left: 0px;
+    /* font-weight: bold; */
+    color: #F45E2C;
+    font-size: 15px !important;
+    text-transform: uppercase;
+    width: 100%;
+    font-weight: 600;}
+#pnStartCity .sp_city.sp_city,#pnEndCity .sp_city.sp_city{line-height:25px;width:100px;}
+
+.ui-autocomplete{position:absolute;z-index: 9900 !important;top:0;left:0;cursor:default;max-height: 185px!important;width: 400px!important;}
+.ui-menu .ui-menu-item a{
+    border: 1px solid white;
+}
+.ui-state-focus,.ui-widget-content .ui-state-focus{font-weight: normal}
+
+
+
+
+#pnStartCity1 ul.ul_mien, #pnEndCity1 ul.ul_mien
+{
+    margin:0px;
+    padding: 0px 0px;
+    list-style:none;
+}
+#pnStartCity1 ul.ul_mien a:hover,#pnEndCity1 ul.ul_mien a:hover{color:#717171;}
+#pnStartCity1 ul.ul_mien li.li_mien, #pnEndCity1 ul.ul_mien li.li_mien
+{
+    float: none;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 5px 5px 10px;
+    
+}
+
+
+#pnStartCity1 ul.ul_mien li.li_mien ul, #pnEndCity1 ul.ul_mien li.li_mien ul
+{
+    padding:0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    list-style:none;
+}
+#pnStartCity1 ul.ul_mien li.li_mien ul li, #pnEndCity1 ul.ul_mien li.li_mien ul li
+{
+    float:left;
+    margin-left:15px;
+    padding: 4px;
+    color:#717171;
+}
+#pnStartCity1 ul.ul_mien li.li_mien ul li:hover,#pnEndCity1 ul.ul_mien li.li_mien ul li:hover
+{
+    padding:4px;
+    background-color:#717171;
+    color:#FFF;
+    cursor:pointer;
+}
+
+#pnStartCity1 .sp_mien,#pnEndCity1 .sp_mien{margin-left:0px;/* font-weight:bold; */color: #F45E2C;text-transform:uppercase;}
+#pnStartCity1 .sp_city.sp_city,#pnEndCity1 .sp_city.sp_city{line-height:25px;width:100px;}
+
+.col-md-3.pLeft0 {
+    padding-left: 0px;
+}
+.field.field-checkbox label {
+    position: static;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2b303d;
+    cursor: pointer;
+}
+
+.field-cheapest label {
+    font-size: 1em!important;
+}
+
+.domestic-col {
+    width: 20%;
+}
+
+    .domestic-col.domestic-col-lg {
+        width: 57%;
+    }
+
+        .domestic-col.domestic-col-lg li {
+            white-space: nowrap;
+        }
+
+.SelectCityBoxContent span {
+    font-size: 12px;
+    font-weight: bold;
+}
+.SelectCityBoxHeader .Close {
+    font-size: 14px !important;
+    margin-right: 0px !important;
+}

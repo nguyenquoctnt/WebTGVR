@@ -1,0 +1,100 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SharedComponent.EntityInfo.TblArticleInfo
+@{
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+}
+@functions
+{
+
+}
+<style>
+    td img {
+        width: 100px !important;
+    }
+</style>
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.detail img').each(function () {
+            jQuery(this).addClass('img-responsive');
+            jQuery(this).removeAttr("style");
+
+        });
+        jQuery('.detail td img').each(function () {
+            jQuery(this).removeClass('img-responsive');
+            jQuery(this).removeAttr("style");
+        });
+        
+    });</script>
+@Html.Action("HeaderDetail", "Control")
+<div class="hidden1 bgSelect" style="margin-top: 46px;">
+    <div class="row  top log logfix" style="">
+        <div class="col-xs-1 left_re">
+            <a href="#" class="refesh1">
+                <img src="/Content/Images/refesh.png" alt="Alternate Text" />
+            </a>
+        </div>
+        <div class="col-xs-8 cb1">
+            BÀI VIẾT
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="contentdetail">
+        @if (Model != null)
+        {
+            <div style="font-size:12px;">
+                <div class="row datenews">
+                    @(Model.NgayTao.HasValue ? Model.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : "")
+                </div>
+                <script>
+                    $(".refesh1").click(function () {
+                        location.reload();
+                    });
+                </script>
+                <div class="row bgSelect1 pad3">
+                    <div class="row title2">
+                        @Model.Tenbai
+                    </div>
+                </div>
+
+                <div class="row bgSelect1 newimg detail">
+                    <img src="@Model.Thumb" width="320" />
+                </div>
+
+                <div class="row bgSelect1 news detail">
+                    @Html.Raw(Model.Noidung)
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="row bottom log33  ">
+    <a href="/" class="btt add" style="color:#fff;">ĐÓNG</a>
+</div>
+@if (Model != null)
+{
+    <div class="Comment NewShare2" style="width: 96%;margin-left: 10px;margin-right: 18px;z-index: 1000;display:none;">
+        <a href="#" class="comm2" style="float:right;">
+            <img src="/Content/Images/close1.png" alt="Alternate Text" />
+        </a>
+        <div id='comments'>
+            <div class="fb-comments" data-width="100%" data-href="@Request.Url" data-numposts="5"></div>
+        </div>
+    </div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=631942543575730";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+}
+
+
+

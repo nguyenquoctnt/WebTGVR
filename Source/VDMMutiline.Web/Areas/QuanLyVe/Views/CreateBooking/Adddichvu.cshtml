@@ -1,0 +1,67 @@
+﻿@model VDMMutiline.WebBackEnd.Models.addons
+@{
+    Layout = null;
+}
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Thêm dịch vụ</h4>
+        </div>
+        @using (Html.BeginForm("Adddichvu", "CreateBooking", FormMethod.Post, new { @class = "form form-horizontal", id = "frAdddichvu", @role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="modal-body">
+                <div class="form-horizontal form-label-left">
+                    <div class="row" id="create-addons-box">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(z => z.GuiIDaddon)
+                        @Html.HiddenFor(z => z.GuiIDPad)
+                        <div class="form-group col-sm-6 col-md-6 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="type-ways">
+                                Chiều <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                @Html.DropDownListFor(z => z.Type, Model.lstTypeways.Select(s => new SelectListItem { Selected = Model.Type == s.Id, Value = s.Id, Text = s.Name }), new { @class = "form-control " })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="addon-name">
+                                Tên dịch vụ <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(z => z.NameAddon, new { @class = "form-control " })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="addon-value">
+                                Giá trị <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(z => z.valueAddon, new { @class = "form-control " })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="price-before">
+                                Giá gốc <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(z => z.pricebeforeAddon, new { @class = "form-control ", @oninput = "formatMoney($(this))" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="price-after">
+                                Thành tiền <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(z => z.priceAfterAddon, new { @class = "form-control ", @oninput = "formatMoney($(this))" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary btn-save-addon" onclick="createAddon();">Tạo dịch vụ</button>
+            </div>
+        }
+        </div>
+</div>

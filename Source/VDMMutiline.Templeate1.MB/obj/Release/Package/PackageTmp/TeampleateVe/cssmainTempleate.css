@@ -1,0 +1,56 @@
+﻿
+#page-header {
+  
+    background:  {home_search_bgcolor} !important;
+    border-bottom: solid 1px #ffffff;
+}
+.selectway {
+    border-bottom: {home_search_bgcolor} !important;
+    color: {Color_fff} !important;
+    background: {home_search_bgcolor} !important;
+}
+.the-field-icon:after, .pop-ticket .header-pop a, .item-form .no-click-form:before {
+    background-color: {home_search_bgcolor} !important;
+}
+.select-type span.active, .item-submit input, .list-nav-popup, .list-nav-popup ul, .tab-member li a.active, #support-footer, .form-inline p.submit input, .contact-right form input[type="submit"], .sidebar-right .widget h3, .popup-list .item-list li:hover, .item-form input[type="submit"], .button-pop, .mobile-title, .header-popup, .list-add-bonus .item-add-bonus .action-bonus a, .popup .inner-popup h3, .content-popup form input[type="submit"], body .ui-state-highlight, body .ui-widget-content .ui-state-highlight, body .ui-widget-header .ui-state-highlight {
+    background: {home_search_bgcolor} !important;
+}
+.btt {
+    border: none;
+    background-color:  {listticket_booking_step_bgcolor} !important;
+}
+.item-form .no-click-form {
+    border: 1px solid {home_search_bgcolor} !important;
+}
+.log {
+    background-color: {home_search_bgcolor} !important;
+}
+.box_top {
+    color:{Color_fff} !important;
+    background:{listticket_booking_step_bgcolor} !important;
+}
+.log3 {
+    background-color: {listticket_booking_step_bgcolor} !important;
+    color: {Color_fff} !important;
+}
+
+div.PriceLeft {
+    color: {listticket_highlight_color} !important;
+}
+.radair {
+    background-color: {listticket_highlight_color} !important;
+}
+.TitlewithText {
+    background: {listticket_booking_step_bgcolor} !important;
+   
+}
+
+.vere thead tr {
+    background: {home_search_bgcolor} !important;
+    color: {home_search_heading_color} !important;
+}
+
+.BtnChonseach {
+    background: {listticket_SelectbuttonMB_Bgcolor} !important;
+    color:{listticket_SelectbuttonMB_Textcolor}!important;
+}

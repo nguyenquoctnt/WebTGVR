@@ -1,0 +1,89 @@
+﻿@model VDMMutiline.SharedComponent.Params.BK_BookingParam
+@{
+    ViewBag.Title = "Thống kê";
+    ViewBag.Description = "Thống kê booking";
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            <div class="form form-horizontal" style="margin-bottom: 15px;">
+                @if (Model.TicketCountInfos.Count > 0)
+                {
+                    var objVN = Model.TicketCountInfos.FirstOrDefault(z => z.AirlineCode == "VN");
+                    var objJQ = Model.TicketCountInfos.FirstOrDefault(z => z.AirlineCode == "JQ");
+                    var objVJ = Model.TicketCountInfos.FirstOrDefault(z => z.AirlineCode == "VJ");
+                    var objQH = Model.TicketCountInfos.FirstOrDefault(z => z.AirlineCode == "QH");
+                    var objHK = Model.TicketCountInfos.FirstOrDefault(z => z.AirlineCode == "HK");
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
+                            <div class="my-1 text-center">
+                                <div class="card-header mb-2 pt-0">
+                                    <span class="info">Vietnam Airlines</span>
+                                    @if (objVN != null)
+                                    {
+                                        <h3 class="font-large-1 text-bold-200">@(objVN.Count.HasValue? objVN.Count.Value.ToString("n0"):"0")</h3>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
+                            <div class="my-1 text-center">
+                                <div class="card-header mb-2 pt-0">
+                                    <span class="danger">vietjet air</span>
+                                    @if (objVJ != null)
+                                    {
+                                        <h3 class="font-large-1 text-bold-200">@(objVJ.Count.HasValue? objVJ.Count.Value.ToString("n0"):"0")</h3>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
+                            <div class="my-1 text-center">
+                                <div class="card-header mb-2 pt-0">
+                                    <span class="danger">Jetstar Airways</span>
+                                    @if (objJQ != null)
+                                    {
+                                        <h3 class="font-large-1 text-bold-200">@(objJQ.Count.HasValue? objJQ.Count.Value.ToString("n0"):"0")</h3>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
+                            <div class="my-1 text-center">
+                                <div class="card-header mb-2 pt-0">
+                                    <span class="success">Bamboo Airways</span>
+                                    @if (objQH != null)
+                                    {
+                                        <h3 class="font-large-1 text-bold-200">@(objQH.Count.HasValue? objQH.Count.Value.ToString("n0"):"0")</h3>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-12">
+                            <div class="my-1 text-center">
+                                <div class="card-header mb-2 pt-0">
+                                    <span class="success">Các hãng khác</span>
+                                    @if (objHK != null)
+                                    {
+                                        <h3 class="font-large-1 text-bold-200">@(objHK.Count.HasValue? objHK.Count.Value.ToString("n0"):"0")</h3>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

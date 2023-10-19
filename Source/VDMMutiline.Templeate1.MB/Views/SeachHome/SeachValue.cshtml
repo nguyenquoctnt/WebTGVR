@@ -1,0 +1,15 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@using VDMMutiline.SeachAndBook
+@model SeachParam
+@{
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+}
+
+
+@{
+    Html.RenderPartial("_PartialSeachDomestic", Model);
+}
+

@@ -1,0 +1,55 @@
+﻿@model VDMMutiline.SharedComponent.Params.HtmlBlockParam
+@using VDMMutiline.SharedComponent.Constants
+@{
+    Layout = null;
+}
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+@using (Html.BeginForm("Create", "HtmlBlock", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreatehtmlblock", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.HtmlBlock.ID)
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Khóa</label>
+                <div class="col-md-10">
+                    @if (Model.HtmlBlock.ID > 0)
+                    {
+                        @Html.TextBoxFor(x => x.HtmlBlock.HlmlBlockKey, new { @readonly = "readonly", @Required = "Required", @class = "form-control", @placeholder = "" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.HtmlBlock.HlmlBlockKey, new {  @Required = "Required", @class = "form-control", @placeholder = "" })
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.HtmlBlock.HtmlBlockName, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Nội dung</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.HtmlBlock.HtmlblockConten, new { @Required = "Required", @class = "ckeditor form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+      
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+
+
+
+

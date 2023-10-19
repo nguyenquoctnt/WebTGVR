@@ -1,0 +1,178 @@
+﻿@model ApiClient.Models.Flight
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+    Layout = null;
+    var codeold = "";
+}
+@functions{
+    private string getsanbaycode(string code)
+    {
+        var obj = VDMMutiline.Ultilities.Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@if (Model != null)
+{
+    <div class="modal-dialog" style=" margin: 0 !important;">
+        <div class="modal-content" style="width: 100%;border-radius: 0px;border:none;margin-top: -15px;        min-height: 100%;">
+            <div class="modal-body">
+                <div class="FlightItem">
+                    <div class="FlightInfoDetailsMaster">
+                        <div class="modal-header">
+                            <button type="button" class="close BtnChon" style="opacity: 1;    padding-left: 10px;padding-right: 10px;width: auto !important;" data-dismiss="modal">Đóng</button>
+                        </div>
+                        @if (Model.ListSegment != null)
+                        {
+                            var indexAvail = 1;
+                            foreach (var itemAvail in Model.ListSegment)
+                            {
+                                <div class="Pad5">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="Detai-Carrier">
+                                                    Hãng hàng không: <strong>@UIUty.GetNamebyHang(itemAvail.Airline)</strong><br>
+                                                    Chuyến bay: <strong>@itemAvail.FlightNumber</strong><br>
+                                                    Hạng chỗ: <strong class="col2">@itemAvail.Class</strong><br>
+                                                    Máy bay: <strong> @itemAvail.Plane</strong><br>
+                                                    Thời gian bay: <strong>@UIUty.GetTimeString(itemAvail.Duration)</strong><br>
+                                                </td>
+                                                <td class="Detai-Depart">
+                                                    <div class="Hour">@(itemAvail.StartTime.ToString("HH:mm"))</div>
+                                                    <div class="Citycode">@(itemAvail.StartPoint)</div>
+                                                    @*<div class="CityName">@(getsanbaycode(itemAvail.StartPoint))</div>*@
+                                                </td>
+                                                <td class="Detai-Arrow">
+                                                    <img style=" width: 30px;" src="/Content/arrow-long-right.png">
+                                                </td>
+                                                <td class="Detai-Depart">
+                                                    <div class="Hour">@(itemAvail.EndTime.ToString("HH:mm"))</div>
+                                                    <div class="Citycode">@(itemAvail.EndPoint)</div>
+                                                    @*<div class="CityName">@(getsanbaycode(itemAvail.EndPoint))</div>*@
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                if (string.IsNullOrEmpty(codeold))
+                                {
+                                    codeold = itemAvail.EndPoint;
+                                }
+                                if (indexAvail != Model.ListSegment.Count())
+                                {
+                                    string nhagacu = getsanbaycode(codeold);
+                                    string nhagamoi = getsanbaycode(itemAvail.EndPoint);
+                                    if (itemAvail.StartPoint == codeold)
+                                    {
+                                        <div class="StopInfo">
+                                            <span>Đổi nhà ga tại</span>
+                                            <strong class="col2">@(getsanbaycode(itemAvail.EndPoint))</strong>
+                                            - Thời gian dừng: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                                            <img alt="Warning" src="/Content/warning_icon.png" height="14" style="display: none">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="StopInfo">
+                                            <span>Điểm dừng</span>
+                                            <strong class="col2">@(getsanbaycode(itemAvail.EndPoint))</strong>
+                                            - Thời gian dừng: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                                            <img alt="Warning" src="/Content/warning_icon.png" height="14" style="display: none">
+                                        </div>
+                                    }
+                                }
+                                codeold = itemAvail.EndPoint;
+                                indexAvail++;
+                            }
+                        }
+
+
+                        @{
+                            var objreturn = (ApiClient.Models.Flight)ViewBag.flightReturn;
+                            if (objreturn != null)
+                            {
+                                <div>
+                                    <div class="modal-header">
+                                    </div>
+                                    @if (objreturn.ListSegment != null)
+                                    {
+                                        var indexAvail = 1;
+                                        foreach (var itemAvail in objreturn.ListSegment)
+                                        {
+                                            <div class="Pad5">
+                                                <table style="width: 100%;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="Detai-Carrier">
+                                                                Hãng hàng không: <strong>@UIUty.GetNamebyHang(itemAvail.Airline)</strong><br>
+                                                                Chuyến bay: <strong>@itemAvail.FlightNumber</strong><br>
+                                                                Hạng chỗ: <strong class="col2">@itemAvail.Class</strong><br>
+                                                                Máy bay: <strong> @itemAvail.Plane</strong><br>
+                                                                Thời gian bay: <strong>@UIUty.GetTimeString(itemAvail.Duration)</strong><br>
+                                                            </td>
+                                                            <td class="Detai-Depart">
+                                                                <div class="Hour">@(itemAvail.StartTime.ToString("HH:mm"))</div>
+                                                                <div class="Citycode">@(itemAvail.StartPoint)</div>
+                                                                @*<div class="CityName">@(getsanbaycode(itemAvail.StartPoint))</div>*@
+                                                            </td>
+                                                            <td class="Detai-Arrow">
+                                                                <img style=" width: 30px;" src="/Content/arrow-long-right.png">
+                                                            </td>
+
+                                                            <td class="Detai-Depart">
+                                                                <div class="Hour">@(itemAvail.EndTime.ToString("HH:mm"))</div>
+                                                                <div class="Citycode">@(itemAvail.EndPoint)</div>
+                                                                @*<div class="CityName">@(getsanbaycode(itemAvail.EndPoint))</div>*@
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            if (string.IsNullOrEmpty(codeold))
+                                            {
+                                                codeold = itemAvail.EndPoint;
+                                            }
+                                            if (indexAvail != objreturn.ListSegment.Count())
+                                            {
+                                                string nhagacu = getsanbaycode(codeold);
+                                                string nhagamoi = getsanbaycode(itemAvail.EndPoint);
+                                                if (itemAvail.StartPoint == codeold)
+                                                {
+                                                    <div class="StopInfo">
+                                                        <span>Đổi nhà ga tại</span>
+                                                        <strong class="col2">@(getsanbaycode(itemAvail.EndPoint))</strong>
+                                                        - Thời gian dừng: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                                                        <img alt="Warning" src="/Content/warning_icon.png" height="14" style="display: none">
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="StopInfo">
+                                                        <span>Điểm dừng</span>
+                                                        <strong class="col2">@(getsanbaycode(itemAvail.EndPoint))</strong>
+                                                        - Thời gian dừng: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                                                        <img alt="Warning" src="/Content/warning_icon.png" height="14" style="display: none">
+                                                    </div>
+                                                }
+                                            }
+                                            codeold = itemAvail.EndPoint;
+                                            indexAvail++;
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

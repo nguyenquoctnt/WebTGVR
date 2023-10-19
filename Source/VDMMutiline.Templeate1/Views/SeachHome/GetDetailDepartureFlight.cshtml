@@ -1,0 +1,215 @@
+﻿@using VDMMutiline.Core.UI
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.EntityInfo
+@model VDMMutiline.SeachAndBook.VDMFareDataInfo
+@{
+    Layout = null;
+    var departureFlight = Model;
+    var PriceAdult = UIUty.ChuyenDoiTienTe(departureFlight.FareAdt);
+    var PriceChild = UIUty.ChuyenDoiTienTe(departureFlight.FareChd);
+    var PriceInfant = UIUty.ChuyenDoiTienTe(departureFlight.FareInf);
+    var FeeAdult = UIUty.ChuyenDoiTienTe(departureFlight.FeeAdt);
+    var FeeChild = UIUty.ChuyenDoiTienTe(departureFlight.FeeChd);
+    var FeeInfant = UIUty.ChuyenDoiTienTe(departureFlight.FeeInf);
+    var TaxAdult = UIUty.ChuyenDoiTienTe(departureFlight.TaxAdt);
+    var TaxChild = UIUty.ChuyenDoiTienTe(departureFlight.TaxChd);
+    var TaxInfant = UIUty.ChuyenDoiTienTe(departureFlight.TaxInf);
+    var tongtiennguoilon = (departureFlight.Adt * (PriceAdult + FeeAdult + TaxAdult));
+    var tongtientrem = (departureFlight.Chd * (PriceChild + FeeChild + TaxChild));
+    var congtienembe = (departureFlight.Inf * (PriceInfant + FeeInfant + TaxInfant));
+    var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+    var Currency = UIUty.GetDonViTienTe();
+}
+@functions{
+
+    private string getsanbaycode(string code)
+    {
+        var obj =VDMMutiline.Ultilities. Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+<div class="WhiteBox border-radius-all" style="margin-top: 6px;">
+
+    <div class="ItineraryBox">
+        <table style="width:100%">
+            <tbody>
+                @foreach (var item in Model.ListFlight)
+                {
+                    foreach (var listAvailFlights in item.ListSegment)
+                    {
+                        <tr>
+                            <td>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td class="ItineraryBox-Carrier" style="    text-align: left;">
+                                            <div class="CarrierLogo">
+                                                <img alt="Airline logo" src="@UIUty.GetImagebyHang(departureFlight.Airline)">
+                                            </div>
+                                            <div class="CarrierName">
+                                                @UIUty.GetNamebyHang(departureFlight.Airline)
+                                            </div>
+                                            @if (departureFlight.IsVNJQ == true)
+                                            {
+                                        <div class="operated-by-bl">bay Pacific</div>
+                                            }
+                                        </td>
+                                        <td class="ItineraryBox-FlightInfo" style="    text-align: left;">
+                                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.flight: <strong class="col2">@listAvailFlights.FlightNumber</strong> <br />
+                                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Flight_time: <strong class="col2">
+                                                @UIUty.GetTimeString(listAvailFlights.Duration)
+                                            </strong>
+                                        </td>
+                                        <td class="ItineraryBox-FlightInfo" style="    text-align: right;">
+                                            <span>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Class: <strong class="col2">@listAvailFlights.Class </strong> <br /></span>
+                                            <span>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Aircraff: <strong class="col2">@listAvailFlights.Plane </strong> <br /></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%;margin-top:15px">
+                                    <tr>
+                                        <td class="ItineraryBox-Depart">
+                                            <div class="City">
+                                                @(getsanbaycode(listAvailFlights.StartPoint))
+                                            </div>
+                                            <span class="Hour">
+                                                @(listAvailFlights.StartTime.ToString("HH:mm"))
+                                            </span>
+                                            <br />
+                                            <span class="Date">@(listAvailFlights.StartTime.ToString("dd/MM/yyyy"))</span>
+                                        </td>
+                                        <td class="ItineraryBox-Direct">
+                                            <div><span class="FltNum"><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.flight:</span> <strong class="col2">@listAvailFlights.FlightNumber</strong></span></div>
+                                            <div class="ItineraryBox-Direct-Picture"><img src="/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                            <div><span class="FltTime"><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Flight_time:</span> <strong class="col2">@UIUty.GetTimeString(listAvailFlights.Duration)</strong></span></div>
+                                        </td>
+                                        <td class="ItineraryBox-Arrival">
+                                            <div class="City">
+                                                @(getsanbaycode(listAvailFlights.EndPoint))
+                                            </div>
+                                            <span class="Hour">
+                                                @(listAvailFlights.EndTime.ToString("HH:mm"))<br>
+                                            </span>
+                                            <span class="Date">@(listAvailFlights.EndTime.ToString("dd/MM/yyyy"))</span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="BorderTop">
+        <div class="DetailPriceBox">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="TablePrice">
+                <tbody>
+                    <tr>
+                        <td class="ItemHeader">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Passengers
+                        </td>
+                        <td class="ItemHeader" align="center">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Amount
+                        </td>
+
+                        <td class="ItemHeader" align="right">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Price
+                        </td>
+                        <td class="ItemHeader" align="right">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Taxes_and_fees
+                        </td>
+                        <td class="ItemHeader" align="right">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Total_price
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td>
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Adults
+                        </td>
+                        <td align="center">
+                            @departureFlight.Adt
+                        </td>
+
+                        <td class="ItemPrice">
+                            @PriceAdult.ToString("#,0.#") <span class="Currency">  @Currency</span>
+                        </td>
+                        <td class="ItemPrice">
+                            @((FeeAdult + TaxAdult).ToString("#,0.#")) <span class="Currency"> @Currency</span>
+                        </td>
+                        <td class="ItemPrice">
+                            @((departureFlight.Adt * (PriceAdult + FeeAdult + TaxAdult)).ToString("#,0.#"))<span class="Currency"> @Currency</span>
+                        </td>
+                    </tr>
+                    @if (Model.Chd > 0)
+                    {
+                        <tr>
+                            <td>
+                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.Children
+                            </td>
+                            <td align="center">
+                                @departureFlight.Chd
+                            </td>
+
+                            <td class="ItemPrice">
+                                @PriceChild.ToString("#,0.#")  <span class="Currency"> @Currency</span>
+                            </td>
+                            <td class="ItemPrice">
+                                @((FeeChild + TaxChild).ToString("#,0.#")) <span class="Currency"> @Currency</span>
+                            </td>
+                            <td class="ItemPrice">
+                                @((departureFlight.Chd * (PriceChild + FeeChild + TaxChild)).ToString("#,0.#"))<span class="Currency"> @Currency</span>
+                            </td>
+                        </tr>
+                    }
+                    @if (Model.Inf > 0)
+                    {
+                        <tr>
+                            <td>
+                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.Infants
+                            </td>
+                            <td align="center">
+                                @departureFlight.Inf
+                            </td>
+
+                            <td class="ItemPrice">
+                                @PriceInfant.ToString("#,0.#")  <span class="Currency"> @Currency</span>
+                            </td>
+                            <td class="ItemPrice">
+                                @((FeeInfant + TaxInfant).ToString("#,0.#")) <span class="Currency"> @Currency</span>
+                            </td>
+                            <td class="ItemPrice">
+                                @((departureFlight.Inf * (PriceInfant + FeeInfant + TaxInfant)).ToString("#,0.#"))<span class="Currency"> @Currency</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="TotalPriceBox">
+        <b>@VDMMutiline.Resource.App_GlobalResources.weblanguage.GRAND_TOTAL:</b>
+        <span class="GrandTotalPrice">@TotalPrice.ToString("#,0.#") </span>
+        <span class="Currency">@Currency</span>
+    </div>
+    <div class="Content BorderTop" style="display: block; padding: 10px;">
+        <b>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Conditions_of_tickets</b>
+
+        @if (departureFlight.Promo)
+        {
+            @Html.Raw(UIUty.GetHanhLyKyGuikhuyenmai(departureFlight.Airline, departureFlight.FareClass,departureFlight.Ishow23KgVN??false,
+              departureFlight.IsVNJQ ?? false,
+           departureFlight.IsVNJQ0Kg ?? false))
+        }
+        else
+        {
+            @Html.Raw(UIUty.GetHanhLyKyGui(departureFlight.Airline, departureFlight.FareClass,departureFlight.Ishow23KgVN??false,
+              departureFlight.IsVNJQ ?? false,
+           departureFlight.IsVNJQ0Kg ?? false))
+        }
+    </div>
+
+</div>
+

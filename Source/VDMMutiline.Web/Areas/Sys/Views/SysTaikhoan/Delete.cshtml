@@ -1,0 +1,22 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.AspNetUserInfo
+@{
+    ViewBag.Title = "Quản lý";
+    ViewBag.Description = "Xác nhận xóa bản ghi";
+    Layout = null;
+}
+<div class="row">
+    <div class="col-lg-12 mt-15">
+        @using (Html.BeginForm("Delete", " SysTaikhoan", new { @area = "" }, FormMethod.Post, new { id = "frdeleteSystaikhoan", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
+            <p style=" color: red">@ViewBag.Erro</p>
+            <h5>Bạn có chắc chắn muốn xóa @Model.DisplayName?</h5>
+            <a onclick="submitfomrdelete()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal">
+                <i class="fa fa-check"></i>
+                Xác nhận
+            </a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        }
+    </div>
+</div>

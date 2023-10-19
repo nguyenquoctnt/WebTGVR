@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="google-site-verification" content="PdonfJRcZsH-duc8ONgZeipFhFzAJVcljNmBRiggXEA" />
+
+    <script src="/Content/FontEnd/js/jquery-1.9.1.min.js"></script>
+    <script src="/Content/FontEnd/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/style.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/animate.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/responsive.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/FontEnd/VDM/theme/elines/custom.css" />
+    <link href="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="/Content/FontEnd/EditSeach.css" rel="stylesheet" />
+    <script src="/Content/FontEnd/VDM/Scripts/owl.carousel.js"></script>
+    <link href="/Content/FontEnd/VDM/theme/owl.carousel.css" rel="stylesheet" />
+    <script src="/Content/js/moment.min.js"></script>
+    <link href="/Content/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <script src="/Content/daterangepicker/daterangepicker.js"></script>
+    <script src="/Content/Selecttize/selectize.js"></script>
+    <link href="/Content/Selecttize/selectize.bootstrap3.css" rel="stylesheet" />
+    <script src="/Content/js/bootstrap-timepicker.min.js"></script>
+    <script src="/Content/js/bootstrap-datepicker.min.js"></script>
+    <script src="/Content/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Content/Copy/clipboard.js"></script>
+    <link href="/Content/daterangepicker/bootstrap-datepicker3.min.css" rel="stylesheet" />
+    <link href="/Content/daterangepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+
+    @RenderSection("Seometa", required: false)
+    <style>
+        h4.form-section {
+            background: #a9a5a5;
+            padding: 9px;
+            color: #fff;
+        }
+
+        .modal-dialog.modal-lg, .modal-dialog.modal-md {
+            margin-top: 62px;
+        }
+
+        .modal-header {
+            padding: 10px;
+        }
+
+        button.close {
+            position: absolute;
+            right: 6px;
+            top: 18px;
+        }
+
+        label.form-control {
+            font-weight: normal;
+            font-weight: normal;
+            border: none;
+            box-shadow: none;
+        }
+
+        .selectize-input.items.full.has-options.has-items {
+            height: 30px !important;
+        }
+        .has-error {
+            background: #FAEDEC;
+            border: 1px solid #E85445 !important;
+        }
+        .help-block {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("_Topbar")
+    @Html.Action("Header", "Control")
+    <div class="page-title-container">
+        <div class="container">
+            <div class="page-title pull-left br-title">
+                <h2 class="entry-title">Quản lý vé</h2>
+            </div>
+        </div>
+    </div>
+    <div>
+
+        <div class="container ">
+            <div class="row ">
+                <div class="col-md-12">
+                    @Html.Action("Menu", "QuanLyVeDaDat")
+                </div>
+                <div id="main" class="col-md-12">
+                    @RenderBody()
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @Html.Action("Footer", "Control")
+    @RenderSection("scripts", required: false)
+    <script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+    <link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery.placeholder.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/lazyload.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/theme-scripts.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/jquery.flexslider-min.js"></script>
+    <script src="/Scripts/VDMComon.js"></script>
+    <link href="/Content/bootstrap-toastr/toastr.css" rel="stylesheet" />
+    <script src="/Content/bootstrap-toastr/toastr.min.js"></script>
+    <script src="/Content/form-parsley/parsley.js"></script>
+    <script>
+        window.ParsleyConfig = {
+            errorClass: 'has-error'
+            , excluded: 'input[type=hidden]'
+            , trigger: false
+            , animate: true
+            , focus: 'first'
+            , validationMinlength: 3
+            , validators: {}
+            , errorElem: '<span></span>'
+            , errorsWrapper: '<span class="help-block"></span>'
+            , errorTemplate: "<div></div>"
+            , classHandler: function (el) {
+                return el.$element.closest(".form-control");
+            }
+        };
+    </script>
+</body>
+</html>

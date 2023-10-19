@@ -1,0 +1,322 @@
+﻿@using VDMMutiline.Core.UI
+@using VDMMutiline.Core.Common
+@using VDMMutiline.SharedComponent.Constants
+@model VDMMutiline.SeachAndBook.SeachParam
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+}
+<div id="Filter">
+    <div class="xmfix" style="position: sticky; top: 0px;z-index: 999;">
+        <div id="Basket" style="position: relative !important;" class="BasketFlightResult hide">
+            <div class="box_top"><div class="fa fa-shopping-cart"></div>Giỏ hàng của bạn</div>
+            <div class="WhiteBox NoTop">
+                <div class="BasketFlight one-way">
+                    <div class="TextTitle"><div class="fa fa-plane"></div> Chuyến đi</div>
+                    <div style="border-bottom: 1px dotted #cacaca;padding-bottom:5px">
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width:40%;text-align:center">
+                                        <span id="blDepartStartCity" class="from-city-name"></span>
+                                    </td>
+                                    <td style="font-size:15px;text-align:center">►</td>
+                                    <td style="width:40%;text-align:center">
+                                        <span id="blDepartStartCity" class="to-city-name"> </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="border-bottom: 1px dotted #cacaca">
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td class="BasketFlightDepart" valign="top">
+                                        <div class="BasketFlightTime">
+                                            <div class="fa fa-clock-o"></div> <span id="lblDepartStartTime" class="from-city-time">
+
+                                            </span>
+                                        </div>
+                                        <span id="lblDepartStartDate" class="from-city-date" style="font-size:11px;">
+                                        </span>
+
+                                    </td>
+                                    <td class="BasketFlightArrive" valign="top">
+                                        <div class="BasketFlightTime">
+                                            <div class="fa fa-clock-o"></div>
+                                            <span id="lblDepartEndTime" class="to-city-time">
+                                            </span>
+                                        </div>
+                                        <span id="lblDepartEndDate" class="to-city-date" style="font-size:11px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding-top:5px">
+                        <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-right: 5px;width:60px">
+                                        <img id="imgDepartAirline" class="logo-start" src="" style="height:18px;border-width:0px;">
+                                    </td>
+                                    <td style="text-align:center;font-weight:bold">
+                                        ✈ <span id="lblDepartFlightNumber" class="code-start"></span>
+                                    </td>
+                                    <td style="text-align:right;font-weight:bold">
+                                        <span id="lblDepartclassNew" class="class-start">
+
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="BasketFlight has-roundtrip hide">
+                    <div class="TextTitle"><div class="fa fa-plane"></div>Chuyến về</div>
+                    <div style="border-bottom: 1px dotted #cacaca;padding-bottom:5px">
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width:40%;text-align:center">
+
+                                        <span id="blDepartStartCity" class="from-city-name"> </span>
+                                    </td>
+                                    <td style="font-size:15px;text-align:center">►</td>
+                                    <td style="width:40%;text-align:center">
+
+                                        <span id="blDepartStartCity" class="to-city-name"> </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="border-bottom: 1px dotted #cacaca">
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td class="BasketFlightDepart" valign="top">
+                                        <div class="BasketFlightTime">
+                                            <div class="fa fa-clock-o"></div> <span id="lblDepartStartTime" class="from-city-time">
+                                            </span>
+                                        </div>
+                                        <span id="lblDepartStartDate" style="font-size:11px;" class="from-city-date">
+                                        </span>
+                                    </td>
+                                    <td class="BasketFlightArrive" valign="top">
+                                        <div class="BasketFlightTime">
+                                            <div class="fa fa-clock-o"></div>
+                                            <span id="lblDepartEndTime" class="to-city-time">
+
+                                            </span>
+                                        </div>
+                                        <span id="lblDepartEndDate" style="font-size:11px;" class="to-city-date">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding-top:5px">
+                        <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-right: 5px;width:60px">
+                                        <img id="imgDepartAirline" class="logo-start" src="" style="height:18px;border-width:0px;">
+                                    </td>
+                                    <td style="text-align:center;font-weight:bold">
+                                        ✈ <span id="lblDepartFlightNumber" class="code-start"></span>
+                                    </td>
+                                    <td style="text-align:right;font-weight:bold">
+                                        <span id="lblReturnclass" class="class-start"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="Pad10 BorderTop BasketPrice" style="padding-top:0px">
+                    <div class="TextTitle">Tóm tắt giá vé</div>
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span id="lblTotalAdt">@Model.Adult</span> x Người lớn
+                                </td>
+                                <td style="text-align: right;">
+                                    <label style="display:none" id="lblTaxAdt" class="ItemPrice">0</label>
+                                    <span style="display:none" id="lblFareAdt" class="ItemPrice"></span>
+                                    <label id="lblTotalPriceAdt" class="ItemPrice"></label> VNĐ
+                                </td>
+                            </tr>
+                            <tr id="trFareChild">
+                                <td>
+                                    <span id="lblTotalChd">@Model.Children</span> x Trẻ em
+                                </td>
+                                <td style="text-align: right;">
+                                    <span style="display:none" id="lblFareChd" class="ItemPrice">0</span>
+                                    <label style="display:none" id="lblTaxChd" class="ItemPrice">0</label>
+                                    <label id="lblTotalPriceChd" class="ItemPrice"></label>  VNĐ
+                                </td>
+                            </tr>
+                            <tr id="trFareInfant">
+                                <td>
+                                    <span id="lblTotalInf">@Model.Infant</span> x Em bé
+                                </td>
+                                <td style="text-align: right;">
+                                    <label style="display:none" id="lblTaxInf" class="ItemPrice">0</label>
+                                    <span id="lblFareInf" style="display:none" class="ItemPrice">0</span>
+                                    <label id="lblTotalPriceInf" class="ItemPrice"></label>VNĐ
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="Pad10 BorderTop BasketPrice GrandPrice">
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Tổng chi phí</strong>
+                                </td>
+                                <td class="GrandTotalPrice">
+                                    <span id="lblGrandTotal"></span> <span class="Currency">VNĐ</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="Pad10 BorderTop BasketPrice GrandPrice">
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <button type="button" onclick="$('#formvalueSeachdomtick').submit();" class="pview">Đặt vé</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box_top">
+        <div class="close-button"></div>
+        <div class="fa fa-filter"></div>
+        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Filter_flights
+    </div>
+    <div class="WhiteBox NoTop FilterBox border-radius-bottom">
+        <div class="filer-group">
+            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Airlines</strong><br>
+            <input id="ckbAllAirline" type="checkbox" class="checkboxalall" @(string.IsNullOrEmpty(Model.AirlineCode) ? "checked='checked'" : "") name="ckbAllAirline"><label style="font-size: 14px;font-weight: normal;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Select_all</label>
+            <table id="ckbListAirlines" border="0" style="width: 100%;">
+                <tbody>
+                    @if (Model.ListAirline != null)
+                    {
+                        for (int i = 0; i < Model.ListAirline.Count; i++)
+                        {
+                            <tr>
+                                @Html.HiddenFor(z => Model.ListAirline[i].Code)
+                                <td style="width: 80%">
+                                    <input id="@(i + "s")" checked class="checkboxal" type="checkbox" name="@Model.ListAirline[i].Code">
+                                    <label style="font-size: 12px;font-weight: normal;text-transform: none;">
+                                        <img alt="@Model.ListAirline[i].Name" class="filter-airline-logo" src="@Model.ListAirline[i].Pictures" height="16" width="20">@Model.ListAirline[i].Name
+                                    </label>
+                                </td>
+                                <td style="text-align:right;color: #b30404; font-weight: bold;width: 20%">
+                                    @{
+                                        var FareAdult = UIUty.ChuyenDoiTienTe(Model.ListAirline[i].GiareNhat);
+                                        @UIUty.catgia(Model.ListAirline[i].GiareNhat)
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="filer-group">
+            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Sort_flight</strong><br>
+            <div class="BoxContent">
+                <span for="gia" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="gia" onchange="onSort()" name="Sort" value="@Constant.Olderve.Gia">
+                    Giá (Từ thấp tới cao)
+                </span>
+                <br>
+                <span for="TongThoiGianBay" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="TongThoiGianBay" onchange="onSort()" name="Sort" value="@Constant.Olderve.Thoigianbay">
+                    Tổng thời gian bay
+                </span>
+                <br>
+                <span for="GioCatCanh" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="GioCatCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioCatCanh">
+                    Thời gian cất cánh
+                </span>
+                <br>
+                <span for="GioHaCanh" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Soft" type="radio" id="GioHaCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioHaCanh">
+                    Giờ hạ cánh
+                </span>
+                <br>
+                <span for="Hang" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="Hang" onchange="onSort()" name="Sort" value="@Constant.Olderve.HangHangkhong">
+                    Hãng hàng không
+                </span>
+            </div>
+        </div>
+        <div class="filer-group no-bottom">
+            <strong>Chế độ hiển thị</strong><br>
+            <span onchange="SwitchViewMode('base')"><input id="rdbViewBaseFare" type="radio" name="GroupViewMode" value="rdbViewBaseFare"><label style="font-size: 14px;font-weight: normal;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Basic_price_for_1_adult</label></span><br>
+            <span onchange="SwitchViewMode('total')"><input id="rdbViewTotalFare" type="radio" name="GroupViewMode" value="rdbViewTotalFare" checked="checked"><label style="font-size: 14px;font-weight: normal;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Prices_include_taxes_and_fees</label></span>
+        </div>
+    </div>
+    <div class="box_top"><div class="fa fa-shopping-cart"></div>Tìm kiếm chuyến bay</div>
+    <div class="WhiteBox NoTop FilterBox border-radius-bottom">
+        <div class="filer-group">
+            @{Html.RenderPartial("/Views/SeachHome/_PartialSachMiniRight.cshtml", Model);}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $( document ).ready( function () {
+        $('#ckbAllAirline').change(function () {
+            var n = jQuery( ".checkboxal" ).length;
+            var check = $( this ).prop( 'checked' );
+            if (n > 0) {
+                jQuery(".checkboxal").each(function () {
+                    $(this).prop('checked', check);
+                    $( "." + $( this ).attr( "name" ) ).each( function () {
+                         if (check == true) {
+                             $( this ).css( "display", "block" );
+                         } else {
+                             $( this ).css( "display", "none" );
+                        }
+
+                    });
+                });
+            }
+        });
+        $('.checkboxal').change(function () {
+            $("#ckbAllAirline").prop('checked', false);
+            jQuery(".checkboxal").each(function () {
+                var valuecheck = $(this).is(":checked");
+                $("."+$(this).attr("name")).each(function () {
+                    if (valuecheck == true) {
+                        $(this).css("display", "block");
+                    } else {
+                        $(this).css("display", "none");
+                    }
+                });
+            });
+
+        });
+    });
+  
+</script>

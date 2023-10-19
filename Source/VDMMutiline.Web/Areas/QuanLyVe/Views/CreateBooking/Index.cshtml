@@ -1,0 +1,296 @@
+﻿@model VDMMutiline.WebBackEnd.Models.CreareBookingModel
+@{
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                    <h3 style="color:#fff">Tạo vé</h3>
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            @using (Html.BeginForm("Index", "CreateBooking", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", @data_parsley_errors_messages_disabled = "", @novalidate = "", id = "frCreatehtmlblock", @role = "form", enctype = "multipart/form-data" }))
+            {
+                <div class="form-body">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="currentstep" value="1" />
+                    <div id="create-booking" class="form_wizard wizard_horizontal">
+                        @{Html.RenderPartial("~/Areas/QuanLyVe/Views/CreateBooking/_PStep.cshtml");}
+                        @{Html.RenderPartial("~/Areas/QuanLyVe/Views/CreateBooking/VBookingInfo.cshtml", Model);}
+                        @{Html.RenderPartial("~/Areas/QuanLyVe/Views/CreateBooking/_ThongtinNguoiDat.cshtml", Model);}
+                        <div id="pax-info" style="display:none">
+                        </div>
+                    </div>
+                </div>
+                <div id="actiontaove" class="form-actions">
+                    <button type="button" onclick="pressFinishCallback()" id="buttonFinish" disabled="disabled" class="buttonFinish btn btn-warning mr-1">
+                        Tạo vé
+                    </button>
+                    <button type="button" id="buttonNext" onclick="Nextform()" class="buttonNext btn btn-primary  mr-1">
+                        Tiếp theo
+                    </button>
+                    <button type="button" onclick="Previousform()" id="buttonPrevious" disabled="disabled" class="buttonPrevious buttonDisabled btn btn-default">
+                        Trở lại
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addons-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+    <div id="contenaddaddon"></div>
+</div>
+
+<script src="/Content/js/CreateModel.js"></script>
+<script>
+     function createAddon() {
+        var form = $('form#frAdddichvu').get(0);
+                var fd = new FormData(form);
+                _lwfunc.AjaxNoprocessData("@Url.Action("Adddichvu", "CreateBooking")", fd, function (data) {
+                    if (data.isSuccess === true) {
+                        $('#addons-modal').modal('hide');
+                        $('#contenaddaddon').html("");
+                        GetlistAddon(data.GuiID, "#listdichvu" + data.GuiID);
+                        toastr.success(data.mess, "Thông báo!");
+                    } else {
+                        toastr.error(data.mess, "Thông báo!");
+                    }
+                });
+    }
+    $(document).ready(function () {
+        $('.buttonNext').addClass('btn btn-success');
+        $('.buttonPrevious').addClass('btn btn-default');
+        $('.buttonFinish').addClass('btn btn-primary');
+
+        $('#return input').removeAttr('required');
+        $('input[name="Ways"]').on('ifClicked', function (event) {
+            if ($(this).val() == 2) {
+                $('#return').show();
+                $('#return input[name="lstTicket[1].Code"]').prop('required', true);
+                $('#return input[name="lstTicket[1].Class"]').prop('required', true);
+                $('#return input[name="lstTicket[1].FlightNo"]').prop('required', true);
+                $('#return input[name="lstTicket[1].StartDate"]').prop('required', true);
+                $('#return input[name="lstTicket[1].EndDate"]').prop('required', true);
+                $('#return input[name="lstTicket[1].PriceNetAdult"]').prop('required', true);
+            }
+            else if ($(this).val() == 1) {
+                $('#return').hide();
+                $('#return input').removeAttr('required');
+            }
+        });
+    });
+    function validStep(step) {
+        var isStepValid = false;
+        var formvalidate = $('#frCreatehtmlblock');
+        formvalidate.parsley().reset();
+        formvalidate.parsley().destroy();
+        formvalidate.parsley().validate()
+        if (step === 1) {
+            isStepValid = formvalidate.parsley().validate();
+        }
+        else if (step === 2) {
+            isStepValid = (formvalidate.parsley().validate());
+        }
+        else {
+            isStepValid = formvalidate.parsley().validate();
+        }
+        return isStepValid;
+    }
+    function Nextform() {
+        var stepindex = parseInt($('#currentstep').val());
+        if (validStep(stepindex)) {
+            $('#steps-uid-0-t-0').removeClass('current')
+            $('#steps-uid-0-t-1').removeClass('current')
+            $('#steps-uid-0-t-2').removeClass('current')
+            if (stepindex === 1) {
+                $('#steps-uid-0-t-1').addClass('current')
+                $('#steps-uid-0-t-1').removeClass('disabled')
+               // $('#buttonPrevious').attr('disabled', true);
+                $('#buttonPrevious').removeAttr("disabled");
+                $('#booking').hide();
+                $('#contacts').show();
+                $('#pax-info').hide();
+            }
+            else if (stepindex === 2) {
+                $('#steps-uid-0-t-2').addClass('current')
+                $('#steps-uid-0-t-2').removeClass('disabled')
+                $('#buttonFinish').removeAttr("disabled");
+                $('#booking').hide();
+                $('#contacts').hide();
+                addpax();
+                $('#pax-info').show();
+            }
+            if (stepindex < 3) {
+                stepindex = stepindex + 1;
+                $('#currentstep').val(stepindex);
+            }
+        }
+    }
+    function Previousform() {
+        var stepindex = parseInt($('#currentstep').val());
+        if (validStep(stepindex)) {
+            $('#steps-uid-0-t-0').removeClass('current')
+            $('#steps-uid-0-t-1').removeClass('current')
+            $('#steps-uid-0-t-2').removeClass('current')
+            if (stepindex === 3) {
+                $('#steps-uid-0-t-1').addClass('current')
+                $('#steps-uid-0-t-1').removeClass('disabled')
+                $('#buttonPrevious').removeAttr("disabled");
+                $('#buttonFinish').attr('disabled', true);
+                $('#booking').hide();
+                $('#contacts').show();
+                $('#pax-info').hide();
+            }
+            else if (stepindex === 2) {
+                $('#steps-uid-0-t-1').addClass('current')
+                $('#steps-uid-0-t-1').removeClass('disabled')
+                $('#buttonFinish').attr('disabled', true);
+                $('#buttonPrevious').attr('disabled', true);
+                $('#booking').show();
+                $('#contacts').hide();
+                $('#pax-info').hide();
+            }
+            if (stepindex >1) {
+                stepindex = stepindex - 1;
+                $('#currentstep').val(stepindex);
+            }
+        }
+    }
+    function pressFinishCallback() {
+        var formvalidate = $('#frCreatehtmlblock');
+            formvalidate.parsley().validate()
+            if (formvalidate.parsley().isValid() == true) {
+                var form = $('form#frCreatehtmlblock').get(0);
+                var fd = new FormData(form);
+                _lwfunc.AjaxNoprocessData("@Url.Action("Index", "CreateBooking")", fd, function (data) {
+                    if (data.isSuccess === true) {
+                        toastr.success(data.mess, "Thông báo!");
+                        $("#actiontaove").hide();
+                        window.location.href = "@Url.Action("Index", "Booking")";
+                    } else {
+                        toastr.error(data.mess, "Thông báo!");
+                    }
+                });
+            }
+    }
+    $('.date').datepicker({
+        ignoreReadonly: true,
+        allowInputToggle: true,
+        format: 'dd/mm/yyyy',
+    });
+    $(".time").timepicker({
+        minuteStep: 1,
+        showSeconds: false,
+        showMeridian: false,
+        defaultTime: false,
+        format: "HH:mm",
+    });
+    function addpax() {
+        var urls = '@Url.Action("CreateDanhSachHanhKhac", "CreateBooking")' + "?nguoilon=" + $('#TotalAdult').val() + "&treem=" + $('#TotalChild').val() + "&embe=" + $('#TotalInfant').val();
+        $("#pax-info").html("");
+        _lwfunc.AjaxGet(urls, function (data) {
+                $("#pax-info").html(data);
+            });
+    }
+
+</script>
+<style>
+    .selectize-input {
+        min-height: calc(2.75rem + 2px);
+    }
+</style>
+@section scripts {
+    <script>
+        $('#ToCity').selectize({
+            valueField: 'value',
+            labelField: 'labeldisplay',
+            searchField: 'labeldisplay',
+            options: [],
+            create: false,
+            load: function (query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '@Url.Action("SeachGetdiadiem", "CreateBooking")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        searchParam: query,
+                    },
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res);
+                    }
+                });
+            }
+        });
+        $('#FromCity').selectize({
+            valueField: 'value',
+            labelField: 'labeldisplay',
+            searchField: 'labeldisplay',
+            options: [],
+            create: false,
+            load: function (query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '@Url.Action("SeachGetdiadiem", "CreateBooking")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        searchParam: query,
+                    },
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res);
+                    }
+                });
+            }
+        });
+
+
+        var eventHandler = function (name) {
+            return function () {
+            };
+        };
+        $('#lstTicket_0__AirlineCode').selectize({
+            create: false,
+            maxItems: 1,
+            onChange: eventHandler('onChange'),
+            onItemAdd: eventHandler('onItemAdd'),
+            onItemRemove: eventHandler('onItemRemove'),
+            onOptionAdd: eventHandler('onOptionAdd'),
+            onOptionRemove: eventHandler('onOptionRemove'),
+            onDropdownOpen: eventHandler('onDropdownOpen'),
+            onDropdownClose: eventHandler('onDropdownClose'),
+            onFocus: eventHandler('onFocus'),
+            onBlur: eventHandler('onBlur'),
+            onInitialize: eventHandler('onInitialize'),
+        });
+        $('#lstTicket_1__AirlineCode').selectize({
+            create: false,
+            maxItems: 1,
+            onChange: eventHandler('onChange'),
+            onItemAdd: eventHandler('onItemAdd'),
+            onItemRemove: eventHandler('onItemRemove'),
+            onOptionAdd: eventHandler('onOptionAdd'),
+            onOptionRemove: eventHandler('onOptionRemove'),
+            onDropdownOpen: eventHandler('onDropdownOpen'),
+            onDropdownClose: eventHandler('onDropdownClose'),
+            onFocus: eventHandler('onFocus'),
+            onBlur: eventHandler('onBlur'),
+            onInitialize: eventHandler('onInitialize'),
+        });
+
+    </script>
+}
+

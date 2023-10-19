@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Khách sạn";
+
+}
+<div class="container book-and-payment-wrap">
+    <div class="row">
+        <div class="col-sm-12 book-method">
+            <div class="page-title box-sizing">
+                @*<h2>Khách sạn</h2>*@
+            </div>
+            <iframe id="iframe-hotel" src="https://hotels.ebk.vn?tab=hotel" scrolling="no" style="width: 100%; transition: height 0.35s ease-out 0s;" onload="window.addEventListener?window.addEventListener('message',function(e){var t=document.getElementById('iframe-hotel'),h=e.data.hotel;h&amp;&amp;t.height!=h.height&amp;&amp;(t.height=h.height)},!1):window.attachEvent('onmessage',function(e){var t=document.getElementById('iframe-hotel'),h=e.data.hotel;h&amp;&amp;t.height!=h.height&amp;&amp;(t.height=h.height)});" height="600px"></iframe>
+        </div>
+    </div>
+</div>

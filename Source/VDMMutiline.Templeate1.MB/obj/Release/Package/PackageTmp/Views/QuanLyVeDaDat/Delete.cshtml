@@ -1,0 +1,32 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SharedComponent.Params.BK_BookingParam
+@{ ViewBag.Title = "Quản lý vé";
+    ViewBag.Description = "Xóa bản ghi";
+    Layout = "~/Views/Shared/_LayouQuanLyVe.cshtml";
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <h3>Xác nhận xóa bản ghi</h3>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard" style="
+    margin-bottom: 10px;
+">
+            @using (Html.BeginForm("Delete", "QuanLyVeDaDat", FormMethod.Post, new { @role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(z => Model.Id)
+                @Html.HiddenFor(z => Model.RetunUrl)
+                <h5>Bạn muốn xóa?</h5>
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                <a class="btn btn-danger" href="@Server.UrlDecode(Model.RetunUrl)">Hủy</a>
+            }
+
+        </div>
+    </div>
+</div>
+

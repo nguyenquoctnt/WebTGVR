@@ -1,0 +1,208 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using Microsoft.Ajax.Utilities
+@using VDMMutiline.Ultilities
+@using VDMMutiline.SharedComponent.Entities
+@using VDMMutiline.Core
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@model VDMMutiline.SharedComponent.EntityInfo.BK_BookingInfo
+@functions{
+    private List<VDMMutiline.SharedComponent.EntityInfo.BK_PassengerInfo> GetbyBooking(int id)
+    {
+        var dao = new BK_PassengerDao();
+        var param = new VDMMutiline.SharedComponent.Params.BK_PassengerParam() { BookingID = id };
+        dao.GetbyBooking(param);
+        return param.BK_PassengerInfos;
+    }
+    private List<BK_TicketInfo> GetListByBooking(int id)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(id);
+    }
+    private List<BK_PassengerInfo> GetPassengerByBooking(int bokingid)
+    {
+        var dao = new BK_PassengerDao();
+        return dao.GetbyBookingId(bokingid);
+    }
+    private tbl_PaymentInfo GetpaymentInfo(int bokingid)
+    {
+        var dao = new BK_BookingDao();
+        return dao.GetInfoThanhToan(bokingid);
+    }
+}
+
+
+
+@if (Model != null)
+{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+
+    var listPassengerByBooking = GetPassengerByBooking(Model.ID);
+    var nguoilon = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.NguoiLon);
+    var treem = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.TreEm);
+    var embe = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.EmBe);
+    var index = 0;
+    var indexHanhLy = 0;
+    string hangbay = "";
+    decimal TongTienHanhLy = 0;
+    
+    var daoticket = new BK_TicketDao();
+    var getlistticket = GetListByBooking(Model.ID);
+    var Departure = getlistticket.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotDi);
+    var Return = getlistticket.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotVe);
+    if (Departure != null)
+    {
+        hangbay += Departure.Code;
+
+    }
+    if (Return != null)
+    {
+        if (hangbay != Return.Code)
+        {
+            hangbay += (" - " + Return.Code);
+        }
+    }
+    <div class="selected bgSelect1" style="margin-bottom: 50px; margin-top: 65px">
+        <div class="hidden1" style="background-color: #f4f4f4;">
+            <div class="row  top log" style="">
+
+                <div class="col-xs-12 cb ">
+                    XÁC NHẬN ĐẶT CHỖ
+                </div>
+
+            </div>
+            <div class="row namecity" style="margin: 7px 0px;">
+                <span class="citygo">
+                    Tóm tắt đặt chỗ
+                </span>
+                <span class="cityto">
+                    <a style="padding: 4px 20px;" class="radair" id="copy" href="javascript:void(0)">Copy</a>
+                </span>
+            </div>
+            <div id="to-copy">
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    Xác nhận đặt vé: @hangbay
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    Code: @Model.BookCode
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    @{
+                        var incontrail = "";
+                        foreach (var item in listPassengerByBooking)
+                        {
+                            if (!incontrail.Contains(item.ID + ";"))
+                            {
+                                <p style="padding-bottom: 0px; padding-top: 0px; margin-bottom: 0px; margin-top: 0px">
+                                    @Utility.ConvertToUnsign(item.FirstName + " " + item.Name).ToUpper()
+                                    @*(@((!string.IsNullOrEmpty(item.BaggageDepartValue) ? item.BaggageDepartValue : "0") + "kg") @((!string.IsNullOrEmpty(item.BaggageReturnValue) ? " - " + item.BaggageReturnValue : " - 0") + "kg"))*@
+                                </p>
+                            }
+                            incontrail += item.ID + ";";
+                        }
+                    }
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    @{
+
+                        if (Departure != null)
+                        {
+                            var lidetial = daoticket.GetDetailByTicket(Departure.ID);
+                            foreach (var item in lidetial)
+                            {
+                                var departure = item;
+                                <p style="font-weight: bold; margin-bottom: 0px;">
+                                    <span id="lblPhone">@departure.flight @departure.FromCity @departure.ToCity @departure.StartDate.Value.ToString("dd/MM") @departure.StartDate.Value.ToString("HH:mm") </span>
+                                </p>
+                            }
+                        }
+                    }
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 15px; border-bottom: 0px;">
+                    @{
+                        if (Return != null)
+                        {
+                            var lidetial = daoticket.GetDetailByTicket(Return.ID);
+                            foreach (var item in lidetial)
+                            {
+                                var departure = item;
+                                <p style="font-weight: bold; margin-bottom: 0px;">
+                                    <span id="lblPhone">@departure.flight @departure.FromCity @departure.ToCity @departure.StartDate.Value.ToString("dd/MM") @departure.StartDate.Value.ToString("HH:mm") </span>
+                                </p>
+                            }
+                        }
+                    }
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    <span id="lblEmail">Xtay <b> 7Kg</b></span>
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    <span id="lblEmail">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_has_a_front_90P</span>
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    <span id="lblEmail">Gia:</span>@{
+                        var gia = Model.TotalPrice.Value.ToString("n0");
+                        var gialent = gia.Length;
+                    }
+                    @(Model.TotalPrice.HasValue ? (gialent > 4 ? gia.Remove(gialent - 4, 4) + "K" : gia) : "")
+                </div>
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    <span id="lblNote">@Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.Status_Book)</span>
+                </div>
+                @if (Model.Status == Constant.StatusVe.DangGiuCho)
+                {
+                    <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                        Han thanh toan:
+                        <span id="lblPaymentDeadline">@(Model.Expireddate.HasValue ? Model.Expireddate.Value.ToString("dd/MM/yyyy HH:mm") : "")</span>
+                    </div>
+                }
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0px;">
+                    Lhe:
+                    <span id="lblPaymentDeadline">@(CurentUser.PhoneNumber)</span>
+                </div>
+            </div>
+            <div class="row  log3 ">
+                <a id="Button1" text="" style="color: #fff; font-size: 12px" href="/SeachHome/Seach" cssclass="btt">TIẾP TỤC ĐẶT VÉ KHÁC</a>
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 10px !important;">
+                <div class="row hk  ">
+                    <span class="">THÔNG TIN LIÊN HỆ</span>
+                    <input type="button" class="but minusp2" value="" />
+                </div>
+                <div class="addp2">
+                    <div class="row bbot btop" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span class="money">HỌ VÀ TÊN: </span>
+                        @(Utility.ConvertToUnsign(Model.Name).ToUpper())
+                    </div>
+                    <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span class="money">ĐIỆN THOẠI: </span>
+                        @Model.Phone
+
+                    </div>
+                    <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span class="money">EMAIL: </span>
+                        @Model.Email
+                    </div>
+                    <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span class="money">ĐỊA CHỈ: </span>
+                        @Model.Address
+                    </div>
+                    <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span class="money">Ghi chú: </span>
+                        @Model.Note
+                    </div>
+
+                </div>
+            </div>
+            <div class="row  log3 ">
+                <a id="Button1" text="" style="color: #fff; font-size: 12px" href="/SeachHome/Seach" cssclass="btt">ĐẶT VÉ KHÁC</a>
+            </div>
+        </div>
+    </div>
+
+
+}

@@ -1,0 +1,302 @@
+﻿@model VDMMutiline.Core.Models.VDMUser
+@using VDMMutiline.SharedComponent.Constants
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    var idUser = 0;
+
+
+}
+<div class="widget-box ui-sortable-handle" style="padding-bottom:20px">
+    <div class="widget-body">
+        <div class="widget-main padding-6">
+            <div class="tab-content">
+                <div id="home" class="tab-pane active">
+                    @using (Html.BeginForm("ProfileMember", "Account", new { }, FormMethod.Post, new { @data_parsley_validate = "", @class = "login-form", role = "form", Id = "profileform", enctype = "multipart/form-data" }))
+                    {
+                        idUser = Model.Id;
+                        var _biz = new VDMMutiline.Biz.Wallet.WalletBiz();
+                        var param = new VDMMutiline.SharedComponent.Params.Wallet.WalletParam { UserID = idUser };
+                        _biz.GetInfo(param);
+                        var SoDu = "0";
+                        if (param.WalletInfo != null)
+                        {
+                            SoDu = (param.WalletInfo.Amount ?? 0).ToString("n0");
+                        }
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-lg-12 etb-wrapper">
+                                <div class="card">
+                                    <div class="card-header m-h-80">
+                                        <h5 class="card-header-text">
+                                            <button type="button" onclick="Updateprofile();" class="btn-save btn btn-info f-right">
+                                                <i class="fa fa-save "></i> <span class="ng-scope">Cập nhập</span>
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div class="card-block" style="padding-bottom: 15px;">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Ảnh đại diện</label>
+                                                <br />
+                                                <input type="file" name="fileAvatar" />
+                                                <br />
+                                                @if (!string.IsNullOrEmpty(Model.Avatar))
+                                                {
+                                                    <img src="@Model.Avatar" style="height:auto; width:auto;" />
+                                                }
+                                                @Html.HiddenFor(x => x.Avatar)
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">Tên đăng nhập</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-user"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">  Tên hiển thị</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-user"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Điện thoại</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="ace-icon fa fa-phone"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @type = "phone", @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">Số dư</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-user"></i>
+                                                    </span>
+                                                    <input type="text" value="@SoDu" class="form-control input-mask-user" readonly="readonly" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Địa chỉ</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-home"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <ul class="nav nav-tabs nav-underline no-hover-bg">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31" aria-expanded="true">Lịch sử giao dịch</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content px-1 pt-1" style="        padding-left: 0px !important;
+        padding-right: 0px !important;">
+                                                <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
+                                                    <div class="table-responsive">
+                                                        <div class="tableconte">
+                                                            <table id="dynamic-tablehistorysuser" class="table table-striped table-bordered zero-configuration">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Ngày thực hiện</th>
+                                                                        <th>Số tiền</th>
+                                                                        <th>Số chứng từ</th>
+                                                                        <th>Người tạo</th>
+                                                                        <th>Ghi chú</th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="    clear: both;"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+            <!---endPassword----->
+        </div>
+    </div>
+</div>
+@section scripts
+    {
+    <script>
+    $( document ).ready( function () {
+        showpopub();
+         $( "#dynamic-tablehistorysuser" ).dataTable( {
+                "bStateSave": false,
+                "searching": false,
+                "bSort": true,
+                "sPaginationType": "full_numbers",
+                 "serverSide": true,
+                 "processing": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": "@Url.Action("AjaxHistoryByUserLoadList", "Wallet",new {@area="WalletManager" })",
+                "iDisplayLength": 10,
+                "lengthChange": false,
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "UserId", "value": @idUser });
+                },
+                "aoColumns": [
+                    {
+                       "mData": "Datetime",
+                        "mRender": function ( data, type, row ) {
+                            return ( data ) ? _lwfunc.formatDateTime( data ) : "";
+                       },
+                    },
+                    {
+                       "mData": "Amount",
+                       "mRender": function (data, type, row) {
+                           return (data) ? _lwfunc.formatNumber(data) : "";
+                       },
+                    },
+                    { "mData": "NumberOfDocuments" },
+                    { "mData": "CreateUser" },
+                    { "mData": "Note" },
+
+                ],
+                "language": {
+                    "sLoadingRecords": "@Constant.Loaddingdata",
+                    "sProcessing": "@Constant.Loaddingdata",
+                    "lengthMenu": "@Constant.Loaddingdata",
+                    "zeroRecords": "@Constant.zeroRecords",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "((@Constant.Loaddingdata)",
+                    "paginate": {
+                        "next": ">",
+                        "previous": "<",
+                        "first": "<<",
+                        "last": ">>"
+                    }
+            },
+                "initComplete": function ( settings, json ) {
+                closepopub();
+            },
+            "drawCallback": function ( settings ) {
+                closepopub();
+            }
+            });
+    } );
+    </script>
+    <script type="text/javascript">
+        var Updateprofile = function () {
+            var form = $('form#profileform').get(0);
+            var fd = new FormData(form);
+            _lwfunc.AjaxNoprocessData("@Url.Action("ProfileMember", "Account")", fd, function (data) {
+                if (data.isSuccess === true) {
+                    reloadGrid(); toastr.success(data.mess, "Notification!");
+                } else {
+                    toastr.error(data.mess, "Notification!");
+                }
+
+            });
+        }
+        $(document).ready(function () {
+            var oTable = $("#loginhistor").dataTable({
+                "bStateSave": false,
+                "searching": false,
+                "bSort": true,
+                "sPaginationType": "full_numbers",
+                "serverSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": "@Url.Action("AjaxLoadListLogin", "Account")",
+                "iDisplayLength": 50,
+                "order": [[1, "desc"], [2, "desc"]],
+                "lengthChange": false,
+                "aoColumns": [
+                   {
+                       "mData": "Ngaytao",
+                       "mRender": function (data, type, row) {
+                           return (data) ? _lwfunc.formatDateTime(data) : "";
+                       },
+                   },
+                    { "mData": "Agent" },
+                    { "mData": "IPDangnhap" }
+                ],
+                "language": {
+                    "sLoadingRecords": "@Constant.Loaddingdata",
+                    "sProcessing": "@Constant.Loaddingdata",
+                    "lengthMenu": "@Constant.Loaddingdata",
+                    "zeroRecords": "@Constant.zeroRecords",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "((@Constant.Loaddingdata)",
+                    "paginate": {
+                        "next": ">",
+                        "previous": "<",
+                        "first": "<<",
+                        "last": ">>"
+                    }
+                },
+            });
+        });
+        function reloadGrid() {
+            var oDataTable = $("#loginhistor").dataTable();
+            oDataTable.fnDraw(false);
+        }
+
+    </script>
+    <script type="text/javascript">
+        var ChangeTwoFactor = function () {
+            _lwfunc.Ajax("@Url.Action("TwoFactor", "Account")", $("#changefwofactor").serialize(), function (data) {
+                if (data.isSuccess === true) {
+                    toastr.success(data.mess, "Notification!");
+                    //$.get('/url/', function (data) {
+                    //    $(data).find("#id_to_find").appendTo("#id_to_append");
+                    //});
+                    //$(ContentTwo).a
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("TwoFactor", "Account")",
+                        success: function (text) {
+                            $("#ContentTwo").empty();
+                            $('#ContentTwo').append(text);
+                        }
+                    });
+                }
+                else {
+                    toastr.error(data.mess, "Notification!");
+                }
+
+            });
+        }
+
+    </script>
+}

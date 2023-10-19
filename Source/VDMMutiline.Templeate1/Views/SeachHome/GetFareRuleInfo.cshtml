@@ -1,0 +1,57 @@
+﻿@model VDMMutiline.SeachAndBook. VDMFareDataInfo
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+    Layout = null;
+    var objnamedi = getbycode(Model.StartPoint);
+    var objnameden = getbycode(Model.EndPoint);
+}
+@functions{
+
+   private ApiClient.Models.Airport getbycode(string code)
+    {
+        return VDMMutiline.Ultilities. Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = VDMMutiline.Ultilities.Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+
+<span class="button b-close"><span>X</span></span><div class="imageAjaxLoading">
+    @if (Model != null)
+    {
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#@string.Format("Home{0}", Model.FareDataIdValue)" style="color: #000 !important;line-height: 17px !important;padding-top: 5px;padding-bottom: 4px;">
+                    @(objnamedi != null ? string.Format("{0}", objnamedi.AirportName) : "")
+                    - @(objnameden != null ? string.Format("{0}", objnameden.AirportName) : "")
+                </a>
+            </li>
+            @if (Model.Itinerary > 1)
+            {
+                <li>
+                    <a data-toggle="tab" href="#@string.Format("menu1{0}", Model.FareDataIdValue)" style="color: #000 !important;line-height: 17px !important;padding-top: 5px;padding-bottom: 4px;">
+                        @(objnameden != null ? string.Format("{0}", objnameden.AirportName) : "")
+                        - @(objnamedi != null ? string.Format("{0}", objnamedi.AirportName) : "")
+                    </a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content">
+            <div style="height: 300px;overflow-y: auto;width: 400px;text-align: left;" id="@string.Format("Home{0}", Model.FareDataIdValue)" class="tab-pane fade in active">
+
+            </div>
+            @if (Model.Itinerary > 1)
+            {
+                <div style="height: 300px;overflow-y: auto;width: 400px;text-align: left;" id="@string.Format("menu1{0}", Model.FareDataIdValue)" class="tab-pane fade">
+
+                </div>
+            }
+        </div>
+    }
+</div>

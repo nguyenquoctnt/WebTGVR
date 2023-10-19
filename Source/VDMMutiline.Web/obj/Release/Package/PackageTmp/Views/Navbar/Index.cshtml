@@ -1,0 +1,136 @@
+﻿@using System.Text
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Biz;
+@using VDMMutiline.Core.Models
+@model VDMMutiline.Core.Models.VDMUser
+@{
+    Layout = null;
+}
+
+@functions{
+
+    private SysMenuParam GetMenu()
+    {
+        var filter = new SysMenuFilter
+        {
+            Search = string.Empty
+        };
+
+        var param = new SysMenuParam { SysMenuFilter = filter };
+        var biz = new SysMenuBiz();
+        biz.SearchAllMenu(param);
+        return param;
+    }
+
+    private string GetActive(SysMenuInfo menuitem)
+    {
+        string returnvalue = string.Empty;
+
+        if (menuitem.Path != null && Request.Url.ToString().ToLower().Equals("http://" + Request.Url.DnsSafeHost.ToLower() + menuitem.Path.ToLower()))
+        {
+            returnvalue = "active ";
+        }
+        return returnvalue;
+    }
+
+    private string GenderRootMenu()
+    {
+        StringBuilder builder = new StringBuilder();
+        var data = GetMenu();
+
+        var listidquyen = new List<int>();
+        var datavalue = new List<SysMenuInfo>();
+        if (Model != null)
+        {
+            var userinfo = Model;
+            var groupbyuserparam = new AspNetUserGroupsParam() { userId = userinfo.Id };
+            var bizgroup = new AspNetUserGroupsBiz();
+            bizgroup.GetAllByusername(groupbyuserparam);
+            listidquyen = groupbyuserparam.AspNetUserGroupsInfos.Select(z => z.GroupId).ToList();
+        }
+        else
+        {
+            listidquyen.Add(14);
+        }
+        foreach (var item in listidquyen)
+        {
+            datavalue.AddRange(data.SysMenuInfos.Where(z => z.SysMenuGroups.Contains(item)));
+        }
+        if (ViewBag.isadmin)
+        {
+            datavalue = datavalue.Where(z => z.Id != 86).ToList();
+        }
+        int level = 0;
+        foreach (var item in (datavalue.Where(p => p.ParentId.HasValue == false && p.Daxoa == false && p.IsSystem == true).OrderBy(z => z.Thutu)))
+        {
+            builder.Append(GenderSubMenu(item, datavalue, level));
+        }
+        return builder.ToString();
+    }
+    private string GenderSubMenu(SysMenuInfo parent, List<SysMenuInfo> dataufull, int level)
+    {
+        StringBuilder builder = new StringBuilder();
+        var listsub = dataufull.Where(p => p.ParentId == parent.Id && p.Daxoa == false && p.IsSystem == true && (p.ParentId != 85 || p.SiteID == Model.SiteId)).OrderBy(z => z.Thutu);
+        if (listsub.Any())
+        {
+            builder.AppendFormat("<li class='nav-item has-sub is-shown  {0} '>", GetActive(parent));
+            builder.AppendFormat(@"<a href=""{0}"" class=""menu-item""><i class=""menu-icon {1}""></i><span class=""menu-text"">{2}</span></a>"
+            , parent.Path
+            , parent.Id == 60 ? (level == 0 ? parent.cssClass + " active" : " fa fa-caret-right") : (level == 0 ? parent.cssClass : " fa fa-caret-right")
+            , parent.TenHienthi);
+            builder.Append(@"<b class=""arrow""></b><ul class=""menu-content "">");
+            foreach (var item in listsub)
+            {
+                builder.Append(GenderSubMenu(item, dataufull, level + 1));
+            }
+            builder.Append("</ul>");
+            builder.Append("</li>");
+        }
+        else
+        {
+            builder.AppendFormat("<li class='nav-item {0}'>", GetActive(parent));
+            builder.AppendFormat(@"<a href=""{0}"" class=""""><i class=""{1}""></i><span class=""menu-title"">{2}</span></a>"
+           , parent.Path
+           , level == 0 ? parent.cssClass : "fa fa-caret-right"
+           , parent.TenHienthi);
+            builder.Append("</li>");
+        }
+
+        return builder.ToString();
+    }
+}
+
+@*<ul class="nav nav-list" style="top: 0px;">
+        @Html.Raw(GenderRootMenu())
+    </ul>*@
+<div data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion    menu-shadow ">
+    <div class="main-menu-content ps-container ps-theme-light ps-active-y" data-ps-id="c796847c-1a30-d48c-fdfd-41e0db80e0c5">
+        <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+            @Html.Raw(GenderRootMenu())
+            @if (ViewBag.isadmin != true && ViewBag.isbooker!=true && ViewBag.isbookerLL!=true)
+            {
+                var active = Request.Url.ToString().ToLower().Equals("http://" + Request.Url.DnsSafeHost.ToLower() + Url.Action("Settinguser", "Settings", new { area = "Sys", IdUser = Model.Id }).ToLower());
+
+                <li class="has-sub is-shown">
+                    <a href="#" class="menu-item"><i class="fa fa-cogs"></i> Tùy chỉnh</a>
+                    <ul class="menu-content" style="">
+                        @if (!ViewBag.ParentIdHasValue )
+                        {
+                            <li class='nav-item @active'>
+                                <a href="@Url.Action("Index", "SettingsTempleate", new { area = "Sys", IdUser = Model.Id })"><i class="fa fa-caret-right"></i><span class="" menu-title"">Giao diện</span></a>
+                            </li>
+                            <li class='nav-item @active'>
+                                <a href="@Url.Action("Index", "SettingsTempleateHMTL", new { area = "Sys" })"><i class="fa fa-caret-right"></i><span class="" menu-title"">Templeate</span></a>
+                            </li>
+                        }
+                        <li class='nav-item @active'>
+                            <a href="@Url.Action("Settinguser", "Settings" , new { area="Sys" , IdUser=Model.Id })"><i class="fa fa-caret-right"></i><span class="" menu-title"">Hệ thống</span></a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 219px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 54px;"></div></div>
+    </div>
+</div>

@@ -1,0 +1,376 @@
+/*Flight*/
+.FlightItem {
+    padding-right: 0px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 7px;
+    background: #ffffff;
+}
+
+    .FlightItem:hover {
+        background-color: #fffdc4;
+    }
+
+.FlightItemActive1 {
+    background-color: #fffdc4;
+}
+
+.FlightItemActive2 {
+    background-color: #fffdc4;
+}
+
+.Carrier {
+    width: 65px;
+    text-align: center;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-left: 0px;
+}
+
+    .Carrier img {
+        max-height: 30px;
+        max-width: 65px;
+            width: 100%;
+    }
+
+.Depart {
+    min-width: 80px;
+    text-align: center;
+    padding-left: 10px;
+}
+
+.Arrival {
+    min-width: 150px;
+    padding-left: 10px;
+    text-align: center;
+}
+
+    .Depart .City, .Arrival .City {
+        color: #577f9f;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .Depart .Time, .Arrival .Time {
+        color: #04a7ea;
+        font-size: 17px;
+        margin-top: 2px;
+        font-weight: bold;
+    }
+
+.FlightInfo {
+    width: 60px;
+    padding-left: 10px;
+}
+
+    .FlightInfo .FlightNumber {
+        font-size: 13px;
+        font-weight: normal;
+    }
+
+    .FlightInfo .Detail {
+    }
+
+.StopPoint {
+    padding-left: 22px;
+}
+
+.Price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fb7604;
+    text-align: right;
+    width: 142px;
+    padding-top: 2px;
+}
+
+.Select {
+    text-align: right;
+    padding-right: 10px;
+    padding-left: 20px
+}
+
+.SelectOne {
+    padding-left: 20px;
+    text-align: right;
+}
+
+.SelectMobile {
+    display: none;
+}
+
+@media only screen and (max-width:1199px) {
+    /*Flight*/
+    .FlightItem {
+        padding-right: 0px;
+        border-bottom: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        padding: 7px;
+    }
+
+        .FlightItem:hover {
+            background-color: #f5f5f5;
+        }
+
+    .Carrier {
+        width: 50px;
+        text-align: center;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-top: 12px;
+        float: left
+    }
+
+        .Carrier img {
+            max-height: 20px;
+            max-width: 60px
+        }
+
+    .Depart {
+        min-width: 60px;
+        padding-left: 10px;
+    }
+
+    .Arrival {
+        min-width: 120px;
+        padding-left: 10px;
+    }
+
+        .Depart .City, .Arrival .City {
+            color: #577f9f;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .Depart .Time, .Arrival .Time {
+            color: #577f9f;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+    .FlightInfo {
+        width: 60px;
+        padding-left: 10px;
+    }
+
+        .FlightInfo .FlightNumber {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .FlightInfo .Detail {
+        }
+
+    .StopPoint {
+        padding-left: 22px;
+    }
+
+    .Price {
+        font-size: 12px;
+        font-weight: bold;
+        color: #fb7604;
+        text-align: right;
+    }
+
+    .Select {
+        text-align: right;
+        padding-right: 10px;
+        padding-left: 10px
+    }
+
+    /*.BasketFlightResult {
+        display: block !important;
+    }*/
+}
+
+@media only screen and (max-width:979px) {
+    /*Flight*/
+    .FlightItem {
+        padding-right: 0px;
+        border-bottom: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        padding: 7px;
+    }
+
+        .FlightItem:hover {
+            background-color: #f5f5f5;
+        }
+
+    .Carrier {
+        width: 60px;
+        text-align: center;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-top: 12px;
+        float: left
+    }
+
+        .Carrier img {
+            max-height: 20px;
+            max-width: 60px
+        }
+
+    .Depart {
+        min-width: 100px;
+        padding-left: 10px;
+    }
+
+    .Arrival {
+        min-width: 100px;
+        padding-left: 10px;
+    }
+
+        .Depart .City, .Arrival .City {
+            color: #577f9f;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .Depart .Time, .Arrival .Time {
+            color: #577f9f;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+    .FlightInfo {
+        width: 80px;
+        padding-left: 10px;
+    }
+
+        .FlightInfo .FlightNumber {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .FlightInfo .Detail {
+        }
+
+    .StopPoint {
+        padding-left: 22px;
+    }
+
+    .Price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fb7604;
+        text-align: right;
+    }
+
+    .Select {
+        text-align: right;
+        padding-right: 10px;
+        padding-left: 10px
+    }
+}
+
+@media only screen and (max-width:767px) {
+    /*Flight*/
+    .Carrier {
+        width: 50px;
+        text-align: center;
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 4px;
+    }
+
+        .Carrier img {
+            max-height: 20px;
+            max-width: 50px
+        }
+
+    .Depart {
+        width: auto;
+        min-width: 0px;
+        padding-left: 5px;
+        padding-top: 0px
+    }
+
+    .Arrival {
+        width: auto;
+        min-width: 0px;
+        padding-left: 5px;
+        padding-top: 0px
+    }
+
+        .Depart .City, .Arrival .City {
+            display: none
+        }
+
+        .Depart .Time, .Arrival .Time {
+            color: #577f9f;
+            font-size: 15px;
+            margin-top: 0px;
+            font-weight: normal
+        }
+
+    .FlightInfo {
+        width: auto;
+        padding-left: 0px;
+        padding-top: 0px;
+        display: none
+    }
+
+        .FlightInfo .FlightNumber {
+            font-size: 12px;
+            font-weight: normal;
+            background: none;
+            padding-left: 5px;
+        }
+
+        .FlightInfo .Detail {
+            display: none
+        }
+
+    .StopPoint {
+        display: none
+    }
+
+    .Price {
+        width: auto;
+        font-size: 18px;
+        font-weight: normal;
+        text-align: right;
+        padding-top: 0px;
+        padding-left: 6px;
+    }
+
+    .Currency {
+        display: none
+    }
+
+    .Select {
+        display: none
+    }
+
+    .SelectOne {
+        padding-left: 6px;
+        text-align: right
+    }
+
+    .SelectMobile {
+        text-align: right;
+        padding-right: 0px;
+        padding-top: 0px;
+        padding-left: 0px;
+        display: none;
+    }
+
+    #Basket {
+        display: none;
+    }
+}
+
+@media only screen and (max-width:479px) {
+    .Depart {
+        width: auto;
+        padding-left: 6px;
+    }
+
+    .Arrival {
+        width: auto;
+        padding-left: 6px;
+    }
+}

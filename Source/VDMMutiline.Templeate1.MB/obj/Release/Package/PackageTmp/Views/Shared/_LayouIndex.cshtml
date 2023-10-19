@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+}
+<head>
+    
+    <meta charset="utf-8" />
+    @{
+        var seokey = CurentUser.SeoKey;
+        var seodes = CurentUser.SeoDes;
+        var SeoTitle = CurentUser.SeoTitle;
+        <meta name="keywords" content="@(string.IsNullOrEmpty(seokey)?"ve may bay, ve may bay gia re, ve may bay khuyen mai":seokey)" />
+        <meta name="description" content="@(string.IsNullOrEmpty(seodes) ? "Ve may bay, đại lý bán vé máy bay chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế." : seodes)" />
+        <meta name="generator" content="@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)" />
+        <meta property="og:description" content="@(string.IsNullOrEmpty(seodes) ? "Ve may bay, đại lý bán vé máy bay chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế." : seodes)">
+        <meta property="og:title" content="@(string.IsNullOrEmpty(SeoTitle) ? "Vé máy bay, đại lý vé máy bay giá rẻ" : SeoTitle)">
+        <meta property="article:section" content="@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)" />
+        <meta property="article:tag" content="@(string.IsNullOrEmpty(seokey)?"ve may bay, ve may bay gia re, ve may bay khuyen mai":seokey)" />
+        <title>@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)</title>
+
+    }
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="/Content/Images/logo.png" rel="shortcut icon" type="image/x-icon" />
+    <script src="/Content/zipcontents/js/jquery-1.9.1.js"></script>
+    <link href="/Content/zipcontents/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/zipcontents/css/index.css" rel="stylesheet" />
+    <link href="/Content/Styles/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/Content/zipcontents/css/lunar-datepicker.css" rel="stylesheet" />
+    <link href="/Content/Styles/jquery-ui.min.css" rel="stylesheet" />
+    <script src="/Content/zipcontents/js/bootstrap.min.js"></script>
+    <script src="/Content/zipcontents/js/flight_search_dialog.js"></script>
+    <script src="/Content/zipcontents/js/ui.datepicker.lunar.min.js"></script>
+    <link href="/Content/VDM/css/style.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function goToByScroll( tag ) {
+            $( 'html,body' ).animate( { scrollTop: tag.offset().top }, 'fast' );
+        }
+    </script>
+    @RenderSection("Header", required: false)
+
+</head>
+<body>
+    @Html.Action("Header", "Control")
+    @RenderBody()
+    <script src="/Content/Scripts/select.js"></script>
+    <script>
+        function showmenu() {
+            if ( $( '#menu' ).css( "display" ) == "block" ) {
+                $( '#menu' ).css( "display", "none" );
+            } else {
+                $( '#menu' ).css( "display", "block" );
+            }
+        }
+    </script>
+    @*<script>
+            window.ParsleyConfig = {
+                errorClass: 'has-error'
+                , excluded: 'input[type=hidden]'
+                , trigger: false
+                , animate: true
+                , focus: 'first'
+                , validationMinlength: 3
+                , validators: {}
+                , errorElem: '<span></span>'
+                , errorsWrapper: '<span class="help-block"></span>'
+                , errorTemplate: "<div></div>"
+                , classHandler: function (el) {
+                    return el.$element.closest(".form-control");
+                }
+            };
+        </script>
+        <script src="/Content/form-parsley/parsley.js"></script>*@
+</body>
+</html>
+

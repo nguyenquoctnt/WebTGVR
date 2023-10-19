@@ -1,0 +1,133 @@
+/*
+  icons Font: jquery-filer
+*/
+
+@font-face {
+  font-family: "jquery-filer";
+  src: url("../fonts/jquery-filer.eot");
+  src: url("../fonts/jquery-filer.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/jquery-filer.woff") format("woff"),
+       url("../fonts/jquery-filer.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "jquery-filer";
+    src: url("./jquery-filer.svg#jquery-filer") format("svg");
+  }
+}
+
+[data-icons]:before { content: attr(data-icons); }
+
+[data-icons]:before,
+.icons-jfi-ban:before,
+.icons-jfi-calendar:before,
+.icons-jfi-check:before,
+.icons-jfi-check-circle:before,
+.icons-jfi-cloud-o:before,
+.icons-jfi-cloud-up-o:before,
+.icons-jfi-comment:before,
+.icons-jfi-comment-o:before,
+.icons-jfi-download-o:before,
+.icons-jfi-exclamation:before,
+.icons-jfi-exclamation-circle:before,
+.icons-jfi-exclamation-triangle:before,
+.icons-jfi-external-link:before,
+.icons-jfi-eye:before,
+.icons-jfi-file:before,
+.icons-jfi-file-audio:before,
+.icons-jfi-file-image:before,
+.icons-jfi-file-o:before,
+.icons-jfi-file-text:before,
+.icons-jfi-file-video:before,
+.icons-jfi-files-o:before,
+.icons-jfi-folder:before,
+.icons-jfi-heart:before,
+.icons-jfi-heart-o:before,
+.icons-jfi-history:before,
+.icons-jfi-infinite:before,
+.icons-jfi-info:before,
+.icons-jfi-info-circle:before,
+.icons-jfi-minus:before,
+.icons-jfi-minus-circle:before,
+.icons-jfi-paperclip:before,
+.icons-jfi-pencil:before,
+.icons-jfi-plus:before,
+.icons-jfi-plus-circle:before,
+.icons-jfi-power-off:before,
+.icons-jfi-question:before,
+.icons-jfi-question-circle:before,
+.icons-jfi-reload:before,
+.icons-jfi-settings:before,
+.icons-jfi-sort:before,
+.icons-jfi-times:before,
+.icons-jfi-times-circle:before,
+.icons-jfi-trash:before,
+.icons-jfi-upload-o:before,
+.icons-jfi-user:before,
+.icons-jfi-view-grid:before,
+.icons-jfi-view-list:before,
+.icons-jfi-zip:before {
+  display: inline-block;
+  font-family: "jquery-filer";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icons-jfi-ban:before { content: "\f328"; }
+.icons-jfi-calendar:before { content: "\f30b"; }
+.icons-jfi-check:before { content: "\f2f6"; }
+.icons-jfi-check-circle:before { content: "\f30c"; }
+.icons-jfi-cloud-o:before { content: "\f329"; }
+.icons-jfi-cloud-up-o:before { content: "\f32a"; }
+.icons-jfi-comment:before { content: "\f32b"; }
+.icons-jfi-comment-o:before { content: "\f30d"; }
+.icons-jfi-download-o:before { content: "\f32c"; }
+.icons-jfi-exclamation:before { content: "\f32d"; }
+.icons-jfi-exclamation-circle:before { content: "\f32e"; }
+.icons-jfi-exclamation-triangle:before { content: "\f32f"; }
+.icons-jfi-external-link:before { content: "\f330"; }
+.icons-jfi-eye:before { content: "\f2f7"; }
+.icons-jfi-file:before { content: "\f31f"; }
+.icons-jfi-file-audio:before { content: "\f331"; }
+.icons-jfi-file-image:before { content: "\f332"; }
+.icons-jfi-file-o:before { content: "\f31d"; }
+.icons-jfi-file-text:before { content: "\f333"; }
+.icons-jfi-file-video:before { content: "\f334"; }
+.icons-jfi-files-o:before { content: "\f335"; }
+.icons-jfi-folder:before { content: "\f31e"; }
+.icons-jfi-heart:before { content: "\f2f8"; }
+.icons-jfi-heart-o:before { content: "\f336"; }
+.icons-jfi-history:before { content: "\f337"; }
+.icons-jfi-infinite:before { content: "\f2fb"; }
+.icons-jfi-info:before { content: "\f338"; }
+.icons-jfi-info-circle:before { content: "\f339"; }
+.icons-jfi-minus:before { content: "\f33a"; }
+.icons-jfi-minus-circle:before { content: "\f33b"; }
+.icons-jfi-paperclip:before { content: "\f33c"; }
+.icons-jfi-pencil:before { content: "\f2ff"; }
+.icons-jfi-plus:before { content: "\f311"; }
+.icons-jfi-plus-circle:before { content: "\f312"; }
+.icons-jfi-power-off:before { content: "\f33d"; }
+.icons-jfi-question:before { content: "\f33e"; }
+.icons-jfi-question-circle:before { content: "\f33f"; }
+.icons-jfi-reload:before { content: "\f300"; }
+.icons-jfi-settings:before { content: "\f340"; }
+.icons-jfi-sort:before { content: "\f303"; }
+.icons-jfi-times:before { content: "\f316"; }
+.icons-jfi-times-circle:before { content: "\f317"; }
+.icons-jfi-trash:before { content: "\f318"; }
+.icons-jfi-upload-o:before { content: "\f341"; }
+.icons-jfi-user:before { content: "\f307"; }
+.icons-jfi-view-grid:before { content: "\f342"; }
+.icons-jfi-view-list:before { content: "\f343"; }
+.icons-jfi-zip:before { content: "\f344"; }

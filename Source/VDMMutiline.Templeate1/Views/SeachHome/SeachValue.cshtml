@@ -1,0 +1,229 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SeachAndBook.SeachParam
+
+@{
+    Layout = null;
+}
+<div id="search-flight-small" style="margin-top: -10px">
+</div>
+<div id="contend" class="main row">
+
+    <div class="container">
+
+        @{ Html.RenderPartial("_PartialSachMini", Model); }
+        <div id="sp-step">
+            <div class="sps-block sps-01 active">
+                <i class="icon30 icon30-ssearch"></i>
+                1. Tìm kiếm chuyến bay
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-02 " style="padding: 15px 30px;">
+                <i class="icon30 icon30-user"></i>
+                2. Thông tin hành khách
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-03">
+                <i class="icon30 icon30-checkout"></i>
+                3. Chọn cách thanh toán
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-04">
+                <i class="icon30 icon30-success"></i>
+                4. Đặt vé thành công
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        @{ Html.RenderPartial("_PartialSeachDomestic", Model); }
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function validateForm() {
+        var check = true;
+        var Itinerary = @Model.Itinerary;
+        if (Itinerary > 1) {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            var ReturnFlt = $("#hdfSelectedReturnFlt").val();
+            if (DepartFlt == "" || ReturnFlt == "") {
+                check = false;
+                ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+
+            }
+        } else {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            if (DepartFlt == "" ) {
+                check = false;
+                ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+            }
+        }
+        return check;
+
+    }
+	function getHost(){
+		var url = window.location.href;
+		var arr = url.split("/");
+		return arr[0] + "//" + arr[2];
+	}
+    function SelectedDepartFlight(value, fareAdtDepart, taxAdtDepart, fareChdDepart, taxChdDepart, fareInfDepart, taxInfDepart, hdhSession, CodeDepart
+        , city_from, city_to, hour_from, date_from, hour_to, date_to, logo, FlightNumber, classstart) {
+
+        $data = $(".BasketFlight.one-way");
+        $data.find(".from-city-name").html(city_from);
+        $data.find(".to-city-name").html(city_to);
+        $data.find(".from-city-time").html(hour_from);
+        $data.find(".from-city-date").html(date_from);
+        $data.find(".to-city-time").html(hour_to);
+        $data.find(".to-city-date").html(date_to);
+        $data.find(".logo-start").attr("src", logo);
+        $data.find(".code-start").html(FlightNumber);
+        $("#lblDepartclassNew").html(classstart);
+
+        //Set depart price to hidden field
+       // $("#hdfSelectedReturnFlt").val('');
+        $("#hdfFareAdtDepart").val(fareAdtDepart);
+        $("#hdfFareChdDepart").val(fareChdDepart);
+        $("#hdfFareInfDepart").val(fareInfDepart);
+        $("#hdhSession").val(hdhSession);
+        $("#hdfTaxAdtDepart").val(taxAdtDepart);
+        $("#hdfTaxChdDepart").val(taxChdDepart);
+        $("#hdfTaxInfDepart").val(taxInfDepart);
+        $("#hdhCodeDepart").val(CodeDepart);
+
+        fareAdtDepart = Number(fareAdtDepart.replace(",", "."));
+        fareChdDepart = Number(fareChdDepart.replace(",", "."));
+        fareInfDepart = Number(fareInfDepart.replace(",", "."));
+
+        taxAdtDepart = Number(taxAdtDepart.replace(",", "."));
+        taxChdDepart = Number(taxChdDepart.replace(",", "."));
+        taxInfDepart = Number(taxInfDepart.replace(",", "."));
+
+        //Get return price from hidden field
+        var fareAdtReturn = Number($("#hdfFareAdtReturn").val().replace(",", "."));
+        var fareChdReturn = Number($("#hdfFareChdReturn").val().replace(",", "."));
+        var fareInfReturn = Number($("#hdfFareInfReturn").val().replace(",", "."));
+
+        var taxAdtReturn = Number($("#hdfTaxAdtReturn").val().replace(",", "."));
+        var taxChdReturn = Number($("#hdfTaxChdReturn").val().replace(",", "."));
+        var taxInfReturn = Number($("#hdfTaxInfReturn").val().replace(",", "."));
+
+        //Calculate sum of depart price and return price
+        var fareAdt = fareAdtDepart + fareAdtReturn;
+        var fareChd = fareChdDepart + fareChdReturn;
+        var fareInf = fareInfDepart + fareInfReturn;
+
+        var taxAdt = taxAdtDepart + taxAdtReturn;
+        var taxChd = taxChdDepart + taxChdReturn;
+        var taxInf = taxInfDepart + taxInfReturn;
+
+        SetPrice(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf);
+
+        $("#hdfSelectedDepartFlt").val(value);
+        $("#ContentDepartureFlight .FlightItemActive1").removeClass("FlightItemActive1");
+        $("#ContentDepartureFlight" + value).addClass("FlightItem FlightItemActive1");
+
+        var itinerarys = @Model.Itinerary;
+        if (itinerarys != 2) {
+            $('#formvalueSeachdomtick').submit();
+        }
+        else {
+             if ($("#hdfSelectedReturnFlt").val() != "") {
+             $('#formvalueSeachdomtick').submit();
+        }}
+		mdX();
+        ScrollToControlById('SearchParamDomesticReturn');
+    }
+	function mdX(round){
+		$(".BasketFlightResult").removeClass("hide");
+	}
+    function SelectedReturnFlight(value, fareAdtReturn, taxAdtReturn, fareChdReturn, taxChdReturn, fareInfReturn, taxInfReturn, CodeReturn
+        , city_from, city_to, hour_from, date_from, hour_to, date_to, logo, FlightNumber, classstart ) {
+
+        $data = $(".BasketFlight.has-roundtrip");
+        $data.removeClass("hide");
+        $data.find(".from-city-name").html(city_from);
+        $data.find(".to-city-name").html(city_to);
+        $data.find(".from-city-time").html(hour_from);
+        $data.find(".from-city-date").html(date_from);
+        $data.find(".to-city-time").html(hour_to);
+        $data.find(".to-city-date").html(date_to);
+        $data.find(".logo-start").attr("src", logo);
+        $data.find(".code-start").html(FlightNumber);
+        $("#lblReturnclass").html(classstart);
+
+        //Set depart price to hidden field
+        $("#hdfFareAdtReturn").val(fareAdtReturn);
+        $("#hdfFareChdReturn").val(fareChdReturn);
+        $("#hdfFareInfReturn").val(fareInfReturn);
+
+        $("#hdfTaxAdtReturn").val(taxAdtReturn);
+        $("#hdfTaxChdReturn").val(taxChdReturn);
+        $("#hdfTaxInfReturn").val(taxInfReturn);
+        $("#hdhCodeReturn").val(CodeReturn);
+        fareAdtReturn = Number(fareAdtReturn.replace(",", "."));
+        fareChdReturn = Number(fareChdReturn.replace(",", "."));
+        fareInfReturn = Number(fareInfReturn.replace(",", "."));
+
+        taxAdtReturn = Number(taxAdtReturn.replace(",", "."));
+        taxChdReturn = Number(taxChdReturn.replace(",", "."));
+        taxInfReturn = Number(taxInfReturn.replace(",", "."));
+
+        //Get depart price from hidden field
+        var fareAdtDepart = Number($("#hdfFareAdtDepart").val().replace(",", "."));
+        var fareChdDepart = Number($("#hdfFareChdDepart").val().replace(",", "."));
+        var fareInfDepart = Number($("#hdfFareInfDepart").val().replace(",", "."));
+
+        var taxAdtDepart = Number($("#hdfTaxAdtDepart").val().replace(",", "."));
+        var taxChdDepart = Number($("#hdfTaxChdDepart").val().replace(",", "."));
+        var taxInfDepart = Number($("#hdfTaxInfDepart").val().replace(",", "."));
+
+        //Calculate sum of depart price and return price
+        var fareAdt = fareAdtDepart + fareAdtReturn;
+        var fareChd = fareChdDepart + fareChdReturn;
+        var fareInf = fareInfDepart + fareInfReturn;
+
+        var taxAdt = taxAdtDepart + taxAdtReturn;
+        var taxChd = taxChdDepart + taxChdReturn;
+        var taxInf = taxInfDepart + taxInfReturn;
+
+        SetPrice(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf);
+
+
+		mdX(true);
+        $("#hdfSelectedReturnFlt").val(value);
+        $("#contenReturnFlightFlight .FlightItemActive1").removeClass("FlightItemActive1");
+        $("#contenReturnFlightFlight" + value).addClass("FlightItem FlightItemActive1");
+        if ($("#hdfSelectedDepartFlt").val() != "") {
+             $('#formvalueSeachdomtick').submit();
+        }
+
+    }
+	function numberFormat(num,ext) {
+			ext = (!ext) ? ' ?' : ext;
+		   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    $().ready(function () {
+        setTimeout(function () {
+            $("#formvalueSeachdomtick").find("#Filter").first().height($("#contend").height());
+            $('.xmfix').fixTo('#Filter');
+        }, 1000);
+    })
+</script>
+
+
+
+
+
+
+

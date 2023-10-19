@@ -1,0 +1,42 @@
+﻿@model VDMMutiline.SharedComponent.Params.TempleteSetting.TempleateHTMLParam
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("Create", "TempleateHTML", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateTempleateHTML", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TempleateHTML.Id)
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.TempleateHTML.Name, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Ghi chú</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.TempleateHTML.Note, new { @Required = "Required", @class = "form-control ckeditor", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-12 label-control" style="    text-align: left;">Giá trị mặc định</label>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(x => x.TempleateHTML.DefaultValue, new { @rows = "20", @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+

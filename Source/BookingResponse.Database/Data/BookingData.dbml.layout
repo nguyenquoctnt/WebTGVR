@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.75, 16.25" name="BookingData">
+  <DataContextMoniker Name="/BookingDataDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f097e9f8-cf6c-474c-a7fd-44515da41b0f" absoluteBounds="3.75, 5.75, 2, 6.7707340494791666">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponseFareData" />
+      <nestedChildShapes>
+        <elementListCompartment Id="acaa2447-303e-43e2-8482-e3cde4049783" absoluteBounds="3.765, 6.21, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6e0724d9-c062-4644-a7f6-334c5abf6deb" absoluteBounds="1.125, 8, 2, 4.6554182942708326">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponseBooking" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0cfcfb14-28d8-47de-82b4-c7d0c8da549c" absoluteBounds="1.1399999999999997, 8.46, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cdee9289-dec1-416b-8beb-759c2651ac17" absoluteBounds="9.5, 2.875, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponseTicket" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4e25e969-8f78-440d-bec0-a635e8f89432" absoluteBounds="9.515, 3.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b66d45c9-2c23-4460-adfd-1209ea3658ce" absoluteBounds="7.5, 3.375, 2, 5.4246240234375">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponseFlight" />
+      <nestedChildShapes>
+        <elementListCompartment Id="484cc789-304b-4274-afe7-bb7c4dcc5758" absoluteBounds="7.515, 3.835, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="654d67f2-860a-417e-a1c7-503e32602869" absoluteBounds="9, 9.25, 2, 6.7707340494791657">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponseSegment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fec7c924-667a-41be-a8af-027091ce064c" absoluteBounds="9.015, 9.71, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7e14db38-5bc3-4ba9-9d7b-48a9a9f0f0e4" absoluteBounds="8.125, 2.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/BookingDataDataContext/tblBookResponse" />
+      <nestedChildShapes>
+        <elementListCompartment Id="55f7e92c-ab2b-4133-ade7-0ef67322ae75" absoluteBounds="8.14, 2.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

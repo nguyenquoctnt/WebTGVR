@@ -1,0 +1,77 @@
+﻿@model VDMMutiline.SharedComponent.Params.TblQuangCaoParam
+@using VDMMutiline.SharedComponent.Constants
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "TblQuangCao", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateTblQuangCao", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TblQuangCao.Id)
+    <div class="form-body">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Loại</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.TblQuangCao.Loai, Constant.LoaiQuangcao.dctName.Select(n => new SelectListItem { Selected = n.Key == Model.TblQuangCao.Loai, Text = n.Value, Value = n.Key.ToString() }), new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Vị trí</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.TblQuangCao.Vitri, Model.SysVungHienthiInfos.Select(n => new SelectListItem { Selected = n.Id == Model.TblQuangCao.Vitri, Text = n.Tenvung, Value = n.Id.ToString() }), new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Url</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.TblQuangCao.Url, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Mô tả</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.TblQuangCao.Mota, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Thứ tự</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.TblQuangCao.Thutu, new { @Required = "Required", @class = "form-control spinbox-input thutu", @placeholder = "" })
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Ảnh</label>
+                <div class="col-md-10">
+                    <input type="file" name="Imageimput" class="actFile" />
+                    @if (!string.IsNullOrEmpty(Model.TblQuangCao.Path))
+                    {
+                        <img src="@Model.TblQuangCao.Path" style="height:200px; width:300px;" />
+                    }
+                    @Html.HiddenFor(x => x.TblQuangCao.Path)
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+
+
+
+

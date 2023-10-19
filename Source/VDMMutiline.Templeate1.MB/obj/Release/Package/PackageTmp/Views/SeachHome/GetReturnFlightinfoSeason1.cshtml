@@ -1,0 +1,93 @@
+﻿@model List<VDMMutiline.SeachAndBook.VDMFareDataInfo>
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+    Layout = null;
+
+    var dao = new AirlineDao();
+    var list = new List<AirlineInfo>();
+    list.Add(dao.GetbyCode("VN"));
+    list.Add(dao.GetbyCode("JQ"));
+    list.Add(dao.GetbyCode("VJ"));
+    list.Add(dao.GetbyCode("VN"));
+     list.Add(dao.GetbyCode("QH"));
+     var countairline = ViewBag.CountAirline;
+}
+@if (Model != null)
+{
+  
+    foreach (var ReturnFlights in Model)
+    {
+          var querypic = list.FirstOrDefault(z => z.Code == ReturnFlights.Airline);
+    var pictureAirline = querypic != null ? querypic.Pictures : "";
+        var PriceAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(ReturnFlights.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxInf);
+        var tongtiennguoilon = (ReturnFlights.Adt * (PriceAdult + FeeAdult + TaxAdult));
+        var tongtientrem = (ReturnFlights.Chd * (PriceChild + FeeChild + TaxChild));
+        var congtienembe = (ReturnFlights.Inf * (PriceInfant + FeeInfant + TaxInfant));
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+        var Currency = UIUty.GetDonViTienTe();
+       
+        <div  class="KetquaItem NoiDia @(ReturnFlights.Airline)">
+            <div class="firstItem">
+
+                <div class="LogoHang noneMarginImg" style="        padding-top: 0px;">
+                    <img alt="VJ" class="noneMarginImg" src="@pictureAirline">
+                    @if (ReturnFlights.IsVNJQ == true)
+                    {
+                        <div class="operated-by-bl">bay Jetstar</div>
+                    }
+                </div>
+                <div class="TimeStart" style="        width: 35%;">
+                    <div style="        width: 50%;
+        float: left;
+        text-align: center;
+        color: #00428b;">
+                        <b>@(ReturnFlights.FlightNumber)</b>
+
+                    </div>
+                    <div style="        width: 50%;
+        float: left;
+        text-align: center;
+        color: #00428b;">
+                        <b>@(ReturnFlights.StartDate.ToString("HH:mm"))</b>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <button type="reset" onclick="SelectedReturnFlight('@ReturnFlights.FareDataIdValue', '@PriceAdult' , '@(TaxAdult + FeeAdult)' , '@PriceChild' , '@(TaxChild + FeeChild)' , '@PriceInfant' , '@(TaxInfant + FeeInfant)' ,  '@ReturnFlights.Airline') " class="btnchonseach">
+                        Chọn
+                    </button>
+                </div>
+                <div class="right"  style="width: 70px;">
+                    <div class="PriceLeft" style="line-height: 2.1;text-align: center;width: 93%;">
+                        <p style="margin: 0;">@((PriceAdult + FeeAdult + TaxAdult).ToString("#,0.#"))</p>
+                    </div>
+                </div>
+                @if (ReturnFlights.Promo)
+                {
+                    <div class="right">
+                        <p style="margin: 0;font-size: 12px;text-align: center;color: #00428b;font-weight: bold;width: 100%;margin-top: 6px;padding-right: 8px;">Promo</p>
+                    </div>
+                }
+                @if (ReturnFlights.StopNum > 0)
+                {
+                    <div class="right">
+                        <p style="margin: 0;font-size: 9.5px;text-align: center;color: #00428b;font-weight: bold;width: 100%;margin-top: 6px;padding-right: 5px;">
+                            @ReturnFlights.StopNum Đ.dừng
+                        </p>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+}

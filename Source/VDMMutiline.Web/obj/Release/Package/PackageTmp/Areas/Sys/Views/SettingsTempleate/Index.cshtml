@@ -1,0 +1,121 @@
+﻿
+@{
+    var listdata = (List<VDMMutiline.SharedComponent.EntityInfo.TempleteSetting.TempleatePropertyGroupInfo>)ViewBag.Data;
+}
+<style>
+    .collapse.in {
+        display: block;
+    }
+
+    .card-header {
+        border-bottom: 1px solid #EEEEEE;
+    }
+</style>
+<div class="row match-height">
+    @foreach (var item in listdata.Where(z => z.ThuoctinhCha.HasValue == false))
+    {
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@item.Name</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            @*<li><a data-action="collapse"><i class="icon-minus4"></i></a></li>*@
+                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        @foreach (var items in listdata.Where(z => z.ThuoctinhCha == item.Id))
+                        {
+                            <div class="col-xs-12">
+                                <h5>@items.Name</h5>
+                                <p>@items.Note</p>
+                                <div class="form-group">
+                                    @foreach (var itemss in listdata.Where(z => z.ThuoctinhCha == items.Id))
+                                    {
+                                        <button type="button" onclick="showviewCreate('@itemss.Id','@itemss.Name')" class="btn btn-danger btn-min-width mr-1 mb-1">@itemss.Name</button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
+
+<div class="modal fade text-left" id="createModelxl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark white">
+                <h4 class="modal-title white" id="myModaltitel">Thông tin</h4>
+                <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="contenCreatexl">
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .table th, .table td {
+        border-top: 0px solid #818a91 !important;
+    }
+
+    .table th, .table td {
+        padding: 6px 0px !important;
+    }
+
+    form.row-separator .form-group > div {
+        padding: 7px 0px !important;
+        padding-right: 0;
+    }
+
+    p {
+        margin-bottom: 0px !important;
+    }
+
+    b {
+        color: #f70404;
+    }
+</style>
+@section scripts {
+    <script src="/Scripts/ckeditor/ckeditor.js"></script>
+    <link href="/Content/app-assets/js/scripts/pickers/colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet" />
+    <script src="/Content/app-assets/js/scripts/pickers/colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+    <script src="/Scripts/ckfinder/ckfinder.js"></script>
+    <script>
+         function submitform() {
+
+                CKupdate();
+             var form = $('form#frUpdateSetting').get(0);
+                var fd = new FormData(form);
+                _lwfunc.AjaxNoprocessData("@Url.Action("UpdateSetting", "SettingsTempleate")", fd, function (data) {
+                    if (data.isSuccess === true) {
+                        $("#createModelxl").modal('hide');
+                        toastr.success(data.mess, "Thông báo!");
+                    } else {
+                        toastr.error(data.mess, "Thông báo!");
+                    }
+
+                });
+        }
+    function showviewCreate(id,text) {
+    var urls = '@Url.Action("UpdateSetting", "SettingsTempleate")' + "?Idgroup=" + id ;
+        _lwfunc.AjaxGet(urls, function (data) {
+            $("#myModaltitel").text(text);
+        $("#contenCreatexl").html(data);
+        $("#createModelxl").modal();
+    });
+        }
+
+    </script>
+}

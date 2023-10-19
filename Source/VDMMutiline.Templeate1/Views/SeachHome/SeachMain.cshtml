@@ -1,0 +1,478 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@{
+
+}
+@functions{
+
+    private ApiClient.Models.Airport getbycode(string code)
+    {
+        return Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+
+    var objnamedi = getbycode(Model.DepartureAirportCode);
+    var objnameden = getbycode(Model.DestinationAirportCode);
+}
+@Scripts.Render("~/FontEnd/jquery")
+<link href="/Content/FontEnd/SeachValue/Flight.css" rel="stylesheet" />
+<div id="pnSeResult">
+    <div style=" margin: auto; text-align: center;">
+        <span style="font-size: 16px; color: Green">Vui lòng đợi trong giây lát, chúng tôi đang tìm kiếm chuyến bay và mức giá tốt nhất cho bạn......</span>
+    </div>
+    <div style="margin-left: 10px;    margin: auto;">
+        <div style="    font-size: 14px;    font-weight: bold;      margin-bottom: 10px;text-align: center;">
+            <span>@(objnamedi != null ? string.Format("{0}, {1} ({2})", objnamedi.AirportName, objnamedi.CountryName, objnamedi.AirportCode) : "")</span>
+
+            <span> → @(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "")</span>
+        </div>
+        <div style="    font-size: 14px;    font-weight: bold;    margin-top: 10px;    margin-bottom: 10px;text-align: center;">
+            Ngày đi:
+            @if (!string.IsNullOrEmpty(Model.StartMonth) || !string.IsNullOrEmpty(Model.EndMonth))
+            {
+                <span id="lblFlightDateParam">@Model.StartMonth</span>
+                if (Model.Itinerary > 1)
+                {
+
+                    <span id="lblFlightDateParam">  ↔  Ngày về: @Model.EndMonth  </span>
+                }
+
+            }
+            else
+            {
+
+                if (Model.Itinerary > 1)
+                {
+                    DateTime dateDeparture = Utility.GetDateFormat2(Model.DepartureDate, "dd/MM/yyyy");
+                    DateTime datereturn = Utility.GetDateFormat2(Model.ReturnDate, "dd/MM/yyyy");
+                    <span id="lblFlightDateParam">@string.Format("{0} {1} {2} {3}", UIUty.getnameday(dateDeparture), dateDeparture.Day, UIUty.getmountday(dateDeparture), dateDeparture.Year)  ↔  @string.Format("Ngày về: {0} {1} {2} {3}", UIUty.getnameday(datereturn), datereturn.Day, UIUty.getmountday(datereturn), datereturn.Year)</span>
+
+                }
+                else
+                {
+                    DateTime dateDeparture = Utility.GetDateFormat2(Model.DepartureDate, "dd/MM/yyyy");
+                    <span id="lblFlightDateParam">  ↔  Ngày về: @string.Format(" {0} {1} {2} {3}", UIUty.getnameday(dateDeparture), dateDeparture.Day, UIUty.getmountday(dateDeparture), dateDeparture.Year)  </span>
+                }
+            }
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div style=" margin: auto;text-align: center;margin-bottom: 10px;">
+        <img alt="Loader" src="/Content/loadingAnimation.gif" />
+    </div>
+    <div class="SearchingNumberPax" style="margin-top: 0px">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="width: 33%" align="center">
+                        <img alt="Adt" src="/Content/FontEnd/images/adt_icon.png" height="25px">
+                    </td>
+                    <td style="width: 33%" align="center">
+                        <img alt="Chd" src="/Content/FontEnd/images/chd_icon.png" height="25px">
+                    </td>
+                    <td style="width: 33%" align="center">
+                        <img alt="Inf" src="/Content/FontEnd/images/inf_icon.png" height="25px">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Adults:
+                        <b><span>@Model.Adult</span></b>
+                    </td>
+                    <td align="center">
+                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Children:
+                        <b><span>@Model.Children</span></b>
+                    </td>
+                    <td align="center">
+                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Infants:
+                        <b><span>@Model.Infant</span></b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="height: 10px;"></div>
+</div>
+<div id="SeachInfo" style="display: none">
+</div>
+
+@if (!Station.CheckQuocTe(Model.DepartureAirportCode, Model.DestinationAirportCode))
+{
+    if (!string.IsNullOrEmpty(Model.StartMonth) || !string.IsNullOrEmpty(Model.EndMonth))
+    {
+        <script>
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("TimVere", "SeachHome")',
+                    dataType: "html",
+                    data: {        Itinerary : @Model.Itinerary,
+                        DepartureAirportCode : '@Model.DepartureAirportCode',
+                        DestinationAirportCode : '@Model.DestinationAirportCode',
+                        StartMonth : '@Model.StartMonth',
+                        EndMonth : '@Model.EndMonth',
+                        Adult : @Model.Adult,
+                        Children: @Model.Children,Infant : @Model.Infant,
+                    },
+                    success: function (content) {
+                        $("#SeachInfo").html(content);
+                        $("#SeachInfo").slideUp( 300 ).delay( 200 ).fadeIn( 400 );;
+                        $("#pnSeResult").delay( 200 ).fadeOut(0);;
+                    },
+                    error: function (e) { }
+                });
+            });
+        </script>
+    }
+    else
+    {
+        <script>
+            $( document ).ready( function () {
+                $( window ).on( 'hashchange', function () {
+                    console.log( 'location.hash: ' + location.hash );
+                    console.log( 'globalCurrentHash: ' + globalCurrentHash );
+
+                    if ( location.hash == globalCurrentHash ) {
+                        console.log( 'Going fwd' );
+                    }
+                    else {
+
+                        console.log( 'Going Back' );
+                        loadMenuSelection( location.hash );
+                    }
+                } );
+
+            } );
+            function checkAirline() {
+                jQuery( ".checkboxal" ).each( function () {
+                    var valuecheck = $( this ).is( ":checked" );
+                    $( "." + $( this ).attr( "name" ) ).each( function () {
+                        if ( valuecheck == true ) {
+                            $( this ).css( "display", "block" );
+                        } else {
+                            $( this ).css( "display", "none" );
+                        }
+                    } );
+                } );
+            }
+        </script>
+        <script>
+            $( document ).ready( function () {
+                 $.ajax( {
+                    type: "Get",
+                    url: '@Url.Action("SeachValue", "SeachHome")',
+                    dataType: "html",
+                    data: {        Itinerary : @Model.Itinerary,
+                        DepartureAirportCode : '@Model.DepartureAirportCode',
+                        DestinationAirportCode : '@Model.DestinationAirportCode',
+                        DepartureDate : '@Model.DepartureDate',
+                        ReturnDate : '@Model.ReturnDate',
+                        Adult : @Model.Adult,
+                        Children: @Model.Children,Infant : @Model.Infant,
+                        Currency : '@Model.Currency',
+                        older: '@Model.older',
+                        typeolder: '@Model.typeolder',
+                    },
+                    success:  function (content) {
+                        $("#SeachInfo").html(content);
+                        //var lstDeparture = JSON.parse(lstDepartureId);
+
+                        if (@Model.Itinerary <= 1) {
+                            $("#ContentDepartureFlight1chieu").hide();
+                            $("#ContentDepartureFlight1chieuNew1").hide();
+                            $("#ContentDepartureFlight1chieuNew2").hide();
+                            setTimeout(function () { GetDepartureinfo(); }, 0);
+                        }
+                        else {
+                            $("#ContentDepartureFlight").hide();
+                            $("#ContentDepartureFlightNew1").hide();
+                            $("#ContentDepartureFlightNew2").hide();
+                            $("#contenReturnFlight").hide();
+                            $("#contenReturnFlightNew1").hide();
+                            $("#contenReturnFlightNew2").hide();
+                            setTimeout(function () { GetDepartureinfo(); }, 0);
+                            sleep(20);
+                            setTimeout(function () { GetReturnFlightinfo(); }, 0);
+                        }
+                        $("#pnSeResult").delay( 0 ).fadeOut(0);;
+                        $( "#SeachInfo" ).slideUp( 0 ).delay( 0 ).fadeIn( 0 );
+
+                    },
+                    error: function (e) { }
+                });
+            });
+            function GetDepartureinfo() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetDepartureinfo", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         if (@Model.Itinerary > 1) {
+                             $("#ContentDepartureFlight").append(content)
+                             $("#ContentDepartureFlight").slideUp(150).delay(100).fadeIn(100);
+                         }
+                         else {
+                             $("#ContentDepartureFlight1chieu").append(content);
+                             $("#ContentDepartureFlight1chieu").slideUp(150).delay(100).fadeIn(100);;
+                         }
+                          sleep(250);
+                         setTimeout( function () { GetDepartureinfo1(); }, 0 );
+                    },
+                    error: function (e) { }
+                 } );
+
+            }
+            function GetDepartureinfo1() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetDepartureinfoSeason1", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         if (@Model.Itinerary > 1) {
+                             $("#ContentDepartureFlightNew1").append(content)
+                             $("#ContentDepartureFlightNew1").slideUp(150).delay(100).fadeIn(100);
+                         }
+                         else {
+                             $("#ContentDepartureFlight1chieuNew1").append(content);
+                             $("#ContentDepartureFlight1chieuNew1").slideUp(150).delay(100).fadeIn(100);;
+                         }
+                         sleep(200);
+                         setTimeout( function () { GetDepartureinfo2(); }, 0 );
+                    },
+                    error: function (e) { }
+                });
+            }
+            function GetDepartureinfo2() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetDepartureinfoSeason2", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         if (@Model.Itinerary > 1) {
+                             $("#ContentDepartureFlightNew2").append(content)
+                             $("#ContentDepartureFlightNew2").slideUp(150).delay(100).fadeIn(100);
+                         }
+                         else {
+                             $("#ContentDepartureFlight1chieuNew2").append(content);
+                             $("#ContentDepartureFlight1chieuNew2").slideUp(150).delay(100).fadeIn(100);;
+                         }
+                         $( "#loadingDepartureFlight" ).hide();
+                         checkAirline();
+                    },
+                    error: function (e) { }
+                });
+            }
+            function GetReturnFlightinfo() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetReturnFlightinfo", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         $("#contenReturnFlight").append(content);
+                         $("#contenReturnFlight").slideUp(150).delay(100).fadeIn(100);
+                         sleep(200);
+                         setTimeout( function () { GetReturnFlightinfo1(); }, 0 );
+                    },
+                    error: function (e) { }
+                });
+            }
+            function GetReturnFlightinfo1() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetReturnFlightinfoSeason1", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         $("#contenReturnFlightNew1").append(content);
+                         $("#contenReturnFlightNew1").slideUp(150).delay(100).fadeIn(100);
+                         sleep(200);
+                         setTimeout( function () { GetReturnFlightinfo2(); }, 0 );
+                    },
+                    error: function (e) { }
+                });
+            }
+            function GetReturnFlightinfo2() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetReturnFlightinfoSeason2", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         $("#contenReturnFlightNew2").append(content);
+                         $("#loadingReturnFlight").hide();
+                         $( "#contenReturnFlightNew2" ).slideUp( 150 ).delay( 100 ).fadeIn( 100 );
+                         checkAirline();
+                    },
+                    error: function (e) { }
+                });
+            }
+            function sleep(delay) {
+                var start = new Date().getTime();
+                while ( new Date().getTime() < start + delay );
+            }
+            function onSort() {
+                var selectedVal = "";
+                var selected = $( "input[type='radio'][name='Sort']:checked" );
+                if ( selected.length > 0 ) {
+                    selectedVal = selected.val();
+                    $.ajax( {
+                        type: "Post",
+                        url: '@Url.Action("Sort", "SeachHome")',
+                        data: {"older":selectedVal,"typeolder":'@VDMMutiline.SharedComponent.Constants.Constant.Typeolder.Ascending' },
+                        success: function ( data ) {
+                            $( "#loadingDepartureFlight" ).show();
+                            if (@Model.Itinerary <= 1 ) {
+                                $( "#ContentDepartureFlight1chieu" ).html('');
+                                $( "#ContentDepartureFlight1chieuNew1" ).html('');
+                                $( "#ContentDepartureFlight1chieuNew2" ).html('');
+                                $( "#ContentDepartureFlight1chieu" ).hide();
+                                $( "#ContentDepartureFlight1chieuNew1" ).hide();
+                                $( "#ContentDepartureFlight1chieuNew2" ).hide();
+                                setTimeout( function () { GetDepartureinfo(); }, 0 );
+                            }
+                            else {
+
+                                $( "#ContentDepartureFlight" ).html( '' );
+                                $( "#ContentDepartureFlightNew1" ).html('');
+                                $( "#ContentDepartureFlightNew2" ).html('');
+                                $( "#contenReturnFlight" ).html('');
+                                $( "#contenReturnFlightNew1" ).html('');
+                                $( "#contenReturnFlightNew2" ).html('');
+
+                                $( "#loadingReturnFlight" ).show();
+                                $( "#ContentDepartureFlight" ).hide();
+                                $( "#ContentDepartureFlightNew1" ).hide();
+                                $( "#ContentDepartureFlightNew2" ).hide();
+                                $( "#contenReturnFlight" ).hide();
+                                $( "#contenReturnFlightNew1" ).hide();
+                                $( "#contenReturnFlightNew2" ).hide();
+                                setTimeout( function () { GetDepartureinfo(); }, 0 );
+                                setTimeout( function () { GetReturnFlightinfo();  }, 0 );
+                            }
+
+                        },
+                        error: function ( e ) { }
+                    } );
+                }
+            }
+        </script>
+    }
+
+}
+else
+{
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("SeachInternational", "SeachHome")',
+                dataType: "html",
+                data: {        Itinerary : @Model.Itinerary,
+                    DepartureAirportCode : '@Model.DepartureAirportCode',
+                    DestinationAirportCode : '@Model.DestinationAirportCode',
+                    DepartureDate : '@Model.DepartureDate',
+                    ReturnDate : '@Model.ReturnDate',
+                    Adult : @Model.Adult,
+                    Children: @Model.Children,Infant : @Model.Infant,
+                    Currency : '@Model.Currency',
+                    older: '@Model.older',
+                    typeolder: '@Model.typeolder',
+                    StopNum: '@Model.StopNum',
+                },
+                success: function (content) {
+                    $("#SeachInfo").html(content);
+                    $("#ResultTicket").hide();
+                    $("#ResultTicket1").hide();
+                    setTimeout(function () { GetFareDataInfo(); }, 0);
+                    $("#SeachInfo").slideUp( 300 ).delay( 200 ).fadeIn( 400 );;
+                    $("#pnSeResult").delay( 200 ).fadeOut(0);;
+                },
+                error: function (e) { }
+            });
+        });
+        function GetFareDataInfo() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetFareDataInfo", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         $("#ResultTicket").append(content)
+                         $("#ResultTicket").slideUp(150).delay(100).fadeIn(100);
+                         setTimeout( function () { GetFareDataInfo1(); }, 0 );
+                         checkHangbayDiemDung();
+                    },
+                    error: function (e) { }
+                });
+        }
+        function GetFareDataInfo1() {
+                 $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("GetFareDataInfo1", "SeachHome")',
+                    dataType: "html",
+                     success: function (content) {
+                         $("#ResultTicket2").append(content)
+                         $("#ResultTicket2").slideUp(150).delay(100).fadeIn(100);
+                         $( "#loadingResultTicket" ).hide();
+                         checkHangbayDiemDung();
+                    },
+                    error: function (e) { }
+                });
+        }
+        function checkHangbayDiemDung() {
+              jQuery( ".checkdiemdung" ).each( function () {
+                var valuecheck = $( this ).is( ":checked" );
+                $( ".StopNum" + $( this ).attr( "name" ) ).each( function () {
+                    if ( valuecheck == true ) {
+                        $( this ).removeClass( "hiddenStopnum" );
+                    } else {
+                        $( this ).addClass( "hiddenStopnum" );
+                    }
+                } );
+            } );
+        jQuery( ".checkboxal" ).each( function () {
+            var valuecheck = $( this ).is( ":checked" );
+            $( "." + $( this ).attr( "name" ) ).each( function () {
+                if ( valuecheck == true ) {
+                    $( this ).removeClass( "hiddenAirline" );
+
+                } else {
+                    $( this ).addClass( "hiddenAirline" );
+                }
+            } );
+        } );
+    }
+
+        function onSort() {
+                var selectedVal = "";
+                var selected = $( "input[type='radio'][name='Sort']:checked" );
+                if ( selected.length > 0 ) {
+                    selectedVal = selected.val();
+                    $.ajax( {
+                        type: "Post",
+                        url: '@Url.Action("SortInternational", "SeachHome")',
+                        data: {"older":selectedVal,"typeolder":'@VDMMutiline.SharedComponent.Constants.Constant.Typeolder.Ascending' },
+                        success: function ( data ) {
+                            $( "#loadingResultTicket" ).show();
+                            $( "#ResultTicket" ).html( '' );
+                            $( "#ResultTicket1" ).html( '' );
+                            $( "#ResultTicket" ).hide();
+                            $( "#ResultTicket1" ).hide();
+                            setTimeout( function () { GetFareDataInfo(); }, 0 );
+                        },
+                        error: function ( e ) { }
+                    } );
+                }
+            }
+    </script>
+}
+

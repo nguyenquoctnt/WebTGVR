@@ -1,0 +1,125 @@
+﻿@using VDMMutiline.Core.UI
+@using VDMMutiline.Core.Common
+@using VDMMutiline.SharedComponent.Constants
+@model VDMMutiline.SeachAndBook.SeachParam
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+}
+<div class="" style="color: #000;padding-left: 11px;font-size: 14px;font-weight: bold;">
+    <div class="fa fa-shopping-cart"></div>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Airlines
+</div>
+<div class="Pad10 BorderTop BasketPrice" style="        padding-top: 0px">
+    <div class="filer-group" style="    border-bottom: 0px;">
+        <table id="ckbListAirlines" border="0" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 80%">
+                        <input id="ckbAllAirline" type="checkbox" class="checkboxalall" @(string.IsNullOrEmpty(Model.AirlineCode) ? "checked='checked'" : "") name="ckbAllAirline">
+                        <label style="font-size: 12px;font-weight: normal;text-transform: none;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Select_all</label>
+                    </td>
+                    <td style="text-align:right;color: #b30404; font-weight: bold;width: 20%"></td>
+                </tr>
+                @if (Model.ListAirline != null)
+                {
+                    for (int i = 0; i < Model.ListAirline.Count; i++)
+                    {
+                        <tr>
+                            @Html.HiddenFor(z => Model.ListAirline[i].Code)
+                            <td style="width: 80%">
+                                <input id="@(i + "s")" checked class="checkboxal" type="checkbox" name="@Model.ListAirline[i].Code">
+                                <label style="font-size: 12px;font-weight: normal;text-transform: none;">
+                                    <img alt="@Model.ListAirline[i].Name" class="filter-airline-logo" src="@Model.ListAirline[i].Pictures" height="16" width="20">@Model.ListAirline[i].Name
+                                </label>
+                            </td>
+                            <td style="text-align:right;color: #b30404; font-weight: bold;width: 20%">
+                                @{
+                                    var FareAdult = UIUty.ChuyenDoiTienTe(Model.ListAirline[i].GiareNhat);
+                                    @UIUty.catgia(Model.ListAirline[i].GiareNhat)
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="" style="color: #000;padding-left: 11px;font-size: 14px;font-weight: bold;">
+    <div class="fa fa-shopping-cart"></div>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Sort_flight
+</div>
+<div class="Pad10 BorderTop BasketPrice" style="        padding-top: 0px">
+    <div class="filer-group" style="    border-bottom: 0px;">
+
+        <div class="BoxContent">
+            <span for="gia" style="font-size: 14px;font-weight: normal;">
+                <input style="margin-right: 0px;" class="Sort" type="radio" checked id="gia" onchange="onSort()" name="Sort" value="@Constant.Olderve.Gia">
+                Giá (Từ thấp tới cao)
+            </span>
+            <br>
+            <span for="TongThoiGianBay" style="font-size: 14px;font-weight: normal;">
+                <input style="margin-right: 0px;" class="Sort" type="radio" id="TongThoiGianBay" onchange="onSort()" name="Sort" value="@Constant.Olderve.Thoigianbay">
+                Tổng thời gian bay
+            </span>
+            <br>
+            <span for="GioCatCanh" style="font-size: 14px;font-weight: normal;">
+                <input style="margin-right: 0px;" class="Sort" type="radio" id="GioCatCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioCatCanh">
+                Thời gian cất cánh
+            </span>
+            <br>
+            <span for="GioHaCanh" style="font-size: 14px;font-weight: normal;">
+                <input style="margin-right: 0px;" class="Soft" type="radio" id="GioHaCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioHaCanh">
+                Giờ hạ cánh
+            </span>
+            <br>
+            <span for="Hang" style="font-size: 14px;font-weight: normal;">
+                <input style="margin-right: 0px;" class="Sort" type="radio" id="Hang" onchange="onSort()" name="Sort" value="@Constant.Olderve.HangHangkhong">
+                Hãng hàng không
+            </span>
+        </div>
+    </div>
+</div>
+<div class="row bottom log3">
+    <button type="button" onclick="showtap()" value="Đồng ý" class="btt" style="        color: #fff;">Đồng ý</button>
+</div>
+<script>
+    function showtap() {
+        $('.nav-tabs a[href="#home"]').tab('show');
+    }
+    $( document ).ready( function () {
+        $( '#ckbAllAirline' ).change( function () {
+            var n = jQuery( ".checkboxal" ).length;
+            var check = $( this ).prop( 'checked' );
+            if ( n > 0 ) {
+                jQuery( ".checkboxal" ).each( function () {
+                    $( this ).prop( 'checked', check );
+                    $( "." + $( this ).attr( "name" ) ).each( function () {
+                        if ( check == true ) {
+                            $( this ).css( "display", "block" );
+                        } else {
+                            $( this ).css( "display", "none" );
+                        }
+
+                    } );
+                } );
+            }
+        } );
+        $( '.checkboxal' ).change( function () {
+            $( "#ckbAllAirline" ).prop( 'checked', false );
+            jQuery( ".checkboxal" ).each( function () {
+                var valuecheck = $( this ).is( ":checked" );
+                $( "." + $( this ).attr( "name" ) ).each( function () {
+                    if ( valuecheck == true ) {
+                        $( this ).css( "display", "block" );
+                    } else {
+                        $( this ).css( "display", "none" );
+                    }
+                } );
+            } );
+
+        } );
+    } );
+</script>

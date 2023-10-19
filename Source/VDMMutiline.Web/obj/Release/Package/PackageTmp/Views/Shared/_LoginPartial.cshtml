@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using VDMMutiline.Core
+@{
+    /**/
+
+    var CurentUser = HttpContext.Current.GetOwinContext().GetUserManager<VDMUserManager>().FindByName(User.Identity.Name);
+
+
+}
+@{
+    if (CurentUser != null)
+    {
+        var _biz = new VDMMutiline.Biz.Wallet.WalletBiz();
+        var param = new VDMMutiline.SharedComponent.Params.Wallet.WalletParam { UserID = CurentUser.Id };
+        _biz.GetInfo(param);
+        var SoDu = "0";
+        if (param.WalletInfo != null)
+        {
+            SoDu = (param.WalletInfo.Amount ?? 0).ToString("n0");
+        }
+        <li class="dropdown dropdown-notification nav-item">
+            <a class="nav-link nav-link-label" href="#" style="    text-align: right;line-height: 20px;    padding-top: 7px;    padding-bottom: 7px;">
+                Số dư ký quỹ <br /> <b style="color: #DA4453;">@SoDu</b>
+            </a>
+        </li>
+    }
+
+}
+<li class="dropdown dropdown-user nav-item">
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", new { @area = "" }, FormMethod.Post, new { id = "logoutForm", @area = "", @class = "navbar-right" }))
+        {
+
+            @Html.AntiForgeryToken()
+
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link">
+                <span class="avatar avatar-online">
+                    <img src="@(string.IsNullOrEmpty(CurentUser.Avatar)?"/Content/app-assets/images/portrait/small/avatar-s-1.png":CurentUser.Avatar)" alt="avatar">
+                    <i></i>
+                </span><span class="user-name">@User.Identity.GetUserName()</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="@Url.Action("ProfileMember","Account",new {@area=""})" class="dropdown-item"><i class="ft-user"></i> Thông tin cá nhân</a>
+                @*<a href="@Url.Action("ChangePassword","Account",new {@area=""})" class="dropdown-item"><i class="ft-settings"></i> Cấu hình</a>*@
+                <a href="@Url.Action("ChangePassword","Account",new {@area=""})" class="dropdown-item"><i class="ft-lock"></i> Đổi mật khẩu</a>
+                <div class="dropdown-divider"></div><a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item"><i class="ft-log-out"></i> Đăng xuất</a>
+            </div>
+
+
+        }
+    }
+</li>

@@ -1,0 +1,1106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{868C740F-D51C-44EE-B16F-55D363BDB432}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VDMMutiline.Templeate1</RootNamespace>
+    <AssemblyName>VDMMutiline.Templeate1</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CaptchaMvc">
+      <HintPath>..\LIB\CaptchaMvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\LIB\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\LIB\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\LIB\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\LIB\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\LIB\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=18.4.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.18.4.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebStart">
+      <HintPath>..\LIB\WebStart.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AutoRoutingConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebStart.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ControlController.cs" />
+    <Compile Include="Controllers\FontEndnewController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderfontendController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="license.aspx.cs">
+      <DependentUpon>license.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="license.aspx.designer.cs">
+      <DependentUpon>license.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\1399295640745.png" />
+    <Content Include="Content\advertise.jpg" />
+    <Content Include="Content\advertise.png" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-toastr\toastr.css" />
+    <Content Include="Content\bootstrap-toastr\toastr.js" />
+    <Content Include="Content\bootstrap-toastr\toastr.min.css" />
+    <Content Include="Content\bootstrap-toastr\toastr.min.js" />
+    <Content Include="Content\bootstrap-toastr\ui-toastr.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Copy\clipboard-action.js" />
+    <Content Include="Content\Copy\clipboard.js" />
+    <Content Include="Content\Copy\clipboard.min.js" />
+    <Content Include="Content\DachonIcon.png" />
+    <Content Include="Content\daterangepicker\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\daterangepicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\daterangepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Content\daterangepicker\daterangepicker-bs3.css" />
+    <Content Include="Content\daterangepicker\daterangepicker.js" />
+    <Content Include="Content\daterangepicker\daterangepicker.min.css" />
+    <Content Include="Content\Embe.png" />
+    <Content Include="Content\fixto.min.js" />
+    <Content Include="Content\FontEnd\EditSeach.css" />
+    <Content Include="Content\FontEnd\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\FontEnd\images\adt_icon.png" />
+    <Content Include="Content\FontEnd\images\ajax-loading.gif" />
+    <Content Include="Content\FontEnd\images\chd_icon.png" />
+    <Content Include="Content\FontEnd\images\inf_icon.png" />
+    <Content Include="Content\FontEnd\js\bootstrap.js" />
+    <Content Include="Content\FontEnd\js\bootstrap.min.js" />
+    <Content Include="Content\FontEnd\js\CreateModel.js" />
+    <Content Include="Content\FontEnd\js\jquery-1.9.1.js" />
+    <Content Include="Content\FontEnd\js\jquery-1.9.1.min.js" />
+    <Content Include="Content\FontEnd\js\jquery-3.1.1.min.js" />
+    <Content Include="Content\FontEnd\js\jquery.min.js" />
+    <Content Include="Content\FontEnd\Popup\jquery.bpopup.js" />
+    <Content Include="Content\FontEnd\Popup\jquery.bpopup.min.js" />
+    <Content Include="Content\FontEnd\Popup\loading.gif" />
+    <Content Include="Content\FontEnd\Popup\Popubcss.css" />
+    <Content Include="Content\FontEnd\SeachValue\animated-overlay.gif" />
+    <Content Include="Content\FontEnd\SeachValue\arrow.png" />
+    <Content Include="Content\FontEnd\SeachValue\cal.png" />
+    <Content Include="Content\FontEnd\SeachValue\Chart.css" />
+    <Content Include="Content\FontEnd\SeachValue\Control.css" />
+    <Content Include="Content\FontEnd\SeachValue\DomesticFlight.css" />
+    <Content Include="Content\FontEnd\SeachValue\Flight.css" />
+    <Content Include="Content\FontEnd\SeachValue\format.js" />
+    <Content Include="Content\FontEnd\SeachValue\GlobalFlight.css" />
+    <Content Include="Content\FontEnd\SeachValue\GlobalFlightQuocTe.css" />
+    <Content Include="Content\FontEnd\SeachValue\home.png" />
+    <Content Include="Content\FontEnd\SeachValue\IBE.css" />
+    <Content Include="Content\FontEnd\SeachValue\images\sprites.png" />
+    <Content Include="Content\FontEnd\SeachValue\images\step-arrow.png" />
+    <Content Include="Content\FontEnd\SeachValue\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\jquery-1.9.1.js" />
+    <Content Include="Content\FontEnd\SeachValue\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Content\FontEnd\SeachValue\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\FontEnd\SeachValue\jquery.ui.datepicker-en-GB.js" />
+    <Content Include="Content\FontEnd\SeachValue\jquery.ui.datepicker-vi.js" />
+    <Content Include="Content\FontEnd\SeachValue\loading.gif" />
+    <Content Include="Content\FontEnd\SeachValue\mien_bac.jpg" />
+    <Content Include="Content\FontEnd\SeachValue\mien_nam.jpg" />
+    <Content Include="Content\FontEnd\SeachValue\mien_trung.jpg" />
+    <Content Include="Content\FontEnd\SeachValue\point.png" />
+    <Content Include="Content\FontEnd\SeachValue\progress_step.png" />
+    <Content Include="Content\FontEnd\SeachValue\quoc_te.jpg" />
+    <Content Include="Content\FontEnd\SeachValue\Result.js" />
+    <Content Include="Content\FontEnd\SeachValue\SearchBoxQuickly.css" />
+    <Content Include="Content\FontEnd\SeachValue\SelectCityBox.css" />
+    <Content Include="Content\FontEnd\SeachValue\SelectCityBoxMini.css" />
+    <Content Include="Content\FontEnd\SeachValue\Site.css" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\Airline\jq.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\Airline\vj.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\Airline\vn.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\below.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\detail_arrow.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\detail_arrow_s.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\farerule.jpg" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\flight-direct.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\flights-icon-inbound.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\flights-icon-outbound.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\flight_depart.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\flight_return.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\loadingAnimation.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\loading_1.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\loading_5.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\plane-flight-icon.png" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\sort_arrows.gif" />
+    <Content Include="Content\FontEnd\SeachValue\Styles\top.png" />
+    <Content Include="Content\FontEnd\SeachValue\transparent-bg.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-icons_222222_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\FontEnd\SeachValue\ui.datepicker.lunar.min.js" />
+    <Content Include="Content\FontEnd\SeachValue\warning_icon.png" />
+    <Content Include="Content\FontEnd\Seach\Control.css" />
+    <Content Include="Content\FontEnd\Seach\datepicker.css" />
+    <Content Include="Content\FontEnd\Seach\IBE.css" />
+    <Content Include="Content\FontEnd\Seach\Images\arrow.png" />
+    <Content Include="Content\FontEnd\Seach\Images\cal.png" />
+    <Content Include="Content\FontEnd\Seach\Images\home.png" />
+    <Content Include="Content\FontEnd\Seach\Images\mien_bac.jpg" />
+    <Content Include="Content\FontEnd\Seach\Images\mien_nam.jpg" />
+    <Content Include="Content\FontEnd\Seach\Images\mien_trung.jpg" />
+    <Content Include="Content\FontEnd\Seach\Images\phone-icon.png" />
+    <Content Include="Content\FontEnd\Seach\Images\point.png" />
+    <Content Include="Content\FontEnd\Seach\Images\progress_step.png" />
+    <Content Include="Content\FontEnd\Seach\Images\quoc_te.jpg" />
+    <Content Include="Content\FontEnd\Seach\Images\transparent-bg.png" />
+    <Content Include="Content\FontEnd\Seach\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\FontEnd\Seach\js\date_lunar.min.js" />
+    <Content Include="Content\FontEnd\Seach\js\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Content\FontEnd\Seach\js\jquery.min.js" />
+    <Content Include="Content\FontEnd\Seach\js\jquery.ui.datepicker-en-GB.js" />
+    <Content Include="Content\FontEnd\Seach\js\jquery.ui.datepicker-vi.js" />
+    <Content Include="Content\FontEnd\Seach\js\ui.datepicker.lunar.min.js" />
+    <Content Include="Content\FontEnd\Seach\Picker\animated-overlay.gif" />
+    <Content Include="Content\FontEnd\Seach\Picker\arrow.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\cal.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\home.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\FontEnd\Seach\Picker\jquery.ui.datepicker-en-GB.js" />
+    <Content Include="Content\FontEnd\Seach\Picker\jquery.ui.datepicker-vi.js" />
+    <Content Include="Content\FontEnd\Seach\Picker\loading.gif" />
+    <Content Include="Content\FontEnd\Seach\Picker\point.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-icons_222222_256x240.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\FontEnd\Seach\Picker\ui.datepicker.lunar.min.js" />
+    <Content Include="Content\FontEnd\Seach\SelectCityBox.css" />
+    <Content Include="Content\FontEnd\Seach\Site.css" />
+    <Content Include="Content\FontEnd\Selecttize\selectize.bootstrap3.css" />
+    <Content Include="Content\FontEnd\Selecttize\selectize.js" />
+    <Content Include="Content\FontEnd\services\css\style.css" />
+    <Content Include="Content\FontEnd\services\util-1.png" />
+    <Content Include="Content\FontEnd\services\util-2.png" />
+    <Content Include="Content\FontEnd\services\util-3.png" />
+    <Content Include="Content\FontEnd\services\util-4.png" />
+    <Content Include="Content\FontEnd\ThanhToan\bank-transfer.png" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\acb.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\agribank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\bidv.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\donga.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\donga.png" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\Eximbank.png" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\hdbank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\lienviet.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\mbbank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\mrb.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\sacombank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\techcombank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\vib.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\vietcombank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\viettinkbank.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\bankimage\vpbank.png" />
+    <Content Include="Content\FontEnd\ThanhToan\Giaovetannha.svg" />
+    <Content Include="Content\FontEnd\ThanhToan\logo-pay.svg" />
+    <Content Include="Content\FontEnd\ThanhToan\payment.js" />
+    <Content Include="Content\FontEnd\ThanhToan\phone.jpg" />
+    <Content Include="Content\FontEnd\ThanhToan\Thanhtoanvanphong.png" />
+    <Content Include="Content\FontEnd\ThanhToan\Vnpaylogo.png" />
+    <Content Include="Content\FontEnd\VDM\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\FontEnd\VDM\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\FontEnd\VDM\fonts\NexaBlack.svg" />
+    <Content Include="Content\FontEnd\VDM\fonts\soap-icons.svg" />
+    <Content Include="Content\FontEnd\VDM\images\customer_support.png" />
+    <Content Include="Content\FontEnd\VDM\images\elines.png" />
+    <Content Include="Content\FontEnd\VDM\images\hotline-sidebar.png" />
+    <Content Include="Content\FontEnd\VDM\images\hotlinevv.png" />
+    <Content Include="Content\FontEnd\VDM\images\hotrotrutuyen.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconfb.jpg" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu01.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu02.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu03.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu04.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu05.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconmenu06.png" />
+    <Content Include="Content\FontEnd\VDM\images\iconsky.jpg" />
+    <Content Include="Content\FontEnd\VDM\images\logo alobayngay.jpg" />
+    <Content Include="Content\FontEnd\VDM\images\paper_plane_icon.png" />
+    <Content Include="Content\FontEnd\VDM\images\payments-sidebar.png" />
+    <Content Include="Content\FontEnd\VDM\images\sale3.gif" />
+    <Content Include="Content\FontEnd\VDM\logo.png" />
+    <Content Include="Content\FontEnd\VDM\Scripts\ElinesCommon.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\frontend.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\HomePageSearch.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\html5.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\jquery.input-hint.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\owl.carousel.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\owl.carousel.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\PageSearch.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\respond.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\flexslider.css" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\flexslider-icon.svg" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\jquery.flexslider-min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\jquery-ui.1.10.4.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\jquery.placeholder.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\jquery.stellar.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\lazyload.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\modernizr.2.7.1.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\theme-scripts.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForest\waypoints.min.js" />
+    <Content Include="Content\FontEnd\VDM\Scripts\VeGiaReTheoThang.js" />
+    <Content Include="Content\FontEnd\VDM\theme\animate.min.css" />
+    <Content Include="Content\FontEnd\VDM\theme\bootstrap.min.css" />
+    <Content Include="Content\FontEnd\VDM\theme\elines\custom.css" />
+    <Content Include="Content\FontEnd\VDM\theme\icon\mobile-menu.png" />
+    <Content Include="Content\FontEnd\VDM\theme\ie.css" />
+    <Content Include="Content\FontEnd\VDM\theme\image\1516-1507877614-vietfly.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\bank.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\bg-edit2.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\border_eva.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\clllll.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\font-awesome.min.css" />
+    <Content Include="Content\FontEnd\VDM\theme\image\collaspe.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\gachxam.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\giao_dich.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\hotro.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\HouseIcon.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\hover-effect.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\ho_tro.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\iconbb.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\iconskype.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\iconzalo.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\icon_price.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\icon_service.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\icon_usage.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\iline.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\ket_qua.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\khoa.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\logochan01.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\messenger.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\nenvangchuan.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\next.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\ngoisao.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\PartnerV2.jpg" />
+    <Content Include="Content\FontEnd\VDM\theme\image\pattern_xanh.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\pre.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\quick.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\skype1.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\viber.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\zalo.png" />
+    <Content Include="Content\FontEnd\VDM\theme\image\zopim.png" />
+    <Content Include="Content\FontEnd\VDM\theme\menu.css" />
+    <Content Include="Content\FontEnd\VDM\theme\owl.carousel.css" />
+    <Content Include="Content\FontEnd\VDM\theme\owl.theme.css" />
+    <Content Include="Content\FontEnd\VDM\theme\owl.transitions.css" />
+    <Content Include="Content\FontEnd\VDM\theme\responsive.css" />
+    <Content Include="Content\FontEnd\VDM\theme\SeachStyle.css" />
+    <Content Include="Content\FontEnd\VDM\theme\style.css" />
+    <Content Include="Content\FontEnd\VDM\theme\wizard.min.css" />
+    <Content Include="Content\FontEnd\vethang\css\core.css" />
+    <Content Include="Content\FontEnd\vethang\css\font-custom.css" />
+    <Content Include="Content\FontEnd\vethang\css\home.css" />
+    <Content Include="Content\FontEnd\vethang\css\style.css" />
+    <Content Include="Content\FontEnd\vethang\css\style2.css" />
+    <Content Include="Content\FontEnd\vethang\css\v36.css" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Content\FontEnd\vethang\images\cal-next.png" />
+    <Content Include="Content\FontEnd\vethang\images\cal-prev.png" />
+    <Content Include="Content\FontEnd\vethang\images\day_green.png" />
+    <Content Include="Content\FontEnd\vethang\images\day_red.png" />
+    <Content Include="Content\FontEnd\vethang\images\disabled_day.png" />
+    <Content Include="Content\FontEnd\vethang\images\home.png" />
+    <Content Include="Content\FontEnd\vethang\images\icon22.png" />
+    <Content Include="Content\FontEnd\vethang\images\logo.png" />
+    <Content Include="Content\FontEnd\vethang\images\parallax-holland-standard.jpg" />
+    <Content Include="Content\FontEnd\vethang\images\password.png" />
+    <Content Include="Content\FontEnd\vethang\images\plan.png" />
+    <Content Include="Content\FontEnd\vethang\images\skype.png" />
+    <Content Include="Content\FontEnd\vethang\images\sprites.png" />
+    <Content Include="Content\FontEnd\vethang\images\step-arrow.png" />
+    <Content Include="Content\FontEnd\vethang\images\support.png" />
+    <Content Include="Content\FontEnd\vethang\images\tours.png" />
+    <Content Include="Content\FontEnd\vethang\images\users.png" />
+    <Content Include="Content\FontEnd\vethang\images\zalo.png" />
+    <Content Include="Content\FontEnd\vethang\js\bootstrap.js" />
+    <Content Include="Content\FontEnd\vethang\js\core - Copy.js" />
+    <Content Include="Content\FontEnd\vethang\js\core.js" />
+    <Content Include="Content\FontEnd\vethang\js\custom.js" />
+    <Content Include="Content\FontEnd\vethang\js\ext.js" />
+    <Content Include="Content\FontEnd\vethang\js\jquery.min.js" />
+    <Content Include="Content\FontEnd\vethang\js\react.js" />
+    <Content Include="Content\FontEnd\vethang\js\ui.js" />
+    <Content Include="Content\FontEnd\vethang\js\uqj1egd.js" />
+    <Content Include="Content\form-parsley\parsley.js" />
+    <Content Include="Content\iCheck\demo\css\banner.jpg" />
+    <Content Include="Content\iCheck\demo\css\custom.css" />
+    <Content Include="Content\iCheck\demo\css\icheck.png" />
+    <Content Include="Content\iCheck\demo\css\ie\arrow-bottom.png" />
+    <Content Include="Content\iCheck\demo\css\ie\arrow-top.png" />
+    <Content Include="Content\iCheck\demo\css\ie\header-line.png" />
+    <Content Include="Content\iCheck\demo\css\ie\icon-fork.png" />
+    <Content Include="Content\iCheck\demo\css\ie\icon-github.png" />
+    <Content Include="Content\iCheck\demo\css\ie\icon-lab.png" />
+    <Content Include="Content\iCheck\demo\css\ie\icon-options.png" />
+    <Content Include="Content\iCheck\demo\css\ie\icon-star.png" />
+    <Content Include="Content\iCheck\demo\css\montserrat-bold.svg" />
+    <Content Include="Content\iCheck\demo\css\montserrat-regular.svg" />
+    <Content Include="Content\iCheck\demo\css\normalize.css" />
+    <Content Include="Content\iCheck\demo\index.html" />
+    <Content Include="Content\iCheck\demo\js\custom.js" />
+    <Content Include="Content\iCheck\demo\js\custom.min.js" />
+    <Content Include="Content\iCheck\demo\js\jquery.js" />
+    <Content Include="Content\iCheck\demo\js\zepto.js" />
+    <Content Include="Content\iCheck\icheck.js" />
+    <Content Include="Content\iCheck\icheck.min.js" />
+    <Content Include="Content\iCheck\skins\all.css" />
+    <Content Include="Content\iCheck\skins\flat\aero%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\aero.css" />
+    <Content Include="Content\iCheck\skins\flat\aero.png" />
+    <Content Include="Content\iCheck\skins\flat\blue%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\blue.css" />
+    <Content Include="Content\iCheck\skins\flat\blue.png" />
+    <Content Include="Content\iCheck\skins\flat\flat%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\flat.css" />
+    <Content Include="Content\iCheck\skins\flat\flat.png" />
+    <Content Include="Content\iCheck\skins\flat\green%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\green.css" />
+    <Content Include="Content\iCheck\skins\flat\green.png" />
+    <Content Include="Content\iCheck\skins\flat\grey%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\grey.css" />
+    <Content Include="Content\iCheck\skins\flat\grey.png" />
+    <Content Include="Content\iCheck\skins\flat\orange%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\orange.css" />
+    <Content Include="Content\iCheck\skins\flat\orange.png" />
+    <Content Include="Content\iCheck\skins\flat\pink%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\pink.css" />
+    <Content Include="Content\iCheck\skins\flat\pink.png" />
+    <Content Include="Content\iCheck\skins\flat\purple%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\purple.css" />
+    <Content Include="Content\iCheck\skins\flat\purple.png" />
+    <Content Include="Content\iCheck\skins\flat\red%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\red.css" />
+    <Content Include="Content\iCheck\skins\flat\red.png" />
+    <Content Include="Content\iCheck\skins\flat\yellow%402x.png" />
+    <Content Include="Content\iCheck\skins\flat\yellow.css" />
+    <Content Include="Content\iCheck\skins\flat\yellow.png" />
+    <Content Include="Content\iCheck\skins\flat\_all.css" />
+    <Content Include="Content\iCheck\skins\futurico\futurico%402x.png" />
+    <Content Include="Content\iCheck\skins\futurico\futurico.css" />
+    <Content Include="Content\iCheck\skins\futurico\futurico.png" />
+    <Content Include="Content\iCheck\skins\line\aero.css" />
+    <Content Include="Content\iCheck\skins\line\blue.css" />
+    <Content Include="Content\iCheck\skins\line\green.css" />
+    <Content Include="Content\iCheck\skins\line\grey.css" />
+    <Content Include="Content\iCheck\skins\line\line%402x.png" />
+    <Content Include="Content\iCheck\skins\line\line.css" />
+    <Content Include="Content\iCheck\skins\line\line.png" />
+    <Content Include="Content\iCheck\skins\line\orange.css" />
+    <Content Include="Content\iCheck\skins\line\pink.css" />
+    <Content Include="Content\iCheck\skins\line\purple.css" />
+    <Content Include="Content\iCheck\skins\line\red.css" />
+    <Content Include="Content\iCheck\skins\line\yellow.css" />
+    <Content Include="Content\iCheck\skins\line\_all.css" />
+    <Content Include="Content\iCheck\skins\minimal\aero%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\aero.css" />
+    <Content Include="Content\iCheck\skins\minimal\aero.png" />
+    <Content Include="Content\iCheck\skins\minimal\blue%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\blue.css" />
+    <Content Include="Content\iCheck\skins\minimal\blue.png" />
+    <Content Include="Content\iCheck\skins\minimal\green%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\green.css" />
+    <Content Include="Content\iCheck\skins\minimal\green.png" />
+    <Content Include="Content\iCheck\skins\minimal\grey%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\grey.css" />
+    <Content Include="Content\iCheck\skins\minimal\grey.png" />
+    <Content Include="Content\iCheck\skins\minimal\minimal%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\minimal.css" />
+    <Content Include="Content\iCheck\skins\minimal\minimal.png" />
+    <Content Include="Content\iCheck\skins\minimal\orange%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\orange.css" />
+    <Content Include="Content\iCheck\skins\minimal\orange.png" />
+    <Content Include="Content\iCheck\skins\minimal\pink%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\pink.css" />
+    <Content Include="Content\iCheck\skins\minimal\pink.png" />
+    <Content Include="Content\iCheck\skins\minimal\purple%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\purple.css" />
+    <Content Include="Content\iCheck\skins\minimal\purple.png" />
+    <Content Include="Content\iCheck\skins\minimal\red%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\red.css" />
+    <Content Include="Content\iCheck\skins\minimal\red.png" />
+    <Content Include="Content\iCheck\skins\minimal\yellow%402x.png" />
+    <Content Include="Content\iCheck\skins\minimal\yellow.css" />
+    <Content Include="Content\iCheck\skins\minimal\yellow.png" />
+    <Content Include="Content\iCheck\skins\minimal\_all.css" />
+    <Content Include="Content\iCheck\skins\polaris\polaris%402x.png" />
+    <Content Include="Content\iCheck\skins\polaris\polaris.css" />
+    <Content Include="Content\iCheck\skins\polaris\polaris.png" />
+    <Content Include="Content\iCheck\skins\square\aero%402x.png" />
+    <Content Include="Content\iCheck\skins\square\aero.css" />
+    <Content Include="Content\iCheck\skins\square\aero.png" />
+    <Content Include="Content\iCheck\skins\square\blue%402x.png" />
+    <Content Include="Content\iCheck\skins\square\blue.css" />
+    <Content Include="Content\iCheck\skins\square\blue.png" />
+    <Content Include="Content\iCheck\skins\square\green%402x.png" />
+    <Content Include="Content\iCheck\skins\square\green.css" />
+    <Content Include="Content\iCheck\skins\square\green.png" />
+    <Content Include="Content\iCheck\skins\square\grey%402x.png" />
+    <Content Include="Content\iCheck\skins\square\grey.css" />
+    <Content Include="Content\iCheck\skins\square\grey.png" />
+    <Content Include="Content\iCheck\skins\square\orange%402x.png" />
+    <Content Include="Content\iCheck\skins\square\orange.css" />
+    <Content Include="Content\iCheck\skins\square\orange.png" />
+    <Content Include="Content\iCheck\skins\square\pink%402x.png" />
+    <Content Include="Content\iCheck\skins\square\pink.css" />
+    <Content Include="Content\iCheck\skins\square\pink.png" />
+    <Content Include="Content\iCheck\skins\square\purple%402x.png" />
+    <Content Include="Content\iCheck\skins\square\purple.css" />
+    <Content Include="Content\iCheck\skins\square\purple.png" />
+    <Content Include="Content\iCheck\skins\square\red%402x.png" />
+    <Content Include="Content\iCheck\skins\square\red.css" />
+    <Content Include="Content\iCheck\skins\square\red.png" />
+    <Content Include="Content\iCheck\skins\square\square%402x.png" />
+    <Content Include="Content\iCheck\skins\square\square.css" />
+    <Content Include="Content\iCheck\skins\square\square.png" />
+    <Content Include="Content\iCheck\skins\square\yellow%402x.png" />
+    <Content Include="Content\iCheck\skins\square\yellow.css" />
+    <Content Include="Content\iCheck\skins\square\yellow.png" />
+    <Content Include="Content\iCheck\skins\square\_all.css" />
+    <Content Include="Content\IMG_03042018_141956_0.png" />
+    <Content Include="Content\ion.sound\ion.sound.js" />
+    <Content Include="Content\ion.sound\ion.sound.min.js" />
+    <Content Include="Content\ion.sound\sounds\beer_can_opening.aac" />
+    <Content Include="Content\ion.sound\sounds\beer_can_opening.mp3" />
+    <Content Include="Content\ion.sound\sounds\bell_ring.aac" />
+    <Content Include="Content\ion.sound\sounds\bell_ring.mp3" />
+    <Content Include="Content\ion.sound\sounds\branch_break.aac" />
+    <Content Include="Content\ion.sound\sounds\branch_break.mp3" />
+    <Content Include="Content\ion.sound\sounds\button_click.aac" />
+    <Content Include="Content\ion.sound\sounds\button_click.mp3" />
+    <Content Include="Content\ion.sound\sounds\button_click_on.aac" />
+    <Content Include="Content\ion.sound\sounds\button_click_on.mp3" />
+    <Content Include="Content\ion.sound\sounds\button_push.aac" />
+    <Content Include="Content\ion.sound\sounds\button_push.mp3" />
+    <Content Include="Content\ion.sound\sounds\button_tiny.aac" />
+    <Content Include="Content\ion.sound\sounds\button_tiny.mp3" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing.aac" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing.mp3" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing_2.aac" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing_2.mp3" />
+    <Content Include="Content\ion.sound\sounds\cd_tray.aac" />
+    <Content Include="Content\ion.sound\sounds\cd_tray.mp3" />
+    <Content Include="Content\ion.sound\sounds\computer_error.aac" />
+    <Content Include="Content\ion.sound\sounds\computer_error.mp3" />
+    <Content Include="Content\ion.sound\sounds\door_bell.aac" />
+    <Content Include="Content\ion.sound\sounds\door_bell.mp3" />
+    <Content Include="Content\ion.sound\sounds\door_bump.aac" />
+    <Content Include="Content\ion.sound\sounds\door_bump.mp3" />
+    <Content Include="Content\ion.sound\sounds\glass.aac" />
+    <Content Include="Content\ion.sound\sounds\glass.mp3" />
+    <Content Include="Content\ion.sound\sounds\keyboard_desk.aac" />
+    <Content Include="Content\ion.sound\sounds\keyboard_desk.mp3" />
+    <Content Include="Content\ion.sound\sounds\light_bulb_breaking.aac" />
+    <Content Include="Content\ion.sound\sounds\light_bulb_breaking.mp3" />
+    <Content Include="Content\ion.sound\sounds\metal_plate.aac" />
+    <Content Include="Content\ion.sound\sounds\metal_plate.mp3" />
+    <Content Include="Content\ion.sound\sounds\metal_plate_2.aac" />
+    <Content Include="Content\ion.sound\sounds\metal_plate_2.mp3" />
+    <Content Include="Content\ion.sound\sounds\pop_cork.aac" />
+    <Content Include="Content\ion.sound\sounds\pop_cork.mp3" />
+    <Content Include="Content\ion.sound\sounds\snap.aac" />
+    <Content Include="Content\ion.sound\sounds\snap.mp3" />
+    <Content Include="Content\ion.sound\sounds\staple_gun.aac" />
+    <Content Include="Content\ion.sound\sounds\staple_gun.mp3" />
+    <Content Include="Content\ion.sound\sounds\tap.aac" />
+    <Content Include="Content\ion.sound\sounds\tap.mp3" />
+    <Content Include="Content\ion.sound\sounds\water_droplet.aac" />
+    <Content Include="Content\ion.sound\sounds\water_droplet.mp3" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_2.aac" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_2.mp3" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_3.aac" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_3.mp3" />
+    <Content Include="Content\jquery.table2excel.js" />
+    <Content Include="Content\jquery.table2excel.min.js" />
+    <Content Include="Content\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\js\bootstrap-timepicker.min.js" />
+    <Content Include="Content\js\moment.min.js" />
+    <Content Include="Content\loadingAnimation.gif" />
+    <Content Include="Content\Nguoilon.png" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\payment.png" />
+    <Content Include="Content\plane.png" />
+    <Content Include="Content\planeIconTimvetheothang.png" />
+    <Content Include="Content\Selecttize\selectize.bootstrap3.css" />
+    <Content Include="Content\Selecttize\selectize.js" />
+    <Content Include="Content\skype1.png" />
+    <Content Include="Content\Treem.png" />
+    <Content Include="Content\zalo.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="license.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\FontEnd\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\FontEnd\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\FontEnd\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\FontEnd\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\FontEnd\fonts\FontAwesome.otf" />
+    <Content Include="Content\FontEnd\Popup\bower.json" />
+    <Content Include="Content\FontEnd\Popup\bpopup.jquery.json" />
+    <Content Include="Content\FontEnd\Popup\README.md" />
+    <Content Include="Content\FontEnd\VDM\fonts\FontAwesome.otf" />
+    <Content Include="Content\FontEnd\VDM\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\FontEnd\VDM\fonts\glyphicons-halflings-regular.eot%40" />
+    <Content Include="Content\FontEnd\VDM\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\FontEnd\VDM\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\FontEnd\VDM\fonts\NexaBlack.eot%40" />
+    <Content Include="Content\FontEnd\VDM\fonts\NexaBlack.ttf" />
+    <Content Include="Content\FontEnd\VDM\fonts\NexaBlack.woff" />
+    <Content Include="Content\FontEnd\VDM\fonts\soap-icons.eot" />
+    <Content Include="Content\FontEnd\VDM\fonts\soap-icons.ttf" />
+    <Content Include="Content\FontEnd\VDM\fonts\soap-icons.woff" />
+    <Content Include="Content\FontEnd\VDM\Scripts\Descr.WD3" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\Descr.WD3" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\flexslider-icon.eot" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\flexslider-icon.eot%40" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\flexslider-icon.ttf" />
+    <Content Include="Content\FontEnd\VDM\Scripts\themeForestComponents\flexslider\fonts\flexslider-icon.woff" />
+    <Content Include="Content\FontEnd\VDM\theme\Descr.WD3" />
+    <Content Include="Content\FontEnd\VDM\theme\elines\Descr.WD3" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\ion.sound\sounds\beer_can_opening.ogg" />
+    <Content Include="Content\ion.sound\sounds\bell_ring.ogg" />
+    <Content Include="Content\ion.sound\sounds\branch_break.ogg" />
+    <Content Include="Content\ion.sound\sounds\button_click.ogg" />
+    <Content Include="Content\ion.sound\sounds\button_click_on.ogg" />
+    <Content Include="Content\ion.sound\sounds\button_push.ogg" />
+    <Content Include="Content\ion.sound\sounds\button_tiny.ogg" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing.ogg" />
+    <Content Include="Content\ion.sound\sounds\camera_flashing_2.ogg" />
+    <Content Include="Content\ion.sound\sounds\cd_tray.ogg" />
+    <Content Include="Content\ion.sound\sounds\computer_error.ogg" />
+    <Content Include="Content\ion.sound\sounds\door_bell.ogg" />
+    <Content Include="Content\ion.sound\sounds\door_bump.ogg" />
+    <Content Include="Content\ion.sound\sounds\glass.ogg" />
+    <Content Include="Content\ion.sound\sounds\keyboard_desk.ogg" />
+    <Content Include="Content\ion.sound\sounds\light_bulb_breaking.ogg" />
+    <Content Include="Content\ion.sound\sounds\metal_plate.ogg" />
+    <Content Include="Content\ion.sound\sounds\metal_plate_2.ogg" />
+    <Content Include="Content\ion.sound\sounds\pop_cork.ogg" />
+    <Content Include="Content\ion.sound\sounds\snap.ogg" />
+    <Content Include="Content\ion.sound\sounds\staple_gun.ogg" />
+    <Content Include="Content\ion.sound\sounds\tap.ogg" />
+    <Content Include="Content\ion.sound\sounds\water_droplet.ogg" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_2.ogg" />
+    <Content Include="Content\ion.sound\sounds\water_droplet_3.ogg" />
+    <Content Include="Content\bootstrap-toastr\README.md" />
+    <Content Include="Content\bootstrap-toastr\toastr.min.js.map" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\animated.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\core.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\icons.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\larger.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\list.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\mixins.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\path.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\screen-reader.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\stacked.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\less\variables.less" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_core.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_list.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_path.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\FontEnd\vethang\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\FontEnd\vethang\fonts\jquery-filer.eot" />
+    <Content Include="Content\FontEnd\vethang\fonts\jquery-filer.ttf" />
+    <Content Include="Content\FontEnd\vethang\fonts\jquery-filer.woff" />
+    <Content Include="Content\FontEnd\vethang\fonts\meta.otf" />
+    <Content Include="Content\iCheck\.gitignore" />
+    <Content Include="Content\iCheck\bower.json" />
+    <Content Include="Content\iCheck\CHANGELOG.md" />
+    <Content Include="Content\iCheck\demo\css\custom.styl" />
+    <Content Include="Content\iCheck\demo\css\montserrat-bold.eot" />
+    <Content Include="Content\iCheck\demo\css\montserrat-bold.ttf" />
+    <Content Include="Content\iCheck\demo\css\montserrat-bold.woff" />
+    <Content Include="Content\iCheck\demo\css\montserrat-regular.eot" />
+    <Content Include="Content\iCheck\demo\css\montserrat-regular.ttf" />
+    <Content Include="Content\iCheck\demo\css\montserrat-regular.woff" />
+    <Content Include="Content\iCheck\icheck.jquery.json" />
+    <Content Include="Content\iCheck\README.md" />
+    <Content Include="Content\FontEnd\VDM\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\FontEnd\VDM\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\FontEnd\VDM\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\FontEnd\VDM\fonts\fontawesome-webfont.woff2" />
+    <Content Include="xml-sitemap.xsl" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\VDMComon.js" />
+    <Content Include="TeampleateVe\cssmainTempleate.css" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LayouIndex.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutHuongDan.cshtml" />
+    <Content Include="Views\Shared\_LayoutNew.cshtml" />
+    <Content Include="Views\Shared\_LeftHome.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_PartialPNEndCity.cshtml" />
+    <Content Include="Views\Shared\_PartialPNstarCity.cshtml" />
+    <Content Include="Views\Shared\_PartialRighttintuc.cshtml" />
+    <Content Include="Views\Shared\_Topbar.cshtml" />
+    <Content Include="Views\Home\Doitac.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\GetArrticalByCate.cshtml" />
+    <Content Include="Views\Home\SliderHome.cshtml" />
+    <Content Include="Views\Home\TinTuc.cshtml" />
+    <Content Include="Views\SeachHome\Seach.cshtml" />
+    <Content Include="Views\Control\Header.cshtml" />
+    <Content Include="Views\Control\NhanVienHotro.cshtml" />
+    <Content Include="Views\Control\Footer.cshtml" />
+    <Content Include="Views\FontEndTaiKhoanNganHang\Index.cshtml" />
+    <Content Include="Views\SeachHome\_PartialSachMini.cshtml" />
+    <Content Include="Views\SeachHome\_PartialSachMiniTinTuc.cshtml" />
+    <Content Include="Views\SeachHome\block.cshtml" />
+    <Content Include="Views\SeachHome\BookInternational.cshtml" />
+    <Content Include="Views\SeachHome\Bookticket.cshtml" />
+    <Content Include="Views\SeachHome\Dathanhtoan.cshtml" />
+    <Content Include="Views\SeachHome\GetDepartureinfo.cshtml" />
+    <Content Include="Views\SeachHome\GetDetailDepartureFlight.cshtml" />
+    <Content Include="Views\SeachHome\GetDetailReturnFlight.cshtml" />
+    <Content Include="Views\SeachHome\SeachInternational.cshtml" />
+    <Content Include="Views\SeachHome\SeachMain.cshtml" />
+    <Content Include="Views\SeachHome\SeachValue.cshtml" />
+    <Content Include="Views\SeachHome\_PartialPassenger.cshtml" />
+    <Content Include="Views\SeachHome\_PartialPassengerInternational.cshtml" />
+    <Content Include="Views\SeachHome\_PartialRightInternational.cshtml" />
+    <Content Include="Views\SeachHome\_PartialRinght.cshtml" />
+    <Content Include="Views\SeachHome\_PartialSeachContenvere.cshtml" />
+    <Content Include="Views\SeachHome\_PartialSeachDomestic.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginCallback.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ProfileMember.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\selectTempleate.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\FontEndnew\Bancothacmac.cshtml" />
+    <Content Include="Views\FontEndnew\ChiTiet.cshtml" />
+    <Content Include="Views\FontEndnew\Index.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Shared\_LayouQuanLyVe.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\_PartialPageChiTietDatVe.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\_PartialPageThongTinChuyenBay.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\CapNhapghichu.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\CapNhapTrangThai.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Create.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\DanhsachTicket.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Delete.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Expired.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Fail.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Index.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Menu.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\sendmail.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\sendsms.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Updatehinhthucthanhtoan.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\Yeucauxuathoadon.cshtml" />
+    <Content Include="Views\Control\SubmitMail.cshtml" />
+    <Content Include="Views\Orderfontend\Index.cshtml" />
+    <Content Include="Views\Control\home_page_services.cshtml" />
+    <Content Include="Views\ThanhToan\ChonHinhThucThanhToan.cshtml" />
+    <Content Include="Views\ThanhToan\KetQua.cshtml" />
+    <Content Include="Views\ThanhToan\Stripe.cshtml" />
+    <Content Include="Views\ThanhToan\_KetQuaQuocTe.cshtml" />
+    <Content Include="Views\ThanhToan\_KetQuaTrongNuoc.cshtml" />
+    <Content Include="Views\QuanLyVeDaDat\AddPass.cshtml" />
+    <Content Include="Views\CreateBooking\_PStep.cshtml" />
+    <Content Include="Views\CreateBooking\_ThongtinNguoiDat.cshtml" />
+    <Content Include="Views\CreateBooking\Adddichvu.cshtml" />
+    <Content Include="Views\CreateBooking\CreateDanhSachHanhKhac.cshtml" />
+    <Content Include="Views\CreateBooking\Getlistdichvu.cshtml" />
+    <Content Include="Views\CreateBooking\Index.cshtml" />
+    <Content Include="Views\CreateBooking\VBookingInfo.cshtml" />
+    <Content Include="Views\SeachHome\TimVere.cshtml" />
+    <Content Include="Views\SeachHome\_PartialDometicOneWay.cshtml" />
+    <Content Include="Views\Shared\_PartialPNEndCityMini.cshtml" />
+    <Content Include="Views\Shared\_PartialPNstarCityMini.cshtml" />
+    <Content Include="Views\SeachHome\_PartialSachMiniRight.cshtml" />
+    <Content Include="Views\KiemTraVe\Index.cshtml" />
+    <Content Include="Views\SeachHome\GetReturnFlightinfo.cshtml" />
+    <Content Include="Views\SeachHome\GetFareDataInfo.cshtml" />
+    <Content Include="Views\KhachSan\Index.cshtml" />
+    <Content Include="Views\SeachHome\GetDepartureinfoSeason1.cshtml" />
+    <Content Include="Views\SeachHome\GetDepartureinfoSeason2.cshtml" />
+    <Content Include="Views\SeachHome\GetReturnFlightinfoSeason1.cshtml" />
+    <Content Include="Views\SeachHome\GetReturnFlightinfoSeason2.cshtml" />
+    <Content Include="Views\SeachHome\GetFareDataInfo1.cshtml" />
+    <Content Include="Views\SeachHome\Copy.cshtml" />
+    <Content Include="Views\SeachHome\GetFareRuleInfo.cshtml" />
+    <Content Include="Views\SeachHome\GetDetailFare.cshtml" />
+    <Content Include="Views\SeachHome\GetDetailFlights.cshtml" />
+    <Content Include="Views\Sitemap\Index.cshtml" />
+    <Content Include="Views\SeachHome\CopyInternational.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\FontEnd\Seach\Picker\Imaghe\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiClient\ApiClient.Models\ApiClient.Models.csproj">
+      <Project>{829641f2-22d5-4a59-8483-97120da79e3d}</Project>
+      <Name>ApiClient.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApiClient\ApiClientCommon\ApiClient.Common.csproj">
+      <Project>{ca58d3e1-6188-405f-9ffa-6a9888bd58b9}</Project>
+      <Name>ApiClient.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookingResponse.Database\BookingResponse.Database.csproj">
+      <Project>{74e6c497-f6df-438d-ad9f-6673b6d49192}</Project>
+      <Name>BookingResponse.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Biz\VDMMutiline.Biz.csproj">
+      <Project>{9c308a8f-030d-4550-b44a-e904007b1a14}</Project>
+      <Name>VDMMutiline.Biz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Core\VDMMutiline.Core.csproj">
+      <Project>{ac9c00d7-7173-4810-a973-090b96f4e34a}</Project>
+      <Name>VDMMutiline.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Dao\VDMMutiline.Dao.csproj">
+      <Project>{0b99af95-615d-4c95-a0b0-f7dd466dfdae}</Project>
+      <Name>VDMMutiline.Dao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Resource\VDMMutiline.Resource.csproj">
+      <Project>{8769000b-0313-4cf7-bc95-b69f69cc49b0}</Project>
+      <Name>VDMMutiline.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.SeachAndBook\VDMMutiline.SeachAndBook.csproj">
+      <Project>{c1fabda7-b80a-49df-9810-5a7ac1c644a2}</Project>
+      <Name>VDMMutiline.SeachAndBook</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.SendMailAndSMS\VDMMutiline.SendMailAndSMS.csproj">
+      <Project>{78c22fbd-fda7-48d5-ba22-47f8558e4a09}</Project>
+      <Name>VDMMutiline.SendMailAndSMS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.SharedComponent\VDMMutiline.SharedComponent.csproj">
+      <Project>{1637e8e5-c05b-4fef-8524-418544a8f388}</Project>
+      <Name>VDMMutiline.SharedComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Ultilities\VDMMutiline.Ultilities.csproj">
+      <Project>{06fb04af-9f69-480b-aadf-0aa3fc6b3fa9}</Project>
+      <Name>VDMMutiline.Ultilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64804</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64804/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

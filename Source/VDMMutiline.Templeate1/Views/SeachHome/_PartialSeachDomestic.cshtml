@@ -1,0 +1,615 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@model VDMMutiline.SeachAndBook.SeachParam
+@functions{
+
+    private ApiClient.Models.Airport getbycode(string code)
+    {
+        return Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+    var index = 0;
+    var indexDepartureFlight = 0;
+    var indexReturnFlights = 0;
+    var objnameden = getbycode(Model.DestinationAirportCode);
+    var objnamedi = getbycode(Model.DepartureAirportCode);
+    var StartPoint = getsanbaycode(Model.DepartureAirportCode);
+    var EndPoint = getsanbaycode(Model.DestinationAirportCode);
+}
+<style>
+    .BL, .VJ {
+        float: unset !important;
+        font-weight: normal;
+    }
+</style>
+<div class="col-md-9 pLeft0 ">
+    @using (Html.BeginForm("SeachValue", "SeachHome", FormMethod.Post, new { @onsubmit = "return validateForm()", @id = "formvalueSeachdomtick", @class = "form-horizontal seach", @role = "form" }))
+    {
+
+        if (Model != null)
+        {
+            <div>
+                <input type="hidden" name="hdfSelectedDepartFlt" id="hdfSelectedDepartFlt" />
+                <input type="hidden" name="hdfSelectedReturnFlt" id="hdfSelectedReturnFlt" />
+                <input type="hidden" name="hdhSearchArchiveId" id="hdhSearchArchiveId" />
+                <input type="hidden" name="hdfItineraryType" id="hdfItineraryType" />
+                <input type="hidden" name="hdfFareAdtDepart" id="hdfFareAdtDepart" />
+                <input type="hidden" name="hdfFareChdDepart" id="hdfFareChdDepart" />
+                <input type="hidden" name="hdfFareInfDepart" id="hdfFareInfDepart" />
+                <input type="hidden" name="hdfTaxAdtDepart" id="hdfTaxAdtDepart" />
+                <input type="hidden" name="hdfTaxChdDepart" id="hdfTaxChdDepart" />
+                <input type="hidden" name="hdfTaxInfDepart" id="hdfTaxInfDepart" />
+                <input type="hidden" name="hdfFareAdtReturn" id="hdfFareAdtReturn" />
+                <input type="hidden" name="hdfFareChdReturn" id="hdfFareChdReturn" />
+                <input type="hidden" name="hdfFareInfReturn" id="hdfFareInfReturn" />
+                <input type="hidden" name="hdfTaxAdtReturn" id="hdfTaxAdtReturn" />
+                <input type="hidden" name="hdfTaxChdReturn" id="hdfTaxChdReturn" />
+                <input type="hidden" name="hdfTaxInfReturn" id="hdfTaxInfReturn" />
+                <input type="hidden" name="hdhSession" id="hdhSession" />
+                <input type="hidden" name="hdhCodeReturn" id="hdhCodeReturn" />
+                <input type="hidden" name="hdhCodeDepart" id="hdhCodeDepart" />
+                @Html.HiddenFor(z => Model.Itinerary)
+                @Html.HiddenFor(z => Model.DepartureAirportCode)
+                @Html.HiddenFor(z => Model.DestinationAirportCode)
+                @Html.HiddenFor(z => Model.DepartureDate)
+                @Html.HiddenFor(z => Model.ReturnDate)
+                @Html.HiddenFor(z => Model.Adult)
+                @Html.HiddenFor(z => Model.Children)
+                @Html.HiddenFor(z => Model.Infant)
+                @Html.HiddenFor(z => Model.AirlineCode)
+            </div>
+            if (Model.countDepartureFlights > 0)
+            {
+                if (Model.Itinerary <= 1)
+                {
+                    <style>
+    .SelectDate .NearDate {
+        width: 14.2% !important;
+    }
+
+    td.Price {
+        width: 110px;
+    }
+
+    .FlightInfo {
+        width: 90px;
+        padding-left: 10px;
+    }
+
+    .linkViewFlightDetail {
+        float: left !important;
+    }
+
+    .FlightInfo .Detail {
+        float: left !important;
+    }
+
+    </style>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" onclick="ShowCopy()" class="btn btn-default">Copy</button>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="SearchParamDomesticDepart" class="clearfix  box_top">
+                                <div class="SearchParamContent hidden-xs">
+                                    <div class="FlightIcon">
+                                        <img alt="Flight" src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                    </div>
+                                    <div class="Itinerary">
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:
+                                        <span>@(objnamedi != null ? string.Format("{0}, {1} ({2})", objnamedi.AirportName, objnamedi.CountryName, objnamedi.AirportCode) : "")</span>
+                                        <span>>@(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "")</span>
+
+                                    </div>
+                                    <div class="FlightDate">
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:
+                                        <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.DepartureDate)))</span>
+                                        <span> (@(Model.countDepartureFlights) chuyến bay)</span>
+                                    </div>
+                                </div>
+                                <div class="SearchParamContent hiddenMobie">
+                                    <div class="FlightIcon">
+                                        <img alt="Flight" src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                    </div>
+                                    <div class="Itinerary">
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:
+                                        <span>@(objnamedi != null ? string.Format("{0}", objnamedi.AirportName) : "")</span>
+                                        <span>>@(objnameden != null ? string.Format("{0}", objnameden.AirportName) : "")</span>
+                                    </div>
+                                    <div class="FlightDate">
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:
+                                        <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.DepartureDate)))</span>
+                                        <span> (@(Model.countDepartureFlights) @VDMMutiline.Resource.App_GlobalResources.weblanguage.flight)</span>
+                                    </div>
+                                </div>
+                                <div class="ScollButtonImg">
+                                    <div id="ctl00_MainContent_ScrollToReturnFlight">
+                                        <a href="javascript:void(0)" title="Cuộn xuống danh sách chuyến về" onclick="ScrollToControlById('SearchParamDomesticReturn');">
+                                            <img alt="Scroll to list of return flights" src="/Content/FontEnd/SeachValue/Styles/below.png" height="30">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix  SelectDate">
+                                @{
+
+                                    var DepartureDate = Utility.ConvertToDate(Model.DepartureDate);
+                                    if (DepartureDate.HasValue)
+                                    {
+                                        var objDepartureMin = Model.DepartureFlights.OrderBy(z => z.TotalPrice).FirstOrDefault();
+                                        var listthang = VDMMutiline.SeachAndBook.Common.CommonTicket.Getlistbythang(DepartureDate.Value, Model.DepartureAirportCode, Model.DestinationAirportCode);
+                                        var indexngay = 1;
+                                        for (var day = DepartureDate.Value.AddDays(-3); day.Date <= DepartureDate.Value.Date.AddDays(3); day = day.AddDays(1))
+                                        {
+                                            <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                           {
+                                               @itinerary = Model.Itinerary,
+                                               @departureairportcode = Model.DepartureAirportCode, @DestinationAirportCode = Model.DestinationAirportCode,
+                                               @departuredate = Utility.GetDateString(day),
+                                               @returndate = Model.ReturnDate,
+                                               @adult = Model.Adult, @Children = Model.Children, @Infant = Model.Infant, @AirlineCode = Model.AirlineCode,
+                                               @currency = Model.Currency,
+                                               @older = Constant.Olderve.Gia,
+                                               @typeolder = Constant.Typeolder.Ascending
+                                           })))">
+                                                <div class="NearDate  @(day == DepartureDate ? "CurrentDate" : "")" style="        min-height: 49px;">
+                                                    @UIUty.getnameday(day) @*@(day.Day + "/" + day.Month)*@
+                                                    <br>
+                                                    <label class="datecus">@Utility.GetDateString(day)</label>
+                                                    @if (day >= DateTime.Now.Date)
+                                                    {
+                                                        if (objDepartureMin != null && day == DepartureDate)
+                                                        {
+                                                            <label class="price">@((objDepartureMin.FareAdt + objDepartureMin.FeeAdt + objDepartureMin.TaxAdt).ToString("#,0.#"))</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            var getgiarenhat = listthang.OrderBy(z => z.PriceAdult).FirstOrDefault(z => z.StartDate.Value.Date == day);
+                                                            if (getgiarenhat != null)
+                                                            {
+                                                                var TotalPrice = getgiarenhat.PriceAdult + getgiarenhat.TaxAdult + getgiarenhat.FeeAdult;
+                                                                <label class="price">@(TotalPrice.HasValue ? TotalPrice.Value.ToString("n0") : "")</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="price"> &#32;</label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="price"> &#32;</label>
+                                                    }
+
+                                                </div>
+                                            </a>
+                                            indexngay++;
+                                        }
+                                    }
+                                }
+                            </div>
+                            <div class="clearfix  SelectDate visible-xs">
+                                @{
+                                    var sDepartureDate = Utility.ConvertToDate(Model.DepartureDate);
+                                    if (sDepartureDate.HasValue)
+                                    {
+                                        var indexngay = 1;
+                                        for (var day = sDepartureDate.Value.AddDays(-1); day.Date <= sDepartureDate.Value.Date.AddDays(1); day = day.AddDays(1))
+                                        {
+
+                                            <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                           {
+                                               @itinerary = Model.Itinerary,
+                                               @departureairportcode = Model.DepartureAirportCode, @DestinationAirportCode = Model.DestinationAirportCode,
+                                               @departuredate = Utility.GetDateString(day),
+                                               @returndate = Model.ReturnDate,
+                                               @adult = Model.Adult, @Children = Model.Children, @Infant = Model.Infant, @AirlineCode = Model.AirlineCode,
+                                               @currency = Model.Currency,
+                                               @older = Constant.Olderve.Gia,
+                                               @typeolder = Constant.Typeolder.Ascending
+                                           })))">
+                                                <div class="NearDate  @(day == sDepartureDate ? "CurrentDate" : "")" style="        min-height: 49px;">
+                                                    @UIUty.getnameday(day) @*@(day.Day + "/" + day.Month)*@
+                                                    <br>
+                                                    <label class="price">@Utility.GetDateString(day)</label>
+
+                                                </div>
+                                            </a>
+                                            indexngay++;
+                                        }
+                                    }
+                                }
+                            </div>
+                            <div id="ContentDepartureFlight1chieu" class="DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div id="ContentDepartureFlight1chieuNew1" class="DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div id="ContentDepartureFlight1chieuNew2" class="DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div id="loadingDepartureFlight" style="        text-align: center">
+                                <img src="/Content/FontEnd/images/ajax-loading.gif" style="        max-width: 100%" />
+                                <p style="        padding: 3px;
+        margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <style>
+    a.select-button {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+        a.select-button:after {
+            display: none;
+        }
+
+    .Select {
+        text-align: right;
+        padding-right: 0px;
+        padding-left: 5px;
+    }
+
+    </style>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" onclick="ShowCopy()" class="btn btn-default">Copy</button>
+                        </div>
+                        <div class="@(Model.Itinerary > 1 ? "col-md-6" : "col-md-12") ">
+                            <div id="SearchParamDomesticDepart" class="clearfix  box_top">
+                                <div class="SearchParamContent hidden-xs">
+                                    <div class="FlightIcon">
+                                        <img alt="Flight" src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                    </div>
+                                    <div class="Itinerary">
+                                        @*@VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:*@
+                                        <span>@(objnamedi != null ? string.Format("{0} ({1}) ", objnamedi.AirportName, objnamedi.AirportCode) : "")</span>
+                                        <span> <i class="fa fa-arrow-right"></i> @(objnameden != null ? string.Format("{0} ({1})", objnameden.AirportName, objnameden.AirportCode) : "")</span>
+                                    </div>
+                                    <div class="FlightDate">
+                                        @*@VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:*@
+                                        <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.DepartureDate)))</span>
+                                        <span> (@(Model.countDepartureFlights) chuyến bay)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix  SelectDate">
+                                @{
+
+                                    var DepartureDate = Utility.ConvertToDate(Model.DepartureDate);
+                                    if (DepartureDate.HasValue)
+                                    {
+                                        var objDepartureMin = Model.DepartureFlights.OrderBy(z => z.TotalPrice).FirstOrDefault();
+                                        var listthang = VDMMutiline.SeachAndBook.Common.CommonTicket.Getlistbythang(DepartureDate.Value, Model.DepartureAirportCode, Model.DestinationAirportCode); var indexngay = 1;
+                                        for (var day = DepartureDate.Value.AddDays(-2); day.Date <= DepartureDate.Value.Date.AddDays(2); day = day.AddDays(1))
+                                        {
+
+                                            <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                             {
+                                                 @itinerary = Model.Itinerary,
+                                                 @departureairportcode = Model.DepartureAirportCode,
+                                                 @DestinationAirportCode = Model.DestinationAirportCode,
+                                                 @departuredate = Utility.GetDateString(day),
+                                                 @returndate = Model.ReturnDate,
+                                                 @adult = Model.Adult,
+                                                 @Children = Model.Children,
+                                                 @Infant = Model.Infant,
+                                                 @AirlineCode = Model.AirlineCode,
+                                                 @currency = Model.Currency,
+                                                 @older = Constant.Olderve.Gia,
+                                                 @typeolder = Constant.Typeolder.Ascending
+                                             })))">
+                                                <div class="NearDate  @(day == DepartureDate ? "CurrentDate" : "")" style="        min-height: 49px;">
+                                                    @UIUty.getnameday(day)
+                                                    <br>
+                                                    <label class="datecus">@Utility.GetDateStringshos(day)</label>
+
+                                                    @if (day >= DateTime.Now.Date)
+                                                    {
+                                                        if (objDepartureMin != null && day == DepartureDate)
+                                                        {
+                                                            <label class="price">@((objDepartureMin.FareAdt + objDepartureMin.FeeAdt + objDepartureMin.TaxAdt).ToString("#,0.#"))</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            var getgiarenhat = listthang.OrderBy(z => z.PriceAdult).FirstOrDefault(z => z.StartDate.Value.Date == day);
+                                                            if (getgiarenhat != null)
+                                                            {
+                                                                var TotalPrice = getgiarenhat.PriceAdult + getgiarenhat.TaxAdult + getgiarenhat.FeeAdult;
+                                                                <label class="price">@(TotalPrice.HasValue ? TotalPrice.Value.ToString("n0") : "")</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="price"> &#32;</label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="price"> &#32;</label>
+                                                    }
+                                                </div>
+                                            </a>
+                                            indexngay++;
+                                        }
+                                    }
+                                }
+                            </div>
+
+                            <div id="ContentDepartureFlight" class="DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div></div>
+                            <div id="ContentDepartureFlightNew1" class="DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div></div>
+                            <div id="ContentDepartureFlightNew2" class=" DepartureFlight FlightContent NoTop">
+
+                            </div>
+                            <div id="loadingDepartureFlight" style="        text-align: center">
+                                <img src="/Content/FontEnd/images/ajax-loading.gif" style="        max-width: 100%" />
+                                <p style="        padding: 3px;
+        margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                            </div>
+                        </div>
+                        @if (Model.Itinerary > 1)
+                        {
+                            <div class="col-md-6">
+                                <div id="SearchParamDomesticReturn" class="box_top" style="        margin-top: 0px;">
+                                    <div class="SearchParamContent hidden-xs">
+                                        <div class="FlightIcon">
+                                            <img alt="Flight" src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                        </div>
+                                        <div class="Itinerary">
+                                            @*@VDMMutiline.Resource.App_GlobalResources.weblanguage.Inbound_flight:*@
+                                            <span>@(objnameden != null ? string.Format("{0}({1})", objnameden.AirportName, objnameden.AirportCode) : "")</span>
+                                            <span><i class="fa fa-arrow-right"></i>@(objnamedi != null ? string.Format("{0} ({1})", objnamedi.AirportName, objnamedi.AirportCode) : "")</span>
+                                        </div>
+                                        <div class="FlightDate">
+                                            @*@VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:*@
+                                            <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.ReturnDate)))</span>
+                                            <span> (@(Model.countReturnFlights) chuyến bay)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix  SelectDate">
+                                    @{
+                                        var ReturnDates = Utility.ConvertToDate(Model.ReturnDate);
+                                        if (ReturnDates.HasValue)
+                                        {
+                                            var objReturnMin = Model.ReturnFlights.OrderBy(z => z.TotalPrice).FirstOrDefault();
+                                            var listthang = VDMMutiline.SeachAndBook.Common.CommonTicket.Getlistbythang(ReturnDates.Value, Model.DestinationAirportCode, Model.DepartureAirportCode); var indexngay = 1;
+                                            for (var day = ReturnDates.Value.AddDays(-2); day.Date <= ReturnDates.Value.Date.AddDays(2); day = day.AddDays(1))
+                                            {
+                                                <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                                 {
+                                                     @itinerary = Model.Itinerary,
+                                                     @departureairportcode = Model.DepartureAirportCode,
+                                                     @DestinationAirportCode = Model.DestinationAirportCode,
+                                                     @departuredate = Model.DepartureDate,
+                                                     @returndate = Utility.GetDateString(day),
+                                                     @adult = Model.Adult,
+                                                     @Children = Model.Children,
+                                                     @Infant = Model.Infant,
+                                                     @AirlineCode = Model.AirlineCode,
+                                                     @currency = Model.Currency,
+                                                     @older = Constant.Olderve.Gia,
+                                                     @typeolder = Constant.Typeolder.Ascending
+                                                 })))">
+                                                    <div class="NearDate  @(day == ReturnDates ? "CurrentDate" : "")" style="        min-height: 49px;">
+                                                        @UIUty.getnameday(day)
+                                                        <label class="datecus">@Utility.GetDateStringshos(day)</label>
+                                                        @if (day >= DateTime.Now.Date)
+                                                        {
+                                                            if (objReturnMin != null && day == ReturnDates)
+                                                            {
+                                                                <label class="price">@((objReturnMin.FareAdt + objReturnMin.FeeAdt + objReturnMin.TaxAdt).ToString("#,0.#"))</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                var getgiarenhat = listthang.OrderBy(z => z.PriceAdult).FirstOrDefault(z => z.StartDate.Value.Date == day);
+                                                                if (getgiarenhat != null)
+                                                                {
+                                                                    var TotalPrice = getgiarenhat.PriceAdult + getgiarenhat.TaxAdult + getgiarenhat.FeeAdult;
+                                                                    <label class="price">@(TotalPrice.HasValue ? TotalPrice.Value.ToString("n0") : "")</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="price"> &#32;</label>
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <label class="price"> &#32;</label>
+                                                        }
+                                                    </div>
+                                                </a>
+                                                indexngay++;
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div id="contenReturnFlight" class="FlightContent NoTop" style="        margin-top: 0px;">
+
+                                </div>
+                                <div id="contenReturnFlightNew1" class="FlightContent NoTop" style="        margin-top: 0px;">
+
+                                </div>
+                                <div id="contenReturnFlightNew2" class="FlightContent NoTop" style="        margin-top: 0px;">
+
+                                </div>
+                                <div id="loadingReturnFlight" style="        text-align: center">
+                                    <img src="/Content/FontEnd/images/ajax-loading.gif" style="        max-width: 100%" />
+                                    <p style="        padding: 3px;
+        margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="NormalBox">
+                    <div class="Title">
+                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                    </div>
+                    <div class="Content">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="NormalBox">
+                <div class="Title">
+                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                </div>
+                <div class="Content">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div class="col-md-3 pLeft0">
+    @{
+        Html.RenderPartial("_PartialRinght", Model);
+    }
+</div>
+<div class="clear"></div>
+
+
+<div id="myModalloading" style="        display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>
+<script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+<link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+<div id="myModalCopy" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 5px;padding-bottom: 5px; ">
+                <button type="button" class="close" data-dismiss="modal" style="    background: transparent !important;    color: #000 !important;    margin-top: -5px;">&times;</button>
+                <h4 class="modal-title">Copy</h4>
+            </div>
+            <div id="contentmodalcopy"></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function ShowCopy() {
+        $('#myModalloading').bPopup({
+        modalClose: false,
+        opacity: 0.6,
+        positionStyle: 'fixed'
+    });
+    jQuery.ajax({
+        url: '@Url.Action("Copy","SeachHome")',
+        type: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function ( data ) {
+            $( '#contentmodalcopy' ).html( data );
+             $('#myModalCopy').modal('show');
+             $('#myModalloading').bPopup().close();
+        },
+        error: function (jqXhr, errorCode, error) {
+             $('#myModalloading').bPopup().close();
+        }
+    });
+    }
+    function ToggledepartureFlight(targetId, controlId, indexs) {
+        var   target = document.getElementById(targetId);
+        $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("GetDetailDepartureFlight", "SeachHome")',
+                    dataType: "html",
+                    data: {        index : indexs
+                    },
+                    success: function (content) {
+                        $(target).html(content);
+                    },
+                    error: function (e) { }
+                });
+            var  control = document.getElementById(controlId);
+            if ($(target).is(':visible')) {
+                $(control).addClass('linkViewFlight ');
+
+                $(control).removeClass('linkViewFlightDetail');
+            }
+            else {
+                $(control).addClass('linkViewFlightDetail');
+                $(control).removeClass('linkViewFlight ');
+            }
+            $(target).toggle('blind');
+
+    }
+       function ToggleReturn(targetId, controlId, indexs) {
+        var   target = document.getElementById(targetId);
+        $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("GetDetailReturnFlight", "SeachHome")',
+                    dataType: "html",
+                    data: {        index : indexs
+                    },
+                    success: function (content) {
+                        $(target).html(content);
+                    },
+                    error: function (e) { }
+                });
+           var control = document.getElementById(controlId);
+           if ($(target).is(':visible')) {
+               $(control).addClass('linkViewFlight ');
+
+               $(control).removeClass('linkViewFlightDetail');
+           }
+           else {
+               $(control).addClass('linkViewFlightDetail');
+               $(control).removeClass('linkViewFlight ');
+           }
+            $(target).toggle('blind');
+    }
+    //$(document).ready(function () {
+    //    jScript();
+    //    airScript();
+    //});
+</script>

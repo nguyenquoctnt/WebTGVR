@@ -1,0 +1,10 @@
+﻿@model string
+    @{
+        Layout = null;
+    }
+    <ul class="nav nav-pills" style="background: #e4e4e4;">
+        <li  class="@(TempData["keymenu"]=="Index"?"active":"") "><a href="@Url.Action("Index","QuanLyVeDaDat")">Danh sách vé</a></li>
+        <li  class="@(TempData["keymenu"]=="Expired"?"active":"") "><a href="@Url.Action("Expired","QuanLyVeDaDat")">Hết hạn giữ chỗ</a></li>
+        <li  class="@(TempData["keymenu"]=="Fail"?"active":"") "><a href="@Url.Action("Fail","QuanLyVeDaDat")">Đặt vé thất bại</a></li>
+        <li  class="@(TempData["keymenu"]=="DanhsachTicket"?"active":"") "><a href="@Url.Action("DanhsachTicket","QuanLyVeDaDat")">Trạng thái vé</a></li>
+    </ul>

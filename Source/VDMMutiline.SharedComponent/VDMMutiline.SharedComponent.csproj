@@ -1,0 +1,317 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1637E8E5-C05B-4FEF-8524-418544A8F388}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VDMMutiline.SharedComponent</RootNamespace>
+    <AssemblyName>VDMMutiline.SharedComponent</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Entities\Context.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Context.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.4.js" />
+    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseFilter.cs" />
+    <Compile Include="Constants\Constant.cs" />
+    <Compile Include="Entities\Context.cs">
+      <DependentUpon>Context.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Context.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Context.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityInfo\AddOnService\AddOnServiceHistorysInfo.cs" />
+    <Compile Include="EntityInfo\AddOnService\ConfirmAddOnServiceInfo.cs" />
+    <Compile Include="EntityInfo\AddOnService\PassgerInfo.cs" />
+    <Compile Include="EntityInfo\AirlineInfo.cs" />
+    <Compile Include="EntityInfo\BaggageInfo.cs" />
+    <Compile Include="EntityInfo\BookingInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\BlockIPInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\BlockMailInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\BlockSMSInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysMenuGroupInfo.cs" />
+    <Compile Include="EntityInfo\Issue\ConfirmIssueInfo.cs" />
+    <Compile Include="EntityInfo\Issue\IssueHistorysInfo.cs" />
+    <Compile Include="EntityInfo\MailInfo.cs" />
+    <Compile Include="EntityInfo\ObjSeach.cs" />
+    <Compile Include="EntityInfo\SiteInfo.cs" />
+    <Compile Include="EntityInfo\SysMenuHomeInfo.cs" />
+    <Compile Include="EntityInfo\SysUserMenuHomeInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetGroupsInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetOnlineUsersInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetRoleGroupsInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetRolesInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetUserClaimsInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetUserGroupsInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetUserLoginsInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetUserRolesInfo.cs" />
+    <Compile Include="EntityInfo\TaiKhoan\AspNetUsersInfo.cs" />
+    <Compile Include="EntityInfo\DanhMuc\DmHuyenthiInfo.cs" />
+    <Compile Include="EntityInfo\DanhMuc\DmQuocgiaInfo.cs" />
+    <Compile Include="EntityInfo\DanhMuc\DmTaikhoanNganHangInfo.cs" />
+    <Compile Include="EntityInfo\DanhMuc\DmTinhthanhInfo.cs" />
+    <Compile Include="EntityInfo\DanhMuc\DmXaphuongInfo.cs" />
+    <Compile Include="EntityInfo\EventLogInfo.cs" />
+    <Compile Include="EntityInfo\LwFileInfo.cs" />
+    <Compile Include="EntityInfo\MessageInfo.cs" />
+    <Compile Include="EntityInfo\MessageReceivedInfo.cs" />
+    <Compile Include="EntityInfo\MessageRoomInfo.cs" />
+    <Compile Include="EntityInfo\NotifycationInfo.cs" />
+    <Compile Include="EntityInfo\SettingSystemInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysBinhchonInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysBinhluanInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysCategoryInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysMenuInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysSmsTemplateInfo.cs" />
+    <Compile Include="EntityInfo\Hethong\SysVungHienthiInfo.cs" />
+    <Compile Include="EntityInfo\TblArticleInfo.cs" />
+    <Compile Include="EntityInfo\TblCategoryArticleInfo.cs" />
+    <Compile Include="EntityInfo\TblQuangCaoInfo.cs" />
+    <Compile Include="EntityInfo\TempleteSetting\TempleateHTMLUserInfo.cs" />
+    <Compile Include="EntityInfo\TempleteSetting\TempleatePropertyGroupInfo.cs" />
+    <Compile Include="EntityInfo\TempleteSetting\TempleateHTMLInfo.cs" />
+    <Compile Include="EntityInfo\TempleteSetting\TempleatePropertyInfo.cs" />
+    <Compile Include="EntityInfo\TempleteSetting\TempleatePropertyUserInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\TicketCountInfo.cs" />
+    <Compile Include="EntityInfo\CancelTicket\ConfirmCancelTicketInfo.cs" />
+    <Compile Include="EntityInfo\CancelTicket\CancelTicketHistorysInfo.cs" />
+    <Compile Include="EntityInfo\VoidTicket\ConfirmVoidInfo.cs" />
+    <Compile Include="EntityInfo\VoidTicket\VoidTicketHistorysInfo.cs" />
+    <Compile Include="EntityInfo\Wallet\WalletHistorysInfo.cs" />
+    <Compile Include="EntityInfo\Wallet\WalletInfo.cs" />
+    <Compile Include="Models\GridFilterSetting.cs" />
+    <Compile Include="PagingInfo.cs" />
+    <Compile Include="BaseParam.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_BaggageInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_BookingDetailInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_BookingInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_PassengerInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_TicketDetailInfo.cs" />
+    <Compile Include="EntityInfo\Ticket\BK_TicketInfo.cs" />
+    <Compile Include="EntityInfo\HtmlBlockInfo.cs" />
+    <Compile Include="EntityInfo\LogBookingInfo.cs" />
+    <Compile Include="EntityInfo\LogSendSMSInfo.cs" />
+    <Compile Include="EntityInfo\MailContendInfo.cs" />
+    <Compile Include="EntityInfo\SettingGroupInfo.cs" />
+    <Compile Include="EntityInfo\SettingUserInfo.cs" />
+    <Compile Include="Params\AddOnService\VoidTicketHistoryParam.cs" />
+    <Compile Include="Params\AirlineParam.cs" />
+    <Compile Include="Params\BaggageParam.cs" />
+    <Compile Include="Params\HeThong\SysMenuGroupParam.cs" />
+    <Compile Include="Params\Issue\IssueParam.cs" />
+    <Compile Include="Params\MenuHomeParam.cs" />
+    <Compile Include="Params\OlderParam.cs" />
+    <Compile Include="Params\SiteInfoParam.cs" />
+    <Compile Include="Params\TempleteSetting\TempleateHTMLUserParam.cs" />
+    <Compile Include="Params\TempleteSetting\TempleateHTMLParam.cs" />
+    <Compile Include="Params\TempleteSetting\TempleatePropertyUserParam.cs" />
+    <Compile Include="Params\TempleteSetting\TempleatePropertyParam.cs" />
+    <Compile Include="Params\TempleteSetting\TempleatePropertyGroupParam.cs" />
+    <Compile Include="Params\Ticket\BK_BaggageParam.cs" />
+    <Compile Include="Params\Ticket\BK_BookingDetailParam.cs" />
+    <Compile Include="Params\Ticket\BK_BookingParam.cs" />
+    <Compile Include="Params\Ticket\BK_PassengerParam.cs" />
+    <Compile Include="Params\Ticket\BK_TicketParam.cs" />
+    <Compile Include="Params\BlockIPParam.cs" />
+    <Compile Include="Params\BlockMailParam.cs" />
+    <Compile Include="Params\BlockSMParam.cs" />
+    <Compile Include="Params\HtmlBlockParam.cs" />
+    <Compile Include="Params\LogBookingParam.cs" />
+    <Compile Include="Params\LogSendSMSParam.cs" />
+    <Compile Include="Params\MailContenParam.cs" />
+    <Compile Include="Params\MailParam.cs" />
+    <Compile Include="Params\SettingGroupParam.cs" />
+    <Compile Include="Params\SettingUserParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetGroupsParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetOnlineUsersParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetRoleGroupsParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetRolesParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetUserClaimsParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetUserGroupsParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetUserLoginsParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetUserRolesParam.cs" />
+    <Compile Include="Params\TaiKhoan\AspNetUsersParam.cs" />
+    <Compile Include="Params\DanhMuc\DmHuyenthiParam.cs" />
+    <Compile Include="Params\DanhMuc\DmQuocgiaParam.cs" />
+    <Compile Include="Params\DanhMuc\DmTaikhoanNganHangParam.cs" />
+    <Compile Include="Params\DanhMuc\DmTinhthanhParam.cs" />
+    <Compile Include="Params\DanhMuc\DmXaphuongParam.cs" />
+    <Compile Include="Params\EventLogParam.cs" />
+    <Compile Include="Params\MessageParam.cs" />
+    <Compile Include="Params\MessageReceivedParam.cs" />
+    <Compile Include="Params\MessageRoomParam.cs" />
+    <Compile Include="Params\NotifyParam.cs" />
+    <Compile Include="Params\SettingSystemParam.cs" />
+    <Compile Include="Params\HeThong\SysCategoryParam.cs" />
+    <Compile Include="Params\HeThong\SysMenuParam.cs" />
+    <Compile Include="Params\HeThong\SysSmsTemplateParam.cs" />
+    <Compile Include="Params\HeThong\SysVungHienthiParam.cs" />
+    <Compile Include="Params\TblArticleParam.cs" />
+    <Compile Include="Params\TblCategoryArticleParam.cs" />
+    <Compile Include="Params\TblQuangCaoParam.cs" />
+    <Compile Include="EntityInfo\VoucherCodeInfo.cs" />
+    <Compile Include="EntityInfo\YeucaugoilaiInfo.cs" />
+    <Compile Include="Params\CancelTicket\CancelTicketHistoryParam.cs" />
+    <Compile Include="Params\VoidTicket\VoidTicketHistoryParam.cs" />
+    <Compile Include="Params\VoucherCodeParam.cs" />
+    <Compile Include="Params\Wallet\WalletParam.cs" />
+    <Compile Include="Params\YeucaugoilaiParam.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\ExpressionFilterGroup.cs" />
+    <Compile Include="Search\FilterGroup.cs" />
+    <Compile Include="Search\IFilter.cs" />
+    <Compile Include="Sort\ISortCriteria.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiClient\ApiClient.Models\ApiClient.Models.csproj">
+      <Project>{829641f2-22d5-4a59-8483-97120da79e3d}</Project>
+      <Name>ApiClient.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entities\Context.dbml.layout">
+      <DependentUpon>Context.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3091</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3091/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

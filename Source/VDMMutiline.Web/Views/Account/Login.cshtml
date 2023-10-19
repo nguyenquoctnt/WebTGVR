@@ -1,0 +1,42 @@
+﻿@model VDMMutiline.Core.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    ViewBag.Title = "Đăng nhập";
+}
+<p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Đăng nhập hệ thống</span></p>
+<div class="card-body">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @required = "required", @data_parsley_validate = "", @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset class="form-group position-relative has-icon-left mb-0">
+            <label style="color:red">@Html.Raw(ViewBag.erro)</label>
+        </fieldset>
+        <fieldset class="form-group position-relative has-icon-left">
+            @Html.TextBoxFor(m => m.UserName, new { @required = "required", @data_parsley_validate = "", @data_parsley_group = "loginform", @class = "form-control form-control-lg input-lg", autocomplete = "off", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
+            <div class="form-control-position">
+                <i class="fa fa-user"></i>
+            </div>
+        </fieldset>
+        <fieldset class="form-group position-relative has-icon-left">
+            @Html.PasswordFor(m => m.Password, new { @required = "required", @data_parsley_validate = "", @data_parsley_group = "loginform", @class = "form-control form-control-lg input-lg", autocomplete = "off", @placeholder = "Mật khẩu" })
+            <div class="form-control-position">
+                <i class="fa fa-key"></i>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="col-md-6 col-12 text-center text-sm-left">
+                <fieldset>
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "chk-remember" })
+                    <label for="remember-me">Ghi nhớ</label>
+                </fieldset>
+            </div>
+            @*<div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="@Url.Action("ForgotPassword","Account")" class="card-link">Quên mật khẩu?</a></div>*@
+        </div>
+        <button type="submit" class="btn btn-outline-info btn-block"><i class="fa fa-lock"></i> Đăng nhập</button>
+    }
+</div>
+<p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Bạn chưa có tài khoản ?</span></p>
+<div class="card-body">
+    <a href="@Url.Action("Register","Account")" class="btn btn-outline-danger btn-block"><i class="fa fa-user"></i> Đăng ký</a>
+</div>
+

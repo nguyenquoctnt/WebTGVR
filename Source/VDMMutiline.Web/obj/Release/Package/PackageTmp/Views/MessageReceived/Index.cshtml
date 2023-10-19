@@ -1,0 +1,172 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Description = "";
+
+}
+
+<div class="widget-container-col ui-sortable" id="widget-container-col-2">
+    <div class="widget-box widget-color-blue ui-sortable-handle" id="widget-box-2">
+        <div class="widget-header">
+            <h5 class="widget-title bigger lighter" style="padding-top: 10px">
+                <a style="margin-top: 2px" onclick="showviewCreate('','@Url.Action("Create", "MessageReceived")')" class="btn btn-white btn-default btn-round pull-left"><i class="fa fa-plus"></i>Thêm mới</a>
+            </h5>
+            <div class="widget-toolbar widget-toolbar-light no-border">
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <div class="form-horizontal" >
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <label class="col-sm-2 control-label no-padding-right">Tìm kiếm</label>
+                        <div class="col-sm-8">
+                            @Html.TextBox("keyseach", "", new { @class = "form-control",@placeholder="Nhập từ cần tìm" })
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" id="btnSearch" class="btn btn-sm btn-info"><span class="ace-icon fa fa-search icon-on-right bigger-110"></span>Tìm kiếm</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+<th>MsgId</th>
+<th>IdReceiver</th>
+<th>Ngaynhan</th>
+
+                            <th style="width: 100px">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function() {
+            var oTable = $("#dynamic-table").dataTable({
+                "bStateSave": false,
+                "searching": false,
+                "bSort": true,
+                "sPaginationType": "full_numbers",
+                "serverSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": "@Url.Action("AjaxLoadList", "MessageReceived")",
+                "iDisplayLength": 50,
+                "order": [[1, "desc"], [2, "desc"]],
+                "lengthChange": false,
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "keyseach", "value": $("#keyseach").val() });
+                },
+                "aoColumns": [
+                    
+                   {"mData": "Id"},
+{"mData": "MsgId"},
+{"mData": "IdReceiver"},
+{"mData": "Ngaynhan"},
+
+                    {
+                        "sortable": false,
+                        "sClass": "text-center",
+                        "mData": function(data, type, row) {
+
+                            var urledit = "@Url.Action("Create", "MessageReceived")";
+                            var urldelete = "@Url.Action("Delete", "MessageReceived")";
+
+                            var btnaddPc = "   <div class='hidden-sm hidden-xs btn-group'><button onclick=\"showviewCreate(" + data.Id + ",'" + urledit + "')\" class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button>";
+                            var btndeletePc = " <button onclick=\" showviewdelete('" + urldelete + "/" + data.Id + "')\" class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div >";
+
+                            var startmobile="<div class='hidden-md hidden-lg'><div class='inline pos-rel'><button class='btn btn-minier btn-primary dropdown-toggle' data-toggle='dropdown' data-position='auto' aria-expanded='false'><i class='ace-icon fa fa-cog icon-only bigger-110'></i></button><ul class='dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close' style=''>";
+                            var endmobile = "</ul></div></div></td>";
+                            var btnaddMb = "<li><a href='#' onclick=\"showviewCreate(" + data.Id + ",'" + urledit + "')\" class='tooltip-success' data-rel='tooltip' title='' data-original-title='Edit'><span class='green'><i class='ace-icon fa fa-pencil-square-o bigger-120'></i></span></a></li>";
+                            var btndeleteMb = "  <li><a href='#' onclick=\"showviewdelete('" + urldelete + "/" + data.Id + "')\" class='tooltip-error' data-rel='tooltip' title='' data-original-title='Delete'><span class='red'><i class='ace-icon fa fa-trash-o bigger-120'></i></span></a></li>";
+
+
+                            return (btnaddPc + btndeletePc + startmobile + btnaddMb + btndeleteMb + endmobile);
+                        }
+                    },
+                ],
+                "language": {
+                    "sLoadingRecords": "@Constant.Loaddingdata",
+                    "sProcessing": "@Constant.Loaddingdata",
+                    "lengthMenu": "@Constant.Loaddingdata",
+                    "zeroRecords": "@Constant.zeroRecords",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "((@Constant.Loaddingdata)",
+                    "paginate": {
+                        "next": ">",
+                        "previous": "<",
+                        "first": "<<",
+                        "last": ">>"
+                    }
+                },
+            });
+            $("#btnSearch").click(function() {
+                reloadGrid(); 
+            });
+
+
+        });
+        function reloadGrid() {
+            var oDataTable = $("#dynamic-table").dataTable();
+            oDataTable.fnDraw(false);
+        }
+        function showviewCreate(id, url) {
+            var urls = url + "/" + id;
+            _lwfunc.AjaxGet(urls, function (data) {
+                $("#contenCreate").html(data);
+                $("#createModel").modal();
+            });
+        }
+        function submitform() {
+            _lwfunc.Ajax("@Url.Action("Create", "MessageReceived")", $("#frCreateMessageReceived").serialize(), function (data) {
+                if (data.isSuccess === true) {
+                    $("#createModel").modal('hide');
+                    reloadGrid(); toastr.success(data.mess, "Thông báo!");
+                } else {
+                    toastr.error(data.mess,"Thông báo!");
+
+                }
+                
+            });
+        }
+        function showviewdelete(url) {
+            _lwfunc.AjaxGet(url, function (data) {
+                $("#contendelete").html(data);
+                $("#deleteModel").modal();
+            });
+        }
+        function submitfomrdelete() {
+            _lwfunc.Ajax("@Url.Action("Delete", "MessageReceived")", $("#frdeleteMessageReceived").serialize(), function (data) {
+                if (data.isSuccess === true) {
+                    $("#deleteModel").modal('hide');
+                    reloadGrid(); toastr.success(data.mess, "Thông báo!");
+                } else {
+                    toastr.error(data.mess,"Thông báo!");
+                }
+                
+            });
+        }
+    </script>
+
+
+
+
+}
+
+
+
+
+

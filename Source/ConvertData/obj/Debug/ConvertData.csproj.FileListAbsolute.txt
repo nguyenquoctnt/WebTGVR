@@ -1,0 +1,16 @@
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\ConvertData.exe.config
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\ConvertData.exe
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\ConvertData.pdb
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\VDMMutiline.SharedComponent.dll
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\PagedList.dll
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\VDMMutiline.SharedComponent.pdb
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\VDMMutiline.SharedComponent.dll.config
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\bin\Debug\PagedList.xml
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.csprojAssemblyReference.cache
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.Form1.resources
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.Properties.Resources.resources
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.csproj.GenerateResource.cache
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.csproj.CoreCompileInputs.cache
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.csproj.CopyComplete
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.exe
+G:\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ConvertData\obj\Debug\ConvertData.pdb

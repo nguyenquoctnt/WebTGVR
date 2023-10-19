@@ -1,0 +1,680 @@
+﻿
+/* DEFAULTS
+----------------------------------------------------------*/
+
+body {
+    font-size: 14px !important;
+    font-family: Arial, Helvetica, Verdana, sans-serif, "Helvetica Neue", "Lucida Grande", "Segoe UI";
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+a:link, a:visited {
+    color: #6699FF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+}
+
+p {
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.Page {
+    margin: 0px auto 0px auto;
+}
+
+.Main {
+    padding: 2px;
+    margin: 0px auto 0px auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+fieldset {
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+    fieldset p {
+        margin: 2px 12px 10px 10px;
+    }
+
+    fieldset.login label, fieldset.register label, fieldset.changePassword label {
+        display: block;
+    }
+
+    fieldset label.inline {
+        display: inline;
+    }
+
+legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+.clear {
+    clear: both;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/*Global*/
+.FloatLeft {
+    float: left;
+}
+
+.FloatRight {
+    float: right;
+}
+
+.MarginTop {
+    margin-top: 10px;
+}
+
+.MarginBottom {
+    margin-bottom: 10px;
+}
+
+.ShadowBold {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.ShadowNormal {
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.Center {
+    text-align: center;
+}
+
+.TextShadow {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.BlueGradient {
+    background: #0A65EE;
+    background: -webkit-gradient(linear, 0% 0%, 0% 60%, from(#0A65EE), to(#44A2FE));
+    background: -moz-linear-gradient(#0A65EE, #44A2FE 60%) !;
+    background-image: -ms-linear-gradient(#0A65EE, #44A2FE 60%);
+}
+
+.GrayGradient {
+    background: #F0F0F0;
+    background: -webkit-gradient(linear, 0% 0%, 0% 70%, from(#F0F0F0), to(#FFFFFF));
+    background: -moz-linear-gradient(#F0F0F0, #FFFFFF 70%) !;
+    background-image: -ms-linear-gradient(#F0F0F0, #FFFFFF 70%);
+}
+
+.GreenGradient {
+    background: #00CC00;
+    background: -webkit-gradient(linear, 0% 0%, 0% 70%, from(#00CC00), to(#009900));
+    background: -moz-linear-gradient(#00CC00, #009900 70%) !;
+    background-image: -ms-linear-gradient(#00CC00, #009900 70%);
+}
+
+.RedGradient {
+    background: #CC0000;
+    background: -webkit-gradient(linear, 0% 0%, 0% 70%, from(#CC0000), to(#FF0000));
+    background: -moz-linear-gradient(#CC0000, #FF0000 70%) !;
+    background-image: -ms-linear-gradient(#CC0000, #FF0000 70%);
+}
+
+.NoBottom {
+    border-bottom: 0 !important;
+}
+
+.NoTop {
+    border-top: 0 !important;
+}
+
+.BorderTop {
+    border-top: 1px solid #cacaca;
+}
+
+.BorderBottom {
+    border-bottom: 1px solid #cacaca;
+}
+
+.NoBorder {
+    border: 0 !important;
+}
+
+.FontSize9 {
+    font-size: 9px;
+}
+
+.FontSize10 {
+    font-size: 10px;
+}
+
+.FontSize11 {
+    font-size: 11px;
+}
+
+.FontSize12 {
+    font-size: 12px;
+}
+
+/*WhiteBox*/
+.WhiteBox {
+    border: 1px solid #cacaca;
+    background-color: White;
+}
+
+    .WhiteBox .WhiteBoxTitle {
+        border-bottom: 1px solid #cacaca;
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+
+        .WhiteBox .WhiteBoxTitle a:link, a:visited {
+        }
+
+    .WhiteBox .WhiteBoxContent {
+        padding: 10px;
+    }
+
+    .WhiteBox .WhiteBoxFooter {
+        border-top: 1px solid #cacaca;
+        padding: 10px;
+    }
+
+/*GrayBox*/
+.GrayBox {
+    background-color: White;
+}
+
+    .GrayBox .Title {
+        -webkit-border-radius: 5px 5px 0px 0px;
+        -moz-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+        background-color: #e0e0e0;
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+
+        .GrayBox .Title a:link, a:visited {
+        }
+
+    .GrayBox .Header {
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+    }
+
+        .GrayBox .Header a:link, a:visited {
+        }
+
+    .GrayBox .Content {
+        padding: 5px;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+    }
+
+    .GrayBox .BoxFooter {
+        border: 1px solid #e0e0e0;
+        border-top: none;
+        padding: 10px;
+    }
+
+.PopupArea {
+    display: block;
+    position: absolute;
+    visibility: visible;
+    z-index: 1003;
+    width: 100%;
+    top: 30%;
+    left: 0;
+}
+
+.MessageBox {
+    z-index: 1000;
+    width: 400px;
+    margin: 0px auto 0px auto;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    background: #fff;
+}
+
+    .MessageBox .MessageBoxHeader {
+        border-bottom: 1px solid #cacaca;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .MessageBox .MessageBoxContent {
+        padding: 10px;
+        min-height: 60px;
+    }
+
+/*Loading panel*/
+.PopupScreen {
+    position: fixed;
+    display: block;
+    visibility: visible;
+    top: 0px;
+    left: 0px;
+    /*background: url('/Styles/images/transparent-bg.png');*/
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.Loading {
+    display: block;
+    position: absolute;
+    visibility: visible;
+    z-index: 1000;
+    text-align: center;
+    width: 990px;
+    top: 150px;
+}
+
+.LoadingContent {
+    padding: 5px;
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    border: 1px solid gray;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    background-color: White;
+}
+
+.LoadingBooking {
+    display: block;
+    position: fixed;
+    visibility: visible;
+    z-index: 1000;
+    text-align: center;
+    width: 100%;
+    top: 25%;
+}
+
+.LoadingContentBooking {
+    padding: 25px;
+    width: 400px;
+    height: 230px;
+    margin: auto;
+    border: 1px solid gray;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    background-color: White;
+}
+
+    .LoadingContentBooking .LoadingBookingTitle {
+        color: rgb(98, 170, 42);
+    }
+
+.ResultLeft {
+    width: 750px;
+    float: left;
+    padding: 0px 0px 10px 0px;
+}
+
+.ResultRight {
+    width: 220px;
+    float: left;
+    padding: 0px 0px 10px 0px;
+    margin-left: 10px;
+}
+
+    .ResultRight .RightBanner {
+        margin-top: 10px;
+    }
+
+        .ResultRight .RightBanner img {
+            width: 220px;
+            border: 1px solid #cacaca;
+        }
+
+.ResultContinue {
+    padding: 10px 0px 10px 0px;
+    text-align: right;
+}
+
+.Tooltip {
+    padding: 10px;
+    overflow: hidden;
+    z-index: 99999;
+    position: absolute;
+    min-width: auto !important;
+    width: auto !important;
+    background: #fff;
+    border: 1px solid #CCCCCC;
+    border-radius: 0px 0px 4px 4px;
+    -webkit-border-radius: 0px 0px 4px 4px;
+    -moz-border-radius: 0px 0px 4px 4px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.PaxInfoLabel {
+    display: inherit;
+}
+
+.SelectDate {
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+    .SelectDate .NearDate {
+        padding: 10px;
+        float: left;
+        text-align: center;
+        width: 14%;
+        -webkit-appearance: none;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .SelectDate .NotAllow {
+        cursor: not-allowed;
+        text-decoration: none;
+        color: #B9B9B9;
+    }
+
+    .SelectDate .CurrentDate {
+        background: #DDDDDD;
+    }
+
+.NavBar {
+    float: right;
+}
+
+@media only screen and (max-width:1199px) {
+}
+
+@media only screen and (max-width:979px) {
+}
+
+@media only screen and (max-width:767px) {
+    .ResultLeft {
+        width: 100%;
+        float: none;
+        padding: 0px 0px 10px 0px;
+    }
+
+    .ResultRight {
+        display: none !important;
+    }
+
+    #pnStartCity ul.ul_mien, #pnEndCity ul.ul_mien {
+        margin: 0px;
+        padding: 0px 0px;
+        list-style: none;
+    }
+
+        #pnStartCity ul.ul_mien a:hover, #pnEndCity ul.ul_mien a:hover {
+            color: #717171;
+        }
+
+        #pnStartCity ul.ul_mien li.li_mien, #pnEndCity ul.ul_mien li.li_mien {
+            float: none;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 10px 5px 10px;
+        }
+
+            #pnStartCity ul.ul_mien li.li_mien ul, #pnEndCity ul.ul_mien li.li_mien ul {
+                padding: 0px 0px 0px 0px;
+                margin: 0px 0px 0px 0px;
+                list-style: none;
+            }
+
+                #pnStartCity ul.ul_mien li.li_mien ul li, #pnEndCity ul.ul_mien li.li_mien ul li {
+                    float: left;
+                    margin-left: 15px;
+                    padding: 4px;
+                    color: #717171;
+                }
+
+                    #pnStartCity ul.ul_mien li.li_mien ul li:hover, #pnEndCity ul.ul_mien li.li_mien ul li:hover {
+                        padding: 4px;
+                        background-color: #717171;
+                        color: #FFF;
+                        cursor: pointer;
+                    }
+
+    #pnStartCity .sp_mien, #pnEndCity .sp_mien {
+        margin-left: 0px;
+        font-weight: bold;
+        color: #f20000;
+        text-transform: uppercase;
+    }
+
+    #pnStartCity .sp_city.sp_city, #pnEndCity .sp_city.sp_city {
+        line-height: 25px;
+        width: 100px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: default;
+        max-height: 185px !important;
+        -webkit-appearance: none;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 90% !important;
+    }
+
+    .ui-menu .ui-menu-item a {
+        border: 1px solid white;
+    }
+
+    .ui-state-focus, .ui-widget-content .ui-state-focus {
+        font-weight: normal;
+    }
+
+    /*Loading panel*/
+    .PopupScreen {
+        position: fixed;
+        display: block;
+        visibility: visible;
+        top: 0px;
+        left: 0px;
+        background: url('../Seach/images/transparent-bg.png');
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+    }
+
+    .Loading {
+        display: block;
+        position: absolute;
+        visibility: visible;
+        z-index: 1000;
+        text-align: center;
+        width: 100%;
+        top: 100%;
+        margin-top: -350px;
+    }
+
+    .LoadingContent {
+        padding: 5px;
+        width: 70px;
+        height: 70px;
+        margin: auto;
+        border: 1px solid gray;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        background-color: White;
+    }
+
+    .LoadingBooking {
+        display: block;
+        position: fixed;
+        visibility: visible;
+        z-index: 1000;
+        text-align: center;
+        width: 100%;
+        top: 25%;
+        left: 0px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .LoadingContentBooking {
+        padding: 25px;
+        width: 95%;
+        height: auto;
+        margin: auto;
+        border: 1px solid gray;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        background-color: White;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .LoadingContentBooking img {
+            width: 200px;
+        }
+
+        .LoadingContentBooking .LoadingBookingTitle {
+            color: rgb(98, 170, 42);
+        }
+
+    .SelectDate .NearDate {
+        width: 33%;
+    }
+
+    .SelectDate .Day1, .Day2, .Day5, .Day6 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width:479px) {
+    /*SelectCityBox*/
+    .SelectCityBox {
+        width: 100% !important;
+        margin: auto !important;
+        background-color: #FFF;
+        border-radius: 0px 0px 5px 5px;
+        -webkit-border-radius: 0px 0px 5px 5px;
+        -moz-border-radius: 0px 0px 5px 5px;
+        display: none;
+        z-index: 100;
+        position: absolute;
+        color: rgb(113, 113, 113);
+        border: 1px solid #B8B8B8;
+    }
+
+        .SelectCityBox .SelectCityBoxHeader {
+            width: 100%;
+            background-color: #717171;
+            color: White;
+            font-weight: bold;
+            -webkit-appearance: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            padding: 5px;
+        }
+
+            .SelectCityBox .SelectCityBoxHeader .SelectCityTitle {
+                float: left;
+                white-space: nowrap;
+            }
+
+            .SelectCityBox .SelectCityBoxHeader .Close {
+                float: right;
+                margin-right: 15px;
+                font-size: 13px;
+                cursor: pointer;
+            }
+
+        .SelectCityBox .SelectCityBoxContent {
+            width: 100% !important;
+            margin: auto;
+            height: 230px;
+            overflow: auto;
+        }
+
+        .SelectCityBox .AutoComplateTextBox {
+            width: 100%;
+            margin-top: 5px;
+            -webkit-appearance: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+    .ui-datepicker {
+        width: 20em !important;
+    }
+
+        .ui-datepicker td span, .ui-datepicker td a {
+            padding: .2em !important;
+        }
+}

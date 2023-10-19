@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <title>BeepBay</title>
+    <meta content="Vé máy bay giá rẻ" name="description">
+    <script>window.__cf = __cf = window.__cf || {}; __cf._start = []; __cf.onStart = function (fn) { __cf._start.push(fn); }; __cf.viewData = []; __cf.telemetry = []; __cf.settings = { "carsProviderUrl": { "baseUrl": "https://cars.global.cheapflights.com/en/book", "id": 681974 }, "cultureCode": "en-US", "pageType": "Home", "searchInterval": 60, "secureUrlBase": "/en-US", "insecureUrlBase": "https://global.cheapflights.com", "searchUrl": "/Search", "searchResultsUrl": "/search/results/", "startFlightSearchUrl": "/Search/StartFlightSearch", "getFlightResultsUrl": "/Search/GetFlightResults", "getPartnersUrl": "/Search/GetPartners", "hotelsProviderUrl": "http://global.hotels.cheapflights.com", "imageBaseUrl": "/Public/Images", "dateFormat": "DD/MM/YYYY", "firstDayOfWeek": 0, "exitUrl": "/Exit", "partnerExitUrl": "/Exit/Partner", "taggingServer": "uktc.ijento.com", "isTestMode": false, "isSupportedMobile": false, "eventId": "CF-77e2cc51-ec75-4465-b453-4293e22d6322", "clientRef": null, "site": { "ipCountry": "VN", "code": "CFUS", "version": "green", "server": "CFPDWB-4CE61FE1", "build": "1.0.0.118", "name": "USA", "isNewsletterEnabled": false }, "use24HourClock": false, "google": { "tempScale": "c" }, "groupSeparator": ",", "decimalSeparator": ".", "currency": { "code": "USD" }, "telemetry": { "isEnabled": false }, "searchResult": { "shouldShowOfferCurrency": true, "offerCurrencyDeclarationTimeOut": 3000, "shortHaulStopOverCutoffPercent": 60, "longHaulStopOverCutoffPercent": 50, "enableLargeStopOverFlightsExclusion": true, "excludeLargeStopOverFlightsOnLoad": false, "filtersToolbarPosition": "Bottom", "surveyMonkeyExitClicksThreshold": 2 } }; __cf.settings.criteria = { "adults": 1, "children": 0, "departingOn": null, "destination": null, "directFlightsOnly": false, "formAction": 0, "hotelDestination": null, "includeStudentFares": false, "infants": 0, "isChildResolutionForced": false, "isOneWay": false, "isReturn": true, "origin": null, "returningOn": null, "route": { "distanceKms": -1, "routeType": "ShortHaul" }, "searchDestinationRegionCode": null, "searchId": null, "searchOriginRegionCode": null, "sort": null, "ticketClass": 0, "tripType": 1 }; __cf.settings.timestamp = (new Date()).getTime(); __cf.settings.servertimestamp = '2/28/2017 3:44:20 PM';</script>
+    <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
+
+
+    <link href="~/Content/FontEnd/BeepBay/css/v36.css" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/FontEnd/jquery")
+    <script src="~/Content/FontEnd/BeepBay/js/Bootstrap.js"></script>
+    <script src="~/Content/Admin/js/bootstrap.min.js"></script>
+
+    <link href="~/Content/FontEnd/BeepBay/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FontEnd/BeepBay/css/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FontEnd/BeepBay/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FontEnd/BeepBay/css/style2.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FontEnd/BeepBay/css/font-custom.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FontEnd/BeepBay/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/FontEnd/CSS/bootstrap.css" rel="stylesheet" />
+
+    <script>
+        dataLayer = [
+            {
+                'siteVersion': 'green'
+            }
+        ];
+    </script>
+
+    <script type="text/javascript">
+        window.$zopim || (function (d, s) {
+            var z = $zopim = function (c) { z._.push(c) }, $ = z.s =
+                d.createElement(s), e = d.getElementsByTagName(s)[0]; z.set = function (o) {
+                    z.set.
+                        _.push(o)
+                }; z._ = []; z.set._ = []; $.async = !0; $.setAttribute("charset", "utf-8");
+            $.src = "https://v2.zopim.com/?4igxKHpPqan1i9WLIy9MMofbhNI0AWMP"; z.t = +new Date; $.
+                type = "text/javascript";
+            e.parentNode.insertBefore($, e);
+        })(document, "script");
+    </script>
+</head>
+<body>
+    <div id="page" class="">
+        <div id="header" class="header page-section">
+            <a class="nav-target" data-full-title="Tìm chuyến bay" data-icon-font="fa fa-plane" data-short-title="Search" name="search"></a>
+            <header>
+                @Html.Partial("_Header")
+                @Html.Partial("_Partialheader_container")
+            </header>
+            <div class="main_content">
+
+
+                <div style="padding:15px 15px 15px 15px; font-size:13px!important; text-align:justify" class="summary-info box">
+                    @RenderBody()
+                </div>
+
+            </div>
+            @Html.Partial("_Footer")
+            @RenderSection("scripts", required: false)
+        </div>
+        <div id="upper-content" class="upper-content page-section">
+            <div class="content-container"></div>
+        </div>
+        <div id="my-account-layer" class="dark">
+            <div class="inner">
+                <div id="account-full-menu"></div>
+            </div>
+        </div>
+        <div id="my-account-layer" class="dark">
+            <div class="inner">
+                <div id="account-full-menu"></div>
+            </div>
+        </div><div id="my-account-layer" class="dark">
+            <div class="inner">
+                <div id="account-full-menu"></div>
+            </div>
+        </div>
+        <!-- hello you -->
+        <script src="~/Content/FontEnd/BeepBay/js/react.js"></script>
+        <script src="~/Content/FontEnd/BeepBay/js/core.js"></script>
+        <script src="~/Content/FontEnd/BeepBay/js/ext.js"></script>
+        <script src="~/Content/FontEnd/BeepBay/js/ui.js"></script>
+        <script async>
+            __cf.onStart(function () {
+
+                var logo = $("#header-container .logo");
+                setTimeout(function () {
+                    logo.addClass("anim");
+                }, 1000);
+
+            });
+        </script>
+        <div id="modal-overlay">&nbsp;</div>
+        <div id="modal" class="cfux">
+            <div class="inner" id="modal-content"></div>
+        </div>
+    </div>
+</body>
+</html>
+

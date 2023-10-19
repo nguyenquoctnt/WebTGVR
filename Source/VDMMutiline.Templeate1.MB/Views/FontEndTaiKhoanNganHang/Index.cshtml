@@ -1,0 +1,60 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model List<VDMMutiline.SharedComponent.EntityInfo.DmTaikhoanNganHangInfo>
+@{
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+}@Html.Action("HeaderDetail", "Control")
+<div class="hidden1 bgSelect" style="margin-top: 46px">
+    <div class="row  top log logfix" style="">
+        <div class="col-xs-12 cb">
+           Thanh toán
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="contentdetail">
+        <div style="font-size: 12px;">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  hot-news">
+                    <article class="box" style="margin-bottom: 1px;border-bottom: 1px dotted #867b7b;padding-bottom: 7px;padding-top: 10px;">
+                        <figure>
+                            <a title="@item.Tentaikhoan">
+                                <img data-src="@item.Logo" src="@item.Logo" alt="@item.Tentaikhoan" class="famous-place lazy" width="270" height="192" />
+                            </a>
+                        </figure>
+                        <div class="details " style="    padding: 0px 0 0 145px;">
+                            <h4>
+                                TK:@item.Tentaikhoan
+                            </h4>
+                            <h4>
+                                STK:@item.Sotaikhoan
+                            </h4>
+                            <h4>
+                                CN: @item.ChiNhanh
+                            </h4>
+                        </div>
+                    </article>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

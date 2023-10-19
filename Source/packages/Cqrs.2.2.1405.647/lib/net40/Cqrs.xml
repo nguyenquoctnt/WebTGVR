@@ -1,0 +1,2307 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cqrs</name>
+    </assembly>
+    <members>
+        <member name="T:Cqrs.Authentication.SingleSignOnTokenWithUserRsnAndCompanyRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnTokenWithCompanyRsn"/> and <see cref="T:Cqrs.Authentication.ISingleSignOnTokenWithUserRsn"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Authentication.ISingleSignOnTokenWithUserRsnAndCompanyRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnTokenWithCompanyRsn"/> and <see cref="T:Cqrs.Authentication.ISingleSignOnTokenWithUserRsn"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Authentication.ISingleSignOnTokenWithCompanyRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnToken"/> that includes an identifiable <see cref="P:Cqrs.Authentication.ISingleSignOnTokenWithCompanyRsn.CompanyRsn"/> to optimise the hits of the <see cref="T:Cqrs.DataStores.IDataStore`1">DataStores</see> by including data you most likely need.
+            As such, if not used correctly, this can expose identifiable information.
+            It is suggested the service layer populates this before sending commands as part of authorisation/authentication.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.ISingleSignOnTokenWithCompanyRsn.CompanyRsn">
+            <summary>
+            The Rsn of the company the user doing the operation is operating on.
+            When used in a system where a single user can have access to multiple companies, this is not the company the user belongs to, but the company it is operating on.
+            When used by an external 3rd party this is the all in context of the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Authentication.ISingleSignOnTokenWithUserRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnToken"/> that includes an identifiable <see cref="P:Cqrs.Authentication.ISingleSignOnTokenWithUserRsn.UserRsn"/> to optimise the hits of the <see cref="T:Cqrs.DataStores.IDataStore`1">DataStores</see> by including data you most likely need.
+            As such, if not used correctly, this can expose identifiable information.
+            It is suggested the service layer populates this before sending commands as part of authorisation/authentication.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.ISingleSignOnTokenWithUserRsn.UserRsn">
+            <summary>
+            The Rsn of the user doing the operation. When used by an external 3rd party this is the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.SingleSignOnTokenWithUserRsnAndCompanyRsn.CompanyRsn">
+            <summary>
+            The Rsn of the company the user doing the operation is operating on.
+            When used in a system where a single user can have access to multiple companies, this is not the company the user belongs to, but the company it is operating on.
+            When used by an external 3rd party this is the all in context of the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.SingleSignOnTokenWithUserRsnAndCompanyRsn.UserRsn">
+            <summary>
+            The Rsn of the user doing the operation. When used by an external 3rd party this is the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Authentication.SingleSignOnTokenWithCompanyRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnToken"/> that includes an identifiable <see cref="P:Cqrs.Authentication.SingleSignOnTokenWithCompanyRsn.CompanyRsn"/> to optimise the hits of the <see cref="T:Cqrs.DataStores.IDataStore`1">DataStores</see> by including data you most likely need.
+            As such, if not used correctly, this can expose identifiable information.
+            It is suggested the service layer populates this before sending commands as part of authorisation/authentication.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.SingleSignOnTokenWithCompanyRsn.CompanyRsn">
+            <summary>
+            The Rsn of the company the user doing the operation is operating on.
+            When used in a system where a single user can have access to multiple companies, this is not the company the user belongs to, but the company it is operating on.
+            When used by an external 3rd party this is the all in context of the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Authentication.SingleSignOnTokenWithUserRsn">
+            <summary>
+            This is a <see cref="T:Cqrs.Authentication.ISingleSignOnToken"/> that includes an identifiable <see cref="P:Cqrs.Authentication.SingleSignOnTokenWithUserRsn.UserRsn"/> to optimise the hits of the <see cref="T:Cqrs.DataStores.IDataStore`1">DataStores</see> by including data you most likely need.
+            As such, if not used correctly, this can expose identifiable information.
+            It is suggested the service layer populates this before sending commands as part of authorisation/authentication.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Authentication.SingleSignOnTokenWithUserRsn.UserRsn">
+            <summary>
+            The Rsn of the user doing the operation. When used by an external 3rd party this is the person being impersonated, not the 3rd party system itself.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.IBusHelper.IsEventRequired(System.Type)">
+            <summary>
+            Checks if a white-list or black-list approach is taken, then checks the <see cref="T:Cqrs.Configuration.IConfigurationManager"/> to see if a key exists defining if the event is required or not.
+            If the event is required and it cannot be resolved, an error will be raised.
+            Otherwise the event will be marked as processed.
+            </summary>
+            <param name="messageType">The <see cref="T:System.Type"/> of the message being processed.</param>
+        </member>
+        <member name="M:Cqrs.Bus.IBusHelper.IsEventRequired(System.String)">
+            <summary>
+            Checks if a white-list or black-list approach is taken, then checks the <see cref="T:Cqrs.Configuration.IConfigurationManager"/> to see if a key exists defining if the event is required or not.
+            If the event is required and it cannot be resolved, an error will be raised.
+            Otherwise the event will be marked as processed.
+            </summary>
+            <param name="configurationKey">The configuration key to check.</param>
+        </member>
+        <member name="M:Cqrs.Bus.IBusHelper.BuildTelemeteredActionHandler``2(cdmdotnet.Logging.ITelemetryHelper,System.Action{``0},System.Boolean,System.String)">
+            <summary>
+            Build a message handler that implements telemetry capturing as well as off thread handling.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.IBusHelper.BuildActionHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Build a message handler that implements telemetry capturing as well as off thread handling.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.BusHelper.IsEventRequired(System.Type)">
+            <summary>
+            Checks if a white-list or black-list approach is taken, then checks the <see cref="T:Cqrs.Configuration.IConfigurationManager"/> to see if a key exists defining if the event is required or not.
+            If the event is required and it cannot be resolved, an error will be raised.
+            Otherwise the event will be marked as processed.
+            </summary>
+            <param name="messageType">The <see cref="T:System.Type"/> of the message being processed.</param>
+        </member>
+        <member name="M:Cqrs.Bus.BusHelper.IsEventRequired(System.String)">
+            <summary>
+            Checks if a white-list or black-list approach is taken, then checks the <see cref="T:Cqrs.Configuration.IConfigurationManager"/> to see if a key exists defining if the event is required or not.
+            If the event is required and it cannot be resolved, an error will be raised.
+            Otherwise the event will be marked as processed.
+            </summary>
+            <param name="configurationKey">The configuration key to check.</param>
+        </member>
+        <member name="M:Cqrs.Bus.BusHelper.BuildTelemeteredActionHandler``2(cdmdotnet.Logging.ITelemetryHelper,System.Action{``0},System.Boolean,System.String)">
+            <summary>
+            Build a message handler that implements telemetry capturing as well as off thread handling.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.BusHelper.BuildActionHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Build a message handler that implements telemetry capturing as well as off thread handling.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandReceiver`1">
+            <summary>
+            Receives instances of a <see cref="T:Cqrs.Commands.ICommand`1"/> from the command bus
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandReceiver">
+            <summary>
+            Receives instances of a <see cref="T:Cqrs.Commands.ICommand`1"/> from the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Commands.ICommandReceiver.Start">
+            <summary>
+            Starts listening and processing instances of <see cref="T:Cqrs.Commands.ICommand`1"/> from the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Commands.ICommandReceiver`1.ReceiveCommand(Cqrs.Commands.ICommand{`0})">
+            <summary>
+            Receives a <see cref="T:Cqrs.Commands.ICommand`1"/> from the command bus.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Bus.ICommandHandlerRegistrar">
+            <summary>
+            Registers command handlers that listen and respond to commands.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Bus.IHandlerRegistrar">
+            <summary>
+            Registers event or command handlers that listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.IHandlerRegistrar.RegisterHandler``1(System.Action{``0},System.Type,System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+            <remarks>
+            In many cases the <paramref name="targetedType"/> will be the event handler class itself, what you actually want is the target of what is being updated
+            </remarks>
+        </member>
+        <member name="M:Cqrs.Bus.IHandlerRegistrar.RegisterHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Bus.IEventHandlerRegistrar">
+            <summary>
+            Registers event handlers that listen and respond to events.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.IEventHandlerRegistrar.RegisterGlobalEventHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event handler that will listen and respond to all events.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.RouteManager.RegisterHandler``1(System.Action{``0},System.Type,System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.RouteManager.RegisterHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.RouteManager.RegisterGlobalEventHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event handler that will listen and respond to all events.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.RouteManager.Routes">
+            <summary>
+            The <see cref="T:Cqrs.Bus.Route"/> to execute per <see cref="T:System.Type"/>
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.RouteManager.GlobalEventRoute">
+            <summary>
+            A <see cref="T:Cqrs.Bus.Route"/> to execute for all <see cref="T:Cqrs.Events.IEvent`1"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.DtoCommand`2">
+            <summary>
+            A <see cref="T:Cqrs.Commands.ICommand`1"/> for <see cref="T:Cqrs.Domain.IDto"/> objects
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.ICommand`1">
+            <summary>
+            People request changes to the domain by sending <see cref="T:Cqrs.Commands.ICommand`1"/>s. They are named with a verb in the imperative mood plus and may include the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> type, for example ConfirmOrder. Unlike an <see cref="T:Cqrs.Events.IEvent`1"/>, a <see cref="T:Cqrs.Commands.ICommand`1"/> is not a statement of fact; it's only a request, and thus may be refused. (A typical way to convey refusal is to raise a specifically typed <see cref="T:Cqrs.Events.IEvent`1"/> stating the <see cref="T:Cqrs.Commands.ICommand`1"/> didn't happen for a specific reason).
+            </summary>
+            <example>
+            public class ConfirmOrder
+            {
+            	public Guid OrderRsn;
+            }
+            </example>
+            <remarks>
+            What does a <see cref="T:Cqrs.Commands.ICommand`1"/> or an <see cref="T:Cqrs.Events.IEvent`1"/> look like?
+            
+            An <see cref="T:Cqrs.Commands.ICommand`1"/> or <see cref="T:Cqrs.Events.IEvent`1"/> is simply a data structure that contain data for reading, and no behavior. We call such structures "Data Transfer Objects" (DTOs). The name indicates the purpose. In many languages they are represented as classes, but they are not true classes in the real OO sense.
+            
+            
+            What is the difference between a <see cref="T:Cqrs.Commands.ICommand`1"/> and an <see cref="T:Cqrs.Events.IEvent`1"/>?
+            
+            Their intent.
+            
+            
+            What is immutability? Why is a <see cref="T:Cqrs.Commands.ICommand`1"/> or <see cref="T:Cqrs.Events.IEvent`1"/> immutable?
+            
+            For the purpose of this question, immutability is not having any setters, or other methods which change internal state. The <see cref="T:System.String"/> type in is a familiar example; you never actually change an existing <see cref="T:System.String"/> value, you just create new <see cref="T:System.String"/> values based on old ones.
+            
+            An <see cref="T:Cqrs.Commands.ICommand`1"/> is immutable because their expected usage is to be sent directly to the domain model side for processing. They do not need to change during their projected lifetime in traveling from client to server.
+            Sometimes however business logic dictates that a decision may be made to construct a <see cref="T:Cqrs.Commands.ICommand`1"/> and local variables should be used.
+            
+            An <see cref="T:Cqrs.Events.IEvent`1"/> is immutable because they represent domain actions that took place in the past. Unless you're Marty McFly, you can't change the past, and sometimes not even then.
+            
+            
+            What is command upgrading?
+            
+            Upgrading an <see cref="T:Cqrs.Commands.ICommand`1"/> becomes necessary when new requirements cause an existing <see cref="T:Cqrs.Commands.ICommand`1"/> not to be sufficient. Maybe a new field needs to be added, for example, or maybe an existing field should really have been split into several different ones.
+            
+            
+            How do I upgrade my <see cref="T:Cqrs.Commands.ICommand`1"/>s?
+            
+            How you do the upgrade depends how much control you have over your clients. If you can deploy your client updates and server updates together, just change things in both and deploy the updates. Job done. If not, it's usually best to have the updated <see cref="T:Cqrs.Commands.ICommand`1"/> be a new type and have the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> accept both for a while.
+            
+            
+            Could you give an example of names of some versioned <see cref="T:Cqrs.Commands.ICommand`1"/>?
+            
+            Sure.
+            
+            UploadFile
+            UploadFile_v2
+            UploadFile_v3
+            
+            It's just a convention, but a sane one.
+            ********************************************
+            Also see http://cqrs.nu/Faq/commands-and-events.
+            </remarks>
+        </member>
+        <member name="P:Cqrs.Messages.IMessage.OriginatingFramework">
+            <summary>
+            The originating framework this message was sent from.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Messages.IMessage.Frameworks">
+            <summary>
+            The frameworks this <see cref="T:Cqrs.Messages.IMessage"/> has been delivered to/sent via already.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Commands.DtoCommand`2.OriginatingFramework">
+            <summary>
+            The originating framework this message was sent from.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Commands.DtoCommand`2.Frameworks">
+            <summary>
+            The frameworks this <see cref="T:Cqrs.Messages.IMessage"/> has been delivered to/sent via already.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandHandler`2">
+            <summary>
+            An <see cref="T:Cqrs.Commands.ICommandHandler`2"/> receives an <see cref="T:Cqrs.Commands.ICommand`1"/> and brokers a result from the appropriate <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            "A result" is either a successful application of the command, or an exception.
+            This is the common sequence of steps an <see cref="T:Cqrs.Commands.ICommandHandler`2"/> might follow:
+            
+            Validate the <see cref="T:Cqrs.Commands.ICommand`1"/> on its own merits.
+            Ask an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> to handle the <see cref="T:Cqrs.Commands.ICommand`1"/>.
+            If validation is successful, 0..n <see cref="T:Cqrs.Events.IEvent`1"/> artefacts (1 is common) are queued for publishing.
+            Attempt to persist the new <see cref="T:Cqrs.Events.IEvent`1"/> artefacts. If there's a concurrency conflict during this step, either give up, or retry things.
+            Dispatch the queued <see cref="T:Cqrs.Events.IEvent`1"/> artefacts.
+            </summary>
+            <remarks>
+            Should a <see cref="T:Cqrs.Commands.ICommandHandler`2"/> affect one or several <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>s?
+            
+            Only one.
+            
+            
+            Do I put logic in <see cref="T:Cqrs.Commands.ICommandHandler`2"/>?
+            
+            Yes. Exactly what logic depends on your factoring.
+            The logic for validating the <see cref="T:Cqrs.Commands.ICommand`1"/> on its own merits always gets executed in the <see cref="T:Cqrs.Commands.ICommandHandler`2"/>, although we recommend refactoring these into an <see cref="T:Cqrs.Commands.ICommandValidator`2"/>.
+            Provided validation is successful we recommend a more functional factoring, where the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> exists independently of the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> and the next step would be to load the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> from the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> and request the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> handle the <see cref="T:Cqrs.Commands.ICommand`1"/> itself.
+            The <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> should then have uncommitted <see cref="T:Cqrs.Events.IEvent`1"/> artefacts as a results of asking the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> to handle the <see cref="T:Cqrs.Commands.ICommand`1"/>.
+            Finally the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> should instruct the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> to <see cref="M:Cqrs.Domain.IUnitOfWork`1.Commit"/> all uncommited <see cref="T:Cqrs.Events.IEvent`1"/> artefacts.
+            
+            However you have it, the logic boils down to validation and some sequence of steps that lead to the <see cref="T:Cqrs.Commands.ICommand`1"/> becoming an <see cref="T:System.Exception"/> or <see cref="T:Cqrs.Events.IEvent`1"/>(s). If you're tempted to go beyond this, see the rest of the remarks.
+            
+            
+            Can I call a read side (such as a read store, data store or <see cref="T:Cqrs.Domain.IRepository`1"/>) from my <see cref="T:Cqrs.Commands.ICommandHandler`2"/>?
+            
+            No.
+            
+            
+            Can I do logging, security, or auditing in my <see cref="T:Cqrs.Commands.ICommandHandler`2"/>?
+            
+            Yes. The decorator pattern comes in handy here to separate those concerns neatly.
+            
+            
+            How are conflicts between concurrent <see cref="T:Cqrs.Commands.ICommand`1"/>s handled in the <see cref="T:Cqrs.Commands.ICommandHandler`2"/>?
+            
+            The place where the new <see cref="T:Cqrs.Events.IEvent`1"/> artefacts for the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> are persisted is the only place in the system where we need to worry about concurrency conflicts. The <see cref="T:Cqrs.Events.IEventStore`1"/> knows the sequence number of the latest <see cref="T:Cqrs.Events.IEvent`1"/> applied on that <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>, and the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> knows the sequence number of the last <see cref="T:Cqrs.Events.IEvent`1"/> it read. If these numbers do not agree, it means some other thread or process got there first. The <see cref="T:Cqrs.Commands.ICommandHandler`2"/> can then load up the events again and make a new attempt.
+            
+            
+            Should I do things that have side-effects in the outside world (such as sending email) directly in a <see cref="T:Cqrs.Commands.ICommandHandler`2"/>?
+            
+            No, since a concurrency conflict will mean the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> logic will be run again. Do such things in an Apply <see cref="T:Cqrs.Events.IEvent`1"/> method in an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            ********************************************
+            Also see http://cqrs.nu/Faq/command-handlers.
+            </remarks>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandPublisher`1">
+            <summary>
+            Publishes an <see cref="T:Cqrs.Commands.ICommand`1"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Commands.ICommandPublisher`1.Publish``1(``0)">
+            <summary>
+            Publishes the provided <paramref name="command"/> on the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Commands.ICommandPublisher`1.Publish``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Publishes the provided <paramref name="commands"/> on the command bus.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Commands.IPublishAndWaitCommandPublisher`1">
+            <summary>
+            Publishes an <see cref="T:Cqrs.Commands.ICommand`1"/>
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits until the specified condition is satisfied an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.IPublishAndWaitCommandPublisher`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="T:Cqrs.Commands.ISendAndWaitCommandSender`1">
+            <summary>
+            Sends an <see cref="T:Cqrs.Commands.ICommand`1"/>
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandSender`1">
+            <summary>
+            Sends an <see cref="T:Cqrs.Commands.ICommand`1"/>
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits until the specified condition is satisfied an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Commands.ISendAndWaitCommandSender`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="T:Cqrs.Commands.ICommandValidator`2">
+            <summary>
+            Validates an <see cref="T:Cqrs.Commands.ICommand`1"/> on its own merits.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Commands.ICommandValidator`2.IsCommandValid(`1)">
+            <summary>
+            Validates the provided <param name="command" /> on its own merits.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Configuration.DependencyResolver">
+            <summary>
+            Provides an ability to resolve instances of objects.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Configuration.IDependencyResolver">
+            <summary>
+            Provides an ability to resolve instances of objects.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Configuration.IDependencyResolver.Resolve``1">
+            <summary>
+            Resolves a single instance for the specified <typeparamref name="T"/>.
+            Different implementations may return the first or last instance found or may return an exception.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of object you want to resolve.</typeparam>
+            <returns>An instance of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:Cqrs.Configuration.IDependencyResolver.Resolve(System.Type)">
+            <summary>
+            Resolves a single instance for the specified <paramref name="type"/>.
+            Different implementations may return the first or last instance found or may return an exception.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> of object you want to resolve.</param>
+            <returns>An instance of type <paramref name="type"/>.</returns>
+        </member>
+        <member name="M:Cqrs.Configuration.DependencyResolver.Resolve``1">
+            <summary>
+            Resolves a single instance for the specified <typeparamref name="T"/>.
+            Different implementations may return the first or last instance found or may return an exception.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of object you want to resolve.</typeparam>
+            <returns>An instance of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:Cqrs.Configuration.DependencyResolver.Resolve(System.Type)">
+            <summary>
+            Resolves a single instance for the specified <paramref name="type"/>.
+            Different implementations may return the first or last instance found or may return an exception.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> of object you want to resolve.</param>
+            <returns>An instance of type <paramref name="type"/>.</returns>
+        </member>
+        <member name="P:Cqrs.Configuration.DependencyResolver.Current">
+            <summary>
+            The current instance of the <see cref="T:Cqrs.Configuration.IDependencyResolver"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Configuration.ITelemetryHelperExtensions.TrackRequest``1(cdmdotnet.Logging.ITelemetryHelper,System.String,``0,System.DateTimeOffset,System.TimeSpan,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Send information about a request handled by the application.
+            </summary>
+            <param name="telemetryHelper">The <see cref="T:cdmdotnet.Logging.ITelemetryHelper"/> being extended.s</param>
+            <param name="name">The request name.</param>
+            <param name="token">The token with user identifiable information.</param>
+            <param name="startTime">The time when the page was requested.</param>
+            <param name="duration">The time taken by the application to handle the request.</param>
+            <param name="responseCode">The response status code.</param>
+            <param name="wasSuccessfull">True if the request was handled successfully by the application.</param>
+            <param name="properties">Named string values you can use to search and classify events.</param>
+        </member>
+        <member name="M:Cqrs.Configuration.ITelemetryHelperExtensions.TrackRequest(cdmdotnet.Logging.ITelemetryHelper,System.String,System.Nullable{System.Guid},System.DateTimeOffset,System.TimeSpan,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Send information about a request handled by the application.
+            </summary>
+            <param name="telemetryHelper">The <see cref="T:cdmdotnet.Logging.ITelemetryHelper"/> being extended.s</param>
+            <param name="name">The request name.</param>
+            <param name="token">The token with user identifiable information.</param>
+            <param name="startTime">The time when the page was requested.</param>
+            <param name="duration">The time taken by the application to handle the request.</param>
+            <param name="responseCode">The response status code.</param>
+            <param name="wasSuccessfull">True if the request was handled successfully by the application.</param>
+            <param name="properties">Named string values you can use to search and classify events.</param>
+        </member>
+        <member name="M:Cqrs.Configuration.ITelemetryHelperExtensions.TrackRequest(cdmdotnet.Logging.ITelemetryHelper,System.String,System.Nullable{System.Int32},System.DateTimeOffset,System.TimeSpan,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Send information about a request handled by the application.
+            </summary>
+            <param name="telemetryHelper">The <see cref="T:cdmdotnet.Logging.ITelemetryHelper"/> being extended.s</param>
+            <param name="name">The request name.</param>
+            <param name="token">The token with user identifiable information.</param>
+            <param name="startTime">The time when the page was requested.</param>
+            <param name="duration">The time taken by the application to handle the request.</param>
+            <param name="responseCode">The response status code.</param>
+            <param name="wasSuccessfull">True if the request was handled successfully by the application.</param>
+            <param name="properties">Named string values you can use to search and classify events.</param>
+        </member>
+        <member name="M:Cqrs.Configuration.ITelemetryHelperExtensions.TrackRequest(cdmdotnet.Logging.ITelemetryHelper,System.String,System.String,System.DateTimeOffset,System.TimeSpan,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Send information about a request handled by the application.
+            </summary>
+            <param name="telemetryHelper">The <see cref="T:cdmdotnet.Logging.ITelemetryHelper"/> being extended.s</param>
+            <param name="name">The request name.</param>
+            <param name="token">The token with user identifiable information.</param>
+            <param name="startTime">The time when the page was requested.</param>
+            <param name="duration">The time taken by the application to handle the request.</param>
+            <param name="responseCode">The response status code.</param>
+            <param name="wasSuccessfull">True if the request was handled successfully by the application.</param>
+            <param name="properties">Named string values you can use to search and classify events.</param>
+        </member>
+        <member name="T:Cqrs.DataStores.IDataStore`1">
+            <summary>
+            A data store capable of being queried and modified
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.Add(`0)">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.Remove(`0)">
+            <summary>
+            Will mark the <paramref name="data"/> as logically (or soft) deleted by setting <see cref="P:Cqrs.Entities.Entity.IsLogicallyDeleted"/> to true in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.Destroy(`0)">
+            <summary>
+            Remove the provided <paramref name="data"/> (normally by <see cref="P:Cqrs.Entities.IEntity.Rsn"/>) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.RemoveAll">
+            <summary>
+            Remove all contents (normally by use of a truncate operation) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.IDataStore`1.Update(`0)">
+            <summary>
+            Update the provided <paramref name="data"/> in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="T:Cqrs.DataStores.InProcessDataStore`1">
+            <summary>
+            A <see cref="T:Cqrs.DataStores.IDataStore`1"/> using an <see cref="P:Cqrs.DataStores.InProcessDataStore`1.InMemoryDatabase"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.#ctor">
+            <summary>
+            Instantiates a new instance of the <see cref="T:Cqrs.DataStores.InProcessDataStore`1"/> class
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Add(`0)">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Remove(`0)">
+            <summary>
+            Will mark the <paramref name="data"/> as logically (or soft) deleted by setting <see cref="P:Cqrs.Entities.Entity.IsLogicallyDeleted"/> to true in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Destroy(`0)">
+            <summary>
+            Remove the provided <paramref name="data"/> (normally by <see cref="P:Cqrs.Entities.IEntity.Rsn"/>) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.RemoveAll">
+            <summary>
+            Remove all contents (normally by use of a truncate operation) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.InProcessDataStore`1.Update(`0)">
+            <summary>
+            Update the provided <paramref name="data"/> in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.InProcessDataStore`1.Expression">
+            <summary>
+            Gets the expression tree that is associated with the instance of <see cref="T:System.Linq.IQueryable"/>.
+            </summary>
+            <returns>
+            The <see cref="T:System.Linq.Expressions.Expression"/> that is associated with this instance of <see cref="T:System.Linq.IQueryable"/>.
+            </returns>
+        </member>
+        <member name="P:Cqrs.DataStores.InProcessDataStore`1.ElementType">
+            <summary>
+            Gets the type of the element(s) that are returned when the expression tree associated with this instance of <see cref="T:System.Linq.IQueryable"/> is executed.
+            </summary>
+            <returns>
+            A <see cref="T:System.Type"/> that represents the type of the element(s) that are returned when the expression tree associated with this object is executed.
+            </returns>
+        </member>
+        <member name="P:Cqrs.DataStores.InProcessDataStore`1.Provider">
+            <summary>
+            Gets the singleResultQuery provider that is associated with this data source.
+            </summary>
+            <returns>
+            The <see cref="T:System.Linq.IQueryProvider"/> that is associated with this data source.
+            </returns>
+        </member>
+        <member name="T:Cqrs.DataStores.SqlDataStore`1">
+            <summary>
+            A <see cref="T:Cqrs.DataStores.IDataStore`1"/> using simplified SQL.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.#ctor(Cqrs.Configuration.IConfigurationManager,cdmdotnet.Logging.ILogger)">
+            <summary>
+            Instantiates a new instance of the <see cref="T:Cqrs.DataStores.SqlDataStore`1"/> class
+            </summary>
+        </member>
+        <member name="F:Cqrs.DataStores.SqlDataStore`1._writeableConnections">
+            <summary>
+            Gets or sets the list of writeable DataContexts for data mirroring
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.CreateDbDataContext">
+            <summary>
+            Locate the connection settings and create a <see cref="T:System.Data.Linq.DataContext"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.GetWriteableConnectionStrings">
+            <summary>
+            Locate the connection settings for persisting data.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Add(`0)">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add the provided <paramref name="data"/> to the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Remove(`0)">
+            <summary>
+            Will mark the <paramref name="data"/> as logically (or soft) deleted by setting <see cref="P:Cqrs.Entities.Entity.IsLogicallyDeleted"/> to true in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Destroy(`0)">
+            <summary>
+            Remove the provided <paramref name="data"/> (normally by <see cref="P:Cqrs.Entities.IEntity.Rsn"/>) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.RemoveAll">
+            <summary>
+            Remove all contents (normally by use of a truncate operation) from the data store and persist the change.
+            </summary>
+        </member>
+        <member name="M:Cqrs.DataStores.SqlDataStore`1.Update(`0)">
+            <summary>
+            Update the provided <paramref name="data"/> in the data store and persist the change.
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.ConfigurationManager">
+            <summary />
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.DbDataContext">
+            <summary>
+            Gets or sets the DataContext.
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.WriteableConnectionStrings">
+            <summary>
+            Gets or sets the list of writeable connection strings for data mirroring
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.WriteableConnections">
+            <summary>
+            Gets or sets the list of writeable DataContexts for data mirroring
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.Table">
+            <summary>
+            Gets or sets the readable Table
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.Logger">
+            <summary>
+            Gets or sets the Logger
+            </summary>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.Expression">
+            <summary>
+            Gets the expression tree that is associated with the instance of <see cref="T:System.Linq.IQueryable"/>.
+            </summary>
+            <returns>
+            The <see cref="T:System.Linq.Expressions.Expression"/> that is associated with this instance of <see cref="T:System.Linq.IQueryable"/>.
+            </returns>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.ElementType">
+            <summary>
+            Gets the type of the element(s) that are returned when the expression tree associated with this instance of <see cref="T:System.Linq.IQueryable"/> is executed.
+            </summary>
+            <returns>
+            A <see cref="T:System.Type"/> that represents the type of the element(s) that are returned when the expression tree associated with this object is executed.
+            </returns>
+        </member>
+        <member name="P:Cqrs.DataStores.SqlDataStore`1.Provider">
+            <summary>
+            Gets the query provider that is associated with this data source.
+            </summary>
+            <returns>
+            The <see cref="T:System.Linq.IQueryProvider"/> that is associated with this data source.
+            </returns>
+        </member>
+        <member name="T:Cqrs.Domain.Exceptions.EntityNotFoundException`1">
+            <summary>
+            The <see cref="T:Cqrs.Entities.IEntity"/> requested was not found.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the <see cref="T:Cqrs.Entities.IEntity"/> that wasn't found</typeparam>
+        </member>
+        <member name="M:Cqrs.Domain.Exceptions.EntityNotFoundException`1.#ctor(System.Guid)">
+            <summary>
+            Instantiate a new instance of <see cref="T:Cqrs.Domain.Exceptions.EntityNotFoundException`1"/> with the provided identifier of the <see cref="T:Cqrs.Entities.IEntity"/> that wasn't found.
+            </summary>
+            <param name="id">The identifier of the <see cref="T:Cqrs.Entities.IEntity"/> that wasn't found.</param>
+        </member>
+        <member name="T:Cqrs.Domain.Exceptions.SagaNotFoundException`2">
+            <summary>
+            The <see cref="T:Cqrs.Domain.ISaga`1"/> requested was not found.
+            </summary>
+            <typeparam name="TSaga">The <see cref="T:System.Type"/> of the <see cref="T:Cqrs.Domain.ISaga`1"/> that wasn't found.</typeparam>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Domain.Exceptions.SagaNotFoundException`2.#ctor(System.Guid)">
+            <summary>
+            Instantiate a new instance of <see cref="T:Cqrs.Domain.Exceptions.SagaNotFoundException`2"/> with the provided identifier of the <see cref="T:Cqrs.Domain.ISaga`1"/> that wasn't found.
+            </summary>
+            <param name="id">The identifier of the <see cref="T:Cqrs.Domain.ISaga`1"/> that wasn't found.</param>
+        </member>
+        <member name="T:Cqrs.Domain.ISagaUnitOfWork`1">
+            <summary>
+            This is a Unit of Work for sagas
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.ISagaUnitOfWork`1.Add``1(``0)">
+            <summary>
+            Add an item into the <see cref="T:Cqrs.Domain.ISagaUnitOfWork`1"/> ready to be committed.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.ISagaUnitOfWork`1.Get``1(System.Guid,System.Nullable{System.Int32})">
+            <summary>
+            Get an item from the <see cref="T:Cqrs.Domain.ISagaUnitOfWork`1"/> if it has already been loaded.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.ISagaUnitOfWork`1.Commit">
+            <summary>
+            Commit any changed <see cref="T:Cqrs.Domain.Saga`1"/> added to this <see cref="T:Cqrs.Domain.ISagaUnitOfWork`1"/> via <see cref="M:Cqrs.Domain.ISagaUnitOfWork`1.Add``1(``0)"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.SagaEventHandler`2.#ctor(Cqrs.Configuration.IDependencyResolver,cdmdotnet.Logging.ILogger)">
+            <summary>
+            A constructor for the <see cref="T:Cqrs.Domain.Factories.IAggregateFactory"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Domain.ISaga`1">
+            <summary>
+            An independent component that reacts to domain <see cref="T:Cqrs.Events.IEvent`1"/> in a cross-<see cref="T:Cqrs.Domain.IAggregateRoot`1"/>, eventually consistent manner. Time can also be a trigger. A <see cref="T:Cqrs.Domain.Saga`1"/> can sometimes be purely reactive, and sometimes represent workflows.
+            
+            From an implementation perspective, a <see cref="T:Cqrs.Domain.Saga`1"/> is a state machine that is driven forward by incoming <see cref="T:Cqrs.Events.IEvent`1"/> (which may come from many <see cref="T:Cqrs.Domain.AggregateRoot`1"/> or other <see cref="T:Cqrs.Domain.Saga`1"/>). Some states will have side effects, such as sending <see cref="T:Cqrs.Commands.ICommand`1"/>, talking to external web services, or sending emails.
+            </summary>
+            <remarks>
+            Isn't a <see cref="T:Cqrs.Domain.Saga`1"/> just leaked domain logic?
+            No.
+            A <see cref="T:Cqrs.Domain.Saga`1"/> can doing things that no individual <see cref="T:Cqrs.Domain.AggregateRoot`1"/> can sensibly do. Thus, it's not a logic leak since the logic didn't belong in an <see cref="T:Cqrs.Domain.AggregateRoot`1"/> anyway. Furthermore, we're not breaking encapsulation in any way, since <see cref="T:Cqrs.Domain.Saga`1"/> operate with <see cref="T:Cqrs.Commands.ICommand`1"/> and <see cref="T:Cqrs.Events.IEvent`1"/>, which are part of the public API.
+            
+            How can I make my <see cref="T:Cqrs.Domain.Saga`1"/> react to an <see cref="T:Cqrs.Events.IEvent`1"/> that did not happen?
+            The <see cref="T:Cqrs.Domain.Saga`1"/>, besides reacting to domain <see cref="T:Cqrs.Events.IEvent`1"/>, can be "woken up" by recurrent internal alarms. Implementing such alarms is easy. See cron in Unix, or triggered WebJobs in Azure for examples.
+            
+            How does the <see cref="T:Cqrs.Domain.Saga`1"/> interact with the write side?
+            By sending an <see cref="T:Cqrs.Commands.ICommand`1"/> to it.
+            </remarks>
+        </member>
+        <member name="T:Cqrs.Domain.Saga`1">
+            <summary>
+            An independent component that reacts to domain <see cref="T:Cqrs.Events.IEvent`1"/> in a cross-<see cref="T:Cqrs.Domain.IAggregateRoot`1"/>, eventually consistent manner. Time can also be a trigger. A <see cref="T:Cqrs.Domain.Saga`1"/> can sometimes be purely reactive, and sometimes represent workflows.
+            
+            From an implementation perspective, a <see cref="T:Cqrs.Domain.Saga`1"/> is a state machine that is driven forward by incoming <see cref="T:Cqrs.Events.IEvent`1"/> (which may come from many <see cref="T:Cqrs.Domain.AggregateRoot`1"/> or other <see cref="T:Cqrs.Domain.Saga`1"/>). Some states will have side effects, such as sending <see cref="T:Cqrs.Commands.ICommand`1"/>, talking to external web services, or sending emails.
+            </summary>
+            <remarks>
+            Isn't a <see cref="T:Cqrs.Domain.Saga`1"/> just leaked domain logic?
+            No.
+            A <see cref="T:Cqrs.Domain.Saga`1"/> can doing things that no individual <see cref="T:Cqrs.Domain.AggregateRoot`1"/> can sensibly do. Thus, it's not a logic leak since the logic didn't belong in an <see cref="T:Cqrs.Domain.AggregateRoot`1"/> anyway. Furthermore, we're not breaking encapsulation in any way, since <see cref="T:Cqrs.Domain.Saga`1"/> operate with <see cref="T:Cqrs.Commands.ICommand`1"/> and <see cref="T:Cqrs.Events.IEvent`1"/>, which are part of the public API.
+            
+            How can I make my <see cref="T:Cqrs.Domain.Saga`1"/> react to an <see cref="T:Cqrs.Events.IEvent`1"/> that did not happen?
+            The <see cref="T:Cqrs.Domain.Saga`1"/>, besides reacting to domain <see cref="T:Cqrs.Events.IEvent`1"/>, can be "woken up" by recurrent internal alarms. Implementing such alarms is easy. See cron in Unix, or triggered WebJobs in Azure for examples.
+            
+            How does the <see cref="T:Cqrs.Domain.Saga`1"/> interact with the write side?
+            By sending an <see cref="T:Cqrs.Commands.ICommand`1"/> to it.
+            </remarks>
+        </member>
+        <member name="M:Cqrs.Domain.Saga`1.#ctor">
+            <summary>
+            A constructor for the <see cref="T:Cqrs.Domain.Factories.IAggregateFactory"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.Saga`1.#ctor(Cqrs.Configuration.IDependencyResolver,cdmdotnet.Logging.ILogger)">
+            <summary>
+            A constructor for the <see cref="T:Cqrs.Domain.Factories.IAggregateFactory"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Domain.AggregateRoot`1">
+            <summary>
+            A larger unit of encapsulation than just a class. Every transaction is scoped to a single aggregate. The lifetimes of the components of an aggregate are bounded by the lifetime of the entire aggregate.
+            
+            Concretely, an aggregate will handle commands, apply events, and have a state model encapsulated within it that allows it to implement the required command validation, thus upholding the invariants (business rules) of the aggregate.
+            </summary>
+            <remarks>
+            Why is the use of GUID as IDs a good practice?
+            
+            Because they are (reasonably) globally unique, and can be generated either by the server or by the client.
+            </remarks>
+        </member>
+        <member name="T:Cqrs.Domain.IAggregateRoot`1">
+            <summary>
+            An <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> is a larger unit of encapsulation than just a class. Every transaction is scoped to a single aggregate. The lifetimes of the components of an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> are bounded by the lifetime of the entire <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            
+            <para/>Concretely, an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> will handle <see cref="T:Cqrs.Commands.ICommand`1"/>s, apply <see cref="T:Cqrs.Events.IEvent`1"/>s, and have a state model encapsulated within it that allows it to implement the required command validation, thus upholding the invariants (business rules) of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            </summary>
+            <remarks>
+            I know <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> are transaction boundaries, but I really need to transactionally update two <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> in the same transaction. What should I do?
+            
+            <para/>You should re-think the following:
+            <para/>* Your <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> boundaries.
+            <para/>* The responsibilities of each <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            <para/>* What you can get away with doing in a read side or in a saga.
+            <para/>* The actual non-functional requirements of your domain.
+            <para/>
+            <para/>If you write a solution where two or more <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> are transactionally coupled, you have not understood <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            <para/>
+            <para/>
+            <para/>Why is the use of <see cref="T:System.Guid"/> as identifiers a good practice?
+            <para/>
+            <para/>Because they are (reasonably) globally unique, and can be generated either by the server or by the client.
+            <para/>
+            <para/>
+            <para/>What is an Rsn and what is an Id?
+            <para/>
+            <para/>Because few systems are truely green field and there is usually some existing system to operate with our framework identifies
+            <para/>Id properties as <see cref="T:System.Int32"/> typed properties from an external system
+            <para/>and Rsn properties as <see cref="T:System.Guid"/> typed properties for internal use.
+            <para/>
+            <para/>An example might be
+            <para/>{
+            <para/>	Guid Rsn
+            <para/>	string Name
+            <para/>	Guid CategoryRsn
+            <para/>	int CategoryId
+            <para/>}
+            <para/>
+            <para/>Here the category can be referenced within the CQRS framework by it's Rsn <see cref="T:System.Guid"/> typed identifier, but still has a reference to the external systems <see cref="T:System.Int32"/> typed identifier value.
+            <para/>
+            <para/>
+            <para/>How can I get the Rsn for newly created <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>It's an important insight that the client can generate its own Rsns.
+            <para/>
+            <para/>If the client generates a <see cref="T:System.Guid"/> and places it in the create-the-aggregate <see cref="T:Cqrs.Commands.ICommand`1"/>, this is a non-issue. Otherwise, you have to listen to the the appropriate the-aggregate-was-created <see cref="T:Cqrs.Events.IEvent`1"/>, where the Rsn will appear be populated.
+            <para/>
+            <para/>
+            <para/>Should I allow references between <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>In the sense of an actual "memory reference", absolutely not.
+            <para/>
+            <para/>On the write side, an actual memory reference from one <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> to another is forbidden and wrong, since <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> by definition are not allowed to reach outside of themselves. (Allowing this would mean an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> is no longer a transaction boundary, meaning we can no longer sanely reason about its ability to uphold its invariants; it would also preclude sharding of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.)
+            <para/>
+            <para/>Referring to another <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> using an identifier is fine. It is useless on the write side (since the identifier must be treated as an opaque value, since <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> can not reach outside of themselves). Read sides may freely use such information, however, to do interesting correlations.
+            <para/>
+            <para/>
+            <para/>How can I validate a <see cref="T:Cqrs.Commands.ICommand`1"/> across a group of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>This is a common reaction to not being able to query across <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> anymore. There are several answers:
+            <para/>
+            <para/>* Do client-side validation.
+            <para/>* Use a read side.
+            <para/>* Use a saga.
+            <para/>* If those are all completely impractical, then it's time to consider if you got your <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> boundaries correct.
+            <para/>
+            <para/>
+            <para/>How can I guarantee referential integrity across <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>You're still thinking in terms of foreign relations, not <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>. See last question. Also, remember that just because something would be in two tables in a relational design does not in any way suggest it should be two <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>. Designing an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> is different.
+            <para/>
+            <para/>
+            <para/>How can I make sure a newly created user has a unique user name?
+            <para/>
+            <para/>This is a commonly occurring question since we're explicitly not performing cross-aggregate operations on the write side. We do, however, have a number of options:
+            <para/>
+            <para/>* Create a read-side of already allocated user names. Make the client query the read-side interactively as the user types in a name.
+            <para/>* Create a reactive saga to flag down and inactivate accounts that were nevertheless created with a duplicate user name. (Whether by extreme coincidence or maliciously or because of a faulty client.)
+            <para/>
+            <para/>
+            <para/>How can I verify that a customer identifier really exists when I place an order?
+            <para/>
+            <para/>Assuming customer and order are <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> here, it's clear that the order <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> cannot really validate this, since that would mean reaching out of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            <para/>
+            <para/>Checking up on it after the fact, in a saga or just in a read side that records "broken" orders, is one option. After all, the most important thing about an order is actually recording it, and presumably any interesting data about the recipient of the order is being copied into the order <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> (referring to the customer to find the address is bad design; the order was always made to be deliverd to a particular address, whether or not that customer changes their address in the future).
+            <para/>
+            <para/>Being able to use what data was recorded in this broken order means you've got a chance to rescue it and rectify the situation - which makes a good bit more business sense rather than dropping the order on the floor because a foreign key constraint was violated!
+            <para/>
+            <para/>
+            <para/>How can I update a set of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> with a single <see cref="T:Cqrs.Commands.ICommand`1"/>?
+            <para/>
+            <para/>A single <see cref="T:Cqrs.Commands.ICommand`1"/> can't act on a set of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>. It just can't.
+            <para/>
+            <para/>First off, ask yourself whether you really need to update several <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> using just one <see cref="T:Cqrs.Commands.ICommand`1"/>. What in the situation makes this a requirement?
+            <para/>
+            <para/>However, here's what you could do. Allow a new kind of "bulk command", conceptually containing the command you want to issue, and a set of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> (specified either explicitly or implicitly) that you want to issue it on. The write side isn't powerful enough to make the bulk action, but it's able to create a corresponding "bulk event". A saga captures the event, and issues the <see cref="T:Cqrs.Commands.ICommand`1"/> on each of the specified <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>s. The saga can do rollback or send an email, as appropriate, if some of the <see cref="T:Cqrs.Commands.ICommand`1"/> fail.
+            <para/>
+            <para/>There are some advantages to this approach: we store the intent of the bulk action in the event store. The saga automates rollback or equivalent.
+            <para/>
+            <para/>Still, having to resort to this solution is a strong indication that your <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> boundaries are not drawn correctly. You might want to consider changing your <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> boundaries rather than building a saga for this.
+            <para/>
+            <para/>
+            <para/>What is sharding?
+            <para/>
+            <para/>A way to distribute large amounts of <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> on several write-side nodes. We can shard <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> easily because they are completely self-reliant.
+            <para/>
+            <para/>We can shard <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> easily because they don't have any external references.
+            <para/>
+            <para/>
+            <para/>Can an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> send an <see cref="T:Cqrs.Events.IEvent`1"/> to another <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>No.
+            <para/>
+            <para/>The factoring of your <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> and <see cref="T:Cqrs.Commands.ICommandHandler`2"/> will typically already make this idea impossible to express in code. But there's a deeper philosophical reason: go back and re-read the first sentence in the answer to "What is an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?". If you manage to circumvent the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> and just push <see cref="T:Cqrs.Events.IEvent`1"/> into another <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> somehow, you will have taken away that <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>'s chance to participate in validation of changes. That's ultimately why we only allow <see cref="T:Cqrs.Events.IEvent`1"/> to be created as a result of <see cref="T:Cqrs.Commands.ICommand`1"/>s validated by a <see cref="T:Cqrs.Commands.ICommandHandler`2"/> on an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>.
+            <para/>
+            <para/>
+            <para/>Can I call a read side from my <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>?
+            <para/>
+            <para/>No.
+            <para/>
+            <para/>
+            <para/>How do I send e-mail in a CQRS system?
+            <para/>
+            <para/>In an <see cref="T:Cqrs.Events.IEventHandler`2"/> outside of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/>. Do not do it in the <see cref="T:Cqrs.Commands.ICommandHandler`2"/>, as if the <see cref="T:Cqrs.Events.IEvent`1"/> artefacts are not persisted due to losing a race with another <see cref="T:Cqrs.Commands.ICommand`1"/> then the email will have been sent on a false premise.
+            <para/>********************************************
+            <para/>Also see http://cqrs.nu/Faq/aggregates.
+            </remarks>
+        </member>
+        <member name="T:Cqrs.Domain.IUnitOfWork`1">
+            <summary>
+            This is a Unit of Work
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.IUnitOfWork`1.Add``1(``0)">
+            <summary>
+            Add an item into the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> ready to be committed.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.IUnitOfWork`1.Get``1(System.Guid,System.Nullable{System.Int32})">
+            <summary>
+            Get an item from the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> if it has already been loaded.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.IUnitOfWork`1.Commit">
+            <summary>
+            Commit any changed <see cref="T:Cqrs.Domain.AggregateRoot`1"/> added to this <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> via <see cref="M:Cqrs.Domain.IUnitOfWork`1.Add``1(``0)"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Domain.SagaUnitOfWork`1">
+            <summary>
+            This is a Unit of Work. This shouldn't normally be used as a singleton.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.SagaUnitOfWork`1.Add``1(``0)">
+            <summary>
+            Add an item into the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> ready to be committed.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.SagaUnitOfWork`1.Get``1(System.Guid,System.Nullable{System.Int32})">
+            <summary>
+            Get an item from the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> if it has already been loaded or get it from the <see cref="T:Cqrs.Domain.IRepository`1"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.SagaUnitOfWork`1.Commit">
+            <summary>
+            Commit any changed <see cref="T:Cqrs.Domain.Saga`1"/> added to this <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> via <see cref="M:Cqrs.Domain.SagaUnitOfWork`1.Add``1(``0)"/>
+            into the <see cref="T:Cqrs.Domain.IRepository`1"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Domain.UnitOfWork`1">
+            <summary>
+            This is a Unit of Work. This shouldn't normally be used as a singleton.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.UnitOfWork`1.Add``1(``0)">
+            <summary>
+            Add an item into the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> ready to be committed.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.UnitOfWork`1.Get``1(System.Guid,System.Nullable{System.Int32})">
+            <summary>
+            Get an item from the <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> if it has already been loaded or get it from the <see cref="T:Cqrs.Domain.IRepository`1"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Domain.UnitOfWork`1.Commit">
+            <summary>
+            Commit any changed <see cref="T:Cqrs.Domain.AggregateRoot`1"/> added to this <see cref="T:Cqrs.Domain.IUnitOfWork`1"/> via <see cref="M:Cqrs.Domain.UnitOfWork`1.Add``1(``0)"/>
+            into the <see cref="T:Cqrs.Domain.IRepository`1"/>
+            </summary>
+        </member>
+        <member name="T:Cqrs.Entities.DecimalRange">
+            <summary>
+            A <see cref="T:Cqrs.Entities.Range`1"/> object for collecting a <see cref="T:System.Decimal"/> lower and upper limit.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Entities.Range`1">
+            <summary>
+            A range object for collecting a lower and upper limit, such as a number or date range.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Entities.Range`1.From">
+            <summary>
+            The lower limit such as a from <see cref="T:System.DateTime"/>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Entities.Range`1.To">
+            <summary>
+            The upper limit such as a to <see cref="T:System.DateTime"/>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Entities.Range`1.IsFromInclusive">
+            <summary>
+            Is the value of <see cref="P:Cqrs.Entities.Range`1.From"/> inclusive or not. Defaults to true.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Entities.Range`1.IsToInclusive">
+            <summary>
+            Is the value of <see cref="P:Cqrs.Entities.Range`1.To"/> inclusive or not. Defaults to true.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Entities.DecimalRange.#ctor">
+            <summary>
+            Instantiates and Initialises a new instance of the <see cref="T:Cqrs.Entities.DecimalRange"/> class.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Entities.IntegerRange">
+            <summary>
+            A <see cref="T:Cqrs.Entities.Range`1"/> object for collecting a <see cref="T:System.Int32"/> lower and upper limit.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Entities.IntegerRange.#ctor">
+            <summary>
+            Instantiates and Initialises a new instance of the <see cref="T:Cqrs.Entities.IntegerRange"/> class.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Entities.DateRange">
+            <summary>
+            A <see cref="T:Cqrs.Entities.Range`1"/> object for collecting a <see cref="T:System.DateTime"/> lower and upper limit.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Entities.DateRange.#ctor">
+            <summary>
+            Instantiates and Initialises a new instance of the <see cref="T:Cqrs.Entities.DateRange"/> class.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.IEvent`1">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> represents something that took place in the domain. They are always named with a past-participle verb, such as OrderConfirmed. It's not unusual, but not required, for an <see cref="T:Cqrs.Events.IEvent`1"/> to name an <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> or <see cref="T:Cqrs.Entities.IEntity"/> that it relates to; let the domain language be your guide.
+            
+            Since an <see cref="T:Cqrs.Events.IEvent`1"/> represents something in the past, it can be considered a statement of fact and used to take decisions in other parts of the system.
+            </summary>
+            <example>
+            public class OrderConfirmed 
+            {
+            	public Guid OrderRsn;
+            	public DateTime ConfirmationDate;
+            }
+            </example>
+            <remarks>
+            What does a <see cref="T:Cqrs.Commands.ICommand`1"/> or an <see cref="T:Cqrs.Events.IEvent`1"/> look like?
+            
+            An <see cref="T:Cqrs.Commands.ICommand`1"/> or <see cref="T:Cqrs.Events.IEvent`1"/> is simply a data structure that contain data for reading, and no behavior. We call such structures "Data Transfer Objects" (DTOs). The name indicates the purpose. In many languages they are represented as classes, but they are not true classes in the real OO sense.
+            
+            
+            What is the difference between a <see cref="T:Cqrs.Commands.ICommand`1"/> and an <see cref="T:Cqrs.Events.IEvent`1"/>?
+            
+            Their intent.
+            
+            
+            What is immutability? Why is a <see cref="T:Cqrs.Commands.ICommand`1"/> or <see cref="T:Cqrs.Events.IEvent`1"/> immutable?
+            
+            For the purpose of this question, immutability is not having any setters, or other methods which change internal state. The <see cref="T:System.String"/> type in is a familiar example; you never actually change an existing <see cref="T:System.String"/> value, you just create new <see cref="T:System.String"/> values based on old ones.
+            
+            An <see cref="T:Cqrs.Commands.ICommand`1"/> is immutable because their expected usage is to be sent directly to the domain model side for processing. They do not need to change during their projected lifetime in traveling from client to server.
+            Sometimes however business logic dictates that a decision may be made to construct a <see cref="T:Cqrs.Commands.ICommand`1"/> and local variables should be used.
+            
+            An <see cref="T:Cqrs.Events.IEvent`1"/> is immutable because they represent domain actions that took place in the past. Unless you're Marty McFly, you can't change the past, and sometimes not even then.
+            
+            
+            What is command upgrading?
+            
+            Upgrading an <see cref="T:Cqrs.Commands.ICommand`1"/> becomes necessary when new requirements cause an existing <see cref="T:Cqrs.Commands.ICommand`1"/> not to be sufficient. Maybe a new field needs to be added, for example, or maybe an existing field should really have been split into several different ones.
+            
+            
+            How do I upgrade my <see cref="T:Cqrs.Commands.ICommand`1"/>s?
+            
+            How you do the upgrade depends how much control you have over your clients. If you can deploy your client updates and server updates together, just change things in both and deploy the updates. Job done. If not, it's usually best to have the updated <see cref="T:Cqrs.Commands.ICommand`1"/> be a new type and have the <see cref="T:Cqrs.Commands.ICommandHandler`2"/> accept both for a while.
+            
+            
+            Could you give an example of names of some versioned <see cref="T:Cqrs.Commands.ICommand`1"/>?
+            
+            Sure.
+            
+            UploadFile
+            UploadFile_v2
+            UploadFile_v3
+            
+            It's just a convention, but a sane one.
+            ********************************************
+            Also see http://cqrs.nu/Faq/commands-and-events.
+            </remarks>
+        </member>
+        <member name="P:Cqrs.Events.SagaEvent`1.OriginatingFramework">
+            <summary>
+            The originating framework this message was sent from.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.SagaEvent`1.Frameworks">
+            <summary>
+            The frameworks this <see cref="T:Cqrs.Messages.IMessage"/> has been delivered to/sent via already.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.NotifyEveryoneExceptCallerEventAttribute">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> that should be sent to all connected people except the person who was authenticated when sending the request via SignalR.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.NotifyEveryoneEventAttribute">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> that should be sent to all connected people via SignalR.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.NotifyCallerEventAttribute">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> that should be sent back to the person who was authenticated when sending the request via SignalR.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.PrivateEventAttribute">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> that should be sent via the private <see cref="T:Cqrs.Events.IEventPublisher`1"/>.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.EventStoreRetentionLevelAttribute">
+            <summary>
+            Provides a mechanism to configure different <see cref="T:Cqrs.Events.IEventStore`1"/> instances to save the event to.
+            This is useful if you have events that should be in hot storage with quick loads and events that should be in cold storage and are unlikely to be reloaded and use slower cheaper storage.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.EventStoreRetentionLevelAttribute.RetentionLevel">
+            <summary>
+            The level of retention required. By specifying a value we look for a matching configured <see cref="T:Cqrs.Events.IEventStore`1"/> with the same level defined.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.MemoryCacheEventStore`1">
+            <summary>
+            A, <see cref="T:Cqrs.Events.EventStore`1"/> that uses a <see cref="T:System.Runtime.Caching.MemoryCache"/> implementation, flushing out data (I.E. it's not persisted)
+            </summary>
+        </member>
+        <member name="M:Cqrs.Events.MemoryCacheEventStore`1.GetDetaultCacheItemPolicy">
+            <summary>
+            Get's a <see cref="T:System.Runtime.Caching.CacheItemPolicy"/> with the <see cref="P:System.Runtime.Caching.CacheItemPolicy.SlidingExpiration"/> set to 15 minutes
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.DuplicateCreateCommandEvent`1.OriginatingFramework">
+            <summary>
+            The originating framework this message was sent from.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.DuplicateCreateCommandEvent`1.Frameworks">
+            <summary>
+            The frameworks this <see cref="T:Cqrs.Messages.IMessage"/> has been delivered to/sent via already.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.IEventReceiver">
+            <summary>
+            Receives instances of a <see cref="T:Cqrs.Events.IEvent`1"/> from the event bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Events.IEventReceiver.Start">
+            <summary>
+            Starts listening and processing instances of <see cref="T:Cqrs.Events.IEvent`1"/> from the event bus.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.IEventReceiver`1">
+            <summary>
+            Receives instances of a <see cref="T:Cqrs.Events.IEvent`1"/> from the event bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Events.IEventReceiver`1.ReceiveEvent(Cqrs.Events.IEvent{`0})">
+            <summary>
+            Receives a <see cref="T:Cqrs.Events.IEvent`1"/> from the event bus.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.IEventPublisher`1">
+            <summary>
+            Publishes an <see cref="T:Cqrs.Events.IEvent`1"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Events.IEventPublisher`1.Publish``1(``0)">
+            <summary>
+            Publishes the provided <paramref name="@event"/> on the event bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Events.IEventPublisher`1.Publish``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Publishes the provided <paramref name="events"/> on the event bus.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.DtoAggregateEvent`2.OriginatingFramework">
+            <summary>
+            The originating framework this message was sent from.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Events.DtoAggregateEvent`2.Frameworks">
+            <summary>
+            The frameworks this <see cref="T:Cqrs.Messages.IMessage"/> has been delivered to/sent via already.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.PublicEventAttribute">
+            <summary>
+            An <see cref="T:Cqrs.Events.IEvent`1"/> that should be sent via the public <see cref="T:Cqrs.Events.IEventPublisher`1"/>.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Events.SqlEventStore`1">
+            <summary>
+            A simplified SqlServer based <see cref="T:Cqrs.Events.EventStore`1"/> that uses LinqToSql and follows a rigid schema.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Hosts.CoreHost`1">
+            <summary>
+            Configure and start command and event handlers in a host
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.#ctor">
+            <summary>
+            Instantiate a new instance of a <see cref="T:Cqrs.Hosts.CoreHost`1"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.ConfigureTelemetry">
+            <summary>
+            When overridden, allows you to configure Telemetry
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.Run(System.Action)">
+            <summary>
+            Calls <see cref="M:Cqrs.Hosts.CoreHost`1.Prepare"/>, <paramref name="handlerRegistation"/> and then <see cref="M:Cqrs.Hosts.CoreHost`1.Start"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.PrepareSecurityProtocol">
+            <summary>
+            Sets the <see cref="P:System.Net.ServicePointManager.SecurityProtocol"/> to <see cref="F:System.Net.SecurityProtocolType.Tls"/>.
+            You might want to override this to .net 4.5 and above to SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.Prepare">
+            <summary>
+            Prepare the host before registering handlers and starting the host.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.ConfigureDefaultDependencyResolver">
+            <summary>
+            Configure the <see cref="T:Cqrs.Configuration.DependencyResolver"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.Start">
+            <summary>
+            Start the host post preparing and registering handlers.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.ManuallyRegisterEventHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event handler that will listen and respond to events.
+            </summary>
+            <param name="eventHandler">The event handler to call</param>
+            <param name="holdMessageLock">If false, this will spin off another thread. This is a bad performance impact. Strongly suggest you use lock renewing instead... which is configuration based... so even better.</param>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.ManuallyRegisterCommandHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an command handler that will listen and respond to commands.
+            </summary>
+            <param name="commandHandler">The command handler to call</param>
+            <param name="holdMessageLock">If false, this will spin off another thread. This is a bad performance impact. Strongly suggest you use lock renewing instead... which is configuration based... so even better.</param>
+        </member>
+        <member name="M:Cqrs.Hosts.CoreHost`1.StartBusRegistrar">
+            <summary>
+            Start the <see cref="T:Cqrs.Configuration.BusRegistrar"/> by calling <see cref="M:Cqrs.Configuration.BusRegistrar.Register(System.Type[])"/> passing <see cref="P:Cqrs.Hosts.CoreHost`1.HandlerTypes"/>
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.ConfigurationManager">
+            <summary>
+            The <see cref="T:Cqrs.Configuration.IConfigurationManager"/> that can be use before the <see cref="P:Cqrs.Configuration.DependencyResolver.Current"/> is set.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.HandlerTypes">
+            <summary>
+            Each <see cref="T:System.Type"/> will be traced back to it's assembly, and that assembly will be scanned for other handlers to auto register.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.EventBus">
+            <summary>
+            The <see cref="T:Cqrs.Events.IEventReceiver"/> that will be configured to receive <see cref="T:Cqrs.Events.IEvent`1">events</see>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.CommandBus">
+            <summary>
+            The <see cref="T:Cqrs.Commands.ICommandReceiver"/> that will be configured to receive <see cref="T:Cqrs.Commands.ICommand`1">commands</see>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.TelemetryName">
+            <summary>
+            The hosts telemetry name if telemetry is configured
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.CorrelationIdHelper">
+            <summary>
+            The <see cref="T:cdmdotnet.Logging.ICorrelationIdHelper"/> that will be used when starting and stopping the host.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CoreHost`1.Logger">
+            <summary>
+            The <see cref="T:cdmdotnet.Logging.ILogger"/> that will be used when starting and stopping the host.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Hosts.CqrsHttpApplication">
+            <summary>
+            An <see cref="T:System.Web.HttpApplication"/> that prepares and configures CQRS with use in IIS or other web server.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.#ctor">
+            <summary>
+            Instantiate a new instance of a <see cref="T:Cqrs.Hosts.CqrsHttpApplication"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_Start(System.Object,System.EventArgs)">
+            <summary>
+            Calls <see cref="M:Cqrs.Hosts.CqrsHttpApplication.SetBuses"/>, <see cref="M:Cqrs.Hosts.CqrsHttpApplication.RegisterCommandAndEventHandlers"/> and finally <see cref="M:Cqrs.Hosts.CqrsHttpApplication.LogApplicationStarted"/>.
+            Gets executed once during the life cycle of the application when the first request for any resource in the application is made. A resource can be a page or an image in the application. 
+            If the server where the application is hosted is restarted then this is fired once again upon the first request for any resource in the application.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.SetBuses">
+            <summary>
+            Set <see cref="P:Cqrs.Hosts.CqrsHttpApplication.EventBus"/> and <see cref="P:Cqrs.Hosts.CqrsHttpApplication.CommandBus"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.RegisterCommandAndEventHandlers">
+            <summary>
+            Start the <see cref="T:Cqrs.Configuration.BusRegistrar"/> by calling <see cref="M:Cqrs.Configuration.BusRegistrar.Register(System.Type[])"/> passing <see cref="P:Cqrs.Hosts.CqrsHttpApplication.HandlerTypes"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.RegisterServiceParameterResolver">
+            <summary>
+            Call the static "RegisterDataContracts" method on any <see cref="T:Cqrs.Services.IServiceParameterResolver"/> we can find in the <see cref="T:System.Reflection.Assembly"/> of any <see cref="T:System.Type"/> in <see cref="P:Cqrs.Hosts.CqrsHttpApplication.HandlerTypes"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.StartBuses">
+            <summary>
+            Starts the command bus and event bus receivers depending on configuration settings
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.LogApplicationStarted">
+            <summary>
+            Log that the application has started
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_End(System.Object,System.EventArgs)">
+            <summary>
+            Gets executed once during the life cycle of the application when it is unloaded.
+            This is normally fired when the application is taken off-line or when the server is stopped.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_Error(System.Object,System.EventArgs)">
+            <summary>
+            Logs all error via <see cref="M:cdmdotnet.Logging.ILogger.LogError(System.String,System.String,System.Exception,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})"/> unless the execution is <see cref="T:System.Security.SecurityException"/>, in which case <see cref="M:cdmdotnet.Logging.ILogger.LogWarning(System.String,System.String,System.Exception,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})"/> is used.
+            Gets executed when any un-handled <see cref="T:System.Exception"/>/error occurs anywhere in the application. Any un-handled <see cref="T:System.Exception"/> here means exception which are not caught using try catch block. Also if you have custom errors enabled in your application i.e. in web.config file then the configuration in web.config takes precedence and all errors will be directed to the file mentioned in the tag.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_BeginRequest(System.Object,System.EventArgs)">
+            <summary>
+            Gets executed for each and every request which comes to the application to generate a new CorrelationId and then sets the generated CorrelationId via <see cref="M:cdmdotnet.Logging.ICorrelationIdHelper.SetCorrelationId(System.Guid)"/>.
+            The generated CorrelationId is also set in the <see cref="P:System.Web.HttpResponse.Headers"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_EndRequest(System.Object,System.EventArgs)">
+            <summary>
+            Gets executed after <see cref="M:Cqrs.Hosts.CqrsHttpApplication.Application_BeginRequest(System.Object,System.EventArgs)"/> and before the stream starts getting sent to the client.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Application_AuthenticateRequest(System.Object,System.EventArgs)">
+            <summary>
+            Gets executed after <see cref="M:Cqrs.Hosts.CqrsHttpApplication.Application_BeginRequest(System.Object,System.EventArgs)"/>.
+            Override this method to extract any authentication token from the request and then call <see cref="M:Cqrs.Authentication.IAuthenticationTokenHelper`1.SetAuthenticationToken(`0)"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Session_Start(System.Object,System.EventArgs)">
+            <summary>
+            Makes a call to retrieve the <see cref="P:System.Web.SessionState.HttpSessionState.SessionID"/>. This is done so the session is generated at the beginning of the request.
+            If this isn't called the session (when using WCF) is generated late in the pipeline, which can cause issues when trying to work with WCF.
+            Gets executed after <see cref="M:Cqrs.Hosts.CqrsHttpApplication.Application_AuthenticateRequest(System.Object,System.EventArgs)"/> when a new session for a "user" starts such as a first request or after a session has expired.
+            This event doesn't get triggered if you are not using sessions which can be disabled in the web.config.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication.Session_End(System.Object,System.EventArgs)">
+            <summary>
+            Whenever a user's session in the application expires this gets executed. The session is no longer available or accessible. 
+            The session expiration time can be set in web.config file. By default session time out is set to 20 mins.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CqrsHttpApplication.HandlerTypes">
+            <summary>
+            Each <see cref="T:System.Type"/> will be traced back to it's assembly, and that assembly will be scanned for other handlers to auto register.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CqrsHttpApplication.EventBus">
+            <summary>
+            The <see cref="T:Cqrs.Events.IEventReceiver"/> that will be configured to receive <see cref="T:Cqrs.Events.IEvent`1">events</see>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.CqrsHttpApplication.CommandBus">
+            <summary>
+            The <see cref="T:Cqrs.Commands.ICommandReceiver"/> that will be configured to receive <see cref="T:Cqrs.Commands.ICommand`1">commands</see>.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Hosts.CqrsHttpApplication`1">
+            <summary>
+            An <see cref="T:System.Web.HttpApplication"/> that prepares and configures CQRS with use in IIS or other web server with knowledge of a basic type authentication token being sent in <see cref="P:System.Web.HttpRequest.Headers"/>, <see cref="P:System.Web.HttpRequest.Cookies"/>, <see cref="P:System.Web.HttpRequest.Form"/> or <see cref="P:System.Web.HttpRequest.QueryString"/>.
+            A basic type authentication token is <see cref="T:System.Guid"/>, <see cref="T:System.String"/> or <see cref="T:System.Int32"/>.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication`1.Application_AuthenticateRequest(System.Object,System.EventArgs)">
+            <summary>
+            Gets executed after <see cref="M:Cqrs.Hosts.CqrsHttpApplication.Application_BeginRequest(System.Object,System.EventArgs)"/>.
+            Extracts the authentication token looking for a <see cref="T:System.Collections.Generic.KeyValuePair`2"/> where the key as defined by the <see cref="P:System.Configuration.ConfigurationManager.AppSettings"/> "Cqrs.Web.AuthenticationTokenName",
+            from the <see cref="P:System.Web.HttpRequest.Headers"/>, if one isn't found we then try the following in order 
+            <see cref="P:System.Web.HttpRequest.Cookies"/>, <see cref="P:System.Web.HttpRequest.Form"/> or <see cref="P:System.Web.HttpRequest.QueryString"/>; then
+            calls <see cref="M:Cqrs.Authentication.IAuthenticationTokenHelper`1.SetAuthenticationToken(`0)"/> to make it accessible to others parts of the system if one is found.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.CqrsHttpApplication`1.SetBuses">
+            <summary>
+            Set <see cref="P:Cqrs.Hosts.CqrsHttpApplication.EventBus"/> and <see cref="P:Cqrs.Hosts.CqrsHttpApplication.CommandBus"/>.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Hosts.StartUp">
+            <summary>
+            A startUp action for the <see cref="T:Cqrs.Hosts.CoreHost`1"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.StartUp.#ctor(System.Action)">
+            <summary>
+            Instantiate a new instance of a <see cref="T:Cqrs.Hosts.StartUp"/>
+            </summary>
+        </member>
+        <member name="M:Cqrs.Hosts.StartUp.Initialise">
+            <summary>
+            Initialise by calling the <see cref="P:Cqrs.Hosts.StartUp.DependencyResolverConfigurationFunction"/>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Hosts.StartUp.DependencyResolverConfigurationFunction">
+            <summary>
+            The <see cref="T:System.Action"/> that will configure the <see cref="T:Cqrs.Configuration.DependencyResolver"/>.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Infrastructure.SpinWait">
+            <summary>
+            Provides support for spin-based waiting.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Infrastructure.SpinWait.DefaultSleepInMilliseconds">
+            <summary>
+            A recommended sleep value of 50.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Infrastructure.SpinWait.SpinOnce(System.Int16)">
+            <summary>
+            Performs a single spin.
+            </summary>
+            <param name="sleepInMilliseconds">The amount of milliseconds the thread will sleep for.</param>
+        </member>
+        <member name="M:Cqrs.Infrastructure.SpinWait.Reset">
+            <summary>
+            Resets the spin counter.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Infrastructure.SpinWait.SpinUntil(System.Func{System.Boolean},System.Int16)">
+            <summary>
+            Spins until the specified condition is satisfied.
+            </summary>
+            <param name="condition">A delegate to be executed over and over until it returns true.</param>
+            <param name="sleepInMilliseconds">The amount of milliseconds the thread will sleep for.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="condition"/> argument is null.</exception>
+        </member>
+        <member name="M:Cqrs.Infrastructure.SpinWait.SpinUntil(System.Func{System.Boolean},System.TimeSpan,System.Int16)">
+            <summary>
+            Spins until the specified condition is satisfied or until the specified timeout is expired.
+            </summary>
+            
+            <returns>
+            True if the condition is satisfied within the timeout; otherwise, false
+            </returns>
+            <param name="condition">A delegate to be executed over and over until it returns true.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="sleepInMilliseconds">The amount of milliseconds the thread will sleep for.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="condition"/> argument is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="timeout"/> is a negative number other than -1 milliseconds, which represents an infinite time-out -or- timeout is greater than <see cref="F:System.Int32.MaxValue"/>.</exception>
+        </member>
+        <member name="M:Cqrs.Infrastructure.SpinWait.SpinUntil(System.Func{System.Boolean},System.Int32,System.Int16)">
+            <summary>
+            Spins until the specified condition is satisfied or until the specified timeout is expired.
+            </summary>
+            
+            <returns>
+            True if the condition is satisfied within the timeout; otherwise, false
+            </returns>
+            <param name="condition">A delegate to be executed over and over until it returns true.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="sleepInMilliseconds">The amount of milliseconds the thread will sleep for.</param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="condition"/> argument is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
+        </member>
+        <member name="P:Cqrs.Infrastructure.SpinWait.NextSpinWillYield">
+            <summary>
+            Gets whether the next call to <see cref="M:System.Threading.SpinWait.SpinOnce"/> will yield the processor, triggering a forced context switch.
+            </summary>
+            
+            <returns>
+            Whether the next call to <see cref="M:System.Threading.SpinWait.SpinOnce"/> will yield the processor, triggering a forced context switch.
+            </returns>
+        </member>
+        <member name="T:Cqrs.Repositories.InMemoryDatabase">
+            <summary>
+            Uses a static <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2"/> to store data accessible by all threads.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Add(`0)">
+            <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. </exception>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Contains(`0)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+            <returns>
+            true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            </returns>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param><param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param><exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex"/> is less than 0.</exception><exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.-or-Type <paramref name="TEntity"/> cannot be cast automatically to the type of the destination <paramref name="array"/>.</exception>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Remove(`0)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <returns>
+            true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+            <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.IndexOf(`0)">
+            <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+            <returns>
+            The index of <paramref name="item"/> if found in the list; otherwise, -1.
+            </returns>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            </summary>
+            <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param><param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.</exception><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.</exception>
+        </member>
+        <member name="M:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the item to remove.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.</exception><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.</exception>
+        </member>
+        <member name="P:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <returns>
+            The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+        </member>
+        <member name="P:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+            <returns>
+            true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+            </returns>
+        </member>
+        <member name="P:Cqrs.Repositories.InMemoryDatabase.CollectionWrapper`1.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <returns>
+            The element at the specified index.
+            </returns>
+            <param name="index">The zero-based index of the element to get or set.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.</exception><exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1"/> is read-only.</exception>
+        </member>
+        <member name="M:Cqrs.Repositories.IRepository`2.Delete(`1)">
+            <summary>
+            Will mark the <paramref name="data"/> as logically (or soft).
+            </summary>
+        </member>
+        <member name="M:Cqrs.Repositories.Queries.QueryParameter.CompareTo(System.Object)">
+            <summary>
+            Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+            </summary>
+            <returns>
+            A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref name="obj"/>. Zero This instance is equal to <paramref name="obj"/>. Greater than zero This instance is greater than <paramref name="obj"/>. 
+            </returns>
+            <param name="obj">An object to compare with this instance. </param>
+            <exception cref="T:System.ArgumentException"><paramref name="obj"/> is not the same type as this instance. </exception>
+        </member>
+        <member name="M:Cqrs.Repositories.Queries.QueryParameter.CompareTo(Cqrs.Repositories.Queries.QueryParameter)">
+            <summary>
+            Compares the current object with another object of the same type.
+            </summary>
+            <returns>
+            A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other"/> parameter.Zero This object is equal to <paramref name="other"/>. Greater than zero This object is greater than <paramref name="other"/>. 
+            </returns>
+            <param name="other">An object to compare with this object.</param>
+        </member>
+        <member name="M:Cqrs.Repositories.Repository`3.Delete(`2)">
+            <summary>
+            Will mark the <paramref name="data"/> as logically (or soft).
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.BasicServiceParameterResolver`2">
+            <summary>
+            A <see cref="T:System.Runtime.Serialization.DataContractResolver"/> for use via WCF
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.BasicServiceParameterResolver`2.ResolveName(System.String,System.String,System.Type,System.Runtime.Serialization.DataContractResolver)">
+            <summary>
+            Override this method to map the specified xsi:type name and namespace to a data contract type during deserialization.
+            </summary>
+            <returns>
+            The type the xsi:type name and namespace is mapped to. 
+            </returns>
+            <param name="typeName">The xsi:type name to map.</param><param name="typeNamespace">The xsi:type namespace to map.</param><param name="declaredType">The type declared in the data contract.</param><param name="knownTypeResolver">The known type resolver.</param>
+        </member>
+        <member name="T:Cqrs.Services.IServiceRequest`1">
+            <summary>
+            A request message envelope that holds authentication and correlation information used when making public API requests.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type">type</see> of authentication token used.</typeparam>
+        </member>
+        <member name="P:Cqrs.Services.IServiceRequest`1.AuthenticationToken">
+            <summary>
+            The authentication token used to identify the requester.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.IServiceRequest`1.CorrelationId">
+            <summary>
+            The correlation id used to group together events and notifications.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.IServiceRequestWithData`2">
+            <summary>
+            A <see cref="T:Cqrs.Services.IServiceRequest`1">request message envelope</see> that holds authentication, correlation information as well as request data used when making public API requests.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type">type</see> of authentication token used.</typeparam>
+            <typeparam name="TData">The <see cref="T:System.Type">type</see> of data sent along with the request to act upon/with.</typeparam>
+        </member>
+        <member name="P:Cqrs.Services.IServiceRequestWithData`2.Data">
+            <summary>
+            The data sent along with the request to act upon/with.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.IServiceResponse">
+            <summary>
+            A response message envelope that holds request state and correlation information in response to using public API requests.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.IServiceResponse.State">
+            <summary>
+            The state of the request.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.IServiceResponse.CorrelationId">
+            <summary>
+            The correlation id used to group together events and notifications.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.IServiceResponseWithResultData`1">
+            <summary>
+            A <see cref="T:Cqrs.Services.IServiceResponse">response message envelope</see> that holds request state, correlation information as well as the response data returned from making a public API request.
+            </summary>
+            <typeparam name="TResultData">The <see cref="T:System.Type">type</see> of data returned from making a public API request.</typeparam>
+        </member>
+        <member name="P:Cqrs.Services.IServiceResponseWithResultData`1.ResultData">
+            <summary>
+            The data returned from making a public API request.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.IUnitOfWorkService.SetCommitter(System.Object)">
+            <summary>
+            Informs the service of the object that will be committing the UnitOfWork.
+            </summary>
+            <returns>
+            true if the provided <paramref name="commiter"/> is accepted as the committer, false otherwise.
+            </returns>
+        </member>
+        <member name="M:Cqrs.Services.IUnitOfWorkService.Commit(System.Object)">
+            <summary>
+            Commits the UnitOfWork if the provided <paramref name="commiter"/> is the Committer.
+            </summary>
+            <returns>
+            true if the provided <paramref name="commiter"/> is the Committer, false otherwise.
+            </returns>
+        </member>
+        <member name="T:Cqrs.Services.IVersionedServiceResponse">
+            <summary>
+            A <see cref="T:Cqrs.Services.IServiceResponse"/> that provides version information.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.IVersionedServiceResponse.Version">
+            <summary>
+            The version of the data being returned
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.ServiceChannelFactory`1.#ctor(System.String)">
+            <summary>
+            Instanciates a new instance of the <see cref="T:Cqrs.Services.ServiceChannelFactory`1"/> class with a specified endpoint configuration name.
+            </summary>
+            <param name="endpointConfigurationName">The configuration name used for the endpoint.</param>
+        </member>
+        <member name="T:Cqrs.Services.ServiceParameterResolver`2">
+            <summary>
+            A <see cref="T:System.Runtime.Serialization.DataContractResolver"/> for use via WCF
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.ServiceRequest`1">
+            <summary>
+            A request message envelope that holds authentication and correlation information used when making public API requests.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type">type</see> of authentication token used.</typeparam>
+        </member>
+        <member name="P:Cqrs.Services.ServiceRequest`1.AuthenticationToken">
+            <summary>
+            The authentication token used to identify the requester.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.ServiceRequest`1.CorrelationId">
+            <summary>
+            The correlation id used to group together events and notifications.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.ServiceRequestWithData`2">
+            <summary>
+            A <see cref="T:Cqrs.Services.IServiceRequest`1">request message envelope</see> that holds authentication, correlation information as well as request data used when making public API requests.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type">type</see> of authentication token used.</typeparam>
+            <typeparam name="TData">The <see cref="T:System.Type">type</see> of data sent along with the request to act upon/with.</typeparam>
+        </member>
+        <member name="P:Cqrs.Services.ServiceRequestWithData`2.Data">
+            <summary>
+            The data sent along with the request to act upon/with.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.ServiceResponse">
+            <summary>
+            A response message envelope that holds request state and correlation information in response to using public API requests.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.ServiceResponse.#ctor">
+            <summary>
+            Instantiate a new instance of the <see cref="T:Cqrs.Services.ServiceResponse"/> class.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.ServiceResponse.State">
+            <summary>
+            The state of the request.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.ServiceResponse.CorrelationId">
+            <summary>
+            The correlation id used to group together events and notifications.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.ServiceResponse.Version">
+            <summary>
+            The version of the data being returned
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.ServiceResponseStateType">
+            <summary>
+            The response state of a given request.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.Unknown">
+            <summary>
+            The state is unknown.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.Succeeded">
+            <summary>
+            The request succeeded in being placed.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.FailedWithAFatalException">
+            <summary>
+            The request failed with a fatal <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.FailedWithAnUnexpectedException">
+            <summary>
+            The request failed with an unknown, non-fatal <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.FailedAuthentication">
+            <summary>
+            The request failed to be authenticated.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.FailedAuthorisation">
+            <summary>
+            The request failed to be authorised.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.FailedValidation">
+            <summary>
+            The request failed validation.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.AggregateNotFound">
+            <summary>
+            The request failed as the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> was not found.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.EntityNotFound">
+            <summary>
+            The request failed as the <see cref="T:Cqrs.Entities.IEntity"/> was not found.
+            </summary>
+        </member>
+        <member name="F:Cqrs.Services.ServiceResponseStateType.SagaNotFound">
+            <summary>
+            The request failed as the <see cref="T:Cqrs.Domain.Saga`1"/> was not found.
+            </summary>
+        </member>
+        <member name="T:Cqrs.Services.ServiceResponseWithResultData`1">
+            <summary>
+            A <see cref="T:Cqrs.Services.IServiceResponse">response message envelope</see> that holds request state, correlation information as well as the response data returned from making a public API request.
+            </summary>
+            <typeparam name="TResultData">The <see cref="T:System.Type">type</see> of data returned from making a public API request.</typeparam>
+        </member>
+        <member name="M:Cqrs.Services.ServiceResponseWithResultData`1.#ctor">
+            <summary>
+            Instantiate a new instance of the <see cref="T:Cqrs.Services.ServiceResponseWithResultData`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.ServiceResponseWithResultData`1.#ctor(`0)">
+            <summary>
+            Instantiate a new instance of the <see cref="T:Cqrs.Services.ServiceResponseWithResultData`1"/> class providing <paramref name="resultData"/>.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Services.ServiceResponseWithResultData`1.ResultData">
+            <summary>
+            The data returned from making a public API request.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Services.UnitOfWorkService`1.SetCommitter(System.Object)">
+            <summary>
+            Informs the service of the object that will be committing the <see cref="P:Cqrs.Services.UnitOfWorkService`1.UnitOfWork"/>.
+            </summary>
+            <returns>
+            true if the provided <paramref name="commiter"/> is accepted as the committer, false otherwise.
+            </returns>
+        </member>
+        <member name="M:Cqrs.Services.UnitOfWorkService`1.Commit(System.Object)">
+            <summary>
+            Commits the <see cref="P:Cqrs.Services.UnitOfWorkService`1.UnitOfWork"/> if the provided <paramref name="commiter"/> is the <see cref="P:Cqrs.Services.UnitOfWorkService`1.Committer"/>.
+            </summary>
+            <returns>
+            true if the provided <paramref name="commiter"/> is the <see cref="P:Cqrs.Services.UnitOfWorkService`1.Committer"/>, false otherwise.
+            </returns>
+        </member>
+        <member name="T:Cqrs.Domain.Exceptions.AggregateNotFoundException`2">
+            <summary>
+            The <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> requested was not found.
+            </summary>
+            <typeparam name="TAggregateRoot">The <see cref="T:System.Type"/> of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> that wasn't found.</typeparam>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Domain.Exceptions.AggregateNotFoundException`2.#ctor(System.Guid)">
+            <summary>
+            Instantiate a new instance of <see cref="T:Cqrs.Domain.Exceptions.AggregateNotFoundException`2"/> with the provided identifier of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> that wasn't found.
+            </summary>
+            <param name="id">The identifier of the <see cref="T:Cqrs.Domain.IAggregateRoot`1"/> that wasn't found.</param>
+        </member>
+        <member name="T:Cqrs.Bus.InProcessBus`1">
+            <summary>
+            An in process command bus 
+            (<see cref="T:Cqrs.Commands.ICommandPublisher`1"/> and <see cref="T:Cqrs.Commands.ICommandReceiver`1"/>)
+            event bus
+            (<see cref="T:Cqrs.Events.IEventPublisher`1"/> and <see cref="T:Cqrs.Events.IEventHandler`3"/>)
+            as well as a <see cref="T:Cqrs.Bus.IEventHandlerRegistrar"/> and <see cref="T:Cqrs.Bus.ICommandHandlerRegistrar"/> that requires no networking.
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.#ctor(Cqrs.Authentication.IAuthenticationTokenHelper{`0},cdmdotnet.Logging.ICorrelationIdHelper,Cqrs.Configuration.IDependencyResolver,cdmdotnet.Logging.ILogger,Cqrs.Configuration.IConfigurationManager,Cqrs.Bus.IBusHelper)">
+            <summary>
+            Instantiates a new instance of the <see cref="T:Cqrs.Bus.InProcessBus`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PrepareCommand``1(``0)">
+            <summary>
+            Sets the
+            <see cref="P:Cqrs.Messages.IMessageWithAuthenticationToken`1.AuthenticationToken"/>,
+            <see cref="P:Cqrs.Messages.IMessage.CorrelationId"/>,
+            <see cref="!:ICommand&lt;TAuthenticationToken&gt;.OriginatingFramework"/> to "Built-In" and
+            adds a value of "Built-In" to the <see cref="P:Cqrs.Messages.IMessage.Frameworks"/>
+            if not already done so
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PrepareAndValidateCommand``1(``0,Cqrs.Bus.RouteHandlerDelegate@)">
+            <summary>
+            Locates a suitable <see cref="T:Cqrs.Commands.ICommandValidator`2"/> to validate the provided <paramref name="command"/> and validates the provided <paramref name="command"/> if one is located
+            Calls <see cref="M:Cqrs.Bus.InProcessBus`1.PrepareCommand``1(``0)"/>
+            Checks if the provided <paramref name="command"/> is required to be processed
+            Locates a single <see cref="T:Cqrs.Bus.RouteHandlerDelegate">command handler</see> for the provided <paramref name="command"/>
+            </summary>
+            <returns>
+            False if a suitable <see cref="T:Cqrs.Commands.ICommandValidator`2"/> is located and the provided <paramref name="command"/> fails validation,
+            False if no <see cref="T:Cqrs.Bus.RouteHandlerDelegate">command handler</see> is found but the command isn't required to be handled,
+            True otherwise.
+            </returns>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Cqrs#Commands#ICommandPublisher{TAuthenticationToken}#Publish``1(``0)">
+            <summary>
+            Publishes the provided <paramref name="command"/> on the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Send``1(``0)">
+            <summary>
+            Publishes the provided <paramref name="command"/> on the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Cqrs#Commands#ICommandPublisher{TAuthenticationToken}#Publish``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Publishes the provided <paramref name="commands"/> on the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Send``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Publishes the provided <paramref name="commands"/> on the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits until the specified condition is satisfied an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.SendAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Sends the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to send.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Publish``1(``0)">
+            <summary>
+            Publishes the provided <paramref name="@event"/> on the event bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.Publish``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Publishes the provided <paramref name="events"/> on the event bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits until the specified condition is satisfied an event of <typeparamref name="TEvent"/>
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.Int32,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,System.Func{System.Collections.Generic.IEnumerable{Cqrs.Events.IEvent{`0}},``1},System.TimeSpan,Cqrs.Events.IEventReceiver{`0})">
+            <summary>
+            Publishes the provided <paramref name="command"></paramref> and waits for an event of <typeparamref name="TEvent"/> or exits if the specified timeout is expired.
+            </summary>
+            <param name="command">The <typeparamref name="TCommand"/> to publish.</param>
+            <param name="condition">A delegate to be executed over and over until it returns the <typeparamref name="TEvent"/> that is desired, return null to keep trying.</param>
+            <param name="timeout">A <see cref="T:System.TimeSpan"/> that represents the number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely.</param>
+            <param name="eventReceiver">If provided, is the <see cref="T:Cqrs.Events.IEventReceiver`1"/> that the event is expected to be returned on.</param>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.RegisterHandler``1(System.Action{``0},System.Type,System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.RegisterHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event or command handler that will listen and respond to events or commands.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.RegisterGlobalEventHandler``1(System.Action{``0},System.Boolean)">
+            <summary>
+            Register an event handler that will listen and respond to all events.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.ReceiveCommand(Cqrs.Commands.ICommand{`0})">
+            <summary>
+            Receives a <see cref="T:Cqrs.Commands.ICommand`1"/> from the command bus.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Bus.InProcessBus`1.ReceiveEvent(Cqrs.Events.IEvent{`0})">
+            <summary>
+            Receives an <see cref="T:Cqrs.Events.IEvent`1"/> from the event bus.
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.Routes">
+            <summary>
+            Gets or sets the Route Manager
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.AuthenticationTokenHelper">
+            <summary>
+            Gets or sets the Authentication Token Helper
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.CorrelationIdHelper">
+            <summary>
+            Gets or sets the CorrelationId Helper
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.DependencyResolver">
+            <summary>
+            Gets or sets the Dependency Resolver
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.Logger">
+            <summary>
+            Gets or sets the Logger
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.ConfigurationManager">
+            <summary>
+            Gets or sets the Configuration Manager
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.BusHelper">
+            <summary>
+            Gets or sets the Bus Helper
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.EventWaits">
+            <summary>
+            Gets or sets the current list of events waiting to be evaluated for <see cref="M:Cqrs.Bus.InProcessBus`1.PublishAndWait``2(``0,Cqrs.Events.IEventReceiver{`0})"/>
+            </summary>
+        </member>
+        <member name="P:Cqrs.Bus.InProcessBus`1.TelemetryHelper">
+            <summary>
+            Gets or sets the Telemetry Helper
+            </summary>
+        </member>
+        <member name="T:Cqrs.Snapshots.DefaultSnapshotStrategy`1">
+            <summary>
+            An <see cref="T:Cqrs.Snapshots.ISnapshotStrategy`1"/> that takes a snapshot every 15 versions
+            </summary>
+            <typeparam name="TAuthenticationToken">The <see cref="T:System.Type"/> of the authentication token.</typeparam>
+        </member>
+        <member name="T:Cqrs.Configuration.BusRegistrar">
+            <summary>
+            Triggers the <see cref="T:Cqrs.Bus.IEventHandlerRegistrar"/> and <see cref="T:Cqrs.Bus.ICommandHandlerRegistrar"/> if they are registered in the <see cref="T:Cqrs.Configuration.IDependencyResolver"/>.
+            </summary>
+        </member>
+        <member name="M:Cqrs.Configuration.BusRegistrar.InvokeHandler(System.Type,System.Boolean,System.Func{System.Type,System.Collections.Generic.IEnumerable{System.Type}},System.Type)">
+            <summary>
+            Extract the <see cref="M:Cqrs.Bus.IHandlerRegistrar.RegisterHandler``1(System.Action{``0},System.Type,System.Boolean)"/> method from the provided <paramref name="bus"/>
+            Create an <see cref="T:System.Action"/> around the provided <paramref name="executorType"/>
+            Then register the created <see cref="T:System.Action"/> using the extracted <see cref="M:Cqrs.Bus.IHandlerRegistrar.RegisterHandler``1(System.Action{``0},System.Type,System.Boolean)"/> method
+            </summary>
+            <param name="executorType">The <see cref="T:System.Type"/> of the event handler that will do the handling</param>
+        </member>
+    </members>
+</doc>

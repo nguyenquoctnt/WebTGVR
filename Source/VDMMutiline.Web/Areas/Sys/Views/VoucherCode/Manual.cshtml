@@ -1,0 +1,78 @@
+﻿@model VDMMutiline.SharedComponent.Params.VoucherCodeParam
+@{
+    ViewBag.Title = "Quản lý Voucher";
+    ViewBag.Description = "Cấu hình Manual";
+    Layout = null;
+}
+<div class="form-body">
+    @using (Html.BeginForm("Manual", "VoucherCode", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @data_parsley_validate = "", id = "frCreatevoucher", @role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Từ ngày</label>
+                <div class="col-md-8">
+                    <div class='input-group input-group-sm'>
+                        <input type="text" data-trigger="change" data-validation="date" data-validation-format="dd/mm/yyyy" required class="form-control date-picker" id="fromdate" name="fromdate" value="" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Tới ngày</label>
+                <div class="col-md-8">
+                    <div class='input-group input-group-sm'>
+                        <input type="text" data-trigger="change" data-validation="date" data-validation-format="dd/mm/yyyy" required class="form-control date-picker" id="Todate" name="Todate" value="" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Nội dung</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.VoucherCode.Email, new { @Required = "Required ", @class = " form-control", })
+                    <p style="color: red">abc@gmail.com;xyz@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Giá trị</label>
+                <div class="col-md-10">
+                    <input type="text" data-parsley-type="number" required class="form-control" id="valued" name="valued" value="" />
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    }
+</div>
+<script src="/Content/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/Content/js/bootstrap-datepicker.min.js"></script>
+<script src="/Content/js/bootstrap-timepicker.min.js"></script>
+<link href="/Content/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+<script>
+    jQuery(function ($) {
+        $("#fromdate").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: false,
+            format: 'dd/mm/yyyy',
+        });
+        $("#Todate").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: false,
+            format: 'dd/mm/yyyy',
+        })
+    });
+</script>

@@ -1,0 +1,60 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@using Microsoft.AspNet.Identity
+@using VDMMutiline.Core
+@using Microsoft.AspNet.Identity.Owin
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    Layout = null;
+    var logo = "";
+    if (CurentUser != null)
+    {
+        logo = CurentUser.LogoMbUrl;
+    }
+}
+<style>
+    #page-header {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        background: #0ea8e8;
+        box-shadow: 1px 0 0 #999;
+        background-size: 100% 100%;
+        width: 100%;
+        border-bottom: solid 1px #ffffff;
+    }
+
+    header > div > a.lo-go {
+        padding-left: 10px;
+    }
+
+    header > div > a.lo-go {
+        padding: 6px 0 10px 15px;
+        display: inline-block;
+        /* border-bottom: solid 1px #0a213a; */
+    }
+</style>
+
+<div id="page-header">
+
+    <a class="lo-go" href="/">
+        <span>
+            @if (!string.IsNullOrEmpty(logo))
+            {
+                <img src="@logo" style="width: 180px ;height: 47px;" />
+            }
+            else
+            {
+                <img src="/Content/VDM/img/logo.png" style="height: 47px;" />
+            }
+            </span>
+    </a>
+    <a id="menu-link" onclick="showmenu()"></a>
+    <div style="text-align: right;    right: 57px;position: absolute;bottom: 2px;"><a class="call-center" href="/" style="text-align: right;font-size: 100%;color: #fff;"> <span><img src="~/Content/phone.png" style="width: 24px;" /></span> @CurentUser.PhoneNumber </a></div>
+</div>

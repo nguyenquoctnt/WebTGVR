@@ -1,0 +1,80 @@
+﻿@model VDMMutiline.SharedComponent.Params.Wallet.WalletParam
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Create", "Wallet", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateWallet", @role = "form" }))
+{
+    foreach (var item in Model.AspNetUserInfos)
+    {
+
+    }
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Wallet.Id)
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Chọn đại lý</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.WalletHistorysInfo.IdUser, Model.AspNetUserInfos.Select(n => new SelectListItem { Selected = n.Id == Model.WalletHistorysInfo.IdUser, Text = n.UserName, Value = n.Id.ToString() }), new {@data_parsley_min="1", @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Số chứng từ</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.WalletHistorysInfo.NumberOfDocuments, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Số tiền</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.WalletHistorysInfo.AmountStr, new { @Required = "Required", @class = "amount textr _number valid form-control ", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Ghi chú</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.WalletHistorysInfo.Note, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+}
+
+<script>
+    var eventHandler = function ( name ) {
+            return function () {
+            };
+        };
+    $( '#WalletHistorysInfo_IdUser' ).selectize( {
+            create: false,
+            maxItems: 1,
+            onChange: eventHandler( 'onChange' ),
+            onItemAdd: eventHandler( 'onItemAdd' ),
+            onItemRemove: eventHandler( 'onItemRemove' ),
+            onOptionAdd: eventHandler( 'onOptionAdd' ),
+            onOptionRemove: eventHandler( 'onOptionRemove' ),
+            onDropdownOpen: eventHandler( 'onDropdownOpen' ),
+            onDropdownClose: eventHandler( 'onDropdownClose' ),
+            onFocus: eventHandler( 'onFocus' ),
+            onBlur: eventHandler( 'onBlur' ),
+            onInitialize: eventHandler( 'onInitialize' ),
+        } );
+    $( document ).ready( function () {
+        $( '.amount' ).number( true, 0 );
+         
+    } );
+</script>

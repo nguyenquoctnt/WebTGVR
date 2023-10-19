@@ -1,0 +1,11 @@
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\NLog.config
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\SleevesUp.Common.Logger.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\SleevesUp.Common.Logger.pdb
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\NLog.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\SleevesUp.Common.Serialization.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\SleevesUp.Common.Serialization.pdb
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\bin\Release.DEV\NLog.xml
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\obj\Release.DEV\SleevesUp.Common.Logger.csprojResolveAssemblyReference.cache
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\obj\Release.DEV\SleevesUp.Common.Logger.csproj.CoreCompileInputs.cache
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\obj\Release.DEV\SleevesUp.Common.Logger.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Logger\obj\Release.DEV\SleevesUp.Common.Logger.pdb

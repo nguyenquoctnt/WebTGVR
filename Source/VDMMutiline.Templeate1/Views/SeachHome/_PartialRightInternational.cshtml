@@ -1,0 +1,193 @@
+﻿@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.Constants
+@model VDMMutiline.SeachAndBook.SeachParam
+
+
+<div id="Filter">
+    <div class="box_top">
+        <div class="close-button"></div>
+        <div class="fa fa-filter"></div>
+        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Filter_flights
+    </div>
+    <div class="WhiteBox NoTop FilterBox border-radius-bottom">
+        <div class="filer-group">
+            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Airlines</strong><br>
+            <input id="ckbAllAirline" type="checkbox" class="checkboxalall" @(string.IsNullOrEmpty(Model.AirlineCode) ? "checked='checked'" : "") name="ckbAllAirline"><label style="font-size: 14px;font-weight: normal;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Select_all</label>
+            <table id="ckbListAirlines" border="0">
+                <tbody>
+                    @if (Model.ListAirline != null)
+                    {
+                        for (int i = 0; i < Model.ListAirline.Count; i++)
+                        {
+                            <tr>
+                                @Html.HiddenFor(z => Model.ListAirline[i].Code)
+                                <td>
+                                    <input id="@(i+"s")" checked class="checkboxal" type="checkbox" name="@Model.ListAirline[i].Code">
+                                    <label style="font-size: 14px;font-weight: normal;">
+                                        <img alt="@Model.ListAirline[i].Name" class="filter-airline-logo" src="@Model.ListAirline[i].Pictures" height="16" width="20">@Model.ListAirline[i].Name
+                                    </label>
+                                </td>
+                                <td style="text-align:right;color: #b30404;font-weight:bold">
+                                    @{
+                                        var FareAdult = UIUty.ChuyenDoiTienTe(Model.ListAirline[i].GiareNhat);
+                                        @UIUty.catgia(Model.ListAirline[i].GiareNhat)
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="filer-group">
+            @{
+                var typeolder = Request.QueryString["older"];
+                var typeoldervalue = "";
+                if (typeolder != null)
+                {
+                    typeoldervalue = typeolder.ToString();
+                }
+
+            }
+            <style>
+                a.SortLink {
+                    padding-left: 0px;
+                }
+
+                    a.SortLink p {
+                        float: right;
+                    }
+            </style>
+            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Sort_flight</strong><br>
+            <div class="BoxContent">
+                <span for="gia" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="gia" onchange="onSort()" name="Sort" value="@Constant.Olderve.Gia">
+                    Giá (Từ thấp tới cao)
+                </span>
+                <br>
+                <span for="TongThoiGianBay" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="TongThoiGianBay" onchange="onSort()" name="Sort" value="@Constant.Olderve.Thoigianbay">
+                    Tổng thời gian bay
+                </span>
+                <br>
+                <span for="GioCatCanh" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="GioCatCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioCatCanh">
+                    Thời gian cất cánh
+                </span>
+                <br>
+                <span for="GioHaCanh" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Soft" type="radio" id="GioHaCanh" onchange="onSort()" name="Sort" value="@Constant.Olderve.GioHaCanh">
+                    Giờ hạ cánh
+                </span>
+                <br>
+                <span for="Hang" style="font-size: 14px;font-weight: normal;">
+                    <input style="margin-right: 0px;" class="Sort" type="radio" id="Hang" onchange="onSort()" name="Sort" value="@Constant.Olderve.HangHangkhong">
+                    Hãng hàng không
+                </span>
+            </div>
+        </div>
+        <div class="filer-group no-bottom">
+            <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Number_stops</strong><br>
+            <table id="ckbListAirlines" border="0">
+                <tbody>
+                    @if (Model.ListStopNum != null)
+                    {
+                        if (string.IsNullOrEmpty(Model.StopNum))
+                        {
+                            for (int i = 0; i < Model.ListStopNum.Count; i++)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(z => Model.ListStopNum[i])
+
+                                    <td>
+                                        <input id="@(i + "s")" checked='checked' class="checkdiemdung" type="checkbox" name="@string.Format("{0}", Model.ListStopNum[i])">
+                                        <label style="font-size: 14px; font-weight: normal;">
+                                            @Model.ListStopNum[i] @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_point
+                                        </label>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.ListStopNum.Count; i++)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(z => Model.ListStopNum[i])
+
+                                    <td>
+                                        <input id="@(i + "s")" @(Model.StopNum.Contains(Model.ListStopNum[i].ToString() + ";") ? "checked='checked'" : "") class="checkdiemdung" type="checkbox" name="@string.Format("{0}", Model.ListStopNum[i])">
+                                        <label style="font-size: 14px; font-weight: normal;">
+                                            @Model.ListStopNum[i] @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_point
+                                        </label>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+
+    $( document ).ready( function () {
+        $( '.checkdiemdung' ).change( function () {
+            jQuery( ".checkdiemdung" ).each( function () {
+                var valuecheck = $( this ).is( ":checked" );
+                $( ".StopNum" + $( this ).attr( "name" ) ).each( function () {
+                    if ( valuecheck == true ) {
+                        $( this ).removeClass( "hiddenStopnum" );
+                    } else {
+                        $( this ).addClass( "hiddenStopnum" );
+                    }
+                } );
+            } );
+            checkhangbay();
+        } );
+        $( '#ckbAllAirline' ).change( function () {
+            var n = jQuery( ".checkboxal" ).length;
+            var check = $( this ).prop( 'checked' );
+            if ( n > 0 ) {
+                jQuery( ".checkboxal" ).each( function () {
+                    $( this ).prop( 'checked', check );
+                    $( "." + $( this ).attr( "name" ) ).each( function () {
+                        if ( check == true ) {
+                            $( this ).removeClass( "hiddenAirline" );
+                        } else {
+                            $( this ).addClass( "hiddenAirline" );
+                        }
+
+                    } );
+                } );
+            }
+        } );
+        $( '.checkboxal' ).change( function () {
+            $( "#ckbAllAirline" ).prop( 'checked', false );
+            checkhangbay();
+        } );
+    } );
+
+    function checkhangbay() {
+        jQuery( ".checkboxal" ).each( function () {
+            var valuecheck = $( this ).is( ":checked" );
+            $( "." + $( this ).attr( "name" ) ).each( function () {
+                if ( valuecheck == true ) {
+                    $( this ).removeClass( "hiddenAirline" );
+
+                } else {
+                    $( this ).addClass( "hiddenAirline" );
+                }
+            } );
+        } );
+    }
+</script>
+<style>
+    .hiddenAirline, .hiddenStopnum {
+        display: none;
+    }
+</style>

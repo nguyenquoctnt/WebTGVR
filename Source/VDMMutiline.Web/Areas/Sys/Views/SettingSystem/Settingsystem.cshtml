@@ -1,0 +1,80 @@
+﻿@using VDMMutiline.Core
+@using VDMMutiline.Ultilities;
+@model VDMMutiline.SharedComponent.Params.SettingSystemParam
+
+@{
+    ViewBag.Title = "Thiết lập hệ thống";
+    ViewBag.Description = "";
+    var rowIndex = 0;
+}
+@using (Html.BeginForm("Settingsystem", "SettingSystem", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_validate = "", id = "frCreate", @role = "form" }))
+{
+
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                    <button type="submit" class="btn btn-success btn-block btnaddnew" style="
+    height: 35px;
+    padding-top: 9px;
+    width: 150px;
+">
+                        <i style="padding-right:10px" class="fa fa-save"></i>Lưu
+                    </button>
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            <div class="table-responsive">
+                <div class="tableconte">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="sort-numeric">STT</th>
+                                <th>Tiêu đề</th>
+                                <th>Giá trị</th>
+                                <th>Mô tả</th>
+                                <th>Lần cuối cập nhập</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.SettingSystemInfos != null)
+                            {
+                                for (int i = 0; i < Model.SettingSystemInfos.Count; i++)
+                                {
+
+                                    rowIndex++;
+                                    <tr class="gradeA">
+                                        <td>
+                                            @Html.HiddenFor(z => Model.SettingSystemInfos[i].ID)
+                                            @rowIndex
+                                        </td>
+                                        <td>@Model.SettingSystemInfos[i].Key</td>
+                                        <td>
+                                            @Html.TextBoxFor(z => Model.SettingSystemInfos[i].Giatri)
+                                        </td>
+                                        <td>@Model.SettingSystemInfos[i].Mota</td>
+                                        <td>@Utility.GetDateString(Model.SettingSystemInfos[i].Ngaysua)</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section scripts {
+
+
+
+
+}
+

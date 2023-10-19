@@ -1,0 +1,34 @@
+    #ui-datepicker-div{ display: none;z-index: 10000;}
+@media (min-width: 800px)
+{
+    #ui-datepicker-div
+    {
+        display: none;
+        z-index: 10000;
+        right: 150px;
+        left: inherit !important;
+    }
+}
+    /* with multiple calendars */
+    .ui-datepicker.ui-datepicker-multi { width:auto; }
+    .ui-datepicker-multi .ui-datepicker-group { float:left; }
+    .ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
+    .ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
+    .ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
+    .ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
+    .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
+    .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
+    .ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
+    .ui-datepicker-row-break { clear:both; width:100%; }
+
+    .ui-datepicker-lunar{font-family:宋体,楷体 !important;font-weight:normal; font-size:11px; color:#999;}
+    span.ui-datepicker-lunar { }
+    .ui-datepicker-inline{width:auto}
+    .ui-datepicker .ui-datepicker-title select.ui-datepicker-year { float: left; }
+    .ui-datepicker .ui-datepicker-title select.ui-datepicker-month { float: right; }
+    .ui-datepicker td {width:14%; border: 0; padding: 1px; }
+    .ui-datepicker td span { display: block; padding: 0px; text-align: right; text-decoration: none;
+                              overflow: hidden; white-space: nowrap;}
+    .ui-datepicker-day{ text-align: left !important;}
+
+    .ui-helper-hidden-accessible {display: none}

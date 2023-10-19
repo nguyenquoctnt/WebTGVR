@@ -1,0 +1,697 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using VDMMutiline.Core.UI
+@using VDMMutiline.Dao
+@model VDMMutiline.SeachAndBook.SeachParam
+@functions{
+
+    private ApiClient.Models.Airport getbycode(string code)
+    {
+        return VDMMutiline.Ultilities. Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj =  VDMMutiline.Ultilities.Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+
+    var index = 0;
+    var indexDepartureFlight = 0;
+    var indexReturnFlights = 0;
+    var objnamedi = getbycode(Model.DepartureAirportCode);
+    var objnameden = getbycode(Model.DestinationAirportCode);
+
+    decimal nguoilon = 0;
+    decimal tongtiennguoilon = 0;
+    decimal treem = 0;
+    decimal tongtientrem = 0;
+    decimal embe = 0;
+    decimal congtienembe = 0;
+    decimal tonggia = 0;
+    string donvi = UIUty.GetDonViTienTe();
+    if (Model.DepartureFlight != null)
+    {
+
+        nguoilon = Model.DepartureFlight.Adt;
+        treem = Model.DepartureFlight.Chd;
+        embe = Model.DepartureFlight.Inf;
+        var PriceAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(Model.DepartureFlight.TaxInf);
+
+        tongtiennguoilon += (Model.DepartureFlight.Adt * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (Model.DepartureFlight.Chd * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (Model.DepartureFlight.Inf * (PriceInfant + FeeInfant + TaxInfant));
+
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+
+
+
+        tonggia += TotalPrice;
+    }
+    if (Model.ReturnFlight != null)
+    {
+        var PriceAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(Model.ReturnFlight.TaxInf);
+
+        tongtiennguoilon += (Model.ReturnFlight.Adt * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (Model.ReturnFlight.Chd * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (Model.ReturnFlight.Inf * (PriceInfant + FeeInfant + TaxInfant));
+
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+
+
+        tonggia = TotalPrice;
+    }
+
+}
+<style>
+    span.checkmotchieu {
+        margin-top: 0px !important;
+    }
+</style>
+<link href="/Content/FontEnd/SeachValue/SearchBoxQuickly.css" rel="stylesheet" />
+<link href="/Content/FontEnd/SeachValue/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/Seach/Picker/ui.datepicker.lunar.min.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-en-GB.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-vi.js"></script>
+<link href="/Content/FontEnd/SeachValue/DomesticFlight.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/SeachValue/Result.js" type="text/javascript"></script>
+<script src="/Content/FontEnd/SeachValue/format.js" type="text/javascript"></script>
+<link href="/Content/FontEnd/Seach/SelectCityBox.css" rel="stylesheet" />
+<div id="contend">
+
+    <div class="container margintop">
+        @*@{ Html.RenderPartial("_PartialSachMini", Model); }*@
+        <div id="sp-step">
+            <div class="sps-block sps-01">
+                <a style="color:#616161" href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                           {
+                               @Itinerary = Model.Itinerary,
+                               @DepartureAirportCode = Model.DepartureAirportCode,@DestinationAirportCode = Model.DestinationAirportCode,
+                               @DepartureDate = Model.DepartureDate,
+                               @ReturnDate = Model.ReturnDate
+                               ,@Adult = Model.Adult,@Children = Model.Children,@Infant = Model.Infant,@AirlineCode = Model.AirlineCode
+                               ,
+                               @Currency = Model.Currency
+                           })))">
+                    <i class="icon30 icon30-ssearch"></i>
+                    1. Tìm kiếm chuyến bay
+                </a>
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-02 active" style="padding: 15px 30px;">
+                <i class="icon30 icon30-user"></i>
+                2. Thông tin hành khách
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-03">
+                <i class="icon30 icon30-checkout"></i>
+                3. Chọn cách thanh toán
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-04">
+                <i class="icon30 icon30-success"></i>
+                4. Đặt vé thành công
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        @using (Html.BeginForm("Bookticket", "SeachHome", FormMethod.Post, new { @onsubmit = "submitbooktrongnuoc()", @data_parsley_validate = "", id = "frCreatebootrongnuoc", @role = "form" }))
+        {
+            @Html.HiddenFor(z => z.Itinerary)
+            @Html.HiddenFor(z => z.DepartureAirportCode)
+            @Html.HiddenFor(z => z.DestinationAirportCode)
+            @Html.HiddenFor(z => z.DepartureDate)
+            @Html.HiddenFor(z => z.ReturnDate)
+            @Html.HiddenFor(z => z.Adult)
+            @Html.HiddenFor(z => z.Children)
+            @Html.HiddenFor(z => z.Infant)
+            @Html.HiddenFor(z => z.AirlineCode)
+            <input type="hidden" id="hdfGrandPrice" value="@tonggia">
+            <div class="col-md-3 pLeft0 ">
+                <div id="Filter">
+                    <div class="xmfix" style="position: sticky; top: 0px;z-index: 999;">
+                        <div id="Basket" style="position: relative !important;" class="BasketFlightResult">
+                            <div class="box_top"><div class="fa fa-shopping-cart"></div>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Cart</div>
+                            <div class="WhiteBox NoTop">
+                                @if (Model.DepartureFlight != null)
+                                {
+                                    var startpoind =objnamedi;
+                                    var EndPoint =objnameden;
+
+                                    <div class="BasketFlight">
+                                        <div class="TextTitle"><div class="fa fa-plane"></div> @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight</div>
+                                        <div style="border-bottom: 1px dotted #cacaca;padding-bottom:5px">
+                                            <table style="width:100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width:40%;text-align:center">
+                                                            <span id="lblDepartStartCode" style="font-size:20px;">@startpoind.AirportCode</span><br>
+                                                            <span id="blDepartStartCity">@(startpoind != null ? string.Format("{0}, {1} ", startpoind.AirportName, startpoind.CountryName) : "")</span>
+                                                        </td>
+                                                        <td style="font-size:15px;text-align:center">►</td>
+                                                        <td style="width:40%;text-align:center">
+                                                            <span id="lblDepartStartCode" style="font-size:20px;">@EndPoint.AirportCode</span><br>
+                                                            <span id="blDepartStartCity">@(EndPoint != null ? string.Format("{0}, {1} ", EndPoint.AirportName, EndPoint.CountryName) : "")</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="border-bottom: 1px dotted #cacaca">
+                                            <table style="width:100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="BasketFlightDepart" valign="top">
+                                                            <div class="BasketFlightTime">
+                                                                <div class="fa fa-clock-o"></div> <span id="lblDepartStartTime">
+                                                                    @Model.DepartureFlight.StartDate.ToString("HH:mm")
+                                                                </span>
+                                                            </div>
+                                                            <span id="lblDepartStartDate" style="font-size:11px;">
+                                                                @Model.DepartureFlight.StartDate.ToString("dd/MM/yyyy")
+                                                            </span>
+
+                                                        </td>
+                                                        <td class="BasketFlightArrive" valign="top">
+                                                            <div class="BasketFlightTime">
+                                                                <div class="fa fa-clock-o"></div>
+                                                                <span id="lblDepartEndTime">
+                                                                    @Model.DepartureFlight.EndDate.ToString("HH:mm")
+                                                                </span>
+                                                            </div>
+                                                            <span id="lblDepartEndDate" style="font-size:11px;">
+                                                                @Model.DepartureFlight.EndDate.ToString("dd/MM/yyyy")
+                                                            </span>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="padding-top:5px">
+                                            <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="padding-right: 5px;width:60px">
+                                                            <img id="imgDepartAirline" src="@UIUty.GetImagebyHang(Model.DepartureFlight.Airline)" style="height:18px;border-width:0px;">
+                                                            @if (Model.DepartureFlight.IsVNJQ == true)
+                                                            {
+                                                        <div class="operated-by-bl">bay Pacific</div>
+                                                            }
+                                                        </td>
+                                                        <td style="text-align:center;font-weight:bold">
+                                                            ✈ <span id="lblDepartFlightNumber">@Model.DepartureFlight.FlightNumber</span>
+                                                        </td>
+                                                        <td style="text-align:right;font-weight:bold">
+                                                            @Model.DepartureFlight.GroupClass
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                }
+                                @if (Model.ReturnFlight != null)
+                                {
+                                    var startpoind = objnameden;
+                                    var EndPoint =objnamedi;
+                                    <div class="BasketFlight">
+                                        <div class="TextTitle"><div class="fa fa-plane"></div>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Inbound_flight</div>
+                                        <div style="border-bottom: 1px dotted #cacaca;padding-bottom:5px">
+                                            <table style="width:100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width:40%;text-align:center">
+                                                            <span id="lblDepartStartCode" style="font-size:20px;">@startpoind.AirportCode</span><br>
+                                                            <span id="blDepartStartCity">@(startpoind != null ? string.Format("{0}, {1} ", startpoind.AirportName, startpoind.CountryName) : "")</span>
+                                                        </td>
+                                                        <td style="font-size:15px;text-align:center">►</td>
+                                                        <td style="width:40%;text-align:center">
+                                                            <span id="lblDepartStartCode" style="font-size:20px;">@EndPoint.AirportCode</span><br>
+                                                            <span id="blDepartStartCity">@(EndPoint != null ? string.Format("{0}, {1} ", EndPoint.AirportName, EndPoint.CountryName) : "")</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="border-bottom: 1px dotted #cacaca">
+                                            <table style="width:100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="BasketFlightDepart" valign="top">
+                                                            <div class="BasketFlightTime">
+                                                                <div class="fa fa-clock-o"></div> <span id="lblDepartStartTime">
+                                                                    @Model.ReturnFlight.StartDate.ToString("HH:mm")
+                                                                </span>
+                                                            </div>
+                                                            <span id="lblDepartStartDate" style="font-size:11px;">
+                                                                @Model.ReturnFlight.StartDate.ToString("dd/MM/yyyy")
+                                                            </span>
+
+                                                        </td>
+                                                        <td class="BasketFlightArrive" valign="top">
+                                                            <div class="BasketFlightTime">
+                                                                <div class="fa fa-clock-o"></div>
+                                                                <span id="lblDepartEndTime">
+                                                                    @Model.ReturnFlight.EndDate.ToString("HH:mm")
+                                                                </span>
+                                                            </div>
+                                                            <span id="lblDepartEndDate" style="font-size:11px;">
+                                                                @Model.ReturnFlight.EndDate.ToString("dd/MM/yyyy")
+                                                            </span>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="padding-top:5px">
+                                            <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="padding-right: 5px;width:60px">
+                                                            <img id="imgDepartAirline" src="@UIUty.GetImagebyHang(Model.ReturnFlight.Airline)" style="height:18px;border-width:0px;">
+                                                            @if (Model.ReturnFlight.IsVNJQ == true)
+                                                            {
+                                                        <div class="operated-by-bl">bay Pacific</div>
+                                                            }
+                                                        </td>
+                                                        <td style="text-align:center;font-weight:bold">
+                                                            ✈ <span id="lblDepartFlightNumber">@Model.ReturnFlight.FlightNumber</span>
+                                                        </td>
+                                                        <td style="text-align:right;font-weight:bold">
+                                                            @Model.ReturnFlight.GroupClass
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                                @{
+
+                                    <div class="Pad10 BorderTop BasketPrice" style="padding-top:0px">
+                                        <div class="TextTitle">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Summary_fares</div>
+                                        <table style="width:100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span id="lblTotalAdt1">@nguoilon</span> x @VDMMutiline.Resource.App_GlobalResources.weblanguage.Adults
+                                                    </td>
+                                                    <td style="text-align: right;">
+                                                        <span id="lblFareAdt1" class="ItemPrice">@tongtiennguoilon.ToString("#,0.#")</span> @donvi
+                                                    </td>
+                                                </tr>
+                                                <tr id="trFareChild">
+                                                    <td>
+                                                        <span id="lblTotalChd1">@treem</span> x @VDMMutiline.Resource.App_GlobalResources.weblanguage.Children
+                                                    </td>
+                                                    <td style="text-align: right;">
+                                                        <span id="lblFareChd1" class="ItemPrice">@tongtientrem.ToString("#,0.#")</span> @donvi
+                                                    </td>
+                                                </tr>
+                                                <tr id="trFareInfant">
+                                                    <td>
+                                                        <span id="lblTotalInf1">@embe</span> x @VDMMutiline.Resource.App_GlobalResources.weblanguage.Infants
+                                                    </td>
+                                                    <td style="text-align: right;">
+                                                        <span id="lblFareInf1" class="ItemPrice">@congtienembe.ToString("#,0.#")</span> @donvi
+                                                    </td>
+                                                </tr>
+                                                <tr id="ctl00_MainContent_trAdditionService">
+                                                    <td>
+                                                        <a>
+                                                            Dịch vụ kèm thêm
+                                                        </a>
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                        <span class="ItemPrice" id="lblTotalAdditionService">0</span> VNĐ
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="Pad10 BorderTop BasketPrice GrandPrice">
+                                        <table style="width:100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        ∑ <strong>@VDMMutiline.Resource.App_GlobalResources.weblanguage.GRAND_TOTAL</strong>
+                                                    </td>
+                                                    <td class="GrandTotalPrice">
+                                                        <span id="lblBasketGrandTotal">@tonggia.ToString("#,0.#")</span> <span class="Currency">@donvi</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 pLeft0 pright0">
+                <div class="box_top"><div class="fa fa-plane"></div>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Flight_Detail</div>
+                <div class="WhiteBox NoTop border-radius-bottom">
+                    @if (Model.DepartureFlight != null)
+                    {
+                        @Html.HiddenFor(z => Model.DepartureFlight.SessionAll)
+                        @Html.HiddenFor(z => Model.DepartureFlight.SessionId)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareDataId)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareDataIdValue)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FlightNumber)
+                        @Html.HiddenFor(z => Model.DepartureFlight.StartDate)
+                        @Html.HiddenFor(z => Model.DepartureFlight.EndDate)
+                        @Html.HiddenFor(z => Model.DepartureFlight.TotalPrice)
+                        @Html.HiddenFor(z => Model.DepartureFlight.PriceBefor)
+                        @Html.HiddenFor(z => Model.DepartureFlight.StartPoint)
+                        @Html.HiddenFor(z => Model.DepartureFlight.EndPoint)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareClass)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareAdt)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FeeAdt)
+                        @Html.HiddenFor(z => Model.DepartureFlight.TaxAdt)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareChd)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FeeChd)
+                        @Html.HiddenFor(z => Model.DepartureFlight.TaxChd)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareInf)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FeeInf)
+                        @Html.HiddenFor(z => Model.DepartureFlight.TaxInf)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FlightValue)
+                        @Html.HiddenFor(z => Model.DepartureFlight.Airline)
+                        @Html.HiddenFor(z => Model.DepartureFlight.ItineraryType)
+                        @Html.HiddenFor(z => Model.DepartureFlight.Duration)
+                        @Html.HiddenFor(z => Model.DepartureFlight.FareAdtNet)
+                        @Html.HiddenFor(z => Model.DepartureFlight.PriceBeforNet)
+                        @Html.HiddenFor(z => Model.DepartureFlight.Ishow23KgVN)
+                        @Html.HiddenFor(z => Model.DepartureFlight.IsVNJQ)
+                        @Html.HiddenFor(z => Model.DepartureFlight.IsVNJQ0Kg)
+                        @Html.HiddenFor(z => Model.DepartureFlight.Promo)
+                        <div class="FlightDirection">
+                            <table style="width: 100%">
+                                <tbody>
+                                    <tr>
+                                        <td class="FlightItinerary" valign="middle">
+                                            <span>
+                                                <img alt="Flight outbound" src="/Content/FontEnd/SeachValue/Styles/flights-icon-outbound.png">
+                                            </span>
+                                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:
+                                            <span>@(objnamedi != null ? string.Format("{0}, {1} ({2})", objnamedi.AirportName, objnamedi.CountryName, objnamedi.AirportCode) : "") → @(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "")</span>
+                                        </td>
+                                        <td class="FlightWarning" valign="middle">
+                                            <div class="fa fa-clock-o"></div> @VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration: <span>@UIUty.GetTimeString(Model.DepartureFlight.Duration)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="FilghtInfo">
+                            <div class="WhiteBox border-radius-all no-shadow m0">
+                                @{
+                                    var EndPoint = "";
+                                    var EndDate = new DateTime();
+                                    foreach (var itemDepartureFlight in Model.DepartureFlight.ListFlight)
+                                    {
+                                        foreach (var ListAvailFlights in itemDepartureFlight.ListSegment)
+                                        {
+                                            if (EndPoint == ListAvailFlights.StartPoint)
+                                            {
+                                                TimeSpan thoigiandung = (ListAvailFlights.StartTime - EndDate);
+                                                <div class="StopInfo">
+                                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.stop_at <strong class="col2">@EndPoint</strong>
+                                                    -
+                                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_Time: <strong class="col1">@(thoigiandung.Hours)h @(thoigiandung.Minutes)m</strong>
+                                                </div>
+                                            }
+                                            <div class="ItineraryBox">
+                                                <table style="width: 100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="ItineraryBox-Carrier">
+                                                                <div class="CarrierLogo"><img alt="Airline logo" src="@UIUty.GetImagebyHang(Model.DepartureFlight.Airline)"></div>
+                                                                <div class="CarrierName">@UIUty.GetNamebyHang(Model.DepartureFlight.Airline)</div>
+                                                                @if (Model.DepartureFlight.IsVNJQ == true)
+                                                                {
+                                                            <div class="operated-by-bl">bay Pacific</div>
+                                                                }
+                                                            </td>
+                                                            <td class="ItineraryBox-Depart">
+                                                                <div class="City">@(getsanbaycode(ListAvailFlights.StartPoint))</div>
+                                                                <span class="Hour">@(ListAvailFlights.StartTime.ToString("HH:mm"))</span>
+                                                                <span class="Date">@(UIUty.getnameday(ListAvailFlights.StartTime)) @(ListAvailFlights.StartTime.ToString("dd/MM/yyyy"))</span>
+                                                            </td>
+                                                            <td class="ItineraryBox-Direct">
+                                                                <div>
+                                                                    <span class="FltNum">
+                                                                        <span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.flight: </span>
+                                                                        <strong class="col2">@ListAvailFlights.FlightNumber</strong>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="ItineraryBox-Direct-Picture"><img src="/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                <div>
+                                                                    <span class="FltTime">
+                                                                        <span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration: @(ListAvailFlights.EndTime.ToString("HH:mm"))</span>
+                                                                        <strong class="col2">@UIUty.GetTimeString(ListAvailFlights.Duration)</strong>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="ItineraryBox-Arrival">
+                                                                <div class="City">@((getsanbaycode(ListAvailFlights.EndPoint)))</div>
+                                                                <span class="Hour">@(ListAvailFlights.EndTime.ToString("HH:mm"))</span>
+                                                                <span class="Date">@(UIUty.getnameday(ListAvailFlights.EndTime)) @(ListAvailFlights.EndTime.ToString("dd/MM/yyyy"))</span>
+                                                            </td>
+                                                            <td class="ItineraryBox-FlightInfo">
+                                                                <span class="Class"><span style=""><span class="ItineraryBox-FlightInfo-Title">Hạng chỗ:</span> <strong class="col2">@ListAvailFlights.Class</strong><br></span></span>
+                                                                <span class="Plane"><span style=""><span class="ItineraryBox-FlightInfo-Title">Máy bay:</span> <strong class="col2">@ListAvailFlights.Plane</strong></span></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            EndDate = ListAvailFlights.EndTime;
+                                            EndPoint = ListAvailFlights.EndPoint;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                    }
+
+                    @if (Model.ReturnFlight != null)
+                    {
+                        @Html.HiddenFor(z => Model.ReturnFlight.SessionAll)
+                        @Html.HiddenFor(z => Model.ReturnFlight.SessionId)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FlightNumber)
+                        @Html.HiddenFor(z => Model.ReturnFlight.StartDate)
+                        @Html.HiddenFor(z => Model.ReturnFlight.EndDate)
+                        @Html.HiddenFor(z => Model.ReturnFlight.TotalPrice)
+                        @Html.HiddenFor(z => Model.ReturnFlight.StartPoint)
+                        @Html.HiddenFor(z => Model.ReturnFlight.EndPoint)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareClass)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareAdt)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FeeAdt)
+                        @Html.HiddenFor(z => Model.ReturnFlight.TaxAdt)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareChd)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FeeChd)
+                        @Html.HiddenFor(z => Model.ReturnFlight.TaxChd)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareInf)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FeeInf)
+                        @Html.HiddenFor(z => Model.ReturnFlight.TaxInf)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FlightValue)
+                        @Html.HiddenFor(z => Model.ReturnFlight.Airline)
+                        @Html.HiddenFor(z => Model.ReturnFlight.PriceBefor)
+                        @Html.HiddenFor(z => Model.ReturnFlight.ItineraryType)
+                        @Html.HiddenFor(z => Model.ReturnFlight.Duration)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareAdtNet)
+                        @Html.HiddenFor(z => Model.ReturnFlight.PriceBeforNet)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareDataId)
+                        @Html.HiddenFor(z => Model.ReturnFlight.FareDataIdValue)
+                        @Html.HiddenFor(z => Model.ReturnFlight.Ishow23KgVN)
+                        @Html.HiddenFor(z => Model.ReturnFlight.IsVNJQ)
+                        @Html.HiddenFor(z => Model.ReturnFlight.IsVNJQ0Kg)
+                        @Html.HiddenFor(z => Model.ReturnFlight.Promo)
+                        <div id="pnReturn">
+                            <div class="FlightDirection">
+                                <table style="width: 100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="FlightItinerary" valign="middle">
+                                                <span>
+                                                    <img alt="Flight inbound" src="/Content/FontEnd/SeachValue/Styles/flights-icon-inbound.png">
+                                                </span>
+                                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.Inbound_flight:
+                                                <span id="lblInboundFlight">@(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "") → @(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "")</span>
+                                            </td>
+                                            <td class="FlightWarning" valign="middle">
+
+                                                <div class="fa fa-clock-o"></div> @VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration: <span>@UIUty.GetTimeString(Model.ReturnFlight.Duration)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="FilghtInfo">
+                                <div class="WhiteBox border-radius-all no-shadow m0">
+                                    @{
+                                        var EndPoint = "";
+                                        var EndDate = new DateTime();
+                                        foreach (var itemReturnFlight in Model.ReturnFlight.ListFlight)
+                                        {
+                                            foreach (var ListAvailFlights in itemReturnFlight.ListSegment)
+                                            {
+                                                if (EndPoint == ListAvailFlights.StartPoint)
+                                                {
+                                                    TimeSpan thoigiandung = (ListAvailFlights.StartTime - EndDate);
+                                                    <div class="StopInfo">
+                                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.stop_at <strong class="col2">@EndPoint</strong>
+                                                        -
+                                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_Time: <strong class="col1">@(thoigiandung.Hours)h @(thoigiandung.Minutes)m</strong>
+                                                    </div>
+                                                }
+                                                <div class="ItineraryBox">
+                                                    <table style="width: 100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="ItineraryBox-Carrier">
+                                                                    <div class="CarrierLogo"><img alt="Airline logo" src="@UIUty.GetImagebyHang(Model.ReturnFlight.Airline)"></div>
+                                                                    <div class="CarrierName">@UIUty.GetNamebyHang(Model.ReturnFlight.Airline)</div>
+                                                                    @if (Model.ReturnFlight.IsVNJQ == true)
+                                                                    {
+                                                                <div class="operated-by-bl">bay Pacific</div>
+                                                                    }
+                                                                </td>
+                                                                <td class="ItineraryBox-Depart">
+                                                                    <div class="City">@(getsanbaycode(ListAvailFlights.StartPoint))</div>
+                                                                    <span class="Hour">@(ListAvailFlights.StartTime.ToString("HH:mm"))</span>
+                                                                    <span class="Date">@(UIUty.getnameday(ListAvailFlights.StartTime)) @(ListAvailFlights.StartTime.ToString("dd/MM/yyyy"))</span>
+                                                                </td>
+                                                                <td class="ItineraryBox-Direct">
+                                                                    <div>
+                                                                        <span class="FltNum">
+                                                                            <span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.flight: </span>
+                                                                            <strong class="col2">@ListAvailFlights.FlightNumber</strong>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="ItineraryBox-Direct-Picture"><img src="/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                                                    <div>
+                                                                        <span class="FltTime">
+                                                                            <span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration: @(ListAvailFlights.EndTime.ToString("HH:mm"))</span>
+                                                                            <strong class="col2">@UIUty.GetTimeString(ListAvailFlights.Duration)</strong>
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="ItineraryBox-Arrival">
+                                                                    <div class="City">@((getsanbaycode(ListAvailFlights.EndPoint)))</div>
+                                                                    <span class="Hour">@(ListAvailFlights.EndTime.ToString("HH:mm"))</span>
+                                                                    <span class="Date">@(UIUty.getnameday(ListAvailFlights.EndTime)) @(ListAvailFlights.EndTime.ToString("dd/MM/yyyy"))</span>
+                                                                </td>
+                                                                <td class="ItineraryBox-FlightInfo">
+                                                                    <span class="Class"><span style=""><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Class:</span> <strong class="col2">@ListAvailFlights.Class</strong><br></span></span>
+                                                                    <span class="Plane"><span style=""><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Aircraff:</span> <strong class="col2">@ListAvailFlights.Plane</strong></span></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                EndDate = ListAvailFlights.EndTime;
+                                                EndPoint = ListAvailFlights.EndPoint;
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @{
+                    Html.RenderPartial("_PartialPassenger", Model);
+                }
+                <div class="BoxRequiredAcceptTerm">
+                    <input id="ckbAccept" type="checkbox" name="ctl00$MainContent$ckbAccept" checked="checked"><label for="ckbAccept">@VDMMutiline.Resource.App_GlobalResources.weblanguage.check_accept_the_booking</label>
+
+                    <div id="spAgreeMsg" style="display:none;color:red;text-align:right">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_accept_booking</div>
+                </div>
+                <div id="ctl00_MainContent_UpdatePanelSubmitBooking">
+
+                    <div style="text-align:right;margin-top:15px">
+                        <script type="text/javascript">
+                            function CheckConfirmFareRule() {
+                                if ( $( "#ckbAccept" ).prop( "checked" ) ) {
+                                    $( "#spAgreeMsg" ).hide();
+                                    return true;
+                                } else {
+                                    $( "#spAgreeMsg" ).show();
+                                    return false;
+                                }
+                            }
+                        </script>
+                        <button type="submit" value="Đặt chỗ" class="ButtonGreen" style="font-weight: 600;text-align: center;font-size:18px;height:35px;width:150px;">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Booking</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<div id="bootrongnuoc_popup" style="display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+        <h4>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_wait</h4>
+    </div>
+</div>
+<script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+<link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+<script type="text/javascript" language="javascript">
+    $( document ).on( 'keypress', function ( e ) {
+        if ( e.which == 13 ) {
+            e.preventDefault();
+        }
+    } );
+    $().ready( function () {
+        setTimeout( function () {
+            $( "#frCreatebootrongnuoc" ).find( "#Filter" ).first().height( $( "#contend" ).height() );
+            $( '.xmfix' ).fixTo( '#Filter' );
+        }, 1000 );
+    } )
+    function submitbooktrongnuoc() {
+        var form = $( '#frCreatebootrongnuoc' );
+        if ( form.parsley().isValid() == true ) {
+            $( '#bootrongnuoc_popup' ).bPopup( {
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+            } );
+            return true;
+        }
+        return false;
+    }
+
+    $( document ).ready( function () {
+        //jScript();
+        //airScript();
+    } );
+</script>

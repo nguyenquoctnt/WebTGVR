@@ -1,0 +1,1082 @@
+/*HomeSearchForm*/
+.SearchForm {
+    color: #696969;
+    border: 0px solid #f20000;
+    width: 500px;
+    height: auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .SearchForm .Title {
+        font-weight: bold;
+        font-size: 16px;
+        height: 35px;
+        color: #fff;
+        line-height: 35px;
+        vertical-align: middle;
+        padding-left: 10px;
+        background-color: #f20000;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    .SearchForm .Content {
+        height: auto;
+        padding: 10px 20px 10px 20px;
+        border: 1px solid #cacaca;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 0px 0px 5px 5px;
+        //background-color: white;
+        background-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .SearchForm .Line {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .SearchForm .SearchFooter {
+        padding: 10px;
+        height: auto;
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+        .SearchForm .SearchFooter .Hotline {
+            background-image: url('phone-icon.png')/*tpa=https://ibe.acity.vn/(S(r5e42ughvbt1nd0dvgxjrj0n))/Styles/Agent/VRE/Images/phone-icon.png*/;
+            height: 30px;
+            line-height: 30px;
+            width: 150px;
+            padding-left: 30px;
+            background-position: left;
+            background-repeat: no-repeat;
+            font-weight: bold;
+            font-size: 16px;
+            vertical-align: middle;
+            float: left;
+        }
+
+        .SearchForm .SearchFooter .HelpInfo {
+            float: right;
+            margin-right: 10px;
+        }
+
+        .SearchForm .SearchFooter .SearchButton {
+            float: right;
+        }
+
+            .SearchForm .SearchFooter .SearchButton input {
+                width: 100px;
+            }
+
+.PointLabel {
+    font-size: 13px;
+    background-image: url('point.png')/*tpa=https://ibe.acity.vn/Styles/Images/point.png*/;
+    background-repeat: no-repeat;
+    background-position-x: 10px;
+    background-position-y: 5px;
+    padding: 10px 0px 10px 40px;
+    color: #716d6e;
+    background-color: #efe9e9;
+    border: 1px solid #cacaca;
+    border-right: none;
+    white-space: nowrap;
+    width: 25%;
+    float: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 34px;
+}
+
+.PointTextBox {
+    font-size: 13px;
+    width: 75%;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 20px;
+    color: #716d6e;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.CalDepart {
+    float: left;
+    width: 51%;
+    padding-right: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.CalReturn {
+    float: left;
+    width: 49%;
+    padding-left: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.CalendarLabel {
+    font-size: 13px;
+    background-image: url('cal.png')/*tpa=https://ibe.acity.vn/Styles/Images/cal.png*/;
+    background-repeat: no-repeat;
+    background-position-x: 10px;
+    background-position-y: 5px;
+    padding: 10px 0px 10px 40px;
+    color: #716d6e;
+    background-color: #efe9e9;
+    border: 1px solid #cacaca;
+    border-right: none;
+    white-space: nowrap;
+    width: 50%;
+    float: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 34px;
+}
+
+.CalTextBox {
+    font-size: 13px;
+    width: 80px;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 20px;
+    color: #716d6e;
+    width: 50%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.Sec1 {
+    float: left;
+    width: 25%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+.Sec2 {
+    float: left;
+    width: 25%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+.Sec3 {
+    float: left;
+    width: 25%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+.Sec4 {
+    float: left;
+    width: 25%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.SecLabel {
+    height: 20px;
+}
+
+.PaxDropDown {
+    font-size: 13px;
+    width: 100%;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 20px;
+    color: #716d6e;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ItineraryRadio {
+    font-size: 14px;
+}
+
+
+/*HomeSearchForm Horizontal*/
+.SearchFormHorizontal {
+    color: #696969;
+    border: 0px solid #f20000;
+    width: 980px;
+    height: auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+    .SearchFormHorizontal .ContentHorizontal {
+        height: auto;
+        padding: 10px;
+        border: 1px solid #cacaca;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+    .SearchFormHorizontal .LineHorizontal {
+        padding-right: 5px;
+        float: left;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .SearchFormHorizontal .LineHorizontal + .LineHorizontal{
+             padding-right: 10px;
+        }
+
+        .SearchFormHorizontal .LineHorizontal + .LineHorizontal + .LineHorizontal + .LineHorizontal {
+            margin-right: 0px;
+        }
+
+    .SearchFormHorizontal .SearchFooterHorizontal {
+        padding: 10px;
+        height: auto;
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+        .SearchFormHorizontal .SearchFooterHorizontal .SearchButtonHorizontal {
+            float: right;
+        }
+
+            .SearchFormHorizontal .SearchFooterHorizontal .SearchButtonHorizontal input {
+                width: 100px;
+            }
+
+.SpanHorizontal {
+    font-size: 12px;
+    height: 16px;
+}
+
+.PointTextBoxHorizontal {
+    font-size: 13px;
+    width: 175px;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #716d6e;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.CalHorizontal {
+    float: left;
+    width: 100px;
+    margin-right: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+    .CalHorizontal + .CalHorizontal {
+        margin-right: 0px;
+    }
+
+    .CalHorizontal:after {
+        padding-right: 35px;
+        top: 15px;
+        right: 0px;
+        content: "";
+        background-image: url('cal.png')/*tpa=https://ibe.acity.vn/Styles/Images/cal.png*/;
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position-x: 9px;
+        background-position-y: 5px;
+        height: 34px;
+        line-height: 34px;
+    }
+
+.CalTextBoxHorizontal {
+    font-size: 13px;
+    width: 100%;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #716d6e;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.Sec1Horizontal {
+    float: left;
+    width: 80px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.Sec2Horizontal {
+    float: left;
+    width: 80px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.Sec3Horizontal {
+    float: left;
+    width: 80px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.Sec4Horizontal {
+    float: left;
+    width: 100px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.PaxDropDownHorizontal {
+    font-size: 13px;
+    width: 100%;
+    border: 1px solid #cacaca;
+    height: 34px;
+    padding-left: 20px;
+    color: #716d6e;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ItineraryRadioHorizontal {
+    
+}
+
+.SearchBoxItinerary {
+    font-size: 15px;
+}
+
+/*Result page*/
+.SearchParamDomestic {
+    height: auto;
+    width: 100%;
+    margin-top: 5px;
+    background-color: #f20000;
+    color: White;
+}
+
+    .SearchParamDomestic .FlightIcon {
+        padding: 0px;
+    }
+
+        .SearchParamDomestic .FlightIcon img {
+            height: 60px;
+        }
+
+    .SearchParamDomestic .SearchParamContent {
+    }
+
+        .SearchParamDomestic .SearchParamContent .Itinerary {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .SearchParamDomestic .SearchParamContent .FlightDate {
+            margin-top: 4px;
+            color: #fff;
+        }
+
+    .SearchParamDomestic .PassengerNumber {
+        float: right;
+        margin-right: 10px;
+        text-align: right;
+        margin-top: 17px;
+    }
+
+/*FareHeader*/
+.FareHeader {
+    padding: 5px;
+    background-color: #f20000;
+    -webkit-border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+    .FareHeader .Price .TotalPrice {
+        color: #FFFF00;
+        font-size: 1.6667em;
+        text-transform: uppercase;
+        font-weight: bold;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+
+/*ProgressBar*/
+ul.ProgressBar {
+    display: block;
+    height: 24px;
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    width: 100%;
+    background-image: url('progress_step.png')/*tpa=https://ibe.acity.vn/(S(r5e42ughvbt1nd0dvgxjrj0n))/Styles/Images/progress_step.png*/; /*RED*/
+    /*background-image: url('../../Images/progress_step_blue.png');*/ /*BLUE*/
+}
+
+ul.Step1 {
+    background-position: 0px 0px;
+}
+
+ul.Step2 {
+    background-position: 0px -24px;
+}
+
+ul.Step3 {
+    background-position: 0px -48px;
+}
+
+ul.ProgressBar li {
+    float: left;
+    margin-right: 5px;
+}
+
+    ul.ProgressBar li.last {
+        float: right;
+        margin-right: 0px;
+    }
+
+    ul.ProgressBar li a span {
+        display: inline-block;
+        height: 24px;
+    }
+
+    ul.ProgressBar li a, ul.ProgressBar li a:hover {
+        float: left;
+        width: 230px;
+        height: 24px;
+        text-align: center;
+        text-decoration: none;
+        line-height: 24px;
+        cursor: default;
+        font-size: 12px;
+    }
+
+ul.Step1 a#step1 {
+    color: White;
+}
+
+ul.Step1 a#step2 {
+    color: #696969;
+}
+
+ul.Step1 a#step3 {
+    color: #696969;
+}
+
+ul.Step2 a#step1 {
+    color: White;
+    cursor: pointer;
+}
+
+ul.Step2 a#step2 {
+    color: White;
+}
+
+ul.Step2 a#step3 {
+    color: #696969;
+}
+
+ul.Step3 a#step1 {
+    color: White;
+}
+
+ul.Step3 a#step2 {
+    color: White;
+}
+
+ul.Step3 a#step3 {
+    color: White;
+}
+
+/*Box*/
+.Box {
+    background-color: white;
+}
+
+    .Box .BoxTitle {
+        -webkit-border-radius: 5px 5px 0px 0px;
+        -moz-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+        background-color: #f20000;
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+        color: White;
+    }
+
+    .Box .BoxContent {
+        padding: 10px;
+        border: 1px solid #cacaca;
+        border-top: none;
+    }
+
+/*NormalBox*/
+.NormalBox {
+    background-color: White;
+}
+
+    .NormalBox .Title {
+        -webkit-border-radius: 5px 5px 0px 0px;
+        -moz-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+        background-color: #f20000;
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+        color: White;
+    }
+
+        .NormalBox .Title a:link, a:visited {
+            color: White;
+        }
+
+    .NormalBox .Header {
+        height: auto;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-weight: bold;
+        border: 1px solid #cacaca;
+        border-top: none;
+    }
+
+        .NormalBox .Header a:link, a:visited {
+            color: White;
+        }
+
+    .NormalBox .Content {
+        padding: 10px;
+        border: 1px solid #cacaca;
+        border-top: none;
+    }
+
+    .NormalBox .BoxFooter {
+        border: 1px solid #cacaca;
+        border-top: none;
+        padding: 10px;
+    }
+
+/*Button*/
+.ButtonGreen {
+    border: 1px solid #34740e;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 15px;
+    font-family: arial, helvetica, sans-serif;
+    padding: 7px 10px 7px 10px;
+    text-decoration: none;
+    display: inline-block;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #4ba614;
+    background-image: linear-gradient(to bottom, #4ba614, #008c00);
+}
+
+    .ButtonGreen:hover {
+        border: 1px solid #224b09;
+        background-color: #36780f;
+        background-image: linear-gradient(to bottom, #36780f, #005900);
+        cursor: pointer;
+    }
+
+.SearchButton {
+    width: 100%;
+}
+
+a:link, a:visited {
+    color: #6699FF !important;
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
+}
+
+/*Search loading*/
+.SearchParam {
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+    .SearchParam .FlightIcon {
+        height: 60px;
+        padding: 0px;
+    }
+
+        .SearchParam .FlightIcon img {
+            height: 60px;
+        }
+
+    .SearchParam .SearchParamContent {
+        width: 100%;
+    }
+
+        .SearchParam .SearchParamContent .Itinerary {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .SearchParam .SearchParamContent .FlightDate {
+            margin-top: 4px;
+        }
+
+    .SearchParam .PassengerNumber {
+        float: right;
+        margin-right: 5px;
+    }
+
+.SearchParamContentPageLoad {
+    margin-left: 10px;
+    margin: auto;
+}
+
+    .SearchParamContentPageLoad .Itinerary {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .SearchParamContentPageLoad .FlightDate {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+/************************Responsive************************/
+
+@media only screen and (max-width:1199px) {
+}
+
+@media only screen and (max-width:979px) {
+}
+
+@media only screen and (max-width:767px) {
+    /************Mobile************/
+    #SearchForm {
+        color: #696969;
+        width: 100%;
+        height: auto;
+        background-color: white;
+        border: 1px solid #B8B8B8;
+        padding-bottom: 10px;
+    }
+
+        #SearchForm .Title {
+            font-weight: bold;
+            font-size: 16px;
+            height: 35px;
+            color: #333;            
+            line-height: 35px;
+            vertical-align: middle;
+            padding-left: 10px;
+            background: #f0f0f0;
+            background-image: -moz-linear-gradient(top,#eee,#ddd);
+            background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#eee),color-stop(1,#ddd));
+	    color: white;    
+	    background: red;
+	    text-align: center;
+        }
+
+        #SearchForm .Content {
+            height: auto;
+            padding: 10px;
+        }
+
+        #SearchForm .SearchFooter {
+            padding: 10px;
+            height: auto;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+        #SearchForm .SearchButton {
+            float: right;
+            width: 100%;
+            margin-top: 10px;
+            height: 35px;
+            font-size: 16px;
+        }
+
+        /*City*/
+        #SearchForm .Depart {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+            #SearchForm .Depart:after {
+                padding-left: 30px;
+                top: 0px;
+                content: "Tá»«";
+                background-image: url('point.png')/*tpa=https://ibe.acity.vn/Styles/Images/point.png*/;
+                position: absolute;
+                color: #969696;
+                background-repeat: no-repeat;
+                background-position-x: 10px;
+                background-position-y: 6px;
+                height: 32px;
+                line-height: 32px;
+                left: 0px;
+                background-color: #ECECEC;
+                width: 35px;
+                border: 1px solid #B8B8B8;
+            }
+
+        #SearchForm .Arrive {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+            #SearchForm .Arrive:after {
+                padding-left: 30px;
+                top: 0px;
+                content: "Äáº¿n";
+                background-image: url('point.png')/*tpa=https://ibe.acity.vn/Styles/Images/point.png*/;
+                position: absolute;
+                color: #969696;
+                background-repeat: no-repeat;
+                background-position-x: 10px;
+                background-position-y: 6px;
+                height: 32px;
+                line-height: 32px;
+                left: 0px;
+                background-color: #ECECEC;
+                width: 35px;
+                border: 1px solid #B8B8B8;
+            }
+
+        #SearchForm .PointTextBox {
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #B8B8B8;
+            color: #716d6e;
+            -webkit-appearance: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            padding: 10px 0px 10px 80px;
+        }
+
+        /*Calendar*/
+        #SearchForm .DepartDate {
+            position: relative;
+            margin-bottom: 10px;
+            float: left;
+            width: 48%;
+        }
+
+            #SearchForm .DepartDate:after {
+                padding-left: 30px;
+                padding-right: 7px;
+                top: 15px;
+                right: 0px;
+                content: "";
+                background-image: url('cal.png')/*tpa=https://ibe.acity.vn/Styles/Images/cal.png*/;
+                position: absolute;
+                color: #d1d1d1;
+                background-repeat: no-repeat;
+                background-position-x: 9px;
+                background-position-y: 5px;
+                height: 32px;
+                line-height: 32px;
+                background-color: #ECECEC;
+                border: 1px solid #B8B8B8;
+            }
+
+        #SearchForm .ReturnDate {
+            position: relative;
+            margin-bottom: 10px;
+            float: right;
+            width: 48%;
+        }
+
+            #SearchForm .ReturnDate:after {
+                padding-left: 30px;
+                padding-right: 7px;
+                top: 15px;
+                right: 0px;
+                content: "";
+                background-image: url('cal.png')/*tpa=https://ibe.acity.vn/Styles/Images/cal.png*/;
+                position: absolute;
+                color: #d1d1d1;
+                background-repeat: no-repeat;
+                background-position-x: 9px;
+                background-position-y: 5px;
+                height: 32px;
+                line-height: 32px;
+                background-color: #ECECEC;
+                border: 1px solid #B8B8B8;
+            }
+
+        #SearchForm .CalTextBox {
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #B8B8B8;
+            padding-left: 10px;
+            color: #716d6e;
+            -webkit-appearance: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            padding: 10px 20px 10px 10px;
+        }
+
+        /*Passenger*/
+        #SearchForm .Passenger {
+            float: left;
+            width: 33.33%;
+            -webkit-appearance: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            padding-right: 10px;
+        }
+
+            #SearchForm .Passenger + .Passenger + .Passenger {
+                padding-right: 0px;
+            }
+
+        #SearchForm .PaxDropDown {
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #B8B8B8;
+            height: 34px;
+            padding-left: 20px;
+            color: #716d6e;
+        }
+
+
+    /*Result page*/
+    .SearchParamDomestic {
+        height: auto;
+        width: 100%;
+        margin-top: 5px;
+        /*background-color: #f20000;*/
+        color: White;
+        background: #0789BF;
+        background: -webkit-gradient(linear, 0% 0%, 0% 60%, from(#07ACFD), to(#0789BF));
+        background: -moz-linear-gradient(#07ACFD, #0789BF 60%);
+        background: -ms-linear-gradient(top, #07ACFD 0%, #0789BF 60%);
+    }
+
+        .SearchParamDomestic .FlightIcon {
+            height: auto;
+            padding: 0px;
+            width: 40px;
+        }
+
+            .SearchParamDomestic .FlightIcon img {
+                width: 40px;
+                height: auto;
+            }
+
+        .SearchParamDomestic .SearchParamContent {
+            height: auto;
+        }
+
+            .SearchParamDomestic .SearchParamContent .Itinerary {
+                font-size: inherit;
+                font-weight: bold;
+            }
+
+            .SearchParamDomestic .SearchParamContent .FlightDate {
+                margin-top: 4px;
+            }
+
+        .SearchParamDomestic .PassengerNumber {
+            display: none;
+        }
+
+    /*FareHeader*/
+    .FareHeader {
+        padding: 5px;
+        -webkit-border-radius: 5px 5px 0px 0px;
+        -moz-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+        /*background-color: #f20000;*/
+        background: #0789BF;
+        background: -webkit-gradient(linear, 0% 0%, 0% 60%, from(#07ACFD), to(#0789BF));
+        background: -moz-linear-gradient(#07ACFD, #0789BF 60%);
+        background: -ms-linear-gradient(top, #07ACFD 0%, #0789BF 60%);
+    }
+
+        .FareHeader .Price .TotalPrice {
+            color: #FFFF00;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+
+    /*ProgressBar*/
+    ul.ProgressBar {
+        display: block;
+        height: 24px;
+        padding: 0px;
+        margin: 0px;
+        list-style-type: none;
+        width: 100%;
+        background: url('home.png')/*tpa=https://ibe.acity.vn/Styles/Images/home.png*/ no-repeat right center;
+        padding-left: 23px;
+        -webkit-appearance: none;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    ul.Step1 {
+        background-position: 0px 0px;
+    }
+
+    ul.Step2 {
+        background-position: 0px 0px;
+    }
+
+    ul.Step3 {
+        background-position: 0px 0px;
+    }
+
+    ul.ProgressBar li {
+        float: left;
+        margin-right: 5px;
+        background: url('arrow.png')/*tpa=https://ibe.acity.vn/Styles/Images/arrow.png*/ no-repeat right center;
+        padding-right: 20px;
+    }
+
+        ul.ProgressBar li.last {
+            margin-right: 0px;
+            background: none;
+            float: left;
+        }
+
+        ul.ProgressBar li a span {
+            display: inline-block;
+            height: 24px;
+        }
+
+        ul.ProgressBar li a, ul.ProgressBar li a:hover {
+            float: left;
+            width: auto;
+            height: 24px;
+            text-align: center;
+            text-decoration: none;
+            line-height: 24px;
+            cursor: default;
+            font-size: 12px;
+        }
+
+    ul.Step1 a#step1 {
+        color: #ff7b0f;
+        font-weight: bold;
+    }
+
+    ul.Step1 a#step2 {
+        color: #666666;
+    }
+
+    ul.Step1 a#step3 {
+        color: #666666;
+    }
+
+
+    ul.Step2 a#step1 {
+        color: #949494;
+        cursor: pointer;
+    }
+
+    ul.Step2 a#step2 {
+        color: #ff7b0f;
+        font-weight: bold;
+    }
+
+    ul.Step2 a#step3 {
+        color: #666666;
+    }
+
+    ul.Step3 a#step1 {
+        color: #949494;
+    }
+
+    ul.Step3 a#step2 {
+        color: #949494;
+    }
+
+    ul.Step3 a#step3 {
+        color: #ff7b0f;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width:479px) {
+}

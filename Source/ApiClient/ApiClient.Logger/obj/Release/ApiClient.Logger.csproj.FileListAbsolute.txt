@@ -1,0 +1,2 @@
+D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csprojAssemblyReference.cache
+D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csproj.CoreCompileInputs.cache

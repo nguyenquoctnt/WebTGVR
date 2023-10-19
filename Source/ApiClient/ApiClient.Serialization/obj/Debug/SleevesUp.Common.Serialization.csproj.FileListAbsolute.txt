@@ -1,0 +1,11 @@
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Debug\SleevesUp.Common.Serialization.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Debug\SleevesUp.Common.Serialization.pdb
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.csproj.CoreCompileInputs.cache
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.dll
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.pdb
+E:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.csprojResolveAssemblyReference.cache
+G:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Debug\SleevesUp.Common.Serialization.dll
+G:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\bin\Debug\SleevesUp.Common.Serialization.pdb
+G:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.csproj.CoreCompileInputs.cache
+G:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.dll
+G:\Project\WebSite\SleevesUp common\SleevesUp.Common\SleevesUp.Common.Serialization\obj\Debug\SleevesUp.Common.Serialization.pdb

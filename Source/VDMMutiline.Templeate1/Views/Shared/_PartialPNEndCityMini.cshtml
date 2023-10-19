@@ -1,0 +1,219 @@
+﻿
+
+<div class="SelectCityBoxContent">
+
+    <div id="sub-departure" class="sub-search" style="">
+        <div class="sub-search-content">
+            <div class="domestic-col">
+                <ul>
+                    <li class="title"><i class="icon icon-formsearch-sub-location"></i>Miền Bắc </li>
+                    <li><a onclick='addGeoAirPort_ToMini("HAN","Hà Nội")'><b>Hà Nội </b><span>(HAN)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("HPH","Hải Phòng")'><b>Hải Phòng</b> <span>(HPH)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("DIN","Điện Biên")'><b>Điện Biên</b> <span>(DIN)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("THD","Thanh Hóa")'><b>Thanh Hóa</b> <span>(THD)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VDO","Quảng Ninh")'><b>Quảng Ninh</b> <span>(VDO)</span> </a></li>
+                </ul>
+                <ul>
+                    <li class="title"><i class="icon icon-formsearch-sub-location"></i>Miền Trung </li>
+                    <li><a onclick='addGeoAirPort_ToMini("VII","Vinh")'><b>Vinh</b> <span>(VII)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("HUI","Huế")'><b>Huế</b> <span>(HUI)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VDH","Đồng Hới")'><b>Đồng Hới</b> <span>(VDH)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("DAD","Đà Nẵng")' airportcode="DAD"><b>Đà Nẵng</b> <span>(DAD)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("PXU","Pleiku")'><b>Pleiku</b> <span>(PXU)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("TBB","Tuy Hòa")'><b>Tuy Hòa</b> <span>(TBB)</span> </a></li>
+                </ul>
+            </div>
+            <div class="domestic-col">
+                <ul>
+                    <li class="title"><i class="icon icon-formsearch-sub-location"></i>Miền Nam </li>
+                    <li><a onclick='addGeoAirPort_ToMini("SGN","Hồ Chí Minh")'><b>Hồ Chí Minh </b><span>(SGN)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("CXR","Nha Trang")'><b>Nha Trang</b> <span>(CXR)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("DLI","Đà Lạt")'><b>Đà Lạt</b> <span>(DLI)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("PQC","Phú Quốc")'><b>Phú Quốc</b> <span>(PQC)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VCL","Tam Kỳ")'><b>Tam Kỳ</b> <span>(VCL)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("UIH","Qui Nhơn")'><b>Qui Nhơn</b> <span>(UIH)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VCA","Cần Thơ")'><b>Cần Thơ</b> <span>(VCA)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VCS","Côn Đảo")'><b>Côn Đảo</b> <span>(VCS)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("BMV","Ban Mê Thuột")'><b>Ban Mê Thuột</b> <span>(BMV)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("VKG","Rạch Giá")'><b>Rạch Giá</b> <span>(VKG)</span> </a></li>
+                    <li><a onclick='addGeoAirPort_ToMini("CAH","Cà Mau")'><b>Cà Mau</b> <span>(CAH)</span> </a></li>
+                </ul>
+            </div>
+            <div class="domestic-col domestic-col-lg" style="position:relative">
+                <ul>
+                    <li class="title">
+                        <i class="icon icon-formsearch-sub-location"></i>Quốc tế
+                        <p class="desc">Nhập tên thành phố hoặc mã sân bay</p>
+                    </li>
+                </ul>
+                <input placeholder="Hãy nhập vào tên thành phố hoặc mã sân bay" autocomplete="off" id="txtEndPointSearchMini" type="text" class="form-control ui-autocomplete-input" style="margin-top: 10px;margin-bottom: 0px;width: 100%;border: 1px solid #a59b9b;padding-left: 10px;float: none;">
+                <ul style="margin-top:10px">
+
+                    <li class="li_mien" style="float: left;width: 30%;padding-left: 0px;">
+
+                        <ul>
+                            <li class="title">Châu Á</li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('BKK', 'Bangkok')"><b>Bangkok</b> <span>(BKK)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('SIN', 'Singapore')"><b>Singapore</b> <span>(SIN)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('KUL', 'Kuala Lumpur')"><b>Kuala Lumpur</b> <span>(KUL)</span> </a>
+                            </li>
+
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('NRT', 'Tokyo')"><b>Tokyo</b> <span>(NRT)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('ICN', 'Seoul')"><b>Seoul</b> <span>(ICN)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('CAN', 'Quảng Châu')"><b>Quảng Châu</b> <span>(CAN)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('HKG', 'Hong Kong')"><b>Hong Kong</b> <span>(HKG)</span> </a>
+                            </li>
+
+
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('TPE', 'Đài Bắc')"><b>Đài Bắc</b> <span>(TPE)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('SHA', 'Thượng Hải')"><b>Thượng Hải</b> <span>(SHA)</span> </a>
+                            </li>
+
+                        </ul>
+                        <div style="clear: both">
+                        </div>
+                    </li>
+                    <li class="li_mien" style="float: left;width: 31%;padding-left: 0px;">
+
+                        <ul>
+                            <li class="title">Châu Âu</li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('PAR', 'Paris')"><b>Paris</b> <span>(PAR)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('LON', 'London')"><b>London</b> <span>(LON)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('FRA', 'Frankfurt')"><b>Frankfurt</b> <span>(FRA)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('AMS', 'Amsterdam')"><b>Amsterdam</b> <span>(AMS)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('PRG', 'Prague')"><b>Prague</b> <span>(PRG)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('BER', 'Berlin')"><b>Berlin</b> <span>(BER)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('ZRH', 'Zurich')"><b>Zurich</b> <span>(ZRH)</span> </a>
+                            </li>
+
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('STO', 'Stockholm')"><b>Stockholm</b> <span>(STO)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('CPH', 'Copenhagen')"><b>Copenhagen</b> <span>(CPH)</span> </a>
+                            </li>
+
+                        </ul>
+                        <div style="clear: both">
+                        </div>
+                    </li>
+                    <li class="li_mien" style="float: left;width: 33%;padding-left: 0px;">
+
+                        <ul>
+                            <li class="title">Châu Mỹ &amp; Úc</li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('LAX', 'Los Angeles')"><b>Los Angeles</b> <span>(LAX)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('SFO', 'San Francisco')"><b>San Francisco</b> <span>(SFO)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('MEL', 'Melbourne')"><b>Melbourne</b> <span>(MEL)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('SYD', 'Sydney')"><b>Sydney</b> <span>(SYD)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('YTO', 'Toronto')"><b>Toronto</b> <span>(YTO)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('NYC', 'New York')"><b>New York</b> <span>(NYC)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('HOU', 'Houston')"><b>Houston</b> <span>(HOU)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('YVR', 'Vancouver')"><b>Vancouver</b> <span>(YVR)</span> </a>
+                            </li>
+                            <li>
+                                <a onclick="addGeoAirPort_ToMini('DFW', 'Dallas')"><b>Dallas</b> <span>(DFW)</span> </a>
+                            </li>
+                        </ul>
+                        <div style="clear: both">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $( function () {
+        var tabs = $( "#tabs-return" ).tabs();
+    } );
+</script>
+
+<script>
+    @*function addGeoAirPort_ToMini(code, name) {
+        $("#txtEndPointMini").val(name + '- (' + code + ')');
+        $('#hdfEndPointMini').val(code);
+        $('#pnStartCityMini').hide();
+        setTimeout(function () {
+            $("#txtDepartureDateMini").datepickerlunar('show');
+        }, 16);
+        $('html,body').scrollTop(0);
+    }
+    function SearchAutoCompleteEndPointpopub() {
+        $("#txtEndPointSearchMini").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointSearchMini").val(),
+                dataType: "json",
+                success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+            });
+    },
+    select: function (event, ui) {
+
+        $('#hdfEndPointMini').val(ui.item.value);
+        $('#hdfEndPointValue').val(ui.item.value);
+        $("#txtEndPointMini").val(ui.item.labeldisplay);
+        $('#pnEndCity').css('display', 'none');
+        $('#txtStartPointSearch').val('');
+        $("#txtDepartureDate").datepicker('show');
+        $('html,body').scrollTop(0);
+    },
+     minLength: 3
+    });
+    }
+
+    $(document).ready(function() {
+        SearchAutoCompleteEndPointpopub();
+    });*@
+</script>

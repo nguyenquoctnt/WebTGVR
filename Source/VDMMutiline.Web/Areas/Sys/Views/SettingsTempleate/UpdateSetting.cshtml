@@ -1,0 +1,101 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@model VDMMutiline.SharedComponent.Params.TempleteSetting.TempleatePropertyUserParam
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("UpdateSetting", "SettingsTempleate", FormMethod.Post, new { @class = "form form-horizontal row-separator", @data_parsley_validate = "", id = "frUpdateSetting", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-body">
+        <div class="col-md-12">
+            @for (int i = 0; i < Model.TempleatePropertyUserInfos.Count; i++)
+            {
+                @Html.HiddenFor(z => Model.TempleatePropertyUserInfos[i].Id)
+                @Html.HiddenFor(z => Model.TempleatePropertyUserInfos[i].IdProperty)
+                @Html.HiddenFor(z => Model.TempleatePropertyUserInfos[i].IdUser)
+                if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.Editor)
+                {<div class="form-group row">
+                        <div class=" col-md-12">
+                            <b>@Model.TempleatePropertyUserInfos[i].Name</b>
+                            <p class="description">@Model.TempleatePropertyUserInfos[i].Note</p>
+                        </div>
+                        <div class=" col-md-12">
+                            @Html.TextAreaFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @class = "ckeditor form-control", @placeholder = "" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group row">
+                        <div class=" col-md-6">
+                            <b>@Model.TempleatePropertyUserInfos[i].Name</b>
+                            <p class="description">@Model.TempleatePropertyUserInfos[i].Note</p>
+                        </div>
+                        <div class=" col-md-6">
+                            @if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.String)
+                            {
+
+                                @Html.TextBoxFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @class = "form-control", @placeholder = "" })
+
+                            }
+                            else if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.ChuoiNhieuDong)
+                            {
+
+                                @Html.TextAreaFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @class = "form-control", @placeholder = "" })
+
+                            }
+                            else if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.BangMau)
+                            {
+                                <div class="input-group colorpicker-component">
+                                    @Html.TextBoxFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @class = "form-control", @placeholder = "" })
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                            }
+                            else if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.Number)
+                            {
+                                @Html.TextBoxFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @type = "number", @class = "form-control", @placeholder = "" })
+                            }
+                            else if (Model.TempleatePropertyUserInfos[i].Typecontrol == Constant.LoaiThuocTinh.File)
+                            {
+                                <div class="row">
+                                    <div class="col-md-8 ">
+                                        <div class="input-group ">
+                                            @Html.TextBoxFor(x => Model.TempleatePropertyUserInfos[i].Valued, new { @class = "form-control", @placeholder = "" })
+                                            <span class="input-group-addon" onclick="selectfile($('#@("TempleatePropertyUserInfos_" + i + "__Valued")'),$('#@("imgTempleatePropertyUserInfos_" + i + "__Valued")'))"><i class="icon-cloud-upload"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <img src="@Model.TempleatePropertyUserInfos[i].Valued" id="@("imgTempleatePropertyUserInfos_" + i + "__Valued")" alt="" style="max-width: 60px;max-height: 50px;">
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('.colorpicker-component').colorpicker();
+        });
+        function selectfile(control, controlimg) {
+            var finder = new CKFinder();
+            finder.language = 'vi';
+            finder.selectActionFunction = function (fileUrl) {
+                control.val(fileUrl);
+                controlimg.attr("src", fileUrl);
+            };
+            finder.popup();
+        }
+    </script>
+
+}

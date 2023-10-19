@@ -1,0 +1,53 @@
+﻿@model VDMMutiline.SharedComponent.Params.TempleteSetting.TempleatePropertyGroupParam
+@{
+    Layout = null;
+}
+
+
+
+@using (Html.BeginForm("Create", "TempleatePropertyGroup", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateTempleatePropertyGroup", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TempleatePropertyGroup.Id)
+<div class="form-body">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Tên hiển thị</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.TempleatePropertyGroup.Name, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-2 label-control">Ghi chú</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.TempleatePropertyGroup.Note, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-4 label-control">Thứ tự</label>
+            <div class="col-md-8">
+                @Html.TextBoxFor(x => x.TempleatePropertyGroup.ThuTu, new { @Required = "Required", @class = "form-control thutu", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-4 label-control">Menu cha</label>
+            <div class="col-md-8">
+                @Html.DropDownListFor(x => x.TempleatePropertyGroup.ThuoctinhCha, Model.TempleatePropertyGroupInfos.Select(n => new SelectListItem { Selected = n.Id == Model.TempleatePropertyGroup.ThuoctinhCha, Text = n.Name, Value = n.Id.ToString() }), new { @class = "form-control", @placeholder = "" })
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-actions center">
+        <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+        <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+    </div>
+</div>
+
+}
+

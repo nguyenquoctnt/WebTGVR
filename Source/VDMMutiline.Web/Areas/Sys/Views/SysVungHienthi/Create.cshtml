@@ -1,0 +1,127 @@
+﻿@model VDMMutiline.SharedComponent.Params.SysVungHienthiParam
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Create", "SysVungHienthi", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_type = "", id = "frCreateSysVungHienthi", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.SysVungHienthi.Id)
+            <div class="form-group">
+                
+            </div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Loại vùng</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.LoaiVung, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Tên vùng</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.Tenvung, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Số hiển thị</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.Sohienthi, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Thời gian từ</label><div class="col-sm-10">
+ <div class="input-group">
+<input class="form-control date-picker" data-date-format="dd/mm/yyyy" name="ThoigianTu" id="ThoigianTu" type="text"/><span class="input-group-addon">
+<i class="fa fa-calendar bigger-110"></i>
+</span>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Thời gian đến</label><div class="col-sm-10">
+ <div class="input-group">
+<input class="form-control date-picker" data-date-format="dd/mm/yyyy" name="ThoigianDen" id="ThoigianDen" type="text"/><span class="input-group-addon">
+<i class="fa fa-calendar bigger-110"></i>
+</span>
+</div>
+</div>
+</div>
+ <div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Cho phép Cache</label><div class="col-sm-10">
+@if(Model.SysVungHienthi.ChophepCache == null)
+{ 
+Model.SysVungHienthi.ChophepCache = false;
+}
+@Html.CheckBox("SysVungHienthi.ChophepCache", Model.SysVungHienthi.ChophepCache == true)
+ </div>
+</div>
+ <div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Cho phép liên kết</label><div class="col-sm-10">
+@if(Model.SysVungHienthi.ChophepLienKet == null)
+{ 
+Model.SysVungHienthi.ChophepLienKet = false;
+}
+@Html.CheckBox("SysVungHienthi.ChophepLienKet", Model.SysVungHienthi.ChophepLienKet == true)
+ </div>
+</div>
+ <div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Hiển thị tiêu đề</label><div class="col-sm-10">
+@if(Model.SysVungHienthi.HienthiTieude == null)
+{ 
+Model.SysVungHienthi.HienthiTieude = false;
+}
+@Html.CheckBox("SysVungHienthi.HienthiTieude", Model.SysVungHienthi.HienthiTieude == true)
+ </div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Chiều dài</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.Width, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Chiều cao</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.Height, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">SpecStyle</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.SpecStyle, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label no-padding-right">Icon hiển thị</label>
+<div class="col-sm-10">
+@Html.TextBoxFor(x => x.SysVungHienthi.ItemCss, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+</div>
+</div>
+
+
+
+            
+           
+            <div class="clearfix form-actions">
+                <div class="col-md-12 center">
+                    <a onclick="submitform()" class="btn btn-info"><i class="ace-icon fa fa-floppy-o bigger-125"></i>Cập nhật</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="ace-icon fa fa-times bigger-125"></i>Đóng</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $('.date-picker').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+</script>

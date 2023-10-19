@@ -1,0 +1,35 @@
+﻿@model VDMMutiline.SharedComponent.Params.AspNetGroupsParam
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "Groups", FormMethod.Post, new { @class = "form", @data_parsley_validate = "", id = "frCreateAspNetGroups", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.AspNetGroupsInfo.Id)
+    <div class="form-body">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-md-2 label-control">Tên nhóm</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.AspNetGroupsInfo.Name, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-md-2 label-control">Mô tả</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.AspNetGroupsInfo.Description, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+}

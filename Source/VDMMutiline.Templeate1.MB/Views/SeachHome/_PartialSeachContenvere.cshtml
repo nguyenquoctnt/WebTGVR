@@ -1,0 +1,855 @@
+﻿@model VDMMutiline.SeachAndBook.SeachParam
+@using VDMMutiline.SharedComponent.Constants
+@{
+    Layout = null;
+}
+<link href="/Content/zipcontents/css/Site.css" rel="stylesheet" type="text/css" />
+<link href="/Content/zipcontents/css/Control.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/Content/zipcontents/css/IBE.css" />
+<link href="/Content/zipcontents/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+<script src="/Content/zipcontents/js/ui.datepicker.lunar.min.js"></script>
+<link href="/Content/zipcontents/css/SelectCityBox.css" rel="stylesheet">
+<script src="/Content/zipcontents/js/bootstrap-typeahead.js"></script>
+<style>
+    .PaxDropDown {
+        width: 99%;
+      
+    }
+    input#txtStartPoint {
+        width: 99% !important;
+    }
+    input#txtStartPoint {
+        width: 99% !important;
+    }
+    input#txtEndPoint {
+        width: 99% !important;
+    }
+    div#flight-search {
+        margin-top: 10px;
+    }
+    #search-body table {
+        width: 100%;
+    }
+    #search-body #passenger td {
+        width: auto !important;
+    }
+</style>
+@using (Html.BeginForm("Seach", "SeachHome", FormMethod.Post, new { onsubmit = "submitseachome()", @data_parsley_validate = "", id = "frCreateSeachHomde", @role = "form" }))
+{
+    <input type="hidden" id="lang" value="vi-VN">
+    <input id='cheapest' checked="checked" style="display:none" type="checkbox" name="checktimvere" /><span  style="display:none" id='findcheapest' onclick='$("#cheapest").click()'>
+        Tìm vé rẻ nhất
+    </span>
+    <div id="flight-search">
+        <div id="seach-box"  style="    width: 100%;">
+            <div id='search-head'>
+                <img alt='ve may bay gia re' src="/Content/FontEnd/Hoanggiatour.vn/style2.0/images/logo-small.jpg" style="width:50px" class='left' />
+                <div id='search-title' class='left uppercase'>
+                    CHUYẾN BAY CỦA BẠN
+                </div>
+            </div>
+            <div id='search-body'>
+                <div id='search-type'>
+                    <div class='radio' style="    margin-left: 25px;    margin-top: -6px;">
+                        <input @(Model != null ? (Model.Itinerary == 1 ? "checked='checked'" : "") : "") class="ItineraryRadio" id="rdbOneWay" onclick="onOneWay();" type="radio" onchange="ToggleDatepicker()" name="ItineraryType" value="1"><span onclick="$('#rdbOneWay').click();">Một chiều</span>
+                    </div>
+                    <div class='radio' style="    margin-left: 25px;">
+                        <input @(Model != null ? (Model.Itinerary == 2 ? "checked='checked'" : "") : "") class="ItineraryRadio" id="rdbRoundTrip" onclick="onTwoWay();" type="radio" onchange="ToggleDatepicker()" name="ItineraryType" value="2"><span onclick="$('#rdbRoundTrip').click();">Khứ hồi</span>
+                    </div>
+                </div>
+                <table id="flight" style="width: 100%;">
+                    <tr>
+                        <td>
+                            Điểm khởi hành
+                        </td>
+                        <td>
+                            Điểm đến
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="hdfStartPointValue" id="hdfStartPointValue">
+                            <input type="hidden" name="hdfStartPoint" id="hdfStartPoint" value="@(Model!=null?Model.DepartureAirportCode:"")">
+                            <input name="txtStartPoint" required type="text" style='margin-right: 15px;' value="@(Model!=null?Model.DepartureAirportCode:"")" readonly="readonly" id="txtStartPoint" class="TextBox cursor">
+                            <div id="pnStartCity" class="SelectCityBox ShadowBold" style="">
+                                <div class="SelectCityBoxHeader">
+                                    Chọn thành phố, sân bay đi
+                                    <div class="Close">
+                                        <a id="btnCloseStartCity">x</a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="SelectCityBoxContent">
+                                    <ul class="ul_mien">
+
+                                        <li class="li_mien">
+
+
+                                            <div class="sp_mien">Miền Nam</div>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_Go('SGN','Hồ Chí Minh, Việt Nam - (SGN)')">
+                                                    Hồ Chí Minh
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_Go('PQC','Phú Quốc, Việt Nam - (PQC)')">
+                                                    Phú Quốc
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_Go('VCA','Cần Thơ, Việt Nam - (VCA)')">
+                                                    Cần Thơ
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('VCS','Côn Đảo, Việt Nam - (VCS)')">
+                                                    Côn Đảo
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_Go('VKG','Rạch Giá, Việt Nam - (VKG)')">
+                                                    Rạch Giá
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('CAH','Cà Mau, Việt Nam - (CAH)')">
+                                                    Cà Mau
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                            <div class="sp_mien">Miền Bắc</div>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_Go('HAN','Hà Nội, Việt Nam - (HAN)')">
+                                                    Hà Nội
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('HPH','Hải Phòng, Việt Nam - (HPH)')">
+                                                    Hải Phòng
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('DIN','Điện Biên Phủ, Việt Nam - (DIN)')">
+                                                    Điện Biên Phủ
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                        </li>
+                                        <li class="li_mien">
+                                            <span class="sp_mien">Miền Trung</span>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_Go('THD','Thanh Hóa, Việt Nam - (THD)')">
+                                                    Thanh Hóa
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('VII','Vinh, Việt Nam - (VII)')">
+                                                    Vinh
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('HUI','Huế, Việt Nam - (HUI)')">
+                                                    Huế
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('VDH','Đồng Hới, Việt Nam - (VDH)')">
+                                                    Đồng Hới
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('VCL','Quảng Nam, Việt Nam - (TAM)')">
+                                                    Quảng Nam
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('DAD','Đà Nẵng, Việt Nam - (DAD)')">
+                                                    Đà Nẵng
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('PXU','Pleiku, Việt Nam - (PXU)')">
+                                                    Pleiku
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('TBB','Tuy Hòa, Việt Nam - (TBB)')">
+                                                    Tuy Hòa
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('CXR','Nha Trang, Việt Nam - (CXR)')">
+                                                    Nha Trang
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('DLI','Đà Lạt, Việt Nam - (DLI)')">
+                                                    Đà Lạt
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('UIH','Quy Nhơn, Việt Nam - (UIH)')">
+                                                    Quy Nhơn
+                                                </li>
+                                                <li onclick="addGeoAirPort_Go('BMV','Ban Mê Thuật, Việt Nam - (BMV)')">
+                                                    Ban Mê Thuật
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                        </li>
+                                        <li style="width: 55%;    margin-left: 5px;padding: 4px;color: #717171;    float: left;text-align: left;padding: 10px 5px 5px 10px;">
+                                            <div class="sp_mien" style="padding-bottom: 7px;">Tìm kiếm</div>
+                                            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input placeholder="Hãy nhập vào tên thành phố hoặc mã sân bay" autocomplete="off" id="txtStartPointSearch" type="text" class="TextBox ui-autocomplete-input" style="width: 100%;">
+                                            <ul>
+
+                                                <li class="li_mien" style="float: left;width: 30%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Á</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_Go('BKK', 'Bangkok')">
+                                                            Bangkok
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('SIN', 'Singapore')">
+                                                            Singapore
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('KUL', 'Kuala Lumpur')">
+                                                            Kuala Lumpur
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('NRT', 'Tokyo')">
+                                                            Tokyo
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('ICN', 'Seoul')">
+                                                            Seoul
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('CAN', 'Quảng Châu')">
+                                                            Quảng Châu
+                                                        </li>
+
+
+                                                        <li onclick="addGeoAirPort_Go('HKG', 'Hong Kong')">
+                                                            Hong Kong
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('TPE', 'Đài Bắc')">
+                                                            Đài Bắc
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('SHA', 'Thượng Hải')">
+                                                            Thượng Hải
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                                <li class="li_mien" style="float: left;width: 31%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Âu</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_Go('PAR', 'Paris')">
+                                                            Paris
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('LON', 'London')">
+                                                            London
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('FRA', 'Frankfurt')">
+                                                            Frankfurt
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('AMS', 'Amsterdam')">
+                                                            Amsterdam
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('PRG', 'Prague')">
+                                                            London
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('BER', 'Berlin')">
+                                                            Berlin
+                                                        </li>
+
+                                                        <li onclick="addGeoAirPort_Go('ZRH', 'Zurich')">
+                                                            Zurich
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('STO', 'Stockholm')">
+                                                            Stockholm
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('CPH', 'Copenhagen')">
+                                                            Copenhagen
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                                <li class="li_mien" style="float: left;width: 33%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Mỹ & Úc</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_Go('LAX', 'Los Angeles')">
+                                                            Los Angeles
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('SFO', 'San Francisco')">
+                                                            San Francisco
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('MEL', 'Melbourne')">
+                                                            Melbourne
+                                                        </li>
+
+
+                                                        <li onclick="addGeoAirPort_Go('SYD', 'Sydney')">
+                                                            Sydney
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('YTO', 'Toronto')">
+                                                            Toronto
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('NYC', 'New York')">
+                                                            New York
+                                                        </li>
+
+                                                        <li onclick="addGeoAirPort_Go('HOU', 'Houston')">
+                                                            Houston
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('YVR', 'Vancouver')">
+                                                            Vancouver
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_Go('DFW', 'Dallas')">
+                                                            Dallas
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                        <td>
+                            <input type="hidden" name="hdfEndPointValue" id="hdfEndPointValue">
+                            <input type="hidden" name="hdfEndPoint" id="hdfEndPoint" value="@(Model!=null?Model.DestinationAirportCode:"")">
+                            <input name="txtEndPoint" required type="text" value="@(Model!=null?Model.DestinationAirportCode:"")" readonly="readonly" id="txtEndPoint" class="TextBox cursor">
+                            <div id="pnEndCity" class="SelectCityBox ShadowBold" style="">
+                                <div class="SelectCityBoxHeader">
+                                    Chọn thành phố, sân bay đến
+                                    <div class="Close">
+                                        <a id="btnCloseEndCity">x</a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="SelectCityBoxContent">
+                                    <ul class="ul_mien">
+
+                                        <li class="li_mien">
+
+                                            <div class="sp_mien">Miền Nam</div>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_To('SGN','Hồ Chí Minh, Việt Nam - (SGN)')">
+                                                    Hồ Chí Minh
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_To('PQC','Phú Quốc, Việt Nam - (PQC)')">
+                                                    Phú Quốc
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_To('VCA','Cần Thơ, Việt Nam - (VCA)')">
+                                                    Cần Thơ
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('VCS','Côn Đảo, Việt Nam - (VCS)')">
+                                                    Côn Đảo
+                                                </li>
+
+                                                <li onclick="addGeoAirPort_To('VKG','Rạch Giá, Việt Nam - (VKG)')">
+                                                    Rạch Giá
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('CAH','Cà Mau, Việt Nam - (CAH)')">
+                                                    Cà Mau
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                            <div class="sp_mien">Miền Bắc</div>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_To('HAN','Hà Nội, Việt Nam - (HAN)')">
+                                                    Hà Nội
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('HPH','Hải Phòng, Việt Nam - (HPH)')">
+                                                    Hải Phòng
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('DIN','Điện Biên Phủ, Việt Nam - (DIN)')">
+                                                    Điện Biên Phủ
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                        </li>
+                                        <li class="li_mien">
+                                            <span class="sp_mien">Miền Trung</span>
+                                            <ul>
+                                                <li onclick="addGeoAirPort_To('THD','Thanh Hóa, Việt Nam - (THD)')">
+                                                    Thanh Hóa
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('VII','Vinh, Việt Nam - (VII)')">
+                                                    Vinh
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('HUI','Huế, Việt Nam - (HUI)')">
+                                                    Huế
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('VDH','Đồng Hới, Việt Nam - (VDH)')">
+                                                    Đồng Hới
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('VCL','Quảng Nam, Việt Nam - (TAM)')">
+                                                    Quảng Nam
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('DAD','Đà Nẵng, Việt Nam - (DAD)')">
+                                                    Đà Nẵng
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('PXU','Pleiku, Việt Nam - (PXU)')">
+                                                    Pleiku
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('TBB','Tuy Hòa, Việt Nam - (TBB)')">
+                                                    Tuy Hòa
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('CXR','Nha Trang, Việt Nam - (CXR)')">
+                                                    Nha Trang
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('DLI','Đà Lạt, Việt Nam - (DLI)')">
+                                                    Đà Lạt
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('UIH','Quy Nhơn, Việt Nam - (UIH)')">
+                                                    Quy Nhơn
+                                                </li>
+                                                <li onclick="addGeoAirPort_To('BMV','Ban Mê Thuật, Việt Nam - (BMV)')">
+                                                    Ban Mê Thuật
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both">
+                                            </div>
+                                        </li>
+                                        <li style="width: 55%;    margin-left: 5px;padding: 4px;color: #717171;    float: left;text-align: left;padding: 10px 5px 5px 10px;">
+                                            <div class="sp_mien" style="padding-bottom: 7px;">Tìm kiếm</div>
+                                            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input placeholder="Hãy nhập vào tên thành phố hoặc mã sân bay" autocomplete="off" id="txtEndPointSearch" type="text" class="TextBox ui-autocomplete-input" style="width: 100%;">
+                                            <ul>
+
+                                                <li class="li_mien" style="float: left;width: 30%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Á</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_To('BKK', 'Bangkok')">
+                                                            Bangkok
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('SIN', 'Singapore')">
+                                                            Singapore
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('KUL', 'Kuala Lumpur')">
+                                                            Kuala Lumpur
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('NRT', 'Tokyo')">
+                                                            Tokyo
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('ICN', 'Seoul')">
+                                                            Seoul
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('CAN', 'Quảng Châu')">
+                                                            Quảng Châu
+                                                        </li>
+
+
+                                                        <li onclick="addGeoAirPort_To('HKG', 'Hong Kong')">
+                                                            Hong Kong
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('TPE', 'Đài Bắc')">
+                                                            Đài Bắc
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('SHA', 'Thượng Hải')">
+                                                            Thượng Hải
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                                <li class="li_mien" style="float: left;width: 31%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Âu</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_To('PAR', 'Paris')">
+                                                            Paris
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('LON', 'London')">
+                                                            London
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('FRA', 'Frankfurt')">
+                                                            Frankfurt
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('AMS', 'Amsterdam')">
+                                                            Amsterdam
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('PRG', 'Prague')">
+                                                            London
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('BER', 'Berlin')">
+                                                            Berlin
+                                                        </li>
+
+                                                        <li onclick="addGeoAirPort_To('ZRH', 'Zurich')">
+                                                            Zurich
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('STO', 'Stockholm')">
+                                                            Stockholm
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('CPH', 'Copenhagen')">
+                                                            Copenhagen
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                                <li class="li_mien" style="float: left;width: 33%;padding-left: 0px;">
+                                                    <div class="sp_mien">Châu Mỹ & Úc</div>
+                                                    <ul>
+                                                        <li onclick="addGeoAirPort_To('LAX', 'Los Angeles')">
+                                                            Los Angeles
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('SFO', 'San Francisco')">
+                                                            San Francisco
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('MEL', 'Melbourne')">
+                                                            Melbourne
+                                                        </li>
+
+
+                                                        <li onclick="addGeoAirPort_To('SYD', 'Sydney')">
+                                                            Sydney
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('YTO', 'Toronto')">
+                                                            Toronto
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('NYC', 'New York')">
+                                                            New York
+                                                        </li>
+
+                                                        <li onclick="addGeoAirPort_To('HOU', 'Houston')">
+                                                            Houston
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('YVR', 'Vancouver')">
+                                                            Vancouver
+                                                        </li>
+                                                        <li onclick="addGeoAirPort_To('DFW', 'Dallas')">
+                                                            Dallas
+                                                        </li>
+                                                    </ul>
+                                                    <div style="clear: both">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tháng đi
+                        </td>
+                        <td>
+                            <div id="ngayvetieude">Tháng về</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="ddlStartMonth" onchange="OnChangedDropDownMonth()" id="ddlStartMonth" class="PaxDropDown">
+                                @{
+                           
+                                    for (DateTime i = DateTime.Now; i <= DateTime.Now.AddMonths(8); i= i.AddMonths(1))
+                                    {
+                               
+                                        <option @(string.Format("{0}/{1}",i.Month,i.Year)==Model.StartMonth?"selected='selected'":"")  value="@(string.Format("{0}/{1}",i.Month,i.Year))">Tháng @(string.Format("{0}/{1}", i.Month, i.Year))</option>
+                               
+                                    }
+                           
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <div id="divtxtReturnDate" style="width: 100%">
+                                <select name="ddlEndMonth" id="ddlEndMonth" data-bind="value: numberOfPassengers" class="PaxDropDown"></select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table id="passenger">
+                    <tr>
+                        <td>
+                            Người lớn (12+)
+                        </td>
+                        <td>
+                            Trẻ em (2-12)
+                        </td>
+                        <td>
+                            Em bé (0-1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="ddlAdult" id="ddlAdult" class="PaxDropDown">
+                                <option @(Model != null ? (Model.Adult == 1 ? "selected='selected'" : "") : "selected='selected'") value="1">1</option>
+                                <option @(Model != null ? (Model.Adult == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                                <option @(Model != null ? (Model.Adult == 3 ? "selected='selected'" : "") : "'") value="3">3</option>
+                                <option @(Model != null ? (Model.Adult == 4 ? "selected='selected'" : "") : "'") value="4">4</option>
+                                <option @(Model != null ? (Model.Adult == 5 ? "selected='selected'" : "") : "'") value="5">5</option>
+                                <option @(Model != null ? (Model.Adult == 6 ? "selected='selected'" : "") : "'") value="6">6</option>
+                                <option @(Model != null ? (Model.Adult == 7 ? "selected='selected'" : "") : "'") value="7">7</option>
+                                <option @(Model != null ? (Model.Adult == 8 ? "selected='selected'" : "") : "'") value="8">8</option>
+                                <option @(Model != null ? (Model.Adult == 9 ? "selected='selected'" : "") : "'") value="9">9</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="ddlChild" id="ddlChild" class="PaxDropDown">
+                                <option @(Model != null ? (Model.Children == 0 ? "selected='selected'" : "") : "selected='selected'") value="0">0</option>
+                                <option @(Model != null ? (Model.Children == 1 ? "selected='selected'" : "") : "'") value="1">1</option>
+                                <option @(Model != null ? (Model.Children == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                                <option @(Model != null ? (Model.Children == 3 ? "selected='selected'" : "") : "'") value="3">3</option>
+                                <option @(Model != null ? (Model.Children == 4 ? "selected='selected'" : "") : "'") value="4">4</option>
+                                <option @(Model != null ? (Model.Children == 5 ? "selected='selected'" : "") : "'") value="5">5</option>
+                                <option @(Model != null ? (Model.Children == 6 ? "selected='selected'" : "") : "'") value="6">6</option>
+                                <option @(Model != null ? (Model.Children == 7 ? "selected='selected'" : "") : "'") value="7">7</option>
+                                <option @(Model != null ? (Model.Children == 8 ? "selected='selected'" : "") : "'") value="8">8</option>
+                                <option @(Model != null ? (Model.Children == 9 ? "selected='selected'" : "") : "'") value="9">9</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="ddlInfant" id="ddlInfant" class="PaxDropDown">
+                                <option @(Model != null ? (Model.Infant == 0 ? "selected='selected'" : "") : "selected='selected'") value="0">0</option>
+                                <option @(Model != null ? (Model.Infant == 1 ? "selected='selected'" : "") : "'") value="1">1</option>
+                                <option @(Model != null ? (Model.Infant == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div id='search-footer'>
+                    <div class='left'>
+                        <div class='radio'>
+                           
+                        </div>
+                       
+                        <a href='http://hoanggiatour.vn/news/detail/huong-dan-dat-ve-923' style="
+    color: #fff;
+">Hướng dẫn đặt vé(?)</a>
+                    </div>
+                    <div class='right'>
+                        <button type="submit" class='button-blue left'>Tìm chuyến bay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+}
+<div id="SeachHome_popup" style="display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>
+<script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+<link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+<script type="text/javascript" language="javascript">
+    function onOneWay() {
+        $("#rdbOneWay").attr("checked", true);
+    }
+
+    function onTwoWay(e) {
+        $("#rdbRoundTrip").attr("checked", true);
+    }
+
+    function submitseachome() {
+
+        var form = $('#frCreateSeachHomde');
+        if (form.parsley().isValid() == true) {
+            $('#SeachHome_popup').bPopup({
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+            });
+            return true;
+        }
+        return false;
+    }
+
+    
+</script>
+<script>
+
+    $(document).ready(function () {
+        OnChangedDropDownMonth();
+        airScript();
+        $('#btnCloseStartCity').bind('click', function () {
+            $('#pnStartCity').toggle("fast", '');
+        });
+
+        $('#btnCloseEndCity').bind('click', function () {
+            $('#pnEndCity').toggle("fast", '');
+        });
+
+        $("#txtStartPoint").bind('click', function () {
+            $('#txtStartPoint').val('');
+            $('#pnStartCity').toggle("fast", '');
+            $('#pnEndCity').hide();
+        });
+
+        $("#txtEndPoint").bind('click', function () {
+            $('#txtEndPoint').val('');
+            $('#pnEndCity').toggle("fast", '');
+            $('#pnStartCity').hide();
+        });
+        SearchAutoCompleteStartPoint();
+        SearchAutoCompleteEndPoint();
+        SearchAutoCompleteStartPointopub();
+        SearchAutoCompleteEndPointpopub();
+    });
+    function SearchAutoCompleteStartPointopub() {
+        $("#txtStartPointSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPointSearch").val(),
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#hdfStartPoint').val(ui.item.value);
+                $("#txtStartPoint").val(ui.item.labeldisplay);
+
+                $("#txtStartPoint").val(ui.item.labeldisplay);
+                $('#txtStartPointSearch').val(ui.item.labeldisplay);
+
+                $('#pnStartCity').css('display', 'none');
+                $('#pnEndCity').css('display', 'block');
+                $('#txtEndPointSearch').focus();
+            },
+             minLength: 3
+        });
+    }
+    function SearchAutoCompleteEndPointpopub() {
+        $("#txtEndPointSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                   url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointSearch").val(),
+                    dataType: "json",
+                     success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+
+                $('#hdfEndPoint').val(ui.item.value);
+                $('#hdfEndPointValue').val(ui.item.value);
+                $("#txtEndPoint").val(ui.item.labeldisplay);
+                $('#pnEndCity').css('display', 'none');
+                $('#txtStartPointSearch').val('');
+                $("#txtDepartureDate").datepicker('show');
+            },
+            minLength: 3
+        });
+    }
+    function OnChangedDropDownMonth() {
+        $("#ddlEndMonth option").remove();
+        var index = $("#ddlStartMonth").find(":selected").index();
+        var valueold ='@Model.EndMonth';
+        for (var i = index; i <= @DateTime.Now.AddMonths(9).Month; i++) {
+            var itemValue = $('#ddlStartMonth option').eq(i).val();
+            var itemText = $('#ddlStartMonth option').eq(i).text();
+            var option = new Option(itemText, itemValue);
+            if (valueold == itemValue) {
+                option.selected = true;
+            }
+            $("#ddlEndMonth").append($(option));
+        }
+    }
+   
+
+    function ToggleDatepicker() {
+        var check_value = $('.ItineraryRadio:checked').val();
+        if (check_value == 1) {
+            $("#divtxtReturnDate").attr('style', 'visibility: hidden;');
+            $("#ngayvetieude").attr('style', 'visibility: hidden;');
+
+            $("#txtReturnDate").removeAttr("required");
+        }
+        else {
+            $("#divtxtReturnDate").attr('style', 'visibility: visible;');
+            $("#ngayvetieude").attr('style', 'visibility: visible;');
+            $("#divtxtReturnDate").datepicker("option", "minDate", $("#txtDepartureDate").datepicker("getDate"));
+            $("#txtReturnDate").attr("required", "");
+        }
+    }
+
+    function airScript() {
+        $(document.body).mousedown(function (event) {
+            var target = $(event.target);
+            if (!target.parents().andSelf().is('#pnStartCity') && !target.parents().andSelf().is('#ui-id-1') && !target.parents().andSelf().is("#txtStartPoint")) { // Clicked outside
+                $('#pnStartCity').hide("fast", '');
+            }
+            if (!target.parents().andSelf().is('#pnEndCity') && !target.parents().andSelf().is('#ui-id-2') && !target.parents().andSelf().is("#txtEndPoint")) { // Clicked outside
+                $('#pnEndCity').hide("fast", '');
+            }
+        });
+
+    }
+
+    function SearchAutoCompleteStartPoint() {
+        $("#txtStartPoint").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPoint").val(),
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                          $('#pnStartCity').hide();
+                    }
+                });
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#hdfStartPoint').val(ui.item.value);
+                $("#txtStartPoint").val(ui.item.labeldisplay);
+                $('#pnStartCity').hide();
+                $('#pnEndCity').show();
+            },
+            minLength: 3
+        });
+    }
+    function addRequestVerificationToken(data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    }
+    function SearchAutoCompleteEndPoint() {
+        $("#txtEndPoint").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPoint").val(),
+                    dataType: "json",
+                     success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                          $('#pnEndCity').hide();
+                    }
+                });
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#hdfEndPoint').val(ui.item.value);
+                $("#txtEndPoint").val(ui.item.labeldisplay);
+                $('#pnEndCity').hide();
+                setTimeout(function () {
+                    $("#txtDepartureDate").datepicker('show');
+                }, 16);
+            },
+             minLength: 3
+        });
+    }
+
+
+    function addGeoAirPort_Go(code, name) {
+        $("#txtStartPoint").val(name);
+        $('#hdfStartPoint').val(code);
+        $('#pnStartCity').hide();
+        $('#pnEndCity').show();
+    }
+
+    function addGeoAirPort_To(code, name) {
+        $("#txtEndPoint").val(name);
+        $('#hdfEndPoint').val(code);
+        $('#pnEndCity').hide();
+        setTimeout(function () {
+            $("#txtDepartureDate").datepickerlunar('show');
+        }, 16);
+    }
+</script>

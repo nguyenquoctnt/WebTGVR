@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{02B1872B-9CB9-4BCC-9D72-AF8A2BBC76E4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AutoSendMailMuti</RootNamespace>
+    <AssemblyName>AutoSendMailMuti</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>iconfinder_mail-send-receive_118784.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=18.4.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.18.4.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\LIB\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeampleateVe\ExportPDF.cs" />
+    <Compile Include="TeampleateVe\RenderTeamPletave.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiClient\ApiClient.Models\ApiClient.Models.csproj">
+      <Project>{829641f2-22d5-4a59-8483-97120da79e3d}</Project>
+      <Name>ApiClient.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApiClient\ApiClient.Serialization\ApiClient.Serialization.csproj">
+      <Project>{e915ffd4-a2c8-49be-b071-0c3f9af23d43}</Project>
+      <Name>ApiClient.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApiClient\ApiClientCommon\ApiClient.Common.csproj">
+      <Project>{ca58d3e1-6188-405f-9ffa-6a9888bd58b9}</Project>
+      <Name>ApiClient.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Biz\VDMMutiline.Biz.csproj">
+      <Project>{9c308a8f-030d-4550-b44a-e904007b1a14}</Project>
+      <Name>VDMMutiline.Biz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Core\VDMMutiline.Core.csproj">
+      <Project>{ac9c00d7-7173-4810-a973-090b96f4e34a}</Project>
+      <Name>VDMMutiline.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Dao\VDMMutiline.Dao.csproj">
+      <Project>{0b99af95-615d-4c95-a0b0-f7dd466dfdae}</Project>
+      <Name>VDMMutiline.Dao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.SharedComponent\VDMMutiline.SharedComponent.csproj">
+      <Project>{1637e8e5-c05b-4fef-8524-418544a8f388}</Project>
+      <Name>VDMMutiline.SharedComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Ultilities\VDMMutiline.Ultilities.csproj">
+      <Project>{06fb04af-9f69-480b-aadf-0aa3fc6b3fa9}</Project>
+      <Name>VDMMutiline.Ultilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="iconfinder_mail-send-receive_118784.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

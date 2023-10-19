@@ -1,0 +1,50 @@
+﻿@model VDMMutiline.Core.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    ViewBag.Title = "Đăng nhập";
+}
+<div class="page-title box-sizing">
+    Đăng nhập
+</div>
+<span id="cphBody_ContentPlaceHolderMainColumn_lblMessage"></span>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @data_parsley_validate = "", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="travelo-box" style="overflow:hidden">
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <span class="block input-icon input-icon-right" style="color: red">
+                    @Html.Raw(ViewBag.erro)
+                </span>
+            </div>
+            <div class="col-xs-12">
+                <label> Tài khoản</label>
+                @Html.TextBoxFor(m => m.UserName, new { Required = "Required", @class = "input-text full-width", @placeholder = "Tài khoản", @autofocus = "autofocus" })
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px;">
+                <label> Mật khẩu</label>
+                @Html.PasswordFor(m => m.Password, new { Required = "Required", @class = "input-text full-width", @placeholder = "Mật khẩu" })
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px;">
+                <div class="toolbar clearfix">
+                    @*<div>
+                        <a href="@Url.Action("ForgotPassword", "Account")" data-target="#forgot-box" class="forgot-password-link">
+                            <i class="ace-icon fa fa-arrow-left"></i>
+                            Quên mật khẩu
+                        </a>
+                    </div>*@
+                    <div>
+                        <a href="@Url.Action("Register", "Account")" data-target="#signup-box" class="user-signup-link">
+                            <i class="ace-icon fa fa-arrow-left"></i>   Đăng ký tài khoản
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px;text-align:center">
+                <button type="submit" style="width:150px !important;font-size:18px" value="Gửi ý kiến của bạn" class="full-width btnSubmit ">Đăng nhập</button>
+            </div>
+        </div>
+    </div>
+
+}

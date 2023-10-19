@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using VDMMutiline.Core
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@{
+    var CurentUser = HttpContext.Current.GetOwinContext().GetUserManager<VDMUserManager>().FindByName(User.Identity.Name);
+    var common = CommonUI.GetlistTempleate(16);
+
+}
+<div id="header">
+    <div id="login-bar">
+        <div id="login-bar" class="hidden-xs">
+            <div id="login-a" class="container">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-9 loginstatus" style="text-align:right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <a class='uppercase' href="#">@CurentUser.UserName</a>
+                        <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        <a href="@Url.Action("Index","QuanLyVeDaDat")">@CommonUI.Getsettingtempleatebykey(common, "{header_list_booking}")</a>
+                        <span> &nbsp; &nbsp;| &nbsp; &nbsp;</span>
+                        <a href="@Url.Action("Index", "KiemTraVe", new { Area = "" })"> Tra cứu vé </a>
+                        <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        <a href="@Url.Action("ChangePassword","Account",new {@area=""})">Đổi mật khẩu</a>
+                        <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        using (Html.BeginForm("LogOff", "Account", new { @area = "" }, FormMethod.Post, new { id = "logoutForm", @area = "", @class = "navbar-right" }))
+                        {
+                            <a href="/Account/LogOff">@CommonUI.Getsettingtempleatebykey(common, "{header_logout}")</a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Register", "Account", new { Area = "" })"> @CommonUI.Getsettingtempleatebykey(common, "{header_Register}") </a>
+                        <span> &nbsp; &nbsp;| &nbsp; &nbsp;</span>
+                        <a href="@Url.Action("Login", "Account", new { Area = "" })"> @CommonUI.Getsettingtempleatebykey(common, "{header_login}") </a>
+                        <span> &nbsp; &nbsp;| &nbsp; &nbsp;</span>
+                        <a href="@Url.Action("Index", "KiemTraVe", new { Area = "" })"> Tra cứu vé </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

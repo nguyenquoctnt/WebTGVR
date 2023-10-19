@@ -1,0 +1,172 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.BK_BookingInfo
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Entities
+@using Microsoft.Ajax.Utilities
+@using VDMMutiline.Ultilities
+@using VDMMutiline.SeachAndBook
+@functions{
+
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+    private List<VDMMutiline.SharedComponent.EntityInfo.BK_PassengerInfo> GetbyBooking(int id)
+    {
+        var dao = new BK_PassengerDao();
+        var param = new VDMMutiline.SharedComponent.Params.BK_PassengerParam() { BookingID = id };
+        dao.GetbyBooking(param);
+        return param.BK_PassengerInfos;
+    }
+    private List<BK_TicketInfo> GetListByBooking(int id)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(id);
+    }
+}
+<style>
+    .radio {
+        margin-top: 0px !important;
+    }
+</style>
+<div id="contend">
+    <div class="container margintop">
+
+        @if (ViewBag.Fail)
+        {
+            <div class="Content">
+                <div class="NormalBox">
+                    <div class="Title">
+                        <h1 class="madonghang"> <span style="color: orange"><span>Giữ vé không thành công trên toàn bộ hành trình @Model.rCode </span></span></h1>
+                    </div>
+                    <div class="Content">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_book_tickets_again<br>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="padding-top: 15px;font-weight: 600;color: #353434;padding-bottom: 10px;">Tóm tắt @Model.rCode không thể giữ chỗ do sát giờ bay hoặc hết giá vé như sau:</div>
+                <div class=" NoTop border-radius-bottom">
+                    <div class="">
+                        <div class="  BasketPrice">
+                            <table style="width: 100%;" border="0" cellpadding="3" cellspacing="3">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span id="lblName"><b>Code: @Model.BookCode </b></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            @{
+                                                var incontrail = "";
+                                                foreach (var item in GetbyBooking(Model.ID))
+                                                {
+                                                    if (!incontrail.Contains(item.ID + ";"))
+                                                    {
+                                                        <p style="padding-bottom: 0px; padding-top: 0px; margin-bottom: 0px; margin-top: 0px">
+                                                            @Utility.ConvertToUnsign(item.FirstName + " " + item.Name).ToUpper()
+                                                            (@((!string.IsNullOrEmpty(item.BaggageDepartValue) ? item.BaggageDepartValue : "0") + "kg")        @((!string.IsNullOrEmpty(item.BaggageReturnValue) ? " - " + item.BaggageReturnValue : " - 0") + "kg"))
+
+                                                        </p>
+                                                    }
+                                                    incontrail += item.ID + ";";
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                    @{
+                                        var lstve = GetListByBooking(Model.ID);
+                                        var objdi = lstve.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotDi);
+                                        if (objdi != null)
+                                        {
+                                            var Departure = objdi;
+                                            <tr>
+                                                <td style="font-weight: bold">
+                                                    <span id="lblPhone">@Departure.FlightNo @Departure.FromCity @Departure.ToCity @Departure.StartDate.Value.ToString("dd/MM") @Departure.StartDate.Value.ToString("HH:mm") </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    @{
+                                        var objve = lstve.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotVe);
+                                        if (objve != null)
+                                        {
+                                            var Departure = objve;
+                                            <tr>
+                                                <td style="font-weight: bold">
+                                                    <span id="lblPhone">@Departure.FlightNo @Departure.FromCity @Departure.ToCity @Departure.StartDate.Value.ToString("dd/MM") @Departure.StartDate.Value.ToString("HH:mm") </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            <span id="lblEmail">XTay <b> 7Kg</b></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            <span id="lblEmail">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_has_a_front_90P</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            <span id="lblEmail">
+                                                @*@Utility.ConvertToUnsign(@VDMMutiline.Resource.App_GlobalResources.weblanguage.Price):*@
+                                                Gia<b>
+                                                    @{
+                                                        var gia = Model.TotalPrice.Value.ToString("n0");
+                                                        var gialent = gia.Length;
+                                                    }
+                                                    @(Model.TotalPrice.HasValue ? (gialent > 4 ? gia.Remove(gialent - 4, 4) + "K" : gia) : "")
+                                                </b>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            <span id="lblNote">TINH TRANG: DAT THAT BAI</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            <span id="lblNote">THÔNG TIN ĐẶT CHỐ :</span>
+                                            <br />
+                                            <span id="lblNote">HO TEN: @Model.Name</span>
+                                            <span id="lblNote">SDT: @Model.Phone</span>
+                                            <span id="lblNote">EMAIL: @Model.Email</span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="Content  hidden-xs" style="text-align: left">
+                            <a href="#" target="_blank" class="ButtonGreen" style="    margin-top: 10px;font-size: 18px; height: 35px; width: 150px; text-align: center;"> REBOOK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewBag.Quocte)
+        {
+            Html.RenderPartial("_KetQuaQuocTe", Model);
+        }
+        else
+        {
+            Html.RenderPartial("_KetQuaTrongNuoc", Model);
+        }
+    </div>
+</div>

@@ -1,0 +1,174 @@
+﻿@model VDMMutiline.SharedComponent.Params.SysCategoryParam
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Create", "SysCategory", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateSysCategory", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.SysCategory.Id)
+    @Html.HiddenFor(x => x.SysCategory.LoaiCate)
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên hiển thị</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysCategory.TenHienthi, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Thứ tự</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.SysCategory.Thutu, new { @Required = "Required", @class = "form-control thutu", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Chuyên mục cha</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.SysCategory.ParentId, Model.SysCategoryInfos.Select(n => new SelectListItem { Selected = n.Id == Model.SysCategory.ParentId, Text = n.TenHienthi, Value = n.Id.ToString() }), new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Icon</label>
+                <div class="col-md-8">
+                    <input type="file" name="Imageimput" class="actFile" />
+                    <br />
+                    @if (!string.IsNullOrEmpty(Model.SysCategory.Thumb))
+                    {
+                        <img src="@Model.SysCategory.Thumb" style="height: 100px; width: 100px;" />
+                    }
+                    @Html.HiddenFor(x => x.SysCategory.Thumb)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Hình ảnh</label>
+                <div class="col-md-8">
+                    <input type="file" name="Imageimput" class="actFile" />
+                    <br />
+                    @if (!string.IsNullOrEmpty(Model.SysCategory.Image))
+                    {
+                        <img src="@Model.SysCategory.Image" style="height: 100px; width: 100px;" />
+                    }
+                    @Html.HiddenFor(x => x.SysCategory.Image)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Mô tả</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.SysCategory.Mota, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Mô tả seo</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysCategory.SEODescription, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Key seo</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysCategory.SEOKeyword, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tiêu đề seo</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysCategory.SEOTitle, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Liên kết</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysCategory.UrlConten, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control"></label>
+                <div class="col-md-8">
+                    <div class="checkedcontrol">
+                        @if (Model.SysCategory.IsHome == null)
+                        {
+                            Model.SysCategory.IsHome = false;
+                        }
+                        @Html.CheckBox("SysCategory.IsHome", Model.SysCategory.IsHome == true, new { @class = "icheckboxcs" })
+                        <label for="SysMenu_IsSystem">Hiển thị trang chủ</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control"></label>
+                <div class="col-md-8">
+                    <div class="checkedcontrol">
+                        @if (Model.SysCategory.IsMenu == null)
+                        {
+                            Model.SysCategory.IsMenu = false;
+                        }
+                        @Html.CheckBox("SysCategory.IsMenu", Model.SysCategory.IsMenu == true, new { @class = "icheckboxcs" })
+                        <label for="SysMenu_IsSystem">Hiển thị menu</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control"></label>
+                <div class="col-md-8">
+                    <div class="checkedcontrol">
+                        @if (Model.SysCategory.Isfooter == null)
+                        {
+                            Model.SysCategory.Isfooter = false;
+                        }
+                        @Html.CheckBox("SysCategory.Isfooter", Model.SysCategory.Isfooter == true, new { @class = "icheckboxcs" })
+                        <label for="SysMenu_IsSystem">Hiển thị Footer</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control"></label>
+                <div class="col-md-8">
+                    <div class="checkedcontrol">
+                        @if (Model.SysCategory.IsContend == null)
+                        {
+                            Model.SysCategory.IsContend = false;
+                        }
+                        @Html.CheckBox("SysCategory.IsContend", Model.SysCategory.IsContend == true, new { @class = "icheckboxcs" })
+                        <label for="SysMenu_IsSystem">Là link nội dung</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+
+

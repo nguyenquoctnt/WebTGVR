@@ -1,0 +1,69 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.Issue.ConfirmIssueInfo
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.Dao
+@using VDMMutiline.Ultilities
+@{
+
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    @{
+        Html.RenderPartial("~/Areas/Issue/Views/TicketInfo/_PartialInfoTickKet.cshtml", Model.BookingInfos);
+    }
+    @if (string.IsNullOrEmpty(ViewBag.erro))
+    {
+        <div class="card-content collapse show" id="div-submit">
+            <div class="card-body card-dashboard">
+                @using (Html.BeginForm("ConfirmIssue", "IssueTicket", FormMethod.Post, new {@id= "frmConfirmIssue", @class = "form form-horizontal", @data_parsley_validate = "", @role = "form" }))
+                {
+                    @Html.HiddenFor(z => z.IssueInfo.AirlineCode)
+                    @Html.HiddenFor(z => z.IssueInfo.BookingCode)
+                    <div class="form-body">
+                        <h4 class="form-section"><i class="fa fa-user"></i> Xuất vé</h4>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Remark </label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(z => z.IssueInfo.Remark, new { @required = "required", @class = "form-control border-primary" })
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" onclick="submitform()" id="btnxuatve" class="btn btn-info btn-block">Xuất vé</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+<script>
+    function submitform() {
+        $( "#div-submit" ).attr( "disabled", "disabled" );
+           var formvalidate = $('#frmConfirmIssue');
+            formvalidate.parsley().validate()
+            if (formvalidate.parsley().isValid() == true) {
+                var form = $('form#frmConfirmIssue').get(0);
+                var fd = new FormData(form);
+                _lwfunc.AjaxNoprocessData("@Url.Action("ConfirmIssue", "IssueTicket", new { @area = "Issue" })", fd, function (data) {
+                    if (data.isSuccess === true) {
+                        toastr.success( data.mess, "Thông báo!" );
+                        setTimeout( function () {   window.location.href = "@Url.Action("Index", "IssueTicket")"; }, 500 );
+                    } else {
+                        toastr.error( data.mess, "Thông báo!" );
+                        $( "#div-submit" ).removeAttr( "disabled");
+                    }
+
+                });
+            }
+            }
+</script>

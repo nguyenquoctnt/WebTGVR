@@ -1,0 +1,222 @@
+﻿@using VDMMutiline.SharedComponent.EntityInfo
+@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+
+
+
+<div id="contend" class="main row">
+    <div class="container2">
+        <div class="ResultLeft">
+
+
+            <div id="Step1">
+                <h1>Chi tiết chuyến bay</h1>
+                <div class="NormalBox MarginTop BorderTop">
+                    <div id="FareFlightContent" class="FareFlightContent">
+                        @if (Model.DepartureFlight != null)
+                        {
+                            @Html.HiddenFor(z => Model.DepartureFlight.SessionAll)
+                            @Html.HiddenFor(z => Model.DepartureFlight.DebugID)
+                            @Html.HiddenFor(z => Model.DepartureFlight.FltNumb)
+                            @Html.HiddenFor(z => Model.DepartureFlight.StartDate)
+                            @Html.HiddenFor(z => Model.DepartureFlight.EndDate)
+                            @Html.HiddenFor(z => Model.DepartureFlight.TotalPrice)
+                            @Html.HiddenFor(z => Model.DepartureFlight.PriceBefor)
+                            @Html.HiddenFor(z => Model.DepartureFlight.StartPoint)
+                            @Html.HiddenFor(z => Model.DepartureFlight.EndPoint)
+                            @Html.HiddenFor(z => Model.DepartureFlight.FareClass)
+                            @Html.HiddenFor(z => Model.DepartureFlight.PriceAdult)
+                            @Html.HiddenFor(z => Model.DepartureFlight.FeeAdult)
+                            @Html.HiddenFor(z => Model.DepartureFlight.TaxAdult)
+                            @Html.HiddenFor(z => Model.DepartureFlight.PriceChild)
+                            @Html.HiddenFor(z => Model.DepartureFlight.FeeChild)
+                            @Html.HiddenFor(z => Model.DepartureFlight.TaxChild)
+                            @Html.HiddenFor(z => Model.DepartureFlight.PriceInfant)
+                            @Html.HiddenFor(z => Model.DepartureFlight.FeeInfant)
+                            @Html.HiddenFor(z => Model.DepartureFlight.TaxInfant)
+                            @Html.HiddenFor(z => Model.DepartureFlight.SelectValue)
+                            @Html.HiddenFor(z => Model.DepartureFlight.AirlineCode)
+                            <div class="FilghtItem">
+                                <div class="FlightDirection">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Chuyến đi:
+                                                    <span id="lblOutboundFlight">@(objnamedi != null ? string.Format("{0}, {1} ({2})", objnamedi.label, objnamedi.text, objnamedi.value) : "") → @(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.label, objnameden.text, objnameden.value) : "")</span>
+                                                </td>
+                                                <td align="right" style="padding-right: 10px;">
+                                                    <div id="NonRefundMessageDepart">
+                                                        <span><img alt="Warning" src="/Content/FontEnd/SeachValue/warning_icon.png" height="14"></span>
+                                                        Lưu ý: Chặng này có thể không được hoàn vé
+                                                    </div>
+                                                    <span class="DetailLabel">Thời gian bay:</span> <span id="lblDurationDeparture"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="FilghtInfo" style="border: none; margin: 0px;">
+                                    <div class="FlightInfoDetails" style="margin: 0px;">
+                                        <div class="FlightInfoDetailsContent">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody>
+                                                    @foreach (var ListAvailFlights in Model.DepartureFlight.ListAvailFlights)
+                                                    {
+                                                        <tr>
+                                                            <td class="Airline">
+                                                                <img alt="Airline logo" src="">
+                                                                <div class="AirlineName">
+                                                                    @UIUty.GetNamebyHang(Model.DepartureFlight.AirlineCode)
+                                                                </div>
+                                                            </td>
+                                                            <td class="Depart">
+                                                                <div class="City">
+                                                                    @(getsanbaycode(ListAvailFlights.StartPoint))
+                                                                </div>
+                                                                <div class="Time">
+                                                                    <span class="DetailLabel">Cất cánh:</span>
+                                                                    <span class="TimeDetail">@(ListAvailFlights.StartDate.ToString("HH:mm"))</span><br>
+                                                                    <span class="TimeTitle">
+                                                                        <span class="DetailLabel">@(UIUty.getnameday(ListAvailFlights.StartDate))</span>
+                                                                        
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="Depart">
+                                                                <div class="City">
+                                                                  
+                                                                </div>
+                                                                <div class="Time">
+                                                                    <span class="DetailLabel">Hạ cánh:</span>
+                                                                    <span class="TimeDetail"></span><br>
+                                                                    <span class="TimeTitle">
+                                                                        <span class="DetailLabel">@(UIUty.getnameday(ListAvailFlights.EndDate))</span>
+                                                                      
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="Detail">
+                                                                <span class="DetailLabel">Chuyến bay:</span> <b>@ListAvailFlights.FlightNumber</b><br>
+                                                                <span class="DetailLabel">Thời gian bay:</span> <b>@UIUty.GetTimeString(ListAvailFlights.Duration)</b><br>
+
+                                                                <span style="" class="DetailLabel">Máy bay: <b>@ListAvailFlights.Plane</b></span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.ReturnFlight != null)
+                        {    
+                            <div class="FilghtItem">
+                                <div class="FlightDirection">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Chuyến về:
+                                                         </td>
+                                                <td align="right" style="padding-right: 10px;">
+                                                    <div id="NonRefundMessageReturn">
+                                                        <span>
+                                                            <span><img alt="Warning" src="/Content/FontEnd/SeachValue/warning_icon.png" height="14"></span>
+                                                        </span>
+                                                        Lưu ý: Chặng này có thể không được hoàn vé
+                                                    </div>
+                                                    <span class="DetailLabel">Thời gian bay:</span> <span id="lblDurationDeparture"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="FilghtInfo" style="border: none; margin: 0px;">
+                                    <div class="FlightInfoDetails" style="margin: 0px;">
+                                        <div class="FlightInfoDetailsContent">
+
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody>
+                                                    @foreach (var ListAvailFlights in Model.ReturnFlight.ListAvailFlights)
+                                                    {
+                                                        <tr>
+                                                            <td class="Airline">
+                                                                <img alt="Airline logo" src="@UIUty.GetImagebyHang(Model.ReturnFlight.AirlineCode)">
+                                                                <div class="AirlineName">
+                                                                    @UIUty.GetNamebyHang(Model.ReturnFlight.AirlineCode)
+                                                                </div>
+                                                            </td>
+                                                            <td class="Depart">
+                                                                <div class="City">
+                                                                    @(getsanbaycode(ListAvailFlights.StartPoint))
+                                                                </div>
+                                                                <div class="Time">
+                                                                    <span class="DetailLabel">Cất cánh:</span>
+                                                                    <span class="TimeDetail">@(ListAvailFlights.StartDate.ToString("HH:mm"))</span><br>
+                                                                    <span class="TimeTitle">
+                                                                        <span class="DetailLabel">@(UIUty.getnameday(ListAvailFlights.StartDate))</span>
+                                                                        @(ListAvailFlights.StartDate.ToString("dd/MM/yyyy"))
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="Depart">
+                                                                <div class="City">
+                                                                    @((getsanbaycode(ListAvailFlights.EndPoint)))
+                                                                </div>
+                                                                <div class="Time">
+                                                                    <span class="DetailLabel">Hạ cánh:</span>
+                                                                    <span class="TimeDetail">@(ListAvailFlights.EndDate.ToString("HH:mm"))</span><br>
+                                                                    <span class="TimeTitle">
+                                                                        <span class="DetailLabel">@(UIUty.getnameday(ListAvailFlights.EndDate))</span>
+                                                                        @(ListAvailFlights.EndDate.ToString("dd/MM/yyyy"))
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="Detail">
+                                                                <span class="DetailLabel">Chuyến bay:</span> <b>@ListAvailFlights.FlightNumber</b><br>
+                                                                <span class="DetailLabel">Thời gian bay:</span> <b>@UIUty.GetTimeString(ListAvailFlights.Duration)</b><br>
+
+                                                                <span style="" class="DetailLabel">Máy bay: <b>@ListAvailFlights.Plane</b></span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+          
+           
+            }
+        </div>
+        <div class="ResultRight" style="display:block">
+            <div class="NormalBox" style="margin-bottom: 10px">
+                <div class="Title">
+                    Giỏ hàng của bạn
+                </div>
+
+            </div>
+            @section  Seach{
+                <div>
+                    @{ Html.RenderPartial("_PartialSachMini", Model); }
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

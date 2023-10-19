@@ -1,0 +1,49 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.MailInfo
+@{
+    Layout = null;
+}
+<div class="modal fade text-left" id="GuiMail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark white">
+                <h4 class="modal-title white" id="myModalLabel17">Gửi Mail cho khách hàng</h4>
+                <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("sendmail", "Booking", FormMethod.Post, new { @onsubmit = "return validateFormfrCreatesendmail()", enctype = "multipart/form-data", @class = "form-horizontal", @data_parsley_validate = "", id = "frCreatesendmail", @role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label no-padding-right">Mail</label>
+                        <div class="col-sm-10">
+                            @Html.HiddenFor(z => Model.Bookingid)
+                            @Html.TextBoxFor(z => Model.Mail, new { @required = "Required", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button id="submitbtsangmail" type="submit" class="btn btn-info"><i class="ace-icon fa fa-check bigger-110"></i>Gửi mail</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function validateFormfrCreatesendmail() {
+        var isDisabled = $("#submitbtsangmail").is(':disabled');
+        if (!isDisabled) {
+            $("#submitbtsangmail").attr("disabled", true);
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+</script>

@@ -1,0 +1,70 @@
+﻿@using WebProject.Dao
+@using WebProject.SharedComponent.Constants
+@using WebProject.SharedComponent.EntityInfo
+@using WebProject.SharedComponent.Params
+@model WebProject.SharedComponent.EntityInfo.BK_BookingInfo
+@{
+    /**/
+
+    /**/
+
+    Layout = null;
+}
+@if (Model != null)
+{
+    using (Html.BeginForm("Stripe", "ThanhToan", FormMethod.Post, new { @data_parsley_validate = "", id = "frmCharge" }))
+    {
+        @Html.HiddenFor(z => z.TotalPrice)
+        @Html.HiddenFor(z => z.rCode)
+        @Html.HiddenFor(z => z.Email)
+
+        <div class="col-xs-12" style="min-height:18px;">
+            <span class="payment-errors"></span>
+        </div>
+        <div class="col-xs-6" style="min-height:65px;">
+            <label> Card Number</label>
+            <input required="Required" data-stripe="number" class="input-text full-width" id="txtCardNumber" name="txtCardNumber" type="text" value="" data-parsley-id="4440"><span class="help-block" id="parsley-id-4440"></span>
+        </div>
+        <div class="col-xs-6" style="min-height:65px;">
+            <label>Cvc</label>
+            <input required="Required" data-stripe="cvc" class="input-text full-width" id="txtCvc" name="txtCvc" type="text" value="" data-parsley-id="4440"><span class="help-block" id="parsley-id-4440"></span>
+        </div>
+        <div class="col-xs-6" style="min-height:65px;">
+            <label> Expiry Month (MM)</label>
+            <select id="txtExpiryMonth" data-stripe="exp-month" name="txtExpiryMonth" class="input-text full-width">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="col-xs-6" style="min-height:65px;">
+            <label> Expiry Year (YYYY)</label>
+            <select data-stripe="exp-year" id="txtExpiryYear" name="txtExpiryYear" class="input-text full-width">
+                @for (var i = DateTime.Now.Year; i <= DateTime.Now.AddYears(5).Year; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+        <input type="hidden" id="hdnToken" />
+        <div class="col-xs-12" style="text-align:center">
+            <button id="btnCharge" onclick="formthanhtoan()" type="button" style="width:150px !important;font-size:18px" value="Submit" class="full-width btnSubmit ">Đăng ký </button>
+        </div>
+        <div class="clearfix"></div>
+    }
+}
+<script>
+    $(document).ready(function () {
+        $("#frmCharge").parsley({
+        })
+    });
+</script>

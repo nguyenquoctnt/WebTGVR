@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accountlogout" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Addition_services" xml:space="preserve">
+    <value>Dịch vụ kèm thêm</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="Adults" xml:space="preserve">
+    <value>Người lớn</value>
+  </data>
+  <data name="Aircraff" xml:space="preserve">
+    <value>Máy bay</value>
+  </data>
+  <data name="Airlines" xml:space="preserve">
+    <value>Hãng hàng không</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="Amount_of_money" xml:space="preserve">
+    <value>Số tiền</value>
+  </data>
+  <data name="Available_airport" xml:space="preserve">
+    <value>Có đổi sân bay</value>
+  </data>
+  <data name="Baggage" xml:space="preserve">
+    <value>Hành lý ký gửi</value>
+  </data>
+  <data name="Basic_price_for_1_adult" xml:space="preserve">
+    <value>Giá cơ bản cho 1 người lớn</value>
+  </data>
+  <data name="Billing_Information" xml:space="preserve">
+    <value>Thông tin thanh toán</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Ngày sinh</value>
+  </data>
+  <data name="Booking" xml:space="preserve">
+    <value>Đặt chỗ</value>
+  </data>
+  <data name="BOOKING_GUIDE" xml:space="preserve">
+    <value>HD ĐẶT VÉ</value>
+  </data>
+  <data name="BOOKING_SUCCESS" xml:space="preserve">
+    <value>ĐẶT VÉ THÀNH CÔNG!</value>
+  </data>
+  <data name="BOOK_THE_FLIGHT_TICKET" xml:space="preserve">
+    <value>ĐẶT VÉ MÁY BAY</value>
+  </data>
+  <data name="BUY_TICKETS_ONLINE" xml:space="preserve">
+    <value>MUA VÉ TRỰC TUYẾN</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Giỏ hàng của bạn</value>
+  </data>
+  <data name="Changepassword" xml:space="preserve">
+    <value>Đổi mật khẩu</value>
+  </data>
+  <data name="Change_the_station_at" xml:space="preserve">
+    <value>Đổi nhà ga tại</value>
+  </data>
+  <data name="CHARTER_TRANSPORTATION" xml:space="preserve">
+    <value>ĐIỀU LỆ VẬN CHUYỂN</value>
+  </data>
+  <data name="check_accept_the_booking" xml:space="preserve">
+    <value>Tôi chấp nhận các điều khoản đặt vé của website  và điều kiện giá</value>
+  </data>
+  <data name="Children" xml:space="preserve">
+    <value>Trẻ em</value>
+  </data>
+  <data name="Choose_from_the_list_or_enter_to_search" xml:space="preserve">
+    <value>Chọn từ danh sách hoặc nhập vào để tìm kiếm</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Thành phố</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Hạng chỗ</value>
+  </data>
+  <data name="Code_orders" xml:space="preserve">
+    <value>Mã đơn hàng</value>
+  </data>
+  <data name="Company_name" xml:space="preserve">
+    <value>Tên công ty</value>
+  </data>
+  <data name="Conditions_of_tickets" xml:space="preserve">
+    <value>Điều kiện vé</value>
+  </data>
+  <data name="Confirm_reservations" xml:space="preserve">
+    <value>Xác nhận đặt chỗ</value>
+  </data>
+  <data name="Contact_information" xml:space="preserve">
+    <value>Thông tin liên hệ</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Tiếp tục</value>
+  </data>
+  <data name="Date_department" xml:space="preserve">
+    <value>Ngày đi</value>
+  </data>
+  <data name="Date_return" xml:space="preserve">
+    <value>Ngày về</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="Details_fares" xml:space="preserve">
+    <value>Chi tiết giá vé</value>
+  </data>
+  <data name="domestic" xml:space="preserve">
+    <value>Trong nước</value>
+  </data>
+  <data name="Domestic_card_payments" xml:space="preserve">
+    <value>Thanh toán bằng thẻ Quốc nội</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Thời gian bay</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Enter_city_or_airport_code" xml:space="preserve">
+    <value>Nhập thành phố hoặc mã sân bay</value>
+  </data>
+  <data name="Equal_pay" xml:space="preserve">
+    <value>Thanh toán bằng</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Nữ</value>
+  </data>
+  <data name="Filter_flights" xml:space="preserve">
+    <value>Lọc chuyến bay</value>
+  </data>
+  <data name="flight" xml:space="preserve">
+    <value>Chuyến bay</value>
+  </data>
+  <data name="Flight_Detail" xml:space="preserve">
+    <value>Chi tiết chuyến bay</value>
+  </data>
+  <data name="Flight_time" xml:space="preserve">
+    <value>Thời gian bay</value>
+  </data>
+  <data name="Forgotpassword" xml:space="preserve">
+    <value>Quên mật khẩu</value>
+  </data>
+  <data name="Full_name" xml:space="preserve">
+    <value>Họ tên</value>
+  </data>
+  <data name="GRAND_TOTAL" xml:space="preserve">
+    <value>Tổng chi phí</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Inbound_flight" xml:space="preserve">
+    <value>Chuyến về</value>
+  </data>
+  <data name="Infants" xml:space="preserve">
+    <value>Em bé</value>
+  </data>
+  <data name="international" xml:space="preserve">
+    <value>Quốc tế</value>
+  </data>
+  <data name="International_payment_cards" xml:space="preserve">
+    <value>Thanh toán thẻ Quốc tế</value>
+  </data>
+  <data name="I_want_an_invoice" xml:space="preserve">
+    <value>Tôi muốn xuất hóa đơn</value>
+  </data>
+  <data name="Journey" xml:space="preserve">
+    <value>Hành trình</value>
+  </data>
+  <data name="LOGIN" xml:space="preserve">
+    <value>ĐĂNG NHẬP</value>
+  </data>
+  <data name="Luggage" xml:space="preserve">
+    <value>Hành lý xách tay</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Nam</value>
+  </data>
+  <data name="manage" xml:space="preserve">
+    <value>Quản lý</value>
+  </data>
+  <data name="METHOD_TRADE" xml:space="preserve">
+    <value>CÁCH THỨC GIAO DỊCH</value>
+  </data>
+  <data name="Mr" xml:space="preserve">
+    <value>Quý ông</value>
+  </data>
+  <data name="Mrs" xml:space="preserve">
+    <value>Quý bà</value>
+  </data>
+  <data name="MSG_No_flights_found" xml:space="preserve">
+    <value>&lt;span style="    font-size: 16px;    color: #3F51B5;"&gt;
+                                        Xin lỗi, chúng tôi không thể tìm thấy các chuyến bay phù hợp với yêu cầu của bạn. &lt;/span&gt; &lt;br&gt;
+Hãy làm lại việc tìm kiếm các chuyến bay. Cảm ơn bạn.</value>
+  </data>
+  <data name="Note_hotline" xml:space="preserve">
+    <value>&lt;span style="color: #0000ff;"&gt;
+Chú ý: Nếu không nhận được email, xin quý khách liên hệ hotline: 
+&lt;span style="font-size: 14pt;"&gt;&lt;span style="font-family: &amp;quot;Times New Roman&amp;quot;;"&gt;
+&lt;span style="font-style: normal; line-height: 20px; text-align: start;"&gt;
+&lt;strong&gt;19007287&lt;/strong&gt;
+&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;
+&lt;/span&gt;
+&lt;/span&gt;
+&lt;/span&gt;
+ để được hỗ trợ
+&lt;/span&gt;</value>
+  </data>
+  <data name="Note_This_type" xml:space="preserve">
+    <value>Lưu ý: Đây là loại vé khuyến mại, bạn cần thực hiện thanh toán ngay đối với loại vé này</value>
+  </data>
+  <data name="Now_landing" xml:space="preserve">
+    <value>Giờ hạ cánh</value>
+  </data>
+  <data name="Now_take_off" xml:space="preserve">
+    <value>Thời gian cất cánh</value>
+  </data>
+  <data name="No_flights_found" xml:space="preserve">
+    <value>Không tìm thấy chuyến bay</value>
+  </data>
+  <data name="Number_stops" xml:space="preserve">
+    <value>Số điểm dừng</value>
+  </data>
+  <data name="One_way" xml:space="preserve">
+    <value>Một chiều</value>
+  </data>
+  <data name="Other_invoice_address" xml:space="preserve">
+    <value>Địa chỉ nhận hóa đơn khác</value>
+  </data>
+  <data name="Outbound_flight" xml:space="preserve">
+    <value>Chuyến đi</value>
+  </data>
+  <data name="Passengers" xml:space="preserve">
+    <value>Hành khách</value>
+  </data>
+  <data name="Passenger_information" xml:space="preserve">
+    <value>Thông tin hành khách</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="Pay" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
+  <data name="Payday" xml:space="preserve">
+    <value>&lt;strong&gt;Hạn thanh toán: &lt;/strong&gt; Quý khách vui lòng thanh toán trước thời gian sau, đặt chỗ sẽ tự động hủy nếu quý khách không thực hiện thanh toán trước:
+
+</value>
+  </data>
+  <data name="Payment_for_VTC" xml:space="preserve">
+    <value>Thanh toán ví VTC</value>
+  </data>
+  <data name="PAYMENT_GUIDE" xml:space="preserve">
+    <value>HD THANH TOÁN</value>
+  </data>
+  <data name="Phone_number" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="Please_accept_booking" xml:space="preserve">
+    <value>Tôi chấp nhận các điều khoản đặt vé của website  và điều kiện giá</value>
+  </data>
+  <data name="Please_book_tickets_again" xml:space="preserve">
+    <value>Vui lòng đặt vé lại hoặc liên hệ Booker để được xử lý.</value>
+  </data>
+  <data name="Please_has_a_front_90P" xml:space="preserve">
+    <value>VUI LONG CO MAT TRUOC 90P</value>
+  </data>
+  <data name="Please_wait" xml:space="preserve">
+    <value>Vui lòng đợi trong giây lát, hệ thống đang xử lý bạn vui lòng không đóng và làm mới trang.</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Giá</value>
+  </data>
+  <data name="Prices_include_taxes_and_fees" xml:space="preserve">
+    <value>Giá bao gồm thuế va phí</value>
+  </data>
+  <data name="Price_information" xml:space="preserve">
+    <value>Thông tin về giá</value>
+  </data>
+  <data name="Promo" xml:space="preserve">
+    <value>Vé khuyến mại!</value>
+  </data>
+  <data name="Promotion_code" xml:space="preserve">
+    <value>Mã Khuyến Mãi</value>
+  </data>
+  <data name="Promotion_Information" xml:space="preserve">
+    <value>Thông tin Khuyến Mãi</value>
+  </data>
+  <data name="QUICK_BOOKING" xml:space="preserve">
+    <value>ĐẶT VÉ NHANH</value>
+  </data>
+  <data name="Receiver_invoice" xml:space="preserve">
+    <value>Người nhận hóa đơn</value>
+  </data>
+  <data name="Registeraccount" xml:space="preserve">
+    <value>Đăng ký tài khoản</value>
+  </data>
+  <data name="Rememberaccount" xml:space="preserve">
+    <value>Nhớ tài khoản</value>
+  </data>
+  <data name="Round_trip" xml:space="preserve">
+    <value>Khứ hồi</value>
+  </data>
+  <data name="Seach" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Searching_for_flights" xml:space="preserve">
+    <value>Đang tìm kiếm chuyến bay...</value>
+  </data>
+  <data name="Select_all" xml:space="preserve">
+    <value>Chọn tất cả</value>
+  </data>
+  <data name="Select_a_point_from" xml:space="preserve">
+    <value>Chọn điểm đi</value>
+  </data>
+  <data name="Select_a_point_to" xml:space="preserve">
+    <value>Chọn điểm đến</value>
+  </data>
+  <data name="Select_city_from" xml:space="preserve">
+    <value>Chọn thành phố đến</value>
+  </data>
+  <data name="Select_city_to_go" xml:space="preserve">
+    <value>Chọn thành phố đi</value>
+  </data>
+  <data name="Select_flights" xml:space="preserve">
+    <value>Chọn chuyến bay</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>Dịch vụ</value>
+  </data>
+  <data name="Sex" xml:space="preserve">
+    <value>Giới tính</value>
+  </data>
+  <data name="Sort_flight" xml:space="preserve">
+    <value>Xắp xếp theo chuyến bay</value>
+  </data>
+  <data name="Special_requirements" xml:space="preserve">
+    <value>Yêu cầu đặc biệt</value>
+  </data>
+  <data name="Status_Book" xml:space="preserve">
+    <value>Tình trạng:&lt;b&gt; CHO XAC NHAN&lt;/b&gt;</value>
+  </data>
+  <data name="Stoppoint" xml:space="preserve">
+    <value>Dừng tại</value>
+  </data>
+  <data name="stop_at" xml:space="preserve">
+    <value>Dừng tại</value>
+  </data>
+  <data name="Stop_point" xml:space="preserve">
+    <value>Điểm dừng</value>
+  </data>
+  <data name="Stop_Time" xml:space="preserve">
+    <value>Thời gian dừng</value>
+  </data>
+  <data name="Summary_fares" xml:space="preserve">
+    <value>Tóm tắt giá vé</value>
+  </data>
+  <data name="Taxes_and_fees" xml:space="preserve">
+    <value>Thuế và phí</value>
+  </data>
+  <data name="thank_you" xml:space="preserve">
+    <value>xin cảm ơn!</value>
+  </data>
+  <data name="The_total_flight_time" xml:space="preserve">
+    <value>Tổng thời gian bay</value>
+  </data>
+  <data name="Ticket_holder" xml:space="preserve">
+    <value>Giữ vé không thành công trên toàn bộ hành trình.</value>
+  </data>
+  <data name="Ticket_Price" xml:space="preserve">
+    <value>Giá vé</value>
+  </data>
+  <data name="Total_journey" xml:space="preserve">
+    <value>Tổng hành trình</value>
+  </data>
+  <data name="Total_price" xml:space="preserve">
+    <value>Tổng giá</value>
+  </data>
+  <data name="Unable_to_book" xml:space="preserve">
+    <value>Không thể đặt chỗ</value>
+  </data>
+  <data name="username" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="VAT_number" xml:space="preserve">
+    <value>Mã số thuế VAT</value>
+  </data>
+</root>

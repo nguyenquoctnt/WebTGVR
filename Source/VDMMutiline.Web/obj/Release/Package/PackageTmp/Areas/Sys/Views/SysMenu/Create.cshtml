@@ -1,0 +1,117 @@
+﻿@model VDMMutiline.SharedComponent.Params.SysMenuParam
+@{
+    Layout = null;
+}
+
+
+
+@using (Html.BeginForm("Create", "SysMenu", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateSysMenu", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.SysMenu.Id)
+    <div class="form-body">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Tên hiển thị</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.SysMenu.TenHienthi, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Site</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.SysMenu.SiteID, Model.SiteInfos.Select(n => new SelectListItem { Selected = n.Id == Model.SysMenu.SiteID, Text = n.SiteName, Value = n.Id.ToString() }), new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Thứ tự</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.SysMenu.Thutu, new { @Required = "Required", @class = "form-control thutu", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Menu cha</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.SysMenu.ParentId, Model.SysMenuInfos.Select(n => new SelectListItem { Selected = n.Id == Model.SysMenu.ParentId, Text = n.TenHienthi, Value = n.Id.ToString() }), new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Đường dẫn</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.SysMenu.Path, new { @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control"></label>
+                <div class="col-md-8">
+                    <div class="checkedcontrol">
+                        @if (Model.SysMenu.IsSystem == null)
+                        {
+                            Model.SysMenu.IsSystem = false;
+                        }
+                        @Html.CheckBox("SysMenu.IsSystem", Model.SysMenu.IsSystem == true, new { @class = "icheckboxcs" })
+                        <label for="SysMenu_IsSystem">Là menu hệ thống</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 label-control">Lớp giao diện</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.SysMenu.cssClass, new { @class = "form-control", @placeholder = "Nhập class icon" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Có quyền</label>
+                <div class="col-md-10">
+                    <div class="checkedcontrol">
+
+                        @foreach (var item in Model.AspNetGroupsInfos)
+                        {
+
+                            <div class="col-md-6">
+
+                                @if (Model.SysMenuGroupInfos.Any(z => z.GroupId == item.Id))
+                                {
+                                    @Html.CheckBox("group_" + item.Id, true, new { @class = "icheckboxcs" })
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("group_" + item.Id, false, new { @class = "icheckboxcs" })
+                                }
+                                <label for="companyName">@item.Name</label>
+                            </div>
+
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+

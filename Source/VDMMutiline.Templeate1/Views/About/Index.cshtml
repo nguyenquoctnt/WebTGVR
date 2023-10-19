@@ -1,0 +1,39 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@{
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+}
+@section Header{
+    <title>Liên hệ </title>
+}
+
+<div class="page-title">
+    Liên hệ
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="page-content p-DL">
+        <ul>
+            <li class="active">
+                <i class="soap-icon-star yellow-color"></i>@UIUty.GetsettingByKey(setting, "PRT_COMPANY_NAME")
+                <ul style="width: 100%;">
+                    <li>Địa chỉ :@UIUty.GetsettingByKey(setting, "PRT_ADDRESS") </li>
+                    <li>Hotline :  @CurentUser.PhoneNumber - @CurentUser.PhoneNumber2</li>
+                    <li>Email  :@UIUty.GetsettingByKey(setting, "PRT_EMAIL")</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-12 col-xs-12 col-sm-12">
+    <iframe width="100%" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@CurentUser.Gmap"></iframe>
+</div>
+
+

@@ -1,0 +1,332 @@
+﻿@model VDMMutiline.Core.Models.VDMUser
+@using VDMMutiline.SharedComponent.Constants
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+}
+<div class="widget-box ui-sortable-handle" id="widget-box-10">
+    <div class="widget-header widget-header-small">
+        <div class="widget-toolbar no-border">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active">
+                    <a data-toggle="tab" href="#home" aria-expanded="true">
+                        <i class="green ace-icon fa fa-home bigger-120"></i>
+                        Personal Information
+                    </a>
+                </li>
+                @*<li class="">
+                        <a data-toggle="tab" href="#Authentication" aria-expanded="false"> <i class="green ace-icon fa fa-key bigger-120"></i>Two-Factor Authentication</a>
+                    </li>*@
+                <li class="">
+                    <a data-toggle="tab" href="#history" aria-expanded="false"> <i class="green ace-icon fa fa-history bigger-120"></i>Login History</a>
+                </li>
+                <li>
+                        <a data-toggle="tab" href="#Password">
+                            <i class="green ace-icon fa fa-key bigger-120"></i> Change Password
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main padding-6">
+            <div class="tab-content">
+                <div id="home" class="tab-pane active">
+                    @using (Html.BeginForm("ProfileMember", "Account", new { }, FormMethod.Post, new { @data_parsley_validate = "", @class = "login-form", role = "form", Id = "profileform", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-lg-12 etb-wrapper">
+                                <div class="card">
+
+                                    <div class="card-header m-h-80">
+                                        <h5 class="card-header-text">
+                                            <span class="ng-scope">General information</span>
+                                            <button type="button" onclick="Updateprofile();" class="btn-save btn btn-info f-right">
+                                                <i class="fa fa-save "></i> <span class="ng-scope">Update</span>
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">Username</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class=" glyphicon-envelope"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-mask-user", @readonly = "readonly" })
+                                                    <span class="input-group-addon bg-white" role="button" tabindex="0"><i class="glyphicon-ok"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-text">
+                                                <div class="form-text">
+                                                    <label for="control-label bolder blue">Affiliate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="ace-icon fa fa-users"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(model => model.ReferentLink, new { @class = "form-control input-mask-user js-copytextarea", @readonly = "readonly" })
+                                                        <span class="js-textareacopybtn input-group-addon bg-white" role="button" tabindex="0"><i class="ace-icon fa fa-copy"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">  Full Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </span>
+
+                                                    @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Mobile Number</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="ace-icon fa fa-phone"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @type = "phone", @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue"> Full Address</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon-home"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control input-mask-user" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 etb-wrapper">
+                                <div class="card">
+                                    <div class="card-header m-h-80">
+                                        <h5 class="card-header-text">
+                                            <span class="ng-scope">NATIONAL ID / PASSPORT </span>
+                                        </h5>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-text">
+                                                <label for="control-label bolder blue">Number</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="ace-icon fa fa-credit-card"></i>
+                                                    </span>
+                                                    @Html.TextBoxFor(model => model.Passport, new { @class = "form-control input-mask-user js-copytextarea" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if (Model.Confirmed != true)
+                                        {
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="form-text">
+                                                    <label for="control-label bolder red">You have not verified!</label>
+                                                    <div class="form-group">
+                                                        <div class="col-xs-12">
+                                                            @if (string.IsNullOrEmpty(Model.PassportPic1))
+                                                            {
+                                                                <input type="file" name="ConfirmedFile" id="ConfirmedFile" class="actFile" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="@Model.PassportPic1" alt="Pendding" width="100" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                <!---Authentication----->
+                @*<div id="Authentication" class="tab-pane">
+                        <div class="tab-pane">
+                            <div class="row" id="ContentTwo">
+                                @Html.Action("TwoFactor", "Account")
+                            </div>
+                        </div>
+                    </div>*@
+                <!---endAuthentication----->
+                <div id="history" class="tab-pane">
+                    <div class="tab-pane active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-t-10">
+                                    <div class="table-responsive">
+                                        <table id="loginhistor" class="table dt-responsive table-striped table-bordered nowrap dataTable dtr-inline" cellspacing="0" style="width:100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="va-m" style="width: 269px">
+                                                        <span class="ng-scope">Login Time <br><span class="fs10">(local time)</span></span>
+                                                    </th>
+                                                    <th class="va-m">
+                                                        <span class="ng-scope">User Agent</span>
+                                                    </th>
+                                                    <th class="va-m" style="width: 131px">
+                                                        <span class="ng-scope">IP Address</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div id="Password" class="tab-pane">
+                    <div class="tab-pane">
+
+                        <div class="row">
+                            <div class="col-lg-12 etb-wrapper">
+
+                                <div class="card">
+                                    <div class="card-block">
+                                        @Html.Action("ChangePassword", "Account")
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+            <!---endPassword----->
+        </div>
+    </div>
+</div>
+@section scripts
+    {
+    <script type="text/javascript">
+        var Updateprofile = function () {
+            var form = $('form#profileform').get(0);
+            var fd = new FormData(form);
+            _lwfunc.AjaxNoprocessData("@Url.Action("ProfileMember", "Account")", fd, function (data) {
+                if (data.isSuccess === true) {
+                    reloadGrid(); toastr.success(data.mess, "Notification!");
+                } else {
+                    toastr.error(data.mess, "Notification!");
+                }
+
+            });
+        }
+        $(document).ready(function () {
+
+            $('.actFile').ace_file_input({
+                no_file: 'Select a passport for verification ...',
+                btn_choose: 'Select',
+                btn_change: 'Change'
+            }).on('change', function () {
+                var files = $(this).data('ace_input_files');
+                //or
+                //var files = $(this).ace_file_input('files');
+                var method = $(this).data('ace_input_method');
+                //method will be either 'drop' or 'select'
+                //or
+                //var method = $(this).ace_file_input('method');
+            });
+
+
+            var oTable = $("#loginhistor").dataTable({
+                "bStateSave": false,
+                "searching": false,
+                "bSort": true,
+                "sPaginationType": "full_numbers",
+                "serverSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": "@Url.Action("AjaxLoadListLogin", "Account")",
+                "iDisplayLength": 50,
+                "order": [[1, "desc"], [2, "desc"]],
+                "lengthChange": false,
+                "aoColumns": [
+                   {
+                       "mData": "Ngaytao",
+                       "mRender": function (data, type, row) {
+                           return (data) ? _lwfunc.formatDateTime(data) : "";
+                       },
+                   },
+                    { "mData": "Agent" },
+                    { "mData": "IPDangnhap" }
+                ],
+                "language": {
+                    "sLoadingRecords": "@Constant.Loaddingdata",
+                    "sProcessing": "@Constant.Loaddingdata",
+                    "lengthMenu": "@Constant.Loaddingdata",
+                    "zeroRecords": "@Constant.zeroRecords",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "((@Constant.Loaddingdata)",
+                    "paginate": {
+                        "next": ">",
+                        "previous": "<",
+                        "first": "<<",
+                        "last": ">>"
+                    }
+                },
+            });
+        });
+        function reloadGrid() {
+            var oDataTable = $("#loginhistor").dataTable();
+            oDataTable.fnDraw(false);
+        }
+
+    </script>
+    <script type="text/javascript">
+        var ChangeTwoFactor = function () {
+            _lwfunc.Ajax("@Url.Action("TwoFactor", "Account")", $("#changefwofactor").serialize(), function (data) {
+                if (data.isSuccess === true) {
+                    toastr.success(data.mess, "Notification!");
+                    //$.get('/url/', function (data) {
+                    //    $(data).find("#id_to_find").appendTo("#id_to_append");
+                    //});
+                    //$(ContentTwo).a
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("TwoFactor", "Account")",
+                        success: function (text) {
+                            $("#ContentTwo").empty();
+                            $('#ContentTwo').append(text);
+                        }
+                    });
+                }
+                else {
+                    toastr.error(data.mess, "Notification!");
+                }
+
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿@model VDMMutiline.SharedComponent.Params.BaggageParam
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Create", "SysBaggage", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", id = "frCreateSysBaggage", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Baggage.Id)
+
+    <div class="form-body">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Hãng</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Baggage.Airline, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Mã</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Baggage.Code, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Tên</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Baggage.Name, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Giá trị</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Baggage.Value, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-md-2 label-control">Giá</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Baggage.Price, new { @Required = "Required", @class = "form-control", @placeholder = "" })
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-actions center">
+            <a onclick="submitform()" class="btn btn-success btn-min-width mr-1 mb-1 actionmodal"><i class="fa fa-save"></i>Cập nhật</a>
+            <button type="button" class="btn btn-dark btn-min-width mr-1 mb-1 actionmodal" data-dismiss="modal"><i class="ft-corner-down-left"></i>Đóng</button>
+        </div>
+    </div>
+
+}
+
+

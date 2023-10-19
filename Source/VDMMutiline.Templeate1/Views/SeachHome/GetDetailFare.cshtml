@@ -1,0 +1,74 @@
+﻿@model VDMMutiline.SeachAndBook.VDMFareDataInfo
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+
+    Layout = null;
+}
+@if (Model != null)
+{
+    var FeeAdult = UIUty.ChuyenDoiTienTe(Model.FeeAdt);
+    var FeeChild = UIUty.ChuyenDoiTienTe(Model.FeeChd);
+    var FeeInfant = UIUty.ChuyenDoiTienTe(Model.FeeInf);
+    var FareAdult = UIUty.ChuyenDoiTienTe(Model.FareAdt);
+    var FareChild = UIUty.ChuyenDoiTienTe(Model.FareChd);
+    var FareInfant = UIUty.ChuyenDoiTienTe(Model.FareInf);
+    var Pricebefor = UIUty.ChuyenDoiTienTe(Model.PriceBefor);
+    var TotalFare = UIUty.ChuyenDoiTienTe(Model.TotalPrice);
+    var TaxAdult = UIUty.ChuyenDoiTienTe(Model.TaxAdt);
+    var TaxChild = UIUty.ChuyenDoiTienTe(Model.TaxChd);
+    var TaxInfant = UIUty.ChuyenDoiTienTe(Model.TaxInf);
+    var CurrencyCode = UIUty.GetDonViTienTe();
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="TablePrice">
+        <tbody>
+            <tr>
+                <td class="ItemHeader">
+                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Passengers
+                </td>
+                <td class="ItemHeader" align="center">
+                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Amount
+                </td>
+
+                <td class="ItemHeader" align="right">
+                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Price
+                </td>
+                <td class="ItemHeader" align="right">
+                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Total_price
+                </td>
+            </tr>
+            <tr>
+                <td>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Adults</td>
+                <td style="text-align: center">@Model.Adt</td>
+
+                <td class="ItemPrice">@FareAdult.ToString("#,0.#")<span class="Currency"> @CurrencyCode</span></td>
+                <td class="ItemPrice">@((FareAdult * Model.Adt).ToString("#,0.#"))<span class="Currency"> @CurrencyCode</span></td>
+            </tr>
+            @if (Model.Chd > 0)
+            {
+                <tr style="">
+                    <td>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Children</td>
+                    <td style="text-align: center">@Model.Chd</td>
+
+                    <td class="ItemPrice">@FareChild.ToString("#,0.#")<span class="Currency"> @CurrencyCode</span></td>
+                    <td class="ItemPrice">@((FareChild * Model.Chd).ToString("#,0.#"))<span class="Currency"> @CurrencyCode</span></td>
+                </tr>
+            }
+            @if (Model.Inf > 0)
+            {
+                <tr style="">
+                    <td>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Infants</td>
+                    <td style="text-align: center">@Model.Inf</td>
+
+                    <td class="ItemPrice">@FareInfant.ToString("#,0.#")<span class="Currency"> @CurrencyCode</span></td>
+                    <td class="ItemPrice">@((FareInfant * Model.Inf).ToString("#,0.#"))<span class="Currency"> @CurrencyCode</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="BorderTop TotalPrice" style="text-align: right;">
+        <b>@VDMMutiline.Resource.App_GlobalResources.weblanguage.GRAND_TOTAL:</b>
+        <span class="Price">@TotalFare.ToString("#,0.#")</span>
+        <span class="Currency">@CurrencyCode</span>
+    </div>
+}

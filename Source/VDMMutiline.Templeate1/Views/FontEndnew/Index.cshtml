@@ -1,0 +1,105 @@
+﻿@using PagedList.Mvc
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SharedComponent.Params.TblArticleParam
+@{
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+@if (Model.SysCategoryInfo != null)
+{
+    @section Header{
+        <title>@Model.SysCategoryInfo.TenHienthi</title>
+        @if (!string.IsNullOrEmpty(Model.SysCategoryInfo.SEODescription))
+        {
+        <meta property="og:description" content="@Model.SysCategoryInfo.SEODescription">
+        <meta name="description" content="@Model.SysCategoryInfo.SEODescription" />
+        }
+        else
+        {
+        <meta property="og:description" content="Ve may bay, đại lý bán vé máy bay chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế.">
+        <meta name="description" content="Ve may bay, đại lý bán vé máy bay eLines chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế." />
+
+        }
+        @if (!string.IsNullOrEmpty(Model.SysCategoryInfo.SEOTitle))
+        {
+        <meta property="og:title" content="@Model.SysCategoryInfo.SEOTitle">
+
+        }
+        else
+        {
+        <meta property="og:title" content="@Model.SysCategoryInfo.TenHienthi">
+
+        }
+        @if (!string.IsNullOrEmpty(Model.SysCategoryInfo.SEOKeyword))
+        {
+        <meta name="keywords" content="@Model.SysCategoryInfo.SEOKeyword" />
+
+        }
+        else
+        {
+        <meta name="keywords" content="ve may bay, ve may bay gia re, ve may bay khuyen mai" />
+        }
+    }
+    @section breadcrumbs{
+        <div class="page-title-container">
+            <div class="container">
+                <div class="page-title pull-left br-title">
+                    <h2 class="entry-title">@Model.SysCategoryInfo.TenHienthi</h2>
+                </div>
+                <ul class="breadcrumbs pull-right">
+                    <li>
+                        <div itemscope="" itemtype="">
+                            <a href="/" itemprop="url"> <span itemprop="title">Trang chủ ››</span> </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div itemscope="" itemtype="">
+                            <a href="#" itemprop="url">
+                                <span itemprop="title">@Model.SysCategoryInfo.TenHienthi</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+    <div class="post-content el-product">
+        <div class="row image-box style2">
+            @foreach (var item in Model.PagedList)
+            {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  hot-news">
+                    <article class="box" style="margin-bottom: 1px;border-bottom: 1px dotted #867b7b;padding-bottom: 7px;padding-top: 10px;">
+                        <figure>
+                            <a href="@Url.Action("ChiTiet", "FontEndnew", new {key = item.SEOUrl})" title="@item.Tenbai">
+                                <img data-src="@item.Thumb" src="@item.Thumb" alt="@item.Tenbai" class="famous-place lazy" width="270"
+                                     height="192" />
+                            </a>
+                        </figure>
+                        <div class="details " style="    padding: 0px 0 0 145px;">
+                            <h4>
+                                <a href="@Url.Action("ChiTiet", "FontEndnew", new {key = item.SEOUrl})">@item.Tenbai</a>
+                            </h4>
+                            <p class="hidden-xs">@Utility.CatChuoi(item.Mota, 100)</p>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.PagedListPager(Model.PagedList, page => Url.Action("Index", new { page , ChuyenMuc=Model.SysCategoryInfo.SEOUrl }))
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+

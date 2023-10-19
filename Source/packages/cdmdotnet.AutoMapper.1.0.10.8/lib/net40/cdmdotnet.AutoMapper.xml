@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cdmdotnet.AutoMapper</name>
+    </assembly>
+    <members>
+        <member name="T:cdmdotnet.AutoMapper.AutomapHelper">
+            <summary>
+            A helper class to aid auto-mapping
+            </summary>
+        </member>
+        <member name="T:cdmdotnet.AutoMapper.IAutomapHelper">
+            <summary>
+            A helper class to aid auto-mapping
+            </summary>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.IAutomapHelper.Automap``2(``0)">
+            <summary>
+            Creates and returns a new <typeparamref name="TTarget"/> with all the easily auto-mapped properties from <paramref name="source"/> set.
+            </summary>
+            <param name="source">The <typeparamref name="TSource"/> to convert.</param>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.IAutomapHelper.Automap``2(``0,``1)">
+            <summary>
+            Creates and returns a new <typeparamref name="TTarget"/> with all the easily auto-mapped properties from <paramref name="source"/> set.
+            </summary>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.AutomapHelper.Automap``2(``0)">
+            <summary>
+            Creates and returns a new <typeparamref name="TTarget"/> with all the easily auto-mapped properties from <paramref name="source"/> set.
+            </summary>
+            <param name="source">The <typeparamref name="TSource"/> to convert.</param>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.AutomapHelper.Automap``2(``0,``1)">
+            <summary>
+            Creates and returns a new <typeparamref name="TTarget"/> with all the easily auto-mapped properties from <paramref name="source"/> set.
+            </summary>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.AutomapHelper.AutomapCollections``2(System.Type,System.Type,``0,``1)">
+            <summary>
+            Convert the provided <paramref name="source"/> into <typeparamref name="TTarget"/> where both items are <see cref="T:System.Collections.IEnumerable"/>
+            </summary>
+        </member>
+        <member name="M:cdmdotnet.AutoMapper.AutomapHelper.AutomapNonPrimitives(System.Type,System.Type,System.Object,System.Object)">
+            <summary>
+            Convert the provided <paramref name="source"/> into <paramref name="targetType"/> where <paramref name="source"/> is not a primitive.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,101 @@
+/*SelectCityBox*/
+.SelectCityBox
+{
+    width: 480px;
+    margin: auto;
+    background-color: #FFF;
+    border-radius:          0px 0px 5px 5px;
+    -webkit-border-radius:  0px 0px 5px 5px;
+    -moz-border-radius:     0px 0px 5px 5px;
+    display: none;
+    z-index: 100;
+    position: absolute;
+    color: rgb(113, 113, 113);
+}
+
+    .SelectCityBox .SelectCityBoxHeader {
+        width: 100%;
+        height: 30px;
+        line-height: 25px;
+        background-color: #002C5A;
+        color: White;
+        font-weight: bold;
+        padding-left: 10px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+.SelectCityBox .SelectCityBoxHeader .Title{float: left; font-size: 13px;background-color: #717171;white-space: nowrap;height: 25px;line-height: 25px;}
+.SelectCityBox .SelectCityBoxHeader .Close{float: right;margin-right: 15px; font-size: 13px; cursor: pointer}
+
+.SelectCityBox .SelectCityBoxContent
+{
+    width: 480px; 
+    margin: auto;
+}
+
+#pnStartCity ul.ul_mien, #pnEndCity ul.ul_mien
+{
+    margin:0px;
+    padding: 0px 0px;
+    list-style:none;
+}
+#pnStartCity ul.ul_mien a:hover,#pnEndCity ul.ul_mien a:hover{color:#717171;}
+#pnStartCity ul.ul_mien li.li_mien, #pnEndCity ul.ul_mien li.li_mien
+{
+    float: none;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 5px 5px 10px;
+    
+}
+.quoc_te
+{
+    background: url('../Images/quoc_te.jpg') no-repeat 5px 5px;
+}
+.mien_bac
+{
+    background: url('../Images/mien_bac.jpg') no-repeat 5px 5px;
+}
+.mien_trung
+{
+    background: url('../Images/mien_trung.jpg') no-repeat 5px 5px;
+}
+.mien_nam
+{
+    background: url('../Images/mien_nam.jpg') no-repeat 5px 5px;
+}
+
+#pnStartCity ul.ul_mien li.li_mien ul, #pnEndCity ul.ul_mien li.li_mien ul
+{
+    padding:0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    list-style:none;
+}
+#pnStartCity ul.ul_mien li.li_mien ul li, #pnEndCity ul.ul_mien li.li_mien ul li
+{
+    float:left;
+    margin-left:15px;
+    padding: 4px;
+    color:#717171;
+}
+#pnStartCity ul.ul_mien li.li_mien ul li:hover,#pnEndCity ul.ul_mien li.li_mien ul li:hover
+{
+    padding:4px;
+    background-color:#717171;
+    color:#FFF;
+    cursor:pointer;
+}
+#pnStartCity .sp_mien,#pnEndCity .sp_mien{margin-left:0px;font-weight:bold;color:#f20000;text-transform:uppercase;}
+#pnStartCity .sp_city.sp_city,#pnEndCity .sp_city.sp_city{line-height:25px;width:100px;}
+
+.ui-autocomplete{position:absolute;top:0;left:0;cursor:default;/* left: 560px!important; */max-height: 250px!important;width: 400px!important;}
+.ui-menu .ui-menu-item a{
+    border: 1px solid white;
+}
+.ui-state-focus,.ui-widget-content .ui-state-focus{font-weight: normal}
+input#txtStartPointSearch {
+    border: 1px solid #a2a2a2 !important;
+    float: none;
+}

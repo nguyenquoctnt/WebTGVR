@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetMonthlyTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="mountvalue" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="year" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="destinationAirportCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="departureAirportCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="adult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="children" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="infant" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMonthlyTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMonthlyTicketResult" type="tns:ArrayOfFlightFareInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFlightFareInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FlightFareInfo" nillable="true" type="tns:FlightFareInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FlightFareInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoint" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndPoint" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Stops" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Duration" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SelectValue" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Adult" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Child" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Infant" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PriceAdult" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="PriceChild" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="PriceInfant" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="FeeAdult" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="FeeChild" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="FeeInfant" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxAdult" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxChild" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxInfant" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalPrice" nillable="true" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="GroupClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FareClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FltNumb" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Promo" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="AirlineCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DebugID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ItineraryType" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SessionAll" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PriceBefor" nillable="true" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="AvailFlight" type="tns:ArrayOfAvailFlight" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAvailFlight">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AvailFlight" nillable="true" type="tns:AvailFlight" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AvailFlight">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id_ve" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoint" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndPoint" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Plane" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Duration" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Part" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SeatsRemaining" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetFlightFareInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="datetime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="destinationAirportCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="departureAirportCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFlightFareInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFlightFareInfoResult" type="tns:FlightFareInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Getlisthanche">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hang" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetlisthancheResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetlisthancheResult" type="tns:ArrayOfHanchesohieuInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfHanchesohieuInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="HanchesohieuInfo" nillable="true" type="tns:HanchesohieuInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="HanchesohieuInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:tbl_Hanchesohieu">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Hangbay" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Hangve" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="tbl_Hanchesohieu">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdhangBay" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SohieuHanche" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoind" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndPoind" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Priced" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="tbl_hangbay" type="tns:tbl_hangbay" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="tbl_hangbay">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodeHang" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HangVe" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tbl_Hanchesohieus" type="tns:ArrayOfTbl_Hanchesohieu" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTbl_Hanchesohieu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="tbl_Hanchesohieu" nillable="true" type="tns:tbl_Hanchesohieu" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetlisthancheAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hang" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="hanve" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sohieu" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="startpoint" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endpoint" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="price" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetlisthancheAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetlisthancheAllResult" type="tns:ArrayOfHanchesohieuInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetlistCauHinhTaiKhoan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hang" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartPoind" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndPoind" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetlistCauHinhTaiKhoanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetlistCauHinhTaiKhoanResult" type="tns:CauhinhtaikhoanInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CauhinhtaikhoanInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:tbl_Cauhinhtaikhoan" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="tbl_Cauhinhtaikhoan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdhangBay" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Pass" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Khoa" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="tbl_ChiTietCauHinhTaiKhoans" type="tns:ArrayOfTbl_ChiTietCauHinhTaiKhoan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTbl_ChiTietCauHinhTaiKhoan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="tbl_ChiTietCauHinhTaiKhoan" nillable="true" type="tns:tbl_ChiTietCauHinhTaiKhoan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="tbl_ChiTietCauHinhTaiKhoan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdCauhinh" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoind" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Endpoind" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tbl_Cauhinhtaikhoan" type="tns:tbl_Cauhinhtaikhoan" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMonthlyTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMonthlyTicket" />
+  </wsdl:message>
+  <wsdl:message name="GetMonthlyTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMonthlyTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFlightFareInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFlightFareInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetFlightFareInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFlightFareInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetlisthancheSoapIn">
+    <wsdl:part name="parameters" element="tns:Getlisthanche" />
+  </wsdl:message>
+  <wsdl:message name="GetlisthancheSoapOut">
+    <wsdl:part name="parameters" element="tns:GetlisthancheResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetlisthancheAllSoapIn">
+    <wsdl:part name="parameters" element="tns:GetlisthancheAll" />
+  </wsdl:message>
+  <wsdl:message name="GetlisthancheAllSoapOut">
+    <wsdl:part name="parameters" element="tns:GetlisthancheAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetlistCauHinhTaiKhoanSoapIn">
+    <wsdl:part name="parameters" element="tns:GetlistCauHinhTaiKhoan" />
+  </wsdl:message>
+  <wsdl:message name="GetlistCauHinhTaiKhoanSoapOut">
+    <wsdl:part name="parameters" element="tns:GetlistCauHinhTaiKhoanResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MonthSearchSoap">
+    <wsdl:operation name="GetMonthlyTicket">
+      <wsdl:input message="tns:GetMonthlyTicketSoapIn" />
+      <wsdl:output message="tns:GetMonthlyTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFlightFareInfo">
+      <wsdl:input message="tns:GetFlightFareInfoSoapIn" />
+      <wsdl:output message="tns:GetFlightFareInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Getlisthanche">
+      <wsdl:input message="tns:GetlisthancheSoapIn" />
+      <wsdl:output message="tns:GetlisthancheSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetlisthancheAll">
+      <wsdl:input message="tns:GetlisthancheAllSoapIn" />
+      <wsdl:output message="tns:GetlisthancheAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetlistCauHinhTaiKhoan">
+      <wsdl:input message="tns:GetlistCauHinhTaiKhoanSoapIn" />
+      <wsdl:output message="tns:GetlistCauHinhTaiKhoanSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MonthSearchSoap" type="tns:MonthSearchSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMonthlyTicket">
+      <soap:operation soapAction="http://tempuri.org/GetMonthlyTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlightFareInfo">
+      <soap:operation soapAction="http://tempuri.org/GetFlightFareInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Getlisthanche">
+      <soap:operation soapAction="http://tempuri.org/Getlisthanche" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetlisthancheAll">
+      <soap:operation soapAction="http://tempuri.org/GetlisthancheAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetlistCauHinhTaiKhoan">
+      <soap:operation soapAction="http://tempuri.org/GetlistCauHinhTaiKhoan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MonthSearchSoap12" type="tns:MonthSearchSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMonthlyTicket">
+      <soap12:operation soapAction="http://tempuri.org/GetMonthlyTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlightFareInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetFlightFareInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Getlisthanche">
+      <soap12:operation soapAction="http://tempuri.org/Getlisthanche" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetlisthancheAll">
+      <soap12:operation soapAction="http://tempuri.org/GetlisthancheAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetlistCauHinhTaiKhoan">
+      <soap12:operation soapAction="http://tempuri.org/GetlistCauHinhTaiKhoan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MonthSearch">
+    <wsdl:port name="MonthSearchSoap" binding="tns:MonthSearchSoap">
+      <soap:address location="http://api.thegioivere.net/Webservice/MonthSearch.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MonthSearchSoap12" binding="tns:MonthSearchSoap12">
+      <soap12:address location="http://api.thegioivere.net/Webservice/MonthSearch.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

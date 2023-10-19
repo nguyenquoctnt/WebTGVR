@@ -1,0 +1,29 @@
+﻿@model string
+@{
+    Layout = null;
+}
+<script src="/Content/Copy/clipboard.min.js"></script>
+<div class="modal-body" id="to-copy" style="    height: 300px;    overflow-y: auto;">
+    @if (!string.IsNullOrEmpty(ViewBag.contend))
+    {
+         @Html.Raw(ViewBag.contend)
+    }
+</div>
+<div class="modal-footer">
+    <button type="button" id="copy" class="btn btn-success">Copy</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+<script>
+    var clipboard = new Clipboard( '#copy', {
+        target: function () {
+            $( '#copy' ).text( "COPIED" );
+            return document.querySelector( '#to-copy' );
+        }
+    } );
+    clipboard.on( 'success', function ( e ) {
+        console.log( e );
+    } );
+    clipboard.on( 'error', function ( e ) {
+        console.log( e );
+    } );
+</script>

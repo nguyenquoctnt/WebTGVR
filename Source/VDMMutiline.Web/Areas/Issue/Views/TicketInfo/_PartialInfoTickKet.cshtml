@@ -1,0 +1,166 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.BookingInfo
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.Dao
+@using VDMMutiline.Ultilities
+@{
+    List<SelectListItem> datatree = Constant.AirlineDomestic.dctName.Select(z => new SelectListItem { Value = z.Key, Text = z.Value }).ToList();
+}
+
+@if (string.IsNullOrEmpty(ViewBag.erro))
+{
+    if (Model != null)
+    {
+        if (Model.Booking != null)
+        {
+            var BookingInfo = Model.Booking;
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <form class="form form-horizontal form-bordered">
+                        <div class="form-body">
+                            <h4 class="form-section"><i class="fa fa-user"></i> Thông tin</h4>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left" for="projectinput1">Code</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border"> @BookingInfo.BookingCode </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Họ tên</label>
+                                <div class="col-md-3">
+                                    <label class="form-control no-border"> @BookingInfo.ContactName </label>
+                                </div>
+                                <label class="col-md-2 label-control text-right ">Điện thoại</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border"> @BookingInfo.Phone </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Mail</label>
+                                <div class="col-md-3">
+                                    <label class="form-control no-border"> @BookingInfo.Email </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Địa chỉ</label>
+                                <div class="col-md-9">
+                                    <label class="form-control no-border"> @BookingInfo.Address </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Ngày Đặt</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border">   @(BookingInfo.BookingDate.HasValue ? BookingInfo.BookingDate.Value.ToString("dd/MM/yyyy HH:mm") : "") </label>
+                                </div>
+                                <label class="col-md-2 label-control text-right">Thời gian giữ chỗ</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border"> @(BookingInfo.ExpirationDate.HasValue ? BookingInfo.ExpirationDate.Value.ToString("dd/MM/yyyy HH:mm") : "")</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Trạng thái</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border">  @(BookingInfo.BookingStatus)</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Giá</label>
+                                <div class="col-md-2">
+                                    <label class="form-control no-border">  @(BookingInfo.GrandTotal.ToString("n0") )</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        if (Model.Tickets != null)
+        {
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="form-section"><i class="icon-paper-plane"></i> Thông tin chuyến bay</h4>
+                    <div class="form-group ">
+                        <table class="booking table table-striped table-bordered zero-configuration">
+                            <thead>
+                                <tr>
+                                    <th class="sort-numeric">Hãng</th>
+                                    <th>Hạng vé</th>
+                                    <th>Số hiệu</th>
+                                    <th>Từ</th>
+                                    <th>đến</th>
+                                    <th>Ngày</th>
+                                    <th>Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var ticket in Model.Tickets)
+                                    {
+                                        foreach (var items in ticket.ListFlight)
+                                        {
+                                            <tr class="gradeA">
+                                                <td><img class="nav-user-photo" style="width: 50px; height: 30px;" src="@(VDMMutiline.Core.UI.UIUty.GetImagebyHang(items.Airline))" /></td>
+                                                <td>@items.FareClass</td>
+                                                <td>@items.FlightNumber</td>
+                                                <td>@items.StartPoint</td>
+                                                <td>@items.EndPoint</td>
+                                                <td>@( items.StartDate.ToString("dd/MM/yyyy") )</td>
+                                                <td>@(items.EndDate.ToString("HH:mm"))</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+        if (Model.Passengers != null)
+        {
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="form-section"><i class="icon-list"></i> Chi tiết đặt vé</h4>
+                    <div class="form-group ">
+                        <table class="booking table table-striped table-bordered zero-configuration">
+                            <thead>
+                                <tr>
+                                    <th>Loại hành khách</th>
+                                    <th>Họ tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>H.Lý</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Passengers)
+                                {
+                                    <tr class="gradeA">
+                                        <td>
+                                            @item.Type
+                                        </td>
+                                        <td>@(item.FirstName.ToUpper() + " " + item.LastName.ToUpper())</td>
+                                        <td>@(item.Birthday.HasValue?item.Birthday.Value.ToString("dd/MM/yyyy"):"")</td>
+                                        <td>
+                                            @foreach (var itembag in Model.ListBookingBaggage.Where(z => z.PassengerId == item.Id))
+                                            {
+                                                @(itembag.Route) @(": ") @(itembag.Value)@("kg ") @(itembag.Price.ToString("n0") + "VND")
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    <div class="card-content collapse show">
+        <label style="color:red">@ViewBag.erro</label>
+    </div>
+}

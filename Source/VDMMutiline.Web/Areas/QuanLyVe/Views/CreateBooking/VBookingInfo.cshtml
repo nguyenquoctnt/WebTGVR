@@ -1,0 +1,188 @@
+﻿@model VDMMutiline.WebBackEnd.Models.CreareBookingModel
+
+
+<div id="booking" class="" style="display: block;">
+    <h4 class="form-section"><i class="fa fa-paperclip"></i> Thông tin hành trình</h4>
+    <div class="row">
+        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+            <label class="radio-inline">
+                <input type="radio" name="Ways" class="icheckboxcs" value="1" checked="">
+                Một chiều
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="Ways" class="icheckboxcs" value="2">
+                Khứ hồi
+            </label>
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <small>Sân bay đi <span class="required">(*)</span></small>
+            <div>
+                <select id="FromCity" name="FromCity" Required class="form-control" placeholder="Mã hoặc tên thành phố"></select>
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <small>Sân bay đến <span class="required">(*)</span></small>
+            <div>
+                <select id="ToCity" name="ToCity" class="form-control" Required placeholder="Mã hoặc tên thành phố"></select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    @for (var i = 0; i <= Model.lstTicket.Count() - 1; i++)
+    {
+        @Html.HiddenFor(z=> Model.lstTicket[i].types)
+        <div @Html.Raw(Model.lstTicket[i].types == VDMMutiline.SharedComponent.Constants.Constant.Typeve.LuotDi ? "" : "id='return' style='display: none;'")>
+            <h4 class="form-section"><i class="fa fa-paperclip"></i> @(Model.lstTicket[i].types == VDMMutiline.SharedComponent.Constants.Constant.Typeve.LuotDi ? "Thông tin chuyến đi" : "Thông tin chuyến về") </h4>
+            <div class="row">
+                <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                    <small>Code <span class="required">(*)</span></small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].Code, new { @Required = "Required", @class = "form-control", @placeholder = "Code chuyến đi" })
+                </div>
+                <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                    <small>Hạng vé <span class="required">(*)</span></small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].Class, new { @Required = "Required", @class = "form-control", @placeholder = "Hạng vé" })
+                </div>
+                <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                    <small>Hãng hàng không <span class="required">(*)</span></small>
+                    <div>
+                        @Html.DropDownListFor(x => Model.lstTicket[i].AirlineCode, Model.lstTicket[i].lstAirlineInfo.Select(z => new SelectListItem { Selected = z.Code == Model.lstTicket[i].AirlineCode, Text = z.Name, Value = z.Code }), new { @Required = "Required", @class = "form-control", @placeholder = "Hãng hàng không" })
+                    </div>
+                </div>
+                <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                    <small>Số hiệu <span class="required">(*)</span></small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].FlightNo, new { @Required = "Required", @class = "form-control", @placeholder = "Số hiệu" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Ngày đi <span class="required">(*)</span></small>
+                            <div class="input-group date">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].StartDate, new { @Required = "Required", @class = "form-control", @placeholder = "Ngày đi" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Giờ đi <span class="required">(*)</span></small>
+                            <div class="input-group ">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].StartTime, new { @Required = "Required", @class = "form-control time", @placeholder = "Giờ đi" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Ngày đến <span class="required">(*)</span></small>
+                            <div class="input-group date">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].EndDate, new { @Required = "Required", @class = "form-control", @placeholder = "Ngày đến" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Giờ đến <span class="required">(*)</span></small>
+                            <div class="input-group ">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].EndTime, new { @Required = "Required", @class = "form-control time", @placeholder = "Giờ đến" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Thời gian giữ chỗ <span class="required">(*)</span></small>
+                            <div class="input-group date">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].HoldToDate, new { @Required = "Required", @class = "form-control", @placeholder = "Thời gian giữ chỗ" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                            <small>Giờ <span class="required">(*)</span></small>
+                            <div class="input-group ">
+                                @Html.TextBoxFor(x => Model.lstTicket[i].HoldTime, new { @Required = "Required", @class = "form-control time", @placeholder = "Giờ" })
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-clock-o"></i>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gia ve-->
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá gốc: Người lớn <span class="required">(*)</span></small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceNetAdult, new { @oninput = "formatMoney($(this))", @Required = "Required", @class = "form-control", @placeholder = "Giá gốc - Người lớn" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá thuế: Người lớn</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceTaxAdult, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Giá thuế - Người lớn" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Phí: Người lớn</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceFeeAdult, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Phí - Người lớn" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá gốc: Trẻ em</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceNetChild, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Giá gốc - Trẻ em" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá thuế: Trẻ em</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceTaxChild, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Giá thuế - Trẻ em" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Phí: Trẻ em</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceFeeChild, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Phí - Trẻ em" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá gốc: Trẻ sơ sinh</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceNetInfant, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Giá gốc - Em bé" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá thuế: Trẻ sơ sinh</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceTaxInfant, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Giá thuế - Em bé" })
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <small>Giá phí: Trẻ sơ sinh</small>
+                    @Html.TextBoxFor(x => Model.lstTicket[i].PriceFeeInfant, new { @oninput = "formatMoney($(this))", @class = "form-control", @placeholder = "Phí - Em bé" })
+                </div>
+                <!--./Gia ve-->
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
+    <h4 class="form-section"><i class="fa fa-paperclip"></i> Số lượng hành khách</h4>
+    <div class="row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <small>Người lớn <span class="required">(*)</span></small>
+            @Html.DropDownListFor(x => Model.TotalAdult, Model.lstAdult.Select(z => new SelectListItem { Selected = z == Model.TotalAdult, Text = z.ToString(), Value = z.ToString() }), new { @Required = "Required", @class = "form-control" })
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <small>Trẻ em</small>
+            @Html.DropDownListFor(x => Model.TotalChild, Model.lstChild.Select(z => new SelectListItem { Selected = z == Model.TotalChild, Text = z.ToString(), Value = z.ToString() }), new { @Required = "Required", @class = "form-control" })
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <small>Sơ sinh</small>
+            @Html.DropDownListFor(x => Model.TotalInfant, Model.lstInfant.Select(z => new SelectListItem { Selected = z == Model.TotalInfant, Text = z.ToString(), Value = z.ToString() }), new { @Required = "Required", @class = "form-control" })
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    @*<h4 class="form-section"><i class="fa fa-paperclip"></i> Tổng giá gốc</h4>
+    <div class="row">
+        <div class="form-group col-md-6 col-xs-12">
+            <small>Giá chưa bao gồm phí xuất vé <span class="required">(*)</span></small>
+            @Html.TextBoxFor(x => Model.rTotal, new { @oninput = "formatMoney($(this))", @Required = "Required", @class = "form-control", @placeholder = "Giá vé" })
+        </div>
+        <div class="clearfix"></div>
+    </div>*@
+</div>

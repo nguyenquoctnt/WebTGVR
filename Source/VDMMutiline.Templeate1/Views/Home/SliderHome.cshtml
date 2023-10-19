@@ -1,0 +1,32 @@
+﻿@model VDMMutiline.SharedComponent.Params.TblQuangCaoParam
+@{
+    Layout = null;
+}
+
+<style>
+    .flex-viewport {
+        height: 100%;
+    }
+    ol.flex-control-nav.flex-control-paging {
+        display: none;
+    }
+.news {
+  
+    height: 550px;
+  
+}
+</style>
+<div class="top-slide">
+    <div class="flexslider photo-gallery style4" style="height:520px">
+        <ul class="slides" style="height:100%">
+            @foreach (var item in Model.TblQuangCaoInfos)
+            {
+                <li class="news">
+                    <a href="@item.Url">
+                        <img src="@item.Path" style="height:520px" alt="@item.Mota" title="@item.Mota" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

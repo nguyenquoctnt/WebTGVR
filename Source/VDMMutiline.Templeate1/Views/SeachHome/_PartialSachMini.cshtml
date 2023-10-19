@@ -1,0 +1,388 @@
+﻿@model VDMMutiline.SeachAndBook.SeachParam
+<link href="/Content/FontEnd/SeachValue/SearchBoxQuickly.css" rel="stylesheet" />
+<link href="/Content/FontEnd/SeachValue/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/Seach/Picker/ui.datepicker.lunar.min.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-en-GB.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-vi.js"></script>
+<link href="/Content/FontEnd/SeachValue/DomesticFlight.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/SeachValue/Result.js" type="text/javascript"></script>
+<script src="/Content/FontEnd/SeachValue/format.js" type="text/javascript"></script>
+<link href="/Content/FontEnd/Seach/SelectCityBox.css" rel="stylesheet" />
+<style>
+    .pLeft0 {
+        padding-left: 0;
+    }
+    .submit {
+        display: block;
+        position: absolute;
+        right: 0;
+        color: white;
+        text-decoration: none;
+        width: 90px;
+        margin-top: -13px;
+        height: 86px;
+        border: 0;
+        border-radius: 70px;
+        outline: 0;
+        background-color: #4ba614;
+        box-shadow: 0 0 0.001px 6px rgba(0,0,0,0.15);
+        cursor: pointer;
+        overflow: hidden;
+        -webkit-transition: background-color 400ms ease,box-shadow 600ms ease;
+        -moz-transition: background-color 400ms ease,box-shadow 600ms ease;
+        -ms-transition: background-color 400ms ease,box-shadow 600ms ease;
+        -o-transition: background-color 400ms ease,box-shadow 600ms ease;
+        transition: background-color 400ms ease,box-shadow 600ms ease;
+    }
+    .contact-address {
+        width: 420px;
+    }
+   
+</style>
+@using (Html.BeginForm("Seach", "SeachHome", FormMethod.Post, new{    @style = "    font-size: 14px;", @onsubmit = "submitformmini()", @data_parsley_validate = "", id = "frCreateseachmini", @role = "form" }))
+{
+    <div id="bookingForm" style="margin-top: 15px;">
+        <div class="col-md-12 pLeft0">
+            <span style="float: left;padding-right: 10px;padding-top: 9px;">Hành trình:</span>
+            <span style="float: left;padding-right: 10px;padding-top: 9px;">
+                <input id="rdbRoundTrip" class="ItineraryRadio" type="radio" name="ItineraryType" onchange="ToggleDatepicker()" value="2" @(Model != null ? (Model.Itinerary != 1 ? "checked='checked'" : "") : "checked='checked'")><label>Khứ hồi</label>
+            </span>
+            <span class="checkmotchieu" style="float: left;padding-right: 10px;    margin-top: 10px;">
+                <input id="rdbOneWay" class="ItineraryRadio" onchange="ToggleDatepicker()" type="radio" name="ItineraryType" @(Model != null ? (Model.Itinerary == 1 ? "checked='checked'" : "") : "") value="1"><label>Một chiều</label>
+            </span>
+        </div>
+        <div class="col-md-12 pLeft0 pright0">
+            <div class="col-md-4  pLeft0 pright0">
+                <div class="col-md-6 pLeft0   controlHolder">
+                    <label>Điểm đi</label>
+                    <input type="hidden" name="hdfStartPointValue" id="hdfStartPointValue">
+                    <input type="hidden" name="hdfStartPoint" id="hdfStartPoint" value="@(Model!=null?Model.DepartureAirportCode:"")">
+                    <input name="txtStartPoint" required type="text" value="@(Model!=null?Model.DepartureAirportCode:"")" readonly="readonly" id="txtStartPoint" class="TextBox cursor">
+                    <div id="pnStartCity" class="SelectCityBox ShadowBold" style="">
+                        <div class="SelectCityBoxHeader">
+                            Chọn thành phố, sân bay đi
+                            <div class="Close">
+                                <a id="btnCloseStartCity">Đóng</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        @Html.Partial("~/Views/Shared/_PartialPNstarCity.cshtml")
+                    </div>
+                </div>
+                <div class="col-md-6 pLeft0 clear-right0 controlHolder">
+                    <label>Điểm đến</label>
+                    <input type="hidden" name="hdfEndPointValue" id="hdfEndPointValue">
+                    <input type="hidden" name="hdfEndPoint" id="hdfEndPoint" value="@(Model!=null?Model.DestinationAirportCode:"")">
+                    <input name="txtEndPoint" required type="text" value="@(Model!=null?Model.DestinationAirportCode:"")" readonly="readonly" id="txtEndPoint" class="TextBox cursor">
+                    <div id="pnEndCity" class="SelectCityBox ShadowBold" style="">
+                        <div class="SelectCityBoxHeader">
+                            Chọn thành phố, sân bay đến
+                            <div class="Close">
+                                <a id="btnCloseEndCity">Đóng</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        @Html.Partial("~/Views/Shared/_PartialPNEndCity.cshtml")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pLeft0 pright0" id="DatePicker">
+                <div class="col-md-6 pLeft0 controlHolder">
+                    <label class="tmDatepicker">
+                        <label>Ngày đi</label>
+                        <input name="txtDepartureDate" value="@(Model != null ? Model.DepartureDate : "")" required type="text" id="txtDepartureDate" class="TextBox">
+                    </label>
+                </div>
+                <div id="divtxtReturnDate" style="@(Model != null ? (Model.Itinerary == 1 ? "display: none" : "") : "")" class=" col-md-6 pLeft0 clear-right0 controlHolder">
+                    <a class="clear-return"></a>
+                    <label class="tmDatepicker">
+                        <label>Ngày về</label>
+                        <input name="txtReturnDate" @(Model != null ? (Model.Itinerary == 1 ? "" : "required") : "required") value="@(Model != null ? Model.ReturnDate : "")" type="text" id="txtReturnDate" class="TextBox">
+                    </label>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class=" col-md-3 pLeft0 ">
+                <div class="col-md-4 pLeft0 ">
+                    <label>Người lớn</label>
+                    <select name="ddlAdult" id="ddlAdult" class="TextBox">
+                        <option @(Model != null ? (Model.Adult == 1 ? "selected='selected'" : "") : "selected='selected'") value="1">1</option>
+                        <option @(Model != null ? (Model.Adult == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                        <option @(Model != null ? (Model.Adult == 3 ? "selected='selected'" : "") : "'") value="3">3</option>
+                        <option @(Model != null ? (Model.Adult == 4 ? "selected='selected'" : "") : "'") value="4">4</option>
+                        <option @(Model != null ? (Model.Adult == 5 ? "selected='selected'" : "") : "'") value="5">5</option>
+                        <option @(Model != null ? (Model.Adult == 6 ? "selected='selected'" : "") : "'") value="6">6</option>
+                        <option @(Model != null ? (Model.Adult == 7 ? "selected='selected'" : "") : "'") value="7">7</option>
+                        <option @(Model != null ? (Model.Adult == 8 ? "selected='selected'" : "") : "'") value="8">8</option>
+                        <option @(Model != null ? (Model.Adult == 9 ? "selected='selected'" : "") : "'") value="9">9</option>
+
+                    </select>
+                </div>
+                <div class="col-md-4 pLeft0 ">
+                    <label>Trẻ em </label>
+                    <select name="ddlChild" id="ddlChild" class="TextBox">
+                        <option @(Model != null ? (Model.Children == 0 ? "selected='selected'" : "") : "selected='selected'") value="0">0</option>
+                        <option @(Model != null ? (Model.Children == 1 ? "selected='selected'" : "") : "'") value="1">1</option>
+                        <option @(Model != null ? (Model.Children == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                        <option @(Model != null ? (Model.Children == 3 ? "selected='selected'" : "") : "'") value="3">3</option>
+                        <option @(Model != null ? (Model.Children == 4 ? "selected='selected'" : "") : "'") value="4">4</option>
+                        <option @(Model != null ? (Model.Children == 5 ? "selected='selected'" : "") : "'") value="5">5</option>
+                        <option @(Model != null ? (Model.Children == 6 ? "selected='selected'" : "") : "'") value="6">6</option>
+                        <option @(Model != null ? (Model.Children == 7 ? "selected='selected'" : "") : "'") value="7">7</option>
+                    </select>
+                </div>
+                <div class=" col-md-4 pLeft0 ">
+                    <label>Em bé </label>
+                    <select name="ddlInfant" id="ddlInfant" class="TextBox">
+                        <option @(Model != null ? (Model.Infant == 0 ? "selected='selected'" : "") : "selected='selected'") value="0">0</option>
+                        <option @(Model != null ? (Model.Infant == 1 ? "selected='selected'" : "") : "'") value="1">1</option>
+                        <option @(Model != null ? (Model.Infant == 2 ? "selected='selected'" : "") : "'") value="2">2</option>
+                    </select>
+                </div>
+            </div>
+            <div class=" col-md-1 pLeft0 ">
+                <div class="controlHolder">
+                    <button type="submit" class="submit">
+                        <span>
+                            <span class="label">Tìm kiếm</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+}
+
+<div id="Seachmini_popup" style="display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>
+<script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+<link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+<script type="text/javascript">
+    function jScript() {
+
+        var mdate = new Date();
+        var depart = $("#txtDepartureDate").val();
+        if (depart != "") {
+            var dsplit = depart.split("/");
+            mdate = new Date(dsplit[2], dsplit[1] - 1, dsplit[0]);
+        }
+        
+        $("#txtDepartureDate").datepickerlunar({
+            numberOfMonths: 2,
+            minDate: "0",
+            maxDate: "+1Y",
+            showAnim: "show",
+            showButtonPanel: true,
+            dateFormat: "dd/mm/yy",
+            onSelect: function (selectedDate) {
+                var dsplit = selectedDate.split("/");
+                var m2date = new Date(dsplit[2], dsplit[1] - 1, dsplit[0]);
+                $("#txtReturnDate").datepickerlunar("option", "minDate", m2date);
+
+                var display = $("#divtxtReturnDate").css("display");
+                if (display == "none") {
+                    //Do nothing
+                }
+                else {
+                  
+                    setTimeout(function () {
+                        $("#txtReturnDate").datepickerlunar('show');
+                    }, 16);
+                }
+            }
+        });
+
+        $("#txtReturnDate").datepickerlunar({
+            numberOfMonths: 2,
+            showButtonPanel: true,
+            minDate: mdate,
+            maxDate: "+1Y",
+            showAnim: "show",
+            dateFormat: "dd/mm/yy",
+            onSelect: function (selectedDate) {
+
+            }
+        });
+    };
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(date.getDate() + days);
+        return result;
+    }
+    function ToggleDatepicker() {
+        var check_value = $('.ItineraryRadio:checked').val();
+        if (check_value == 1) {
+            $("#divtxtReturnDate").attr('style', 'display: none');
+            $("#txtReturnDate").removeAttr("required");
+        }
+        else {
+            $("#divtxtReturnDate").attr('style', 'display: block');
+            $("#divtxtReturnDate").datepicker("option", "minDate", $("#txtDepartureDate").datepicker("getDate"));
+            $("#txtReturnDate").attr("required", "");
+        }
+    }
+
+    function airScript() {
+        $(document.body).mousedown(function (event) {
+            var target = $(event.target);
+            if (!target.parents().andSelf().is('#pnStartCity') && !target.parents().andSelf().is('#ui-id-1') && !target.parents().andSelf().is("#txtStartPoint")) { // Clicked outside
+                $('#pnStartCity').hide("fast", '');
+            }
+            if (!target.parents().andSelf().is('#pnEndCity') && !target.parents().andSelf().is('#ui-id-2') && !target.parents().andSelf().is("#txtEndPoint")) { // Clicked outside
+                $('#pnEndCity').hide("fast", '');
+            }
+        });
+
+        $(document).ready(function () {
+            $('#btnCloseStartCity').bind('click', function () {
+                $('#pnStartCity').toggle("fast", '');
+            });
+
+            $('#btnCloseEndCity').bind('click', function () {
+                $('#pnEndCity').toggle("fast", '');
+            });
+
+            $("#txtStartPoint").bind('click', function () {
+                $('#txtStartPointSearch').val('');
+                $('#pnStartCity').toggle("fast", '');
+                $('#pnEndCity').css('display', 'none');
+                $('#txtStartPointSearch').val('');
+                $('#txtEndPointSearch').val('');
+            });
+
+            $("#txtEndPoint").bind('click', function () {
+                $('#txtEndPointSearch').val('');
+                $('#pnEndCity').toggle("fast", '');
+                $('#pnStartCity').css('display', 'none');
+                $('#txtStartPointSearch').val('');
+                $('#txtEndPointSearch').val('');
+            });
+            SearchAutoCompleteStartPoint();
+            SearchAutoCompleteEndPoint();
+        });
+    }
+
+    function SearchAutoCompleteStartPoint() {
+        $("#txtStartPointSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                     url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPointSearch").val(),
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+
+                });
+            },
+            select: function ( event, ui ) {
+                $('#hdfStartPoint').val(ui.item.value);
+                $("#txtStartPoint").val(ui.item.labeldisplay);
+
+                $("#txtStartPoint").val(ui.item.labeldisplay);
+                $('#txtStartPointSearch').val(ui.item.labeldisplay);
+
+                $('#pnStartCity').css('display', 'none');
+                $('#pnEndCity').css('display', 'block');
+                $('#txtEndPointSearch').focus();
+            },
+             minLength: 3
+        });
+    }
+    function SearchAutoCompleteEndPoint() {
+        $("#txtEndPointSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointSearch").val(),
+                    dataType: "json",
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                 debugger;
+                $('#hdfEndPoint').val(ui.item.value);
+                $('#hdfEndPointValue').val(ui.item.value);
+                $("#txtEndPoint").val(ui.item.labeldisplay);
+                $('#pnEndCity').css('display', 'none');
+                $('#txtStartPointSearch').val('');
+                $("#txtDepartureDate").datepicker('show');
+            },
+            minLength: 3
+        });
+    }
+    function addGeoAirPort_Go(code, name) {
+        $("#txtStartPoint").val(name);
+        $('#hdfStartPoint').val(code);
+        $('#hdfStartPointValue').val(name);
+        $('#pnStartCity').css('display', 'none');
+        $('#pnEndCity').css('display', 'block');
+        $('#txtEndPointSearch').focus();
+    }
+
+    function addGeoAirPort_To(code, name) {
+        $("#txtEndPoint").val(name);
+        $('#hdfEndPoint').val(code);
+        $('#hdfEndPointValue').val(name);
+        $('#pnEndCity').css('display', 'none');
+    }
+
+</script>
+<script type="text/javascript" language="javascript">
+
+    function submitformmini() {
+        var form = $('#frCreateseachmini');
+        if (form.parsley().isValid() == true) {
+            $('#Seachmini_popup').bPopup({
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+            });
+            return true;
+        }
+        return false;
+    }
+
+    $(document).ready(function () {
+        jScript();
+        airScript();
+
+    });
+</script>
+<style>
+    .TextBox {
+    margin-bottom: 5px;
+    height: 35px;
+    background: #fff;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #4D4D4D;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font: 300 16px/22px sans-serif;
+    padding: 6px 12px 7px;
+    margin-right: 10px;
+    /* border-radius: 3px; */
+    width: 100%;
+    height: 31px !important;
+    padding-left: 5px !important;
+}
+</style>

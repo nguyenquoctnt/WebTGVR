@@ -1,0 +1,73 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Core.UI
+@model VDMMutiline.SeachAndBook.VDMFareDataInfo
+@{
+    Layout = null;
+    var ReturnFlights = Model;
+    var PriceAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.FareAdt);
+    var PriceChild = UIUty.ChuyenDoiTienTe(ReturnFlights.FareChd);
+    var PriceInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.FareInf);
+    var FeeAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeAdt);
+    var FeeChild = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeChd);
+    var FeeInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.FeeInf);
+    var TaxAdult = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxAdt);
+    var TaxChild = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxChd);
+    var TaxInfant = UIUty.ChuyenDoiTienTe(ReturnFlights.TaxInf);
+    var tongtiennguoilon = (ReturnFlights.Adt * (PriceAdult + FeeAdult + TaxAdult));
+    var tongtientrem = (ReturnFlights.Chd * (PriceChild + FeeChild + TaxChild));
+    var congtienembe = (ReturnFlights.Inf * (PriceInfant + FeeInfant + TaxInfant));
+    var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+    var Currency = UIUty.GetDonViTienTe();
+}
+@functions{
+
+
+   private string getsanbaycode(string code)
+    {
+        var obj = VDMMutiline.Ultilities.Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+<table style="line-height: 25px;width: 100%;">
+    <tbody>
+        @foreach (var item in Model.ListFlight)
+        {
+            foreach (var listAvailFlights in item.ListSegment)
+            {
+                <tr style="border-bottom: 1px dotted #bababa;">
+                    <td style="font-size: 12px;width: 190px;">
+                        <b>   @listAvailFlights.StartPoint @listAvailFlights.EndPoint</b>
+                        <span style="padding-left: 5px;padding-right: 5px">
+                            @(listAvailFlights.StartTime.ToString("HH:mm"))
+                        </span>
+                        <span style="padding-left: 5px;padding-right: 5px">
+                            @(listAvailFlights.EndTime.ToString("HH:mm"))
+                        </span>
+                        <span style="padding-left: 5px;padding-right: 5px">
+                            @(listAvailFlights.StartTime.ToString("dd/MM"))
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            <img style="height: 15px;padding-right: 4px;" src="@UIUty.GetImagebyHang(ReturnFlights.Airline)">
+                            @if (ReturnFlights.IsVNJQ == true)
+                            {
+                                <div class="operated-by-bl">bay Jetstar</div>
+                            }
+                        </span>
+                    </td>
+                    <td style="font-size: 11px;text-align: right;">
+                        <span id="sohieubayve" style="color: #fb7604;font-weight: bold">
+                            @listAvailFlights.FlightNumber
+                            <br>
+                            @listAvailFlights.Class
+                        </span>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,141 @@
+.ButtonRed{
+    border:1px solid #df0909; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; 
+    padding: 5px 10px 5px 10px; 
+    text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+     background-color: #f62b2b; background-image: linear-gradient(to bottom, #f62b2b, #d20202);
+     }
+
+.ButtonRed:hover{
+    border:1px solid #b30808;
+    background-color: #e40a0a; background-image: linear-gradient(to bottom, #e40a0a, #9f0202);
+    }
+
+.ButtonGreen{
+   border:1px solid #34740e;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+   font-size:12px;
+   font-family:arial, helvetica, sans-serif;
+   padding: 5px 10px 5px 10px;
+   text-decoration:none;
+   display:inline-block;
+   text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+   font-weight:bold;
+   color: #FFFFFF;
+   background-color: #4ba614; background-image: linear-gradient(to bottom, #4ba614, #008c00);
+   }
+
+.ButtonGreen:hover{
+ border:1px solid #224b09;
+ background-color: #36780f; background-image: linear-gradient(to bottom, #36780f, #005900);
+ cursor:pointer;
+ }
+
+.ButtonBlue{
+    border:1px solid #25729a; -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size:12px;font-family:arial, helvetica, sans-serif; 
+    padding: 5px 10px 5px 10px; text-decoration:none; 
+    display:inline-block;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    font-weight:bold;
+    color: #FFFFFF;
+    background-color: #3093c7; background-image: linear-gradient(to bottom, #3093c7, #1c5a85);
+    }
+
+.ButtonBlue:hover{
+    border:1px solid #1c5675;
+    background-color: #26759e; background-image: linear-gradient(to bottom, #26759e, #133d5b);
+    }
+
+.ButtonGray{
+border:1px solid #d7dada; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; 
+padding: 5px 10px 5px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+ background-color: #f4f5f5; background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);
+ }
+
+.ButtonGray:hover{
+ border:1px solid #bfc4c4;
+ background-color: #d9dddd; background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);
+ }
+
+input[type="checkbox"] {
+    margin: 0px 3px 0px 3px;
+    line-height: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/*
+label 
+{
+    cursor: default;
+    line-height: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+*/
+.TextBox
+{
+    background-color: #FFFFFF;
+    border-color: #A2A2A2;
+    /*border-radius: 4px 4px 4px 4px;*/
+    border-style: solid;
+    border-width: 1px;
+    color: #000000;
+    font-family: arial;
+    font-size: 10pt;
+    height: 28px;
+    padding-left: 3px;
+}
+.TextBox:focus
+{
+    outline: none;
+    border: 1px solid #CCCCCC;
+    box-shadow:         0px 0px 8px #CCCCCC;
+    -moz-box-shadow:    0px 0px 8px #CCCCCC;
+    -webkit-box-shadow: 0px 0px 8px #CCCCCC;
+}
+
+.search_results {
+    padding: 0px;
+    border: 1px solid #d4d4d4;
+    background-color: white;
+    overflow: hidden;
+    z-index: 99999;
+}
+.search_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.search_results li {
+    color: #333;
+    margin: 0px;
+    padding: 3px 8px;
+    cursor: pointer;
+    display: block;
+    width: 270px;
+    font-family: "Tahoma";
+    font-size: 12px;
+    text-align: left;
+    border-bottom: 1px dashed #eee;
+    text-transform: capitalize;
+    line-height: 20px;
+    overflow: hidden;
+}
+.search_results li:hover{
+    background-color: #666;
+    color: #fff;
+    cursor: pointer;
+    border-bottom: none;
+}
+
+.cursor
+{
+   cursor:pointer;
+}

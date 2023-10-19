@@ -1,0 +1,346 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@model VDMMutiline.SeachAndBook.SeachParam
+@functions{
+
+  private ApiClient.Models.Airport getbycode(string code)
+    {
+        return Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+    Layout = null;
+    var objnamedi = getbycode(Model.DepartureAirportCode);
+    var objnameden = getbycode(Model.DestinationAirportCode);
+}
+
+<link href="/Content/FontEnd/SeachValue/GlobalFlightQuocTe.css" rel="stylesheet" />
+<script src="/Content/FontEnd/js/bootstrap.min.js"></script>
+<style>
+    td.Airline {
+        text-align: center;
+    }
+
+    .BL, .VJ {
+        float: unset !important;
+    }
+</style>
+<div id="search-flight-small" style="margin-top: -10px">
+</div>
+<div id="contend" class="main row">
+
+    <div class="container">
+
+        @{ Html.RenderPartial("_PartialSachMini", Model); }
+        <div id="sp-step">
+            <div class="sps-block sps-01 active">
+                <i class="icon30 icon30-ssearch"></i>
+                1. Tìm kiếm chuyến bay
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-02 " style="padding: 15px 30px;">
+                <i class="icon30 icon30-user"></i>
+                2. Thông tin hành khách
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-03">
+                <i class="icon30 icon30-checkout"></i>
+                3. Chọn cách thanh toán
+            </div>
+            <div class="step-arrow"></div>
+            <div class="sps-block sps-04">
+                <i class="icon30 icon30-success"></i>
+                4. Đặt vé thành công
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        @using (Html.BeginForm("SeachInternational", "SeachHome", FormMethod.Post, new { @id = "from1", @class = "form-horizontal seach", @role = "form" }))
+        {
+            <input type="hidden" name="hdfSearchParams" id="hdfSearchParams" />
+            <input type="hidden" name="hdfFareDataId" id="hdfFareDataId" />
+            <input type="hidden" name="hdhDepartureFlightId" id="hdhDepartureFlightId" />
+            <input type="hidden" name="hdfReturnFlightId" id="hdfReturnFlightId" />
+            <div class="col-md-3 pLeft0">
+                @{
+                    Html.RenderPartial("_PartialRightInternational", Model);
+                }
+            </div>
+            <div class="col-md-9 pLeft0 pright0">
+                @if (Model.LstFareData != null)
+                {
+                    if (Model.LstFareData.Count > 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" onclick="ShowCopy()" class="btn btn-default">Copy</button>
+                            </div>
+                        </div>
+                        <div id="SearchParamDomesticDepart" class="clearfix  box_top">
+                            <div class="SearchParamContent hidden-xs hidden-sm">
+                                <div class="FlightIcon">
+                                    <img src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                </div>
+                                <div class="Itinerary">
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:
+                                    <span>@(objnamedi != null ? string.Format("{0}, {1} ({2})", objnamedi.AirportName, objnamedi.CountryName, objnamedi.AirportCode) : "")</span>
+                                    <span>↔ @(objnameden != null ? string.Format("{0}, {1} ({2})", objnameden.AirportName, objnameden.CountryName, objnameden.AirportCode) : "")</span>
+
+                                </div>
+                                <div class="FlightDate">
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:
+                                    <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.DepartureDate)))</span>
+                                    <span> (@(Model.countDepartureFlights) chuyến bay)</span>
+                                </div>
+                            </div>
+                            <div class="SearchParamContent hiddenMobie">
+                                <div class="FlightIcon">
+                                    <img alt="Flight" src="/Content/FontEnd/SeachValue/Styles/flight_depart.png">
+                                </div>
+                                <div class="Itinerary">
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Outbound_flight:
+                                    <span>@(objnamedi != null ? string.Format("{0}", objnamedi.AirportName) : "")</span>
+                                    <span>>@(objnameden != null ? string.Format("{0}", objnameden.AirportName) : "")</span>
+                                </div>
+                                <div class="FlightDate">
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Date_department:
+                                    <span>@(UIUty.GetNameDatetime(Utility.ConvertToDate(Model.DepartureDate)))</span>
+                                    <span> (@(Model.countDepartureFlights) chuyến bay)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div id="ResultTicket">
+
+                        </div>
+                        <div id="ResultTicket2">
+
+                        </div>
+                        <div id="loadingResultTicket" style="text-align:center">
+                            <img src="/Content/FontEnd/images/ajax-loading.gif" style="max-width:100%" />
+                            <p style="padding: 3px; margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="NormalBox">
+                            <div class="Title">
+                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                            </div>
+                            <div class="Content">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="NormalBox">
+                        <div class="Title">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                        </div>
+                        <div class="Content">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+<div id="myModalCopy" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 5px;padding-bottom: 5px; ">
+                <button type="button" class="close" data-dismiss="modal" style="    background: transparent !important;    color: #000 !important;    margin-top: -5px;">&times;</button>
+                <h4 class="modal-title">Copy</h4>
+            </div>
+            <div id="contentmodalcopy"></div>
+        </div>
+
+    </div>
+</div>
+<div id="myModalloading" style="        display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>
+<script>
+     function ShowCopy() {
+        $('#myModalloading').bPopup({
+        modalClose: false,
+        opacity: 0.6,
+        positionStyle: 'fixed'
+    });
+    jQuery.ajax({
+        url: '@Url.Action("CopyInternational","SeachHome")',
+        type: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function ( data ) {
+            $( '#contentmodalcopy' ).html( data );
+             $('#myModalCopy').modal('show');
+             $('#myModalloading').bPopup().close();
+        },
+        error: function (jqXhr, errorCode, error) {
+             $('#myModalloading').bPopup().close();
+        }
+    });
+    }
+    function submitform(SearchParams, FareDataId, groupnameDeparture, groupnameReturn) {
+        $("#hdfSearchParams").val(SearchParams);
+        $("#hdfFareDataId").val(FareDataId);
+        var nameDeparture = "input[name=" + groupnameDeparture + "]:checked";
+        $("#hdhDepartureFlightId").val($(nameDeparture).val());
+        var nameDReturn = "input[name=" + groupnameReturn + "]:checked";
+        $("#hdfReturnFlightId").val($(nameDReturn).val());
+        $("#from1").submit();
+    }
+    function ToggleFare( targetId, controlId, FareDataIdValue ) {
+
+        if ( document.getElementById ) {
+
+            target = document.getElementById(targetId);
+            control = document.getElementById( controlId );
+             if ( $( target ).is( ':visible' ) ) {
+                        $( control ).addClass( 'details' );
+                        $( control ).removeClass( 'details_selected' );
+                    }
+             else {
+                    $( '#GetFareRule_popup' ).bPopup( {
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+        });
+            $.ajax( {
+                url: '@Url.Action("GetDetailFare", "SeachHome")',
+                type: 'POST',
+                cache: false,
+                dataType: "html",
+                data: addRequestVerificationToken( {  "fareid": FareDataIdValue } ),
+                success: function ( data ) {
+                    $( '#'+targetId ).html( data );
+
+                        $( control ).addClass( 'details_selected' );
+                        $( control ).removeClass( 'details' );
+
+
+                     $('#GetFareRule_popup').bPopup().close();
+                },
+                error: function ( jqXHR, exception ) {
+                     $('#GetFareRule_popup').bPopup().close();
+                }
+            } );
+            }
+              $( target ).toggle( 'blind' );
+
+        }
+    }
+    function Toggle(targetId, controlId,FareDataIdValue,flightID) {
+        if ( document.getElementById ) {
+             target = document.getElementById(targetId);
+            control = document.getElementById( controlId );
+             if ( $( target ).is( ':visible' ) ) {
+                        $( control ).addClass( 'details ' );
+                        $( control ).removeClass( 'details_selected FlightItemActive1' );
+                    }
+                    else {
+            $( '#GetFareRule_popup' ).bPopup( {
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+             } );
+
+            $.ajax( {
+                url: '@Url.Action("GetDetailFlights", "SeachHome")',
+                type: 'POST',
+                cache: false,
+                dataType: "html",
+                data: addRequestVerificationToken( {  "fareid": FareDataIdValue,"flightvalue": flightID } ),
+                success: function ( data ) {
+                    $( '#'+targetId ).html( data );
+
+                        $( control ).addClass( 'details_selected FlightItemActive1' );
+                        $( control ).removeClass( 'details ' );
+
+
+                    $( '#GetFareRule_popup' ).bPopup().close();
+                },
+                error: function ( jqXHR, exception ) {
+                     $('#GetFareRule_popup').bPopup().close();
+                }
+            } );
+            }
+               $( target ).toggle( 'blind' );
+
+        }
+    }
+    function onpendieukien(_seachparam, _fareid,  control) {
+        GetInfo(_seachparam, _fareid, control);
+    }
+    function GetInfo( _seachparam,_fareid, ControlOut) {
+        $('#GetFareRule_popup').bPopup({
+            modalClose: false,
+            opacity: 0.6,
+            positionStyle: 'fixed'
+        });
+        $.ajax({
+            url: '@Url.Action("GetFareRuleInfo", "SeachHome")',
+            type: 'POST',
+            cache: false,
+            dataType: "html",
+            data: addRequestVerificationToken({ "seachParam": _seachparam, "fareid": _fareid }),
+            success: function ( data ) {
+                $( ControlOut ).html( data );
+                $(ControlOut).bPopup({
+                    modalClose: false,
+                    opacity: 0.6,
+                    positionStyle: 'fixed'
+                });
+                $('#GetFareRule_popup').bPopup().close();
+            },
+            error: function (jqXHR, exception) {
+                $('#GetFareRule_popup').bPopup().close();
+            }
+        });
+    }
+    function addRequestVerificationToken(data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    }
+    $(document).ready(function () {
+        //jScript();
+        //airScript();
+    });
+</script>
+<div id="GetFareRule_popup" style="display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>

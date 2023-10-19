@@ -1,0 +1,58 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@model List<VDMMutiline.SharedComponent.EntityInfo.TblArticleInfo>
+@{
+    Layout = null;
+}
+
+<div class="bocuc_374" style="font-size: 18px;line-height: 24px;">
+    <div class="col-md-12">
+        <p style="margin-bottom: 0px;">
+            <span style="color: #333333;"><strong>Hỗ trợ trực tuyến</strong></span>
+        </p>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <table style="width: 100%;" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <td width="60"><img style="float: none;" src="@item.Thumb" alt="customer_support" width="50" height="50"></td>
+                        <td>
+
+                            <strong>@item.Tenbai</strong><br><span>@item.Mota</span>
+                            <br>
+                            <a href="skype:@item.SEODescription?chat">
+                                <img src="/Content/FontEnd/VDM/images/iconsky.jpg" alt="" width="18" height="18">
+                            </a>&nbsp;
+                            <a href="@item.SEOKeyword"><img src="/Content/FontEnd/VDM/images/iconfb.jpg" alt="" width="18" height="18"></a>
+                            <a href="https://zalo.me/@item.SEOTitle"><img src="/Content/zalo.png" alt="" style="margin-left: 8px;" width="18" height="18"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+<style>
+    .bocuc_374 {
+        display: inline-block;
+        height: 120PX;
+        margin: 190PX 0 0 20px;
+        vertical-align: top;
+        font-size: 12px;
+        background: #fff;
+        padding: 10px;
+    }
+
+    .bocuc_374 {
+        background: rgba(250, 250, 245, 0.85) !important;
+        border-top-left-radius: 28px;
+        border-bottom-right-radius: 28px;
+    }
+</style>

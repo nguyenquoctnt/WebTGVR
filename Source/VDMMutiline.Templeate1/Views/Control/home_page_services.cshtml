@@ -1,0 +1,61 @@
+﻿@using VDMMutiline.Core.UI
+@{
+    /**/
+
+    Layout = null;
+    var common = CommonUI.GetlistTempleate(22);
+}
+@if (CommonUI.Getsettingtempleatebykey(common, "{home_page_services_show}") == "1")
+{
+    <link href="/Content/FontEnd/services/css/style.css" rel="stylesheet" />
+
+    <div class="container utilities-wrap">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="util-item">
+                    <div class="util-img">
+                        <img src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_image_1}")" alt="Cam kết Giá tốt">
+                    </div>
+                    <h2 class="util-heading">@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_title_1}")</h2>
+                    <p class="util-description">
+                        @CommonUI.Getsettingtempleatebykey(common, "{home_page_services_desc_1}")
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="util-item">
+                    <div class="util-img">
+                        <img src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_image_2}")" alt="Cam kết Giá tốt">
+                    </div>
+                    <h2 class="util-heading">@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_title_2}")</h2>
+                    <p class="util-description">
+                        @CommonUI.Getsettingtempleatebykey(common, "{home_page_services_desc_2}")
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="util-item">
+                    <div class="util-img">
+                        <img src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_image_3}")" alt="Cam kết Giá tốt">
+                    </div>
+                    <h2 class="util-heading">@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_title_3}")</h2>
+                    <p class="util-description">
+                        @CommonUI.Getsettingtempleatebykey(common, "{home_page_services_desc_3}")
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="util-item">
+                    <div class="util-img">
+                        <img src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_image_4}")" alt="Cam kết Giá tốt">
+                    </div>
+                    <h2 class="util-heading">@CommonUI.Getsettingtempleatebykey(common, "{home_page_services_title_4}")</h2>
+                    <p class="util-description">
+                        @CommonUI.Getsettingtempleatebykey(common, "{home_page_services_desc_4}")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

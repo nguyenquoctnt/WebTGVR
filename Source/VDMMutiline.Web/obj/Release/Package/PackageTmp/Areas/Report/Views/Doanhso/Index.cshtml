@@ -1,0 +1,254 @@
+﻿@model VDMMutiline.SharedComponent.Params.BK_BookingParam
+@using VDMMutiline.Core.UI
+@using VDMMutiline.Ultilities
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Params
+@{
+    VDMMutiline.Core.Models.VDMUser userinfor = null;
+    userinfor = (VDMMutiline.Core.Models.VDMUser)ViewBag.userinfor;
+    ViewBag.Title = "Quản lý vé";
+    ViewBag.Description = "Doanh số";
+    var rowIndex = 0;
+}
+@functions {
+    private List<BK_TicketInfo> GetlistTicket(int bookingid)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(bookingid);
+    }
+    private List<BK_PassengerInfo> GetPassengerbyBooking(int id)
+    {
+        var dao = new BK_PassengerDao();
+        var param = new BK_PassengerParam() { BookingID = id };
+        dao.GetbyBooking(param);
+        return param.BK_PassengerInfos;
+    }
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                    Doanh số
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            <div class="form form-horizontal" style="margin-bottom: 15px;">
+                @using (Html.BeginForm("Index", "Doanhso", FormMethod.Post, new { @role = "form" }))
+                {
+                    <div class="row">
+                        <div class="col-md-4 mt-1 p-0">
+                            <div>
+                                <div class="form-group ">
+                                    <label class="col-md-12 label-control">Thời gian đặt chỗ</label>
+                                    <div class="col-md-12 position-relative mb-0">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="padding-left: 15px;padding-right: 15px;">
+                                                <i class="fa fa-calendar bigger-110"></i>
+                                            </span>
+                                            @Html.TextBoxFor(x => Model.BookingFilter.TuNgayDenNgay, new { @class = "form-control", @placeholder = "" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-1 p-0">
+                            <div class="form-group ">
+                                <label class="col-md-12 label-control">Booker</label>
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(x => Model.BookingFilter.TaiKhoan, Model.UserInfos.Select(n => new SelectListItem { Selected = n.UserName == Model.BookingFilter.TaiKhoan, Text = n.UserName, Value = n.UserName }), new { @class = "form-control", @placeholder = "" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-1 p-0">
+                            <div class="form-group ">
+                                <label class="col-md-12 label-control"></label>
+                                <div class="col-md-12 mt-2">
+                                    <button type="submit" id="btnSearch" class="btn btn-info"><span class="ace-icon fa fa-search icon-on-right bigger-110"></span>Tìm kiếm</button>
+                                    <a class="btn btn-info" style="color:#fff" onclick="exportexcel()">
+                                        Export to Excel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="table-responsive">
+                <div class="tableconte">
+                    <table id="dynamic-table" class=" booking table table-striped table-bordered zero-configuration">
+                        <thead>
+                            <tr>
+                                <th class="sort-numeric">STT</th>
+                                <th>Ngày xuất</th>
+                                <th>CTV</th>
+                                <th>Code vé</th>
+                                <th style="min-width: 110px;">Hành trình</th>
+                                <th>Ngày đi</th>
+                                <th>Ngày về</th>
+                                <th>Hình thức thanh toán</th>
+                                <th>Giá bán</th>
+                                <th>Giá mua</th>
+                                <th>Voucher</th>
+                                <th>Giá lợi nhuận</th>
+
+                                @*<th>Ghi chú</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="headertable" class="gradeA"></tr>
+                            @if (Model.BookingInfos != null)
+                            {
+                                var tongsokhach = 0;
+                                double tgiaban = 0;
+                                double tgiamua = 0;
+                                double tloinhuan = 0;
+                                double tongvc = 0;
+                                foreach (var item in Model.BookingInfos)
+                                {
+                                    var listve = GetlistTicket(item.ID);
+                                    var objchieudi = listve.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotDi);
+                                    var objchieuve = listve.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotVe);
+                                    var hanhkhach = GetPassengerbyBooking(item.ID);
+                                    var soluonghanhkhach = hanhkhach.Count;
+                                    tongsokhach += soluonghanhkhach;
+                                    string hang1 = "";
+                                    string hang2 = "";
+                                    string ngaydi = "";
+                                    string ngayve = "";
+                                    double giaban = 0;
+                                    double giamua = 0;
+                                    double loinhuan = 0;
+                                    if (objchieudi != null)
+                                    {
+                                        hang1 = objchieudi.Code;
+                                        ngaydi = objchieudi.StartDate.HasValue ? objchieudi.StartDate.Value.ToString("dd/MM/yyyy HH:mm") : "";
+                                        giaban += objchieudi.Price.HasValue ? objchieudi.Price.Value : 0;
+                                        giamua += objchieudi.PriceBefore.HasValue ? objchieudi.PriceBefore.Value : 0;
+
+                                    }
+                                    if (objchieuve != null)
+                                    {
+                                        hang2 = objchieuve.Code;
+                                        ngayve = objchieuve.StartDate.HasValue ? objchieuve.StartDate.Value.ToString("dd/MM/yyyy HH:mm") : "";
+                                        if (!Station.CheckQuocTe(item.FromCity, item.ToCity))
+                                        {
+                                            giaban += objchieuve.Price.HasValue ? objchieuve.Price.Value : 0;
+                                            giamua += objchieuve.PriceBefore.HasValue ? objchieuve.PriceBefore.Value : 0;
+                                        }
+
+                                    }
+                                    tgiamua += giamua;
+                                    loinhuan = (giaban - giamua);
+                                    tgiaban += (giaban + (item.DiscountPrice.HasValue ? (double)item.DiscountPrice : 0));
+                                    tloinhuan += loinhuan;
+                                    tongvc += (item.DiscountPrice.HasValue ? (double)item.DiscountPrice : 0);
+                                    rowIndex++;
+                                    <tr class="gradeA">
+                                        <td>@rowIndex</td>
+                                        <td> @(item.UpdatedDate.HasValue ? (item.UpdatedDate.HasValue ? item.UpdatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "") : (item.CreatedDate.HasValue ? item.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm") : ""))</td>
+                                        <td>@item.UserId</td>
+                                        <td>@item.BookCode</td>
+                                        <td>
+                                            @soluonghanhkhach <br />
+                                            @(item.FromCity + "-" + item.ToCity + "(" + hang1 + ")")
+
+                                            @if (!string.IsNullOrEmpty(hang2))
+                                            {
+                                                Html.Raw(("<br>" + (item.ToCity + "-" + item.FromCity + "(" + hang2 + ")")).ToString());
+                                            }
+                                        </td>
+                                        <td>@ngaydi</td>
+                                        <td>@ngayve</td>
+                                        <td>
+                                            @{
+                                                var objthanhtoan = item.PaymentInfo;
+                                                if (objthanhtoan != null)
+                                                {
+                                                    if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.Giaovetannha)
+                                                    {
+                                                        <span class="label label-sm arrowed-in label-warning">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, objthanhtoan.IdHinhThuc)</span>
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.Taivanphong)
+                                                    {
+                                                        <span class="label label-sm arrowed-in label-yellow">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, objthanhtoan.IdHinhThuc)</span>
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.VtcPay)
+                                                    {
+                                                        <span class="label label-sm arrowed-in label-danger">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, objthanhtoan.IdHinhThuc)</span>
+                                                    }
+                                                    else if (objthanhtoan.IdHinhThuc == Constant.Hinhthucthanhtoav2.VnPay)
+                                                    {
+                                                        <span class="label label-sm arrowed-in label-purple">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, objthanhtoan.IdHinhThuc)</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-sm arrowed-in label-default">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, objthanhtoan.IdHinhThuc)</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-sm arrowed-in label-default">@Utility.GetDictionaryValue(Constant.Hinhthucthanhtoav2.dctName, Constant.Hinhthucthanhtoav2.chuyenkhoan)</span>
+                                                }
+                                            }
+                                        </td>
+                                        <td>@((giaban).ToString("n0"))</td>
+                                        <td>@giamua.ToString("n0")</td>
+                                        <td>@(item.DiscountPrice.HasValue ? item.DiscountPrice.Value.ToString("n0") : "0")</td>
+                                        <td>@loinhuan.ToString("n0")</td>
+                                    </tr>
+                                }
+                                <tr id="footer" class="gradeA">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="color: red">@tongsokhach </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="color: red">@tgiaban.ToString("n0")</td>
+                                    <td style="color: red">@tgiamua.ToString("n0")</td>
+                                    <td style="color: red">@tongvc.ToString("n0")</td>
+                                    <td style="color: red">@tloinhuan.ToString("n0")</td>
+                                    @*<td></td>*@
+                                    @*<td></td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="/Content/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+<script src="/Content/daterangepicker/daterangepicker.js"></script>
+
+@section scripts {
+    <script src="/Content/js/jquery.table2excel.js"></script>
+    <script src="/Content/js/jquery.table2excel.min.js"></script>
+    <script>
+        $( document ).ready( function () {
+            $( '#headertable' ).html( $( '#footer' ).html() );
+        } );
+        $( '#BookingFilter_TuNgayDenNgay' ).daterangepicker( {
+            format: 'DD/MM/YYYY',
+        } );
+        function exportexcel() {
+            $( "#dynamic-table" ).table2excel( {
+                name: "Table2Excel",
+                filename: "Doanhso",
+                fileext: ".xls"
+            } );
+        }
+    </script>
+
+}

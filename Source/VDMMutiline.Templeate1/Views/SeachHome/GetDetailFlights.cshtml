@@ -1,0 +1,111 @@
+﻿@model ApiClient.Models.Flight
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+    Layout = null;
+   
+    var codeold = "";
+}
+@functions{
+
+    private string getsanbaycode(string code)
+    {
+        var obj =VDMMutiline.Ultilities. Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@if (Model != null)
+{
+    <div class="text1 FloatLeft">
+        ✈ @VDMMutiline.Resource.App_GlobalResources.weblanguage.Flight_Detail
+    </div>
+    <div class="FlightInfoDetails">
+        <div class="ItineraryBox border-radius-all" style="padding: 0px 5px 0px 5px">
+            @if (Model.ListSegment != null)
+            {
+                var indexAvail = 1;
+                foreach (var itemAvail in Model.ListSegment)
+                {
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td class="ItineraryBox-Carrier">
+                                    <div class="CarrierLogo">
+                                        <img alt="Airline logo" src="@UIUty.GetImagebyHang(itemAvail.Airline)">
+                                        <div class="CarrierName">
+                                            @UIUty.GetNamebyHang(itemAvail.Airline)
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="ItineraryBox-Depart">
+                                    <div class="City">
+                                        @(getsanbaycode( itemAvail.StartPoint))
+                                    </div>
+
+                                    <span class="Hour">@(itemAvail.StartTime.ToString("HH:mm"))</span><br>
+                                    <span class="Date">@(itemAvail.StartTime.ToString("dd/MM/yyyy"))</span>
+
+                                </td>
+                                <td class="ItineraryBox-Direct">
+                                    <div><span class="FltNum"><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.flight:</span> <strong class="col2">@itemAvail.FlightNumber </strong></span></div>
+                                    <div class="ItineraryBox-Direct-Picture"><img alt="" src="/Content/FontEnd/SeachValue/Styles/flight-direct.png"></div>
+                                    <div><span class="FltTime"><span class="ItineraryBox-FlightInfo-Title">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration:</span> <strong class="col2">  @UIUty.GetTimeString(Convert.ToInt32(itemAvail.Duration))</strong></span></div>
+                                </td>
+                                <td class="ItineraryBox-Arrival">
+                                    <div class="City">
+                                        @(getsanbaycode( itemAvail.EndPoint))
+                                    </div>
+                                    <span class="Hour">
+                                        @(itemAvail.EndTime.ToString("HH:mm"))<br>
+                                    </span>
+                                    <span class="Date"> @(itemAvail.EndTime.ToString("dd/MM/yyyy"))</span>
+                                </td>
+                                <td class="ItineraryBox-FlightInfo">
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.flight: <strong class="col2">@(itemAvail.Airline + itemAvail.FlightNumber)</strong> <br />
+                                    @VDMMutiline.Resource.App_GlobalResources.weblanguage.Duration: <strong class="col2">
+                                        @UIUty.GetTimeString(itemAvail.Duration)
+                                    </strong><br />
+                                    <span>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Class: <strong class="col2">@itemAvail.Class  </strong> <br /></span>
+                                    <span>@VDMMutiline.Resource.App_GlobalResources.weblanguage.Aircraff: <strong class="col2">@itemAvail.Plane  </strong> <br /></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    if (string.IsNullOrEmpty(codeold))
+                    {
+                        codeold = itemAvail.EndPoint;
+                    }
+                    if (indexAvail != Model.ListSegment.Count())
+                    {
+                        string nhagacu = getsanbaycode( codeold);
+                        string nhagamoi = getsanbaycode( itemAvail.EndPoint);
+                        if (itemAvail.StartPoint == codeold)
+                        {
+                            <div class="StopInfo">
+                                <span id="lblChangeStationAt">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Change_the_station_at</span>
+                                <strong class="col2">@(getsanbaycode( itemAvail.EndPoint))</strong>
+
+                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_Time: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="StopInfo">
+                                <span id="lblChangeStationAt">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Stoppoint</span>
+                                <strong class="col2">@(getsanbaycode( itemAvail.EndPoint))</strong>
+                                @VDMMutiline.Resource.App_GlobalResources.weblanguage.Stop_Time: <strong class="col1">@UIUty.GetTimeString(itemAvail.StopTime)</strong>
+                            </div>
+                        }
+                    }
+
+                    indexAvail++;
+                    codeold = itemAvail.EndPoint;
+                }
+            }
+        </div>
+    </div>
+}
+

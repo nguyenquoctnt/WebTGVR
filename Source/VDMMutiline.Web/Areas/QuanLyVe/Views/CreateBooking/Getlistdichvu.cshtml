@@ -1,0 +1,44 @@
+﻿@model VDMMutiline.WebBackEnd.Models.passenger
+    @{
+        Layout = null;
+    }
+    <div class="table-responsive">
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="heading">
+                    <th width="10%">Chiều</th>
+                    <th width="20%">Dịch Vụ</th>
+                    <th width="15%">Giá trị</th>
+                    <th width="20%">Giá gốc</th>
+                    <th width="20%">Thành tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="addons-data-adult-1">
+
+                @foreach (var item in Model.lstaddons)
+                {
+                    <tr>
+                        <td>
+                            @item.Type
+                        </td>
+                        <td>
+                            @item.NameAddon
+                        </td>
+                        <td>
+                            @item.valueAddon
+                        </td>
+                        <td>
+                            @item.pricebeforeAddon
+                        </td>
+                        <td>
+                            @item.priceAfterAddon
+                        </td>
+                        <td>
+                            <button onclick="deletehanhkhach('@item.GuiIDaddon','@item.GuiIDPad')" class="btn btn-danger btn-delete-addon" type="button"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

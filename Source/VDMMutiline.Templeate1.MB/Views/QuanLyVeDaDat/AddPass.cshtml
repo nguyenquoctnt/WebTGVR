@@ -1,0 +1,127 @@
+﻿@model VDMMutiline.SeachAndBook.Models.CreatePassengerModel
+@{
+    /**/
+
+    Layout = null;
+    var listgioitinh = new List<SelectListItem>();
+    listgioitinh.Add(new SelectListItem { Selected = true, Text = "Nam", Value = "Nam" });
+    listgioitinh.Add(new SelectListItem { Selected = false, Text = "Nữ", Value = "Nữ" });
+
+}
+
+@using (Html.BeginForm("AddPass", "QuanLyVeDaDat", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @data_parsley_validate = "", @data_parsley_errors_messages_disabled = "", @novalidate = "", id = "frAddPass", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(z => Model.Idbooking)
+    @Html.HiddenFor(z => Model.Idticket)
+    @Html.HiddenFor(z => Model.IsReturn)
+    <div class="form-group row">
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Loại </label>
+        <div class="col-sm-4">
+            @Html.DropDownListFor(z => z.TypeID, VDMMutiline.SharedComponent.Constants.Constant.TypePassenger.dctName.Select(z => new SelectListItem { Selected = Model.TypeID == z.Key, Value = z.Key.ToString(), Text = z.Value }), new { @Required = "Required", @class = "form-control " })
+        </div>
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giới tính </label>
+        <div class="col-sm-4">
+            @Html.DropDownListFor(z => z.Sex, listgioitinh, new { @Required = "Required", @class = "form-control " })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px">Họ</label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(z => z.FirstName, new { @Required = "Required", @class = "form-control " })
+        </div>
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Tên </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(z => z.Name, new { @Required = "Required", @class = "form-control " })
+        </div>
+    </div>
+    <div id="divdatehk" class="form-group row" style="display:none">
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Ngày sinh </label>
+        <div class="col-sm-4">
+            <div class="input-group  infant">
+                @Html.TextBoxFor(z => Model.Birthday, new { @class = "form-control datepad", placeholder = "Ngày sinh" })
+                <span class="input-group-addon">
+                    <i class="ace-icon fa fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá đi </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(z => z.TotalPriceDepart, new { @Required = "Required", @oninput = "formatMoney($(this))", @class = "form-control " })
+
+        </div>
+        @if (Model.IsReturn == true)
+        {
+            <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá về </label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(z => z.TotalPriceReturn, new { @Required = "Required", @oninput = "formatMoney($(this))", @class = "form-control " })
+            </div>
+        }
+    </div>
+    <h4 class="form-section"> Hành lý chiều đi</h4>
+    <div class="form-group row">
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá trị </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(z => z.BaggageDepartValue, new { @oninput = "formatMoney($(this))", @class = "form-control " })
+
+        </div>
+        <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá tiền </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(z => z.BaggageDepartPrice, new { @oninput = "formatMoney($(this))", @class = "form-control " })
+        </div>
+    </div>
+    if (Model.IsReturn == true)
+    {
+        <h4 class="form-section"> Hành lý chiều về</h4>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá trị </label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(z => z.BaggageReturnValue, new { @oninput = "formatMoney($(this))", @class = "form-control " })
+            </div>
+            <label class="col-sm-2 control-label no-padding-right text-left" style="padding-top:15px"> Giá tiền </label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(z => z.BaggageReturnPrice, new { @oninput = "formatMoney($(this))", @class = "form-control " })
+            </div>
+        </div>
+    }
+    <div class="clearfix"></div>
+    <div id="actionAddHK" class="modal-footer">
+        <button type="button" onclick="sumitformHK()" class="btn btn-info"><i class="ace-icon fa fa-check bigger-110"></i>Cập nhập</button>
+    </div>
+}
+<script src="/Content/js/bootstrap-datepicker.min.js"></script>
+<script>
+   function sumitformHK() {
+        var formvalidate = $('#frAddPass');
+            formvalidate.parsley().validate()
+            if (formvalidate.parsley().isValid() == true) {
+                var form = $('form#frAddPass').get(0);
+                var fd = new FormData(form);
+                _lwfunc.AjaxNoprocessData("@Url.Action("AddPass", "QuanLyVeDaDat")", fd, function (data) {
+                    if (data.isSuccess === true) {
+                        toastr.success(data.mess, "Thông báo!");
+                        $("#actionAddHK").hide();
+                        window.location.href = "@Url.Action("Create", "QuanLyVeDaDat", new { id= Model.Idbooking })";
+                    } else {
+                        toastr.error(data.mess, "Thông báo!");
+                    }
+                });
+            }
+    }
+    $("#TypeID").change(function () {
+        var id = $(this).val();
+        if (id != "1") {
+            $('#divdatehk').show();
+        }
+        else {
+            $('#divdatehk').hide();
+        }
+    });
+    $('.datepad').datepicker({
+        ignoreReadonly: true,
+        allowInputToggle: true,
+        format: 'dd/mm/yyyy',
+    });
+</script>

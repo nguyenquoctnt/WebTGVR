@@ -1,0 +1,157 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@model VDMMutiline.SharedComponent.Params.TblThanhvienParam
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Create", "TblThanhvien", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_type = "", id = "frCreateTblThanhvien", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.TblThanhvien.Id)
+            <div class="form-group">
+                
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Tên thành viên</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.TenThanhvien, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+                <label class="col-sm-2 control-label no-padding-right">Tên đăng nhập</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Tendangnhap, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Loại Thành viên</label>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(x => x.TblThanhvien.LoaiThanhvien, Constant.LoaiThanhvien.dctName.Select(n => new SelectListItem { Selected = n.Key == Model.TblThanhvien.LoaiThanhvien, Text = n.Value, Value = n.Key.ToString() }), new { @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                    @*@Html.TextBoxFor(x => x.TblThanhvien.LoaiThanhvien, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })*@
+                </div>
+                <label class="col-sm-2 control-label no-padding-right">Thứ tự</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Thutu, new { @Required = "Required", @class = "col-xs-4 col-sm-4 thutu", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Cho phép đăng nhập</label>
+                <div class="col-sm-4">
+                        @if (Model.TblThanhvien.ChophepDangnhap == null)
+                        {
+                            Model.TblThanhvien.ChophepDangnhap = false;
+                        }
+                        @Html.CheckBox("TblThanhvien.ChophepDangnhap", Model.TblThanhvien.ChophepDangnhap == true)
+                    </div>
+                <label class="col-sm-2 control-label no-padding-right">Có gian hàng</label>
+                <div class="col-sm-4">
+                    @if (Model.TblThanhvien.CoGianhang == null)
+                    {
+                        Model.TblThanhvien.CoGianhang = false;
+                    }
+                    @Html.CheckBox("TblThanhvien.CoGianhang", Model.TblThanhvien.CoGianhang == true)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Email</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Email, new { @Required = "Required", @class = "col-xs-12 col-sm-12 email", @placeholder = "" })
+                </div>
+                <label class="col-sm-2 control-label no-padding-right">Điện thoại</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Dienthoai, new { @Required = "Required", @class = "col-xs-12 col-sm-12 phone", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Mô tả</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Mota, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Điểm thưởng</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Diemthuong, new { @Required = "Required", @class = "col-xs-12 col-sm-12 number", @placeholder = ""})
+                </div>
+                <label class="col-sm-2 control-label no-padding-right">Gạch</label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.Gach, new { @Required = "Required", @class = "col-xs-12 col-sm-12 number", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                @*<label class="col-sm-2 control-label no-padding-right">Loại triết khấu</label>
+                    <div class="col-sm-4">
+                    @Html.TextBoxFor(x => x.TblThanhvien.LoaiTrietkhau, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                    </div>*@
+                <label class="col-sm-2 control-label no-padding-right">Mức triết khấu</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(x => x.TblThanhvien.MucTrietkhau, Constant.MucTrieuKhau.dctName.Select(n => new SelectListItem { Selected = n.Key == Model.TblThanhvien.MucTrietkhau, Text = n.Value, Value = n.Key.ToString() }), new { @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                    @*@Html.TextBoxFor(x => x.TblThanhvien.MucTrietkhau, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })*@
+                </div>
+            </div>
+            @*<div class="form-group">
+    <label class="col-sm-2 control-label no-padding-right">Phiên bản</label>
+        <div class="col-sm-4">
+        @Html.TextBoxFor(x => x.TblThanhvien.Phienban, new { @Disabled = "Disabled", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+        </div>
+
+            </div>*@
+            @*<div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right">Người tạo</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(x => x.TblThanhvien.Nguoitao, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right">Ngày tạo</label>
+                    <div class="col-sm-4">
+                         <div class="input-group">
+                            <input class="form-control date-picker" data-date-format="dd/mm/yyyy" name="Ngaytao" id="Ngaytao" type="text" value="@Model.TblThanhvien.Ngaytao"/><span class="input-group-addon">
+                        <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right">Người sửa</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(x => x.TblThanhvien.Nguoisua, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right">Ngày sửa</label><div class="col-sm-4">
+                     <div class="input-group">
+                    <input class="form-control date-picker" data-date-format="dd/mm/yyyy" name="Ngaysua" id="Ngaysua" type="text"/><span class="input-group-addon">
+                    <i class="fa fa-calendar bigger-110"></i>
+                    </span>
+                    </div>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right">Đã xóa</label><div class="col-sm-10">
+                    @if(Model.TblThanhvien.Daxoa == null)
+                    {
+                    Model.TblThanhvien.Daxoa = false;
+                    }
+                    @Html.CheckBox("TblThanhvien.Daxoa", Model.TblThanhvien.Daxoa == true)
+                     </div>
+                </div>*@
+
+
+
+            <div class="clearfix form-actions">
+                <div class="col-md-12 center">
+                    <a onclick="submitform()" class="btn btn-info"><i class="ace-icon fa fa-floppy-o bigger-125"></i>Cập nhật</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="ace-icon fa fa-times bigger-125"></i>Đóng</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $('.date-picker').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+</script>

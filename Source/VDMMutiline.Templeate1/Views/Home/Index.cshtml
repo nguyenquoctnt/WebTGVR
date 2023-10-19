@@ -1,0 +1,198 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@{
+    ViewBag.Title = "Vé máy bay giá rẻ";
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+    var curentDomain = VDMMutiline.Core.Common.SiteMuti.Getsitename();
+    var CurentUser = VDMMutiline.Core.UI.CommonUI.GetInforByDomain(curentDomain);
+    var common = CommonUI.GetlistTempleate(22);
+    var commonpopub = CommonUI.GetlistTempleate(19);
+    var commonicon = CommonUI.GetlistTempleate(16);
+   
+}
+}
+@section HeaderIndex{
+    <link rel="shortcut icon" href="@CommonUI.Getsettingtempleatebykey(commonicon, "{header_favicon}")" />
+
+
+}
+
+@Html.Action("home_page_services", "Control")
+@Html.Action("GetArrticalByCate", "Home")
+@Html.Action("Doitac", "Home")
+@if (CommonUI.Getsettingtempleatebykey(common, "{home_page_show_method_tabs}") == "1")
+{
+    <div class="container book-and-payment-wrap">
+        <div class="row">
+            <div class="col-sm-6 book-method">
+                <div class="heading">Cách thức đặt vé</div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="item-icon"><span class="@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_icon_1}")"></span></div>
+                        <div>
+                            <h2 class="item-title">@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_title_1}")</h2>
+                            <div class="item-content">
+                                @CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_content_1}")
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="item-icon"><span class="@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_icon_2}")"></span></div>
+                        <div>
+                            <h2 class="item-title">@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_title_2}")</h2>
+                            <div class="item-content">
+                                @CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_content_2}")
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="item-icon"><span class="@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_icon_3}")"></span></div>
+                        <div>
+                            <h2 class="item-title">@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_title_3}")</h2>
+                            <div class="item-content">
+                                @CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_content_3}")
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="item-icon"><span class="@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_icon_4}")"></span></div>
+                        <div>
+                            <h2 class="item-title">@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_title_4}")</h2>
+                            <div class="item-content">
+                                @CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_content_4}")
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="    padding: 0px;    padding-top: 15px;">
+                        @if (!string.IsNullOrEmpty(CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_Gmap}")) && CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_Gmap}") != "-")
+                        {
+                            <iframe src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_booking_method_Gmap}")" width="100%" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6 book-method">
+                <div class="heading">Cách thức thanh toán</div>
+                <ul class="wPttt mt15">
+                    <li class=" m0">
+                        <div class="imgPttt">
+                            <img class="thumb" src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_image_1}")">
+                        </div>
+                        <p>
+                            <a class="title" href="#"><b>@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_title_1}") </b> </a><br>
+                            <span class="">@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_content_1}")</span>
+                        </p>
+                        <div class="clr"></div>
+                    </li>
+                    <li class=" m0">
+                        <div class="imgPttt">
+                            <img class="thumb" src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_image_2}")">
+                        </div>
+                        <p>
+                            <a class="title" href="#"><b>@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_title_2}") </b> </a><br>
+                            <span class="">@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_content_2}")</span>
+                        </p>
+                        <div class="clr"></div>
+                    </li>
+                    <li class=" m0">
+                        <div class="imgPttt">
+                            <img class="thumb" src="@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_image_3}")">
+                        </div>
+                        <p>
+                            <a class="title" href="#"><b>@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_title_3}") </b> </a><br>
+                            <span class="">@CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_content_3}")</span>
+                        </p>
+                        <div class="clr"></div>
+                    </li>
+                    <li class=" m0">
+                        @Html.Raw(CommonUI.Getsettingtempleatebykey(common, "{home_page_payment_content}"))
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+@Html.Action("SubmitMail", "Control")
+<script>
+    window.ParsleyConfig = {
+        errorClass: 'has-error'
+        , excluded: 'input[type=hidden]'
+        , trigger: false
+        , animate: true
+        , focus: 'first'
+        , validationMinlength: 3
+        , validators: {}
+        , errorElem: '<span></span>'
+        , errorsWrapper: '<span class="help-block"></span>'
+        , errorTemplate: "<div></div>"
+        , classHandler: function (el) {
+            return el.$element.closest(".form-control");
+        }
+    };
+</script>
+<script src="/Content/form-parsley/parsley.js"></script>
+
+@if (CommonUI.Getsettingtempleatebykey(commonpopub, "{container_popup_display}") == "1")
+{
+    var valuepopub = CommonUI.Getsettingtempleatebykey(commonpopub, "{container_popup}");
+    if (valuepopub != "" && valuepopub != "-")
+    {
+        <style>
+            .buttonbb.b-close, .button.bClose {
+                border-radius: 7px 7px 7px 7px !important;
+                box-shadow: none !important;
+                font: bold 131% sans-serif !important;
+                padding: 0 6px 2px !important;
+                position: absolute !important;
+                right: -7px !important;
+                top: -7px !important;
+                z-index: 500;
+            }
+
+            .buttonbb {
+                background-color: #ffd600 !important;
+                border-radius: 10px !important;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3) !important;
+                color: #FFF !important;
+                cursor: pointer !important;
+                display: inline-block !important;
+                padding: 10px 20px !important;
+                text-align: center !important;
+                text-decoration: none !important;
+            }
+        </style>
+        <link href="/Content/FontEnd/Popup/Popubcss.css" rel="stylesheet" />
+        <div id="home_popup">
+            <span class="buttonbb b-close"><span>X</span></span>
+            <div id="popubconten">
+                @Html.Raw(valuepopub)
+            </div>
+        </div>
+        <script src="/Content/FontEnd/Popup/jquery.bpopup.js"></script>
+        <script>
+            $(document).ready(function () {
+                var width = $(window).width();
+                if (width < 768) {
+                    jQuery('#home_popup img').each(function () {
+                        jQuery(this).addClass('img-responsive');
+                        $(this).removeAttr('width').removeAttr('height');
+                        $(this).removeAttr('style');
+                    });
+                    jQuery('.home_popup img').each(function () {
+                        jQuery(this).addClass('img-responsive');
+                        $(this).removeAttr('width').removeAttr('height');
+                        $(this).removeAttr('style');
+                    });
+                    $('#home_popup').attr('style', 'display:none');
+                } else {
+                    $('#home_popup').bPopup();
+                }
+            });
+        </script>
+    }
+}

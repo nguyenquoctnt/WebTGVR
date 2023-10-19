@@ -1,0 +1,167 @@
+﻿@model List<VDMMutiline.SeachAndBook.VDMFareDataInfo>
+@using VDMMutiline.Dao;
+@using VDMMutiline.Core.UI
+@using VDMMutiline.SharedComponent.EntityInfo
+@{
+    Layout = null;
+    //  var DepartureFlight = Model;
+    var dao = new AirlineDao();
+    var list = new List<AirlineInfo>();
+    list.Add(dao.GetbyCode("VN"));
+    list.Add(dao.GetbyCode("JQ"));
+    list.Add(dao.GetbyCode("VJ"));
+    list.Add(dao.GetbyCode("QH"));
+    list.Add(dao.GetbyCode("VU"));
+    var countairline = ViewBag.CountAirline;
+}
+@if (Model != null)
+{
+    foreach (var DepartureFlight in Model)
+    {
+        var querypic = list.FirstOrDefault(z => z.Code == DepartureFlight.Airline);
+        var pictureAirline = querypic != null ? querypic.Pictures : "";
+        var PriceAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.FareAdt);
+        var PriceChild = UIUty.ChuyenDoiTienTe(DepartureFlight.FareChd);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.FareInf);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeAdt);
+        var FeeChild = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeChd);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeInf);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxAdt);
+        var TaxChild = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxChd);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxInf);
+        var Currency = UIUty.GetDonViTienTe();
+        if (ViewBag.Itinerary > 1)
+        {
+            <div  id="@string.Format("ContentDepartureFlight{0}", DepartureFlight.FareDataIdValue)" class="FlightItem @DepartureFlight.Airline">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="Carrier">
+                                <div class="CarrierLogo">
+                                    <img alt="Airline logo" src="@pictureAirline">
+                                    @if (DepartureFlight.IsVNJQ == true)
+                                    {
+                                <div class="operated-by-bl">bay Pacific</div>
+                                    }
+                                </div>
+                            </td>
+                            <td class="FlightInfo" valign="middle">
+                                <div class="FlightNumber">
+                                    @DepartureFlight.FlightNumber
+                                </div>
+                            </td>
+                            <td class="Depart">
+                                <div class="Time">
+                                    @(DepartureFlight.StartDate.ToString("HH:mm"))
+                                </div>
+                            </td>
+                            <td class="Price">
+                                <span class="view-total-fare" style="display: inline-block">@((PriceAdult + FeeAdult + TaxAdult).ToString("#,0.#"))</span>
+                                <span class="view-base-fare" style="display: none">@((PriceAdult).ToString("#,0.#"))</span>
+                                <span class="Currency">@Currency </span>
+                                @if (DepartureFlight.Promo)
+                                {
+                                    <span class="PromoMessage" style="">
+                                        <br>
+                                        <span class="warning-icon">
+                                            <img alt="Warning" src="/Content/FontEnd/SeachValue/warning_icon.png" height="14">
+                                            <a href="javascript:void(0)" title="Đây là loại giá vé khuyến mại, bạn cần thực hiện thanh toán ngay">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Promo</a>
+                                        </span>
+                                    </span>
+                                }
+                            </td>
+                            <td style="width: 40px;">
+                                <div class="">
+                                    <a id='@string.Format("detaillinkdepart{0}", DepartureFlight.FareDataIdValue)' href="javascript:void(0)" onclick="@string.Format("ToggledepartureFlight('departflightdetail{0}','detaillinkdepart{1}','{2}')", DepartureFlight.FareDataIdValue, DepartureFlight.FareDataIdValue, DepartureFlight.FareDataIdValue)" class="linkViewFlight"></a>
+                                </div>
+                            </td>
+                            <td class="Select">
+                                <a onclick="SelectedDepartFlight('@DepartureFlight.FareDataIdValue', '@PriceAdult', '@(TaxAdult + FeeAdult)', '@PriceChild', '@(TaxChild + FeeChild)', '@PriceInfant', '@(TaxInfant + FeeInfant)', '@DepartureFlight.SessionAll', '@DepartureFlight.Airline','@DepartureFlight.StartPoint',
+'@DepartureFlight.EndPoint','@DepartureFlight.StartDate.ToString("HH:mm")','@DepartureFlight.StartDate.ToString("dd/MM/yyyy")'
+,'@DepartureFlight.EndDate.ToString("HH:mm")','@DepartureFlight.EndDate.ToString("dd/MM/yyyy")','@UIUty.GetImagebyHang(DepartureFlight.Airline)','@DepartureFlight.FlightNumber','@DepartureFlight.GroupClass')" id="btnSelectDepart" class="select-button" href="javascript:void(0)">Chọn</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="@string.Format("departflightdetail{0}", DepartureFlight.FareDataIdValue)" class="FlightDetail">
+
+                </div>
+            </div>
+        }
+        else
+        {
+            <div  id="@string.Format("ContentDepartureFlight{0}", DepartureFlight.FareDataIdValue)" class="FlightItem @DepartureFlight.Airline">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="Carrier">
+                                <div class="CarrierLogo">
+                                    <img alt="Airline logo" src="@pictureAirline">
+                                    @if (DepartureFlight.IsVNJQ == true)
+                                    {
+                                <div class="operated-by-bl">bay Pacific</div>
+                                    }
+                                </div>
+                            </td>
+                            <td class="Depart">
+                                <div class="City">
+                                    @DepartureFlight.StartPoint
+                                </div>
+                                <div class="Time">
+                                    @(DepartureFlight.StartDate.ToString("HH:mm"))
+                                </div>
+                            </td>
+                            <td class="Arrival">
+                                <div class="City">
+                                    @DepartureFlight.EndPoint
+                                </div>
+                                <div class="Time">
+                                    @(DepartureFlight.EndDate.ToString("HH:mm"))
+                                </div>
+                            </td>
+                            <td class="FlightInfo" valign="middle">
+                                <div class="FlightNumber">
+                                    @DepartureFlight.FlightNumber
+                                    @if (DepartureFlight.StopNum > 0)
+                                    {
+                                        <br />
+                                        <a style="font-size: 12px;">
+                                            @DepartureFlight.StopNum điểm dừng
+                                        </a>
+                                    }
+
+                                </div>
+                                <div class="Detail">
+                                    <a id='@string.Format("detaillinkdepart{0}", DepartureFlight.FareDataIdValue)' href="javascript:void(0)" onclick="@string.Format("ToggledepartureFlight('departflightdetail{0}','detaillinkdepart{1}','{2}')", DepartureFlight.FareDataIdValue, DepartureFlight.FareDataIdValue, DepartureFlight.FareDataIdValue)" class="details">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Detail</a>
+                                </div>
+                            </td>
+                            <td class="Price">
+                                <span class="view-total-fare" style="display: inline-block">@((PriceAdult + FeeAdult + TaxAdult).ToString("#,0.#"))</span>
+                                <span class="view-base-fare" style="display: none">@((PriceAdult).ToString("#,0.#"))</span>
+                                <span class="Currency">@Currency </span>
+                                @if (DepartureFlight.Promo)
+                                {
+                                    <span class="PromoMessage" style="">
+                                        <br>
+                                        <span class="warning-icon">
+                                            <img alt="Warning" src="/Content/FontEnd/SeachValue/warning_icon.png" height="14">
+                                            <a href="javascript:void(0)" title="Đây là loại giá vé khuyến mại, bạn cần thực hiện thanh toán ngay">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Promo</a>
+                                        </span>
+                                    </span>
+                                }
+                            </td>
+                            <td class="Select">
+                                <a onclick="SelectedDepartFlight('@DepartureFlight.FareDataIdValue', '@PriceAdult', '@(TaxAdult + FeeAdult)', '@PriceChild', '@(TaxChild + FeeChild)', '@PriceInfant', '@(TaxInfant + FeeInfant)', '@DepartureFlight.SessionAll', '@DepartureFlight.Airline','@DepartureFlight.StartPoint',
+'@DepartureFlight.EndPoint','@DepartureFlight.StartDate.ToString("HH:mm")','@DepartureFlight.StartDate.ToString("dd/MM/yyyy")'
+,'@DepartureFlight.EndDate.ToString("HH:mm")','@DepartureFlight.EndDate.ToString("dd/MM/yyyy")','@UIUty.GetImagebyHang(DepartureFlight.Airline)','@DepartureFlight.FlightNumber','@DepartureFlight.GroupClass')" id="btnSelectDepart" class="select-button" href="javascript:void(0)">Chọn</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="@string.Format("departflightdetail{0}", DepartureFlight.FareDataIdValue)" class="FlightDetail">
+                </div>
+            </div>
+
+        }
+    }
+}

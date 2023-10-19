@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+<head>
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1" />
+    <link rel="icon" href="iconaz.png" />
+    @Scripts.Render("~/FontEnd/jquery")
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/style.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/animate.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/responsive.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/FontEnd/VDM/theme/elines/custom.css" />
+    <link href="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="/Content/FontEnd/EditSeach.css" rel="stylesheet" />
+    <script src="/Content/FontEnd/VDM/Scripts/owl.carousel.js"></script>
+    <link href="/Content/FontEnd/VDM/theme/owl.carousel.css" rel="stylesheet" />
+    @RenderSection("Header", required: false)
+</head>
+
+<body style="padding: 0 !important">
+    <img src="http://alobayngay.com/Content/IMG_03042018_152817_1.png" style="display:none" />
+    @Html.Partial("_Topbar")
+    @Html.Action("Header", "Control")
+    <div id="slideshow" class="slide">
+        @Html.Action("SliderHome", "Home")
+        <div class="hometop">
+            <div class="container ">
+                <div class="row ">
+                    <div class="topnav">
+                        <div class="row" style="margin-top: 5px;">
+                            <div class="col-md-12">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("breadcrumbs", required: false)
+    <div style="margin-top:20px">
+
+        <div class="container ">
+            <div class="row ">
+                <div id="main" class="col-sm-12 col-md-8 col-xs-12  el-bill box-sizing">
+                    @RenderBody()
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 search-detail-col-right collapse " id="filters">
+                    @{
+                        Html.RenderPartial("~/Views/SeachHome/_PartialSachMiniTinTuc.cshtml");
+                    }
+                    @*<div style="    border: 1px solid #ccc;margin-top:20px;margin-bottom:20px;    width: 100%;">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td style="background-color: #1BA0E3; height: 36px; text-align: justify;" width="36"><span style="font-size: 10pt;"><img style="float: none;" src="/Content/FontEnd/VDM/theme/image/ngoisao.jpg" alt="ngoisao"></span></td>
+                                    <td style="background-color: #1BA0E3; height: 36px;"><span style="font-size: 14pt;">&nbsp;<span style="color: #ffffff;">TƯ VẤN&nbsp;ĐẶT VÉ</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0 0 0;" height="40">&nbsp;<img style="float: none;" src="/Content/FontEnd/VDM/theme/image/khoa.jpg" alt="khoa"></td>
+                                    <td style="padding: 10px 0 0 0;" valign="bottom">&nbsp;HÌNH THỨC THANH TOÁN</td>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="2"><img style="float: none;" src="/Content/FontEnd/VDM/theme/image/gachxam.jpg" alt="gachxam"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <ul style="list-style-type: square;margin-left: 40px;line-height: 30px;">
+                                            <li>Thanh toán tại địa chỉ của quý khách</li>
+                                            <li>Thanh toán tại văn phòng </li>
+                                            <li>Thanh toán chuyển khoản</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0 0 0;" height="40">&nbsp;<img style="float: none;" src="/Content/FontEnd/VDM/theme/image/clllll.jpg" alt="clllll" width="23" height="23"></td>
+                                    <td style="padding: 10px 0 0 0;" valign="bottom">&nbsp;HOTLINE 24/7</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><img style="float: none;" src="/Content/FontEnd/VDM/theme/image/gachxam.jpg" alt="gachxam"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <ul style="list-style-type: square;margin-left: 40px;line-height: 30px;">
+
+                                            <li><span style="color: #333333;">Liên hệ : <a style="color: #333333;" href="tel://#"> 0909.151.747</a></span></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>*@
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("Footer", "Control")
+    @RenderSection("scripts", required: false)
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery.placeholder.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/lazyload.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery-ui.1.10.4.min.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/theme-scripts.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/jquery.flexslider-min.js"></script>
+    <script>
+        window.ParsleyConfig = {
+            errorClass: 'has-error'
+            , excluded: 'input[type=hidden]'
+            , trigger: false
+            , animate: true
+            , focus: 'first'
+            , validationMinlength: 3
+            , validators: {}
+            , errorElem: '<span></span>'
+            , errorsWrapper: '<span class="help-block"></span>'
+            , errorTemplate: "<div></div>"
+            , classHandler: function (el) {
+                return el.$element.closest(".form-control");
+            }
+        };
+    </script>
+    <script src="/Content/form-parsley/parsley.js"></script>
+
+</body>
+</html>

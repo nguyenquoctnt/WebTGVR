@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B99AF95-615D-4C95-A0B0-F7DD466DFDAE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VDMMutiline.Dao</RootNamespace>
+    <AssemblyName>VDMMutiline.Dao</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaggageDao.cs" />
+    <Compile Include="airlineDao.cs" />
+    <Compile Include="AddOnService\AddOnServiceHistorysDao.cs" />
+    <Compile Include="HeThong\AliarDao.cs" />
+    <Compile Include="HeThong\SysMenuGroupDao.cs" />
+    <Compile Include="Issue\IssueHistorysDao.cs" />
+    <Compile Include="MenuHomeDao.cs" />
+    <Compile Include="OlderDao.cs" />
+    <Compile Include="SiteInfoDao.cs" />
+    <Compile Include="TaiKhoan\AspNetGroupsDao.cs" />
+    <Compile Include="TaiKhoan\AspNetOnlineUsersDao.cs" />
+    <Compile Include="TaiKhoan\AspNetRoleGroupsDao.cs" />
+    <Compile Include="TaiKhoan\AspNetRolesDao.cs" />
+    <Compile Include="TaiKhoan\AspNetUserClaimsDao.cs" />
+    <Compile Include="TaiKhoan\AspNetUserGroupsDao.cs" />
+    <Compile Include="TaiKhoan\AspNetUserLoginsDao.cs" />
+    <Compile Include="TaiKhoan\AspNetUserRolesDao.cs" />
+    <Compile Include="TaiKhoan\AspNetUsersDao.cs" />
+    <Compile Include="BaseDao.cs" />
+    <Compile Include="TempleteSetting\TempleateHTMLDao.cs" />
+    <Compile Include="TempleteSetting\TempleateHTMLUserDao.cs" />
+    <Compile Include="TempleteSetting\TempleatePropertyUserDao.cs" />
+    <Compile Include="TempleteSetting\TempleatePropertyDao.cs" />
+    <Compile Include="TempleteSetting\TempleatePropertyGroupDao.cs" />
+    <Compile Include="Ticket\BK_BookingDao.cs" />
+    <Compile Include="Ticket\BK_BookingDetailDao.cs" />
+    <Compile Include="Ticket\BK_PassengerDao.cs" />
+    <Compile Include="Ticket\BK_TicketDao.cs" />
+    <Compile Include="BlockEmailDao.cs" />
+    <Compile Include="BlockIPDao.cs" />
+    <Compile Include="DanhMuc\DmHuyenthiDao.cs" />
+    <Compile Include="DanhMuc\DmQuocgiaDao.cs" />
+    <Compile Include="DanhMuc\DmTaikhoanNganHangDao.cs" />
+    <Compile Include="DanhMuc\DmTinhthanhDao.cs" />
+    <Compile Include="DanhMuc\DmXaphuongDao.cs" />
+    <Compile Include="EventLogDao.cs" />
+    <Compile Include="HMTLBlockDao.cs" />
+    <Compile Include="Languaghedao.cs" />
+    <Compile Include="LogBookingDao.cs" />
+    <Compile Include="LogSendSMSDao.cs" />
+    <Compile Include="MailContendDao.cs" />
+    <Compile Include="MailDao.cs" />
+    <Compile Include="MessageDao.cs" />
+    <Compile Include="MessageReceivedDao.cs" />
+    <Compile Include="MessageRoomDao.cs" />
+    <Compile Include="NotifyDao.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingDao.cs" />
+    <Compile Include="StringFormat.cs" />
+    <Compile Include="HeThong\SysCategoryDao.cs" />
+    <Compile Include="HeThong\SysMenuDao.cs" />
+    <Compile Include="HeThong\SysSmsTemplateDao.cs" />
+    <Compile Include="HeThong\SysVungHienthiDao.cs" />
+    <Compile Include="TaoMaDonhang.cs" />
+    <Compile Include="TblArticleDao.cs" />
+    <Compile Include="TblCategoryArticleDao.cs" />
+    <Compile Include="TblQuangCaoDao.cs" />
+    <Compile Include="CancelTicket\CancelTicketHistorysDao.cs" />
+    <Compile Include="VoidTicket\VoidTicketHistorysDao.cs" />
+    <Compile Include="VoucherCodeDao.cs" />
+    <Compile Include="Wallet\WalletDao.cs" />
+    <Compile Include="YeucaugoilaiDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VDMMutiline.SharedComponent\VDMMutiline.SharedComponent.csproj">
+      <Project>{1637e8e5-c05b-4fef-8524-418544a8f388}</Project>
+      <Name>VDMMutiline.SharedComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDMMutiline.Ultilities\VDMMutiline.Ultilities.csproj">
+      <Project>{06fb04af-9f69-480b-aadf-0aa3fc6b3fa9}</Project>
+      <Name>VDMMutiline.Ultilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

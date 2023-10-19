@@ -1,0 +1,110 @@
+﻿@model VDMMutiline.WebBackEnd.Models.CreareBookingModel
+@using VDMMutiline.SharedComponent.Constants
+@{
+    var indexnguoilon = 1;
+    var indextreem = 1;
+    var indexembe = 1;
+    Layout = null;
+}
+
+@for (var i = 0; i <= Model.lstpassenger.Count - 1; i++)
+{
+
+    var typestr = "";
+    if (Model.lstpassenger[i].Type == Constant.TypePassenger.TreEm)
+    {
+        typestr = "Trẻ em" + indextreem.ToString();
+        indextreem++;
+    }
+    else if (Model.lstpassenger[i].Type == Constant.TypePassenger.EmBe)
+    {
+        typestr = "Trẻ em bé" + indexembe.ToString();
+        indexembe++;
+    }
+    else
+    {
+        typestr = "Người lớn" + indexnguoilon.ToString();
+        indexnguoilon++;
+    }
+
+<div class="col-md-12 col-xs-12">
+    <h2>@typestr</h2>
+    @Html.HiddenFor(z => Model.lstpassenger[i].GuiID)
+    @Html.HiddenFor(z => Model.lstpassenger[i].Type)
+    <div class="row">
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="form-group">
+                <small>Giới tính</small>
+                @Html.DropDownListFor(z => Model.lstpassenger[i].Sex, Model.lstpassenger[i].lstSex.Select(z => new SelectListItem { Selected = z == Model.lstpassenger[i].Sex, Value = z, Text = z }), new { @class = "form-control", @required = "required" })
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <small>Họ và tên</small>
+                @Html.TextBoxFor(z => Model.lstpassenger[i].FUllName, new { @class = "form-control", placeholder = "Họ tên hành khách", @required = "required" })
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            @if (Model.lstpassenger[i].Type != Constant.TypePassenger.NguoiLon)
+            {
+                <div class="form-group">
+                    <small>Ngày sinh</small>
+                    <div class="input-group  infant">
+                        @Html.TextBoxFor(z => Model.lstpassenger[i].FUllName, new { @class = "form-control datepad", placeholder = "Ngày sinh", @required = "required" })
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="listdichvu@(Model.lstpassenger[i].GuiID)" class="col-md-12 col-xs-12">
+
+        </div>
+        <div class="col-md-12 col-xs-12">
+            <button class="btn btn-success pull-right " value="adult-1" type="button" onclick="showfromAddon('@Model.lstpassenger[i].GuiID')">Thêm dịch vụ</button>
+        </div>
+        <script>
+                $(document).ready(function () {
+                    GetlistAddon('@Model.lstpassenger[i].GuiID', "#listdichvu@(Model.lstpassenger[i].GuiID)");
+                });
+        </script>
+    </div>
+</div>
+    <div class="clearfix"></div>
+}
+<script src="/Content/js/bootstrap-datepicker.min.js"></script>
+<script>
+
+    $('.datepad').datepicker({
+        ignoreReadonly: true,
+        allowInputToggle: true,
+        format: 'dd/mm/yyyy',
+    });
+    function GetlistAddon(guiid,control) {
+        var urls = '@Url.Action("Getlistdichvu", "CreateBooking")' + "?guiid=" + guiid;
+        $(control).html("");
+        _lwfunc.AjaxGet(urls, function (data) {
+            $(control).html(data);
+        });
+    }
+    function showfromAddon(guiid) {
+        var urls = '@Url.Action("Adddichvu", "CreateBooking")' + "?guiid=" + guiid;
+        _lwfunc.AjaxGet(urls, function (data) {
+            $('#contenaddaddon').html(data);
+            $('#addons-modal').modal('show');
+        });
+    }
+    function deletehanhkhach(guiid, GuiIDPad) {
+        var urls = '@Url.Action("Deletedichvu", "CreateBooking")' + "?guiid=" + guiid + "&GuiIDPad=" + GuiIDPad;
+        _lwfunc.AjaxGet(urls, function (data) {
+            if (data.isSuccess === true) {
+                GetlistAddon(data.GuiID, "#listdichvu" + data.GuiID);
+                toastr.success(data.mess, "Thông báo!");
+            } else {
+                toastr.error(data.mess, "Thông báo!");
+            }
+        });
+    }
+</script>

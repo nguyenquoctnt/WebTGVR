@@ -1,0 +1,99 @@
+﻿@using System.Text
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Biz;
+@using VDMMutiline.Core.Models
+@functions{
+
+    private SysMenuParam GetMenu()
+    {
+        var filter = new SysMenuFilter
+        {
+            Search = string.Empty
+        };
+
+        var param = new SysMenuParam { SysMenuFilter = filter };
+        var biz = new SysMenuBiz();
+        biz.SearchAllMenu(param);
+
+        return param;
+    }
+
+    private string GetActive(SysMenuInfo menuitem)
+    {
+        string returnvalue = string.Empty;
+
+        if (menuitem.Path != null && Request.Url.ToString().ToLower().Equals("http://" + Request.Url.DnsSafeHost.ToLower() + menuitem.Path.ToLower()))
+        {
+            returnvalue = "active";
+        }
+        return returnvalue;
+    }
+
+    private string GenderRootMenu()
+    {
+        StringBuilder builder = new StringBuilder();
+        var data = GetMenu();
+        var listidquyen = new List<int>();
+        var datavalue = new List<SysMenuInfo>();
+        if (Session["CurrentUser"] != null)
+        {
+            var userinfo = (VDMUser)Session["CurrentUser"];
+            var groupbyuserparam = new AspNetUserGroupsParam() { userId = userinfo.Id };
+            var bizgroup = new AspNetUserGroupsBiz();
+            bizgroup.GetAllByusername(groupbyuserparam);
+            listidquyen = groupbyuserparam.AspNetUserGroupsInfos.Select(z => z.GroupId).ToList();
+        }
+        else
+        {
+            listidquyen.Add(14);
+        }
+        foreach (var item in listidquyen)
+        {
+            datavalue.AddRange(data.SysMenuInfos.Where(z => z.SysMenuGroups.Contains(item)));
+        }
+        int level = 0;
+        foreach (var item in (datavalue.Where(p => p.ParentId.HasValue == false && p.Daxoa == false && p.IsSystem == true).OrderBy(z => z.Thutu)))
+        {
+            builder.Append(GenderSubMenu(item, datavalue, level));
+        }
+        return builder.ToString();
+    }
+
+    private string GenderSubMenu(SysMenuInfo parent, List<SysMenuInfo> dataufull, int level)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<li class='{0}'>", GetActive(parent));
+        var listsub = dataufull.Where(p => p.ParentId == parent.Id && p.Daxoa == false && p.IsSystem == true).OrderBy(z => z.Thutu);
+        if (listsub.Any())
+        {
+            builder.AppendFormat(@"<a href=""{0}"" class=""dropdown-toggle""><i class=""menu-icon {1}""></i><span class=""menu-text"">{2}</span><b class=""arrow fa fa-angle-down""></b></a>"
+                , parent.Path
+                , parent.Id == 60 ? (level == 0 ? parent.cssClass + " active" : " fa fa-caret-right") : (level == 0 ? parent.cssClass : " fa fa-caret-right")
+                , parent.TenHienthi);
+            builder.Append(@"<b class=""arrow""></b><ul class=""submenu"">");
+            foreach (var item in listsub)
+            {
+                builder.Append(GenderSubMenu(item, dataufull, level + 1));
+            }
+            builder.Append("</ul>");
+        }
+        else
+        {
+            builder.AppendFormat(@"<a href=""{0}"" class=""""><i class=""menu-icon {1}""></i><span class=""menu-text"">{2}</span></a>"
+               , parent.Path
+               , level == 0 ? parent.cssClass : "fa fa-caret-right"
+               , parent.TenHienthi);
+        }
+        builder.Append("</li>");
+        return builder.ToString();
+    }
+}
+<style>
+    .sidebar-toggle.sidebar-collapse {
+        display: none !important;
+    }
+</style>
+@*<ul class="nav nav-list" style="top: 0px;">
+    @Html.Raw(GenderRootMenu())
+</ul>*@

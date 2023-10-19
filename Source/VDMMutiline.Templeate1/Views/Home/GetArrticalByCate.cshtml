@@ -1,0 +1,109 @@
+﻿@using VDMMutiline.Ultilities
+@model List<VDMMutiline.SharedComponent.EntityInfo.SysCategoryInfo>
+@{
+    Layout = null;
+
+}
+@functions {
+    private List<VDMMutiline.SharedComponent.EntityInfo.TblArticleInfo> GetlistTinTake(int? cateid)
+    {
+        var filter = new VDMMutiline.SharedComponent.Params.TblArticleFilter
+        {
+            Search = string.Empty,
+            ChuyenMucID = cateid,
+            Ishot = true,
+            ListUserName = VDMMutiline.Core.UI.CommonUI.GetparentUserDaiLybyDomain().Select(z => z.UserName).ToList()
+        };
+        var param = new VDMMutiline.SharedComponent.Params.TblArticleParam { TblArticleFilter = filter, Take = 10 };
+        var biz = new VDMMutiline.Biz.TblArticleBiz();
+        biz.Search(param);
+        return param.TblArticleInfos;
+    }
+}
+@if (Model.Count > 0)
+{
+   
+<div class="container">
+    @foreach (var item in Model)
+    {
+        var lst = GetlistTinTake(item.Id);
+        if (lst.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-h1" style="   ">
+                        <h3 class="tieude-vh">
+                            <a href="@Url.Action("Index", "FontEndnew", new { ChuyenMuc = item.SEOUrl })"> @item.TenHienthi  </a>
+                        </h3>
+                        <p style="text-align: center;">
+                            <img style="float: none;" src="/Content/FontEnd/VDM/theme/image/iline.png" alt="iline" />
+                        </p>
+                        @*<div>
+                                <a id="prevsdthkt@(item.Id)" class="btn  prev prevbtn">
+                                    <img src="/Content/FontEnd/VDM/theme/image/pre.png">
+                                </a>
+                                <a id="nextdthk@(item.Id)" class="right btn next nextbtn" style="float: right;">
+                                    <img src="/Content/FontEnd/VDM/theme/image/next.png">
+                                </a>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class=" wellslide" style="position: relative;">
+                        <div id="owl-slider@(item.Id)" class="owl-carousel owl-theme" style="position: relative;">
+                            @foreach (var items in lst)
+                            {
+                                <div class="items itemsliderhome news-item">
+                                    <a href="@Url.Action("ChiTiet", "FontEndnew", new { key = items.SEOUrl })">
+                                        <img class="img-responsive imgsliderhome" src="@items.Thumb" alt="@items.Tenbai" />
+                                    </a>
+                                    <div class="khuyenmaihome">
+                                        <h4 class="news-title">
+
+                                            <a href="@Url.Action("ChiTiet", "FontEndnew", new { key = items.SEOUrl })"> @(Utility.CatChuoi(items.Tenbai, 61))</a>
+
+                                        </h4>
+                                        <p>
+                                            @Utility.CatChuoi(items.Mota, 115)
+                                        </p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <script>
+                $(document).ready(function () {
+                    var owldoitachangkhong = $("#owl-slider@(item.Id)");
+                    owldoitachangkhong.owlCarousel({
+                        items: 3,
+                        itemsDesktop: [1000, 4],
+                        itemsDesktopSmall: [900, 4],
+                        itemsTablet: [600, 1],
+                        itemsMobile: true,
+                        nav: true,
+                        autoPlaySpeed: 5000,
+                        navigation: false,
+                        navigationText: ["prev", "next"],
+                        rewindNav: true,
+                        scrollPerPage: true,
+                    });
+                    $("#nextdthk@(item.Id)").click(function () {
+                        owldoitachangkhong.trigger('owl.next');
+                    });
+                    $("#prevsdthkt@(item.Id)").click(function () {
+                        owldoitachangkhong.trigger('owl.prev');
+                    });
+                });
+                </script>
+
+            </div>
+        }
+    }
+</div>
+    
+
+}

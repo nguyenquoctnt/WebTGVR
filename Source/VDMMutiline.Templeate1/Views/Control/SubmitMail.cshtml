@@ -1,0 +1,35 @@
+﻿@using VDMMutiline.Core.UI;
+@{
+    Layout = null;
+    var common = CommonUI.GetlistTempleate(17);
+}
+<div class="submitmail">
+    <div class="container">
+        <div class="row ">
+            @using (Html.BeginForm("SubmitMail", "Control", FormMethod.Post, new { @class = "newsletter-form", @data_parsley_validate = "", id = "frCreate", @role = "form" }))
+            {
+                <div class="col-md-12">
+                    <p style="color: #000;margin-top: 2px;font-size: 18px;text-align: center;">
+                        @CommonUI.Getsettingtempleatebykey(common, "{footer_email_subscription_title}")
+                    </p>
+                </div>
+                <div class="col-md-12 clear-0px " style="text-align: center;">
+                    <div class="cf_row">
+                        <input required name="sendMail" placeholder="@CommonUI.Getsettingtempleatebykey(common, "{footer_email_subscription_textbox_placeholder}")" class="input_form_sbmail"
+                               id="sendMail" type="email" data-parsley-type="email" value="">
+                    </div>
+                    <input type="submit" class="sbmailbtn" name="Savemail"   value=" @CommonUI.Getsettingtempleatebykey(common, "{footer_email_subscription_button_label}")">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<style>
+    .cf_row .parsley-required {
+        position: absolute;
+    }
+
+    .cf_row .parsley-type {
+        position: absolute;
+    }
+</style>

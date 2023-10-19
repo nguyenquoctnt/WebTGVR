@@ -1,0 +1,81 @@
+﻿@model VDMMutiline.SharedComponent.Params.DmXaphuongParam
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Create", "DmXaphuong", FormMethod.Post, new { @class = "form-horizontal", @data_parsley_type = "", id = "frCreateDmXaphuong", @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.DmXaphuong.Id)
+            <div class="form-group">
+                
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Mã</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(x => x.DmXaphuong.Maxa, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Tê</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(x => x.DmXaphuong.Tenxa, new { @Required = "Required", @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Huyện</label>
+                <div class="col-sm-2">
+                    @Html.DropDownList("squocgia1", Model.DmQuocgiaInfos.Select(n => new SelectListItem { Text = n.Tenquocgia, Value = n.Id.ToString() }), new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.DropDownList("stinhthanh1", Model.DmTinhthanhInfos.Select(n => new SelectListItem { Text = n.Tentinh, Value = n.Id.ToString() }), new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(x => x.DmXaphuong.IdHuyen, Model.DmHuyenthiInfos.Select(n => new SelectListItem { Selected = n.Id == Model.DmXaphuong.IdHuyen, Text = n.Tenhuyen, Value = n.Id.ToString() }), new { @class = "col-xs-12 col-sm-12", @placeholder = "" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Thứ tự</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(x => x.DmXaphuong.Thutu, new { @Required = "Required", @class = "col-xs-12 col-sm-12 thutu", @placeholder = "" })
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-12 center">
+                    <a onclick="submitform()" class="btn btn-info"><i class="ace-icon fa fa-floppy-o bigger-125"></i>Cập nhật</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="ace-icon fa fa-times bigger-125"></i>Đóng</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $('.date-picker').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $(document).ready(function() {
+        loadtinhthanh1();
+        }
+    );
+    function loadtinhthanh1() {
+        _lwfunc.AjaxLoadDrop("@Url.Action("GetTinhthanhbyQuocgia", "CommonAPI", new { area = string.Empty })" , _lwfunc.datajax({ "_Idquocgia": $("#squocgia1").val() }),'@string.Format("#{0}", "stinhthanh1")');
+    }
+    function loadhuyenthi1() {
+        _lwfunc.AjaxLoadDrop("@Url.Action("Gethuyenthibytinhthanh", "CommonAPI", new { area = string.Empty })", _lwfunc.datajax({ "_Idtinhthanh": $("#stinhthanh1").val() }),'@string.Format("#{0}", "DmXaphuong_IdHuyen")');
+    }
+    $("#stinhthanh1").off('change').on('change', function () {
+        loadhuyenthi1();
+    });
+    $("#squocgia1").off('change').on('change', function () {
+        loadtinhthanh1();
+    });
+</script>

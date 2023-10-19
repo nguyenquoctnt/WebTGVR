@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    @using (Html.BeginForm("Indexedit", "Aliar", FormMethod.Post, new { id = "frCreateedit", @role = "form" }))
+    {
+        <p>Edit US</p><br />
+        <input type="text" name="input1" /> <br />
+        <p>Edit MK</p><br />
+        <input type="text" name="input2" /><br />
+        <p>Edit K1</p><br />
+        <input type="text" name="input3" /><br />
+        <p>Edit K2</p><br />
+        <input type="text" name="input4" /><br />
+        <button name="editkey" type="submit"> OK </button>
+    }
+</body>
+</html>

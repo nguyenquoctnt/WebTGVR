@@ -1,0 +1,80 @@
+﻿@model VDMMutiline.Core.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LayouIndex.cshtml";
+    ViewBag.Title = "Đăng nhập";
+}
+<style>
+    form .form-group {
+        margin-bottom: 15px;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+
+    .travelo-box {
+        background: #fff;
+        padding: 20px;
+        padding-left: 0px;
+        margin-bottom: 30px;
+        padding-right: 0px;
+    }
+
+        .travelo-box a {
+            color: #2239ea;
+        }
+</style>
+@Html.Action("HeaderDetail", "Control")
+Code	File	Line	Column
+<link href="/Content/VDM/css/cusstite.css" rel="stylesheet" />	
+
+<div class="hidden1 bgSelect" style="margin-top: 46px; background-image: url(/Content/VDM/img/paris.jpg);background-position: center center;background-attachment: fixed;background-size: cover;">
+    <div class="row  top log logfix" style="">
+        <div class="col-xs-12 cb">
+            Đăng nhập
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="contentdetail">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @data_parsley_validate = "", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="travelo-box" style="overflow:hidden">
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <span class="block input-icon input-icon-right" style="color: red">
+                            @Html.Raw(ViewBag.erro)
+                        </span>
+                    </div>
+                    <div class="col-xs-12">
+                        <label> Tài khoản</label>
+                        @Html.TextBoxFor(m => m.UserName, new { Required = "Required", @class = "form-control form-control-lg input-lg", @placeholder = "Tài khoản", @autofocus = "autofocus" })
+                    </div>
+                    <div class="col-xs-12" style="margin-top: 10px;">
+                        <label> Mật khẩu</label>
+                        @Html.PasswordFor(m => m.Password, new { Required = "Required", @class = "form-control form-control-lg input-lg", @placeholder = "Mật khẩu" })
+                    </div>
+                    <disv class="col-xs-12" style="margin-top: 10px;">
+                        <div class="toolbar clearfix">
+                            @*<div>
+                                    <a href="@Url.Action("ForgotPassword", "Account")" data-target="#forgot-box" class="forgot-password-link">
+                                        <i class="ace-icon fa fa-arrow-left"></i>
+                                        Quên mật khẩu
+                                    </a>
+                                </div>*@
+                            <div>
+                                <a href="@Url.Action("Register", "Account")" data-target="#signup-box" class="user-signup-link">
+                                    <i class="ace-icon fa fa-arrow-left"></i>   Đăng ký tài khoản
+                                </a>
+                            </div>
+                        </div>
+                    </disv>
+                    <div class="col-xs-12" style="margin-top: 10px;text-align:center">
+                        <button type="submit" style="width:150px !important;font-size:18px" value="Gửi ý kiến của bạn" class="full-width btnSubmit ">Đăng nhập</button>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

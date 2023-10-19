@@ -1,0 +1,476 @@
+﻿
+
+
+<link href="/Content/FontEnd/SeachValue/SearchBoxQuickly.css" rel="stylesheet" />
+<link href="/Content/FontEnd/SeachValue/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/Seach/Picker/ui.datepicker.lunar.min.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-en-GB.js"></script>
+<script src="/Content/FontEnd/Seach/Picker/jquery.ui.datepicker-vi.js"></script>
+<link href="/Content/FontEnd/SeachValue/DomesticFlight.css" rel="stylesheet" type="text/css">
+<script src="/Content/FontEnd/SeachValue/Result.js" type="text/javascript"></script>
+<script src="/Content/FontEnd/SeachValue/format.js" type="text/javascript"></script>
+<link href="/Content/FontEnd/Seach/SelectCityBox.css" rel="stylesheet" />
+<style>
+    .search-box-wrapper.style1 .search-tab-content .search-content {
+        padding: 18px 25px 25px;
+    }
+    .SelectCityBox {
+        right: 0px;
+    }
+
+    .TextBox {
+        height: 35px;
+    }
+
+    .datepicker-wrap::after {
+        display: block;
+        font-family: "soap-icons";
+        content: "\e86a";
+        font-size: 25px;
+        color: #fdb714;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        height: 100%;
+        text-align: center;
+        line-height: 34px;
+        background: #f5f5f5;
+    }
+
+    .datepicker-wrap {
+        position: relative;
+    }
+
+   
+
+    .SelectCityBox .SelectCityBoxHeader .Close {
+        font-size: 14px;
+    }
+
+    .SelectCityBox .SelectCityBoxHeader {
+        font-size: 14px;
+    }
+</style>
+@using (Html.BeginForm("SeachMini", "SeachHome", FormMethod.Post, new { @class = "form-sidebar", @onsubmit = "submitformmini_Mini()", @data_parsley_validate = "", id = "frCreateseachminiMini", @role = "form" }))
+{
+    <div class=" searchBlock search-box-wrapper style1">
+        <div class="search-box">
+            <div class="search-tab-content">
+                <div class="tab-pane fade active in">
+                    <div class="search-content">
+                        <label class="title">
+                            Tìm vé máy bay
+                        </label>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <label for="rdbOneWayMini" class="lb-radio">
+                                    <input type="radio" style="    margin-right: 10px;" class="ItineraryRadio" id="rdbOneWayMini" onclick="onOneWayMini();" onchange="ToggleDatepickerMini()" name="ItineraryTypeMini" value="1">
+                                    Vé một chiều
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6">
+                                <label for="rdbRoundTripMini" class="lb-radio">
+                                    <input type="radio" class="ItineraryRadio" id="rdbRoundTripMini" onclick="onTwoWayMini();" onchange="ToggleDatepicker()Mini" name="ItineraryTypeMini" value="2" checked="checked">
+                                    Vé khứ hồi
+                                </label>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 sl-city">
+                                <label>Khởi hành tại</label>
+                                <input type="hidden" name="hdfStartPointMini" id="hdfStartPointMini" value="SGN">
+                                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                <input name="txtStartPointMini" class="input-text full-width startplace city departure text" required="" type="text" id="txtStartPointMini" value="Hồ Chí Minh - (SGN)" placeholder="Chọn sân bay đi..." autocomplete="off">
+                                <div id="pnStartCityMini" class="SelectCityBox ShadowBold" style="">
+                                    <div class="SelectCityBoxHeader">
+                                        Chọn thành phố, sân bay đi
+                                        <div class="Close">
+                                            <a id="btnCloseStartCityMini"> Đóng</a>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    @Html.Partial("~/Views/Shared/_PartialPNstarCityMini.cshtml")
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 sl-city">
+                                <label>Hạ cánh tại</label>
+                                <input type="hidden" name="hdfEndPointMini" id="hdfEndPointMini" value="HAN">
+                                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                <input name="txtEndPointMini" required type="text" id="txtEndPointMini" value="Hà nội - (HAN)" class=" endplace city arrival text input-text full-width" placeholder="Chọn sân bay đến..." autocomplete="off">
+                                <div id="pnEndCityMini" class="SelectCityBox ShadowBold" style="">
+                                    <div class="SelectCityBoxHeader">
+                                        Chọn thành phố, sân bay đến
+                                        <div class="Close">
+                                            <a id="btnCloseEndCityMini">Đóng</a>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    @Html.Partial("~/Views/Shared/_PartialPNEndCityMini.cshtml")
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <label>Ngày đi</label>
+                                <div class="datepicker-wrap" onclick='onclickdiMini()'>
+                                    <input name="txtDepartureDateMini" required type="text" id="txtDepartureDateMini" class="input-text full-width date-input depDate ">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 retBlock" id="divtxtReturnDateMini">
+                                <label>Ngày về</label>
+                                <div class="datepicker-wrap" onclick='onclickveMini()'>
+                                    <input name="txtReturnDateMini" required type="text" id="txtReturnDateMini" class="input-text full-width date-input depDate ">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row passenger">
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <label>Người lớn<br />(>12 tuổi)</label>
+                                <div class="selector">
+                                    <select name="ddlAdultMini" id="ddlAdultMini">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+
+                                    </select>
+                                    <span id="selectcboAdultMini" class="custom-select">1</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <label>Trẻ em <br />(2-11 tuổi)</label>
+                                <div class="selector">
+                                    <select name="ddlChildMini" id="ddlChildMini">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                    </select>
+                                    <span id="selectcboChildMini" class="custom-select">0</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <label>Em bé <br />(< 2 tuổi)</label>
+                                <div class="selector">
+                                    <select name="ddlInfantMini" id="ddlInfantMini" class="op-age">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                    <span id="SelectcboInfantMini" class="custom-select">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <button type="submit" name="btnSearchFlightMini" value="" id="btnSearchFlightMini" class="full-width btn-medium btnSearch">Tìm chuyến bay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="Seachmini_popupMini" style="display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/FontEnd/Popup/loading.gif" />
+    </div>
+</div>
+<script>
+    function onclickdiMini() {
+        $("#txtDepartureDateMini").datepickerlunar('show');
+    }
+    function onclickveMini() {
+        $("#txtReturnDateMini").datepickerlunar('show');
+    }
+</script>
+<script type="text/javascript" language="javascript">
+    $("#ddlAdultMini").on("change", function () {
+        $('#selectcboAdultMini').text($(this).children("option:selected").text());
+    });
+    $("#ddlChildMini").on("change", function () {
+        $('#selectcboChildMini').text($(this).children("option:selected").text());
+    });
+    $("#ddlInfantMini").on("change", function () {
+        $('#SelectcboInfantMini').text($(this).children("option:selected").text());
+    });
+    function onOneWayMini() {
+        $("#rdbOneWayMini").attr("checked", true);
+    }
+    function onTwoWayMini(e) {
+        $("#rdbRoundTripMini").attr("checked", true);
+    }
+    function submitformmini_Mini() {
+        var form = $('#frCreateseachminiMini');
+        if (form.parsley().isValid() == true) {
+            $('#Seachmini_popupMini').bPopup({
+                modalClose: false,
+                opacity: 0.6,
+                positionStyle: 'fixed'
+            });
+            return true;
+        }
+        return false;
+    }
+
+
+</script>
+<script>
+    $(document).ready(function () {
+        jScriptMini();
+        airScriptMini();
+        $('#btnCloseStartCityMini').bind('click', function () {
+            $('#pnStartCityMini').toggle("fast", '');
+        });
+
+        $('#btnCloseEndCityMini').bind('click', function () {
+            $('#pnEndCityMini').toggle("fast", '');
+        });
+
+        $("#txtStartPointMini").bind('click', function () {
+            $('#txtStartPointMini').val('');
+            $('#pnStartCityMini').toggle("fast", '');
+            $('#pnEndCityMini').hide();
+        });
+
+        $("#txtEndPointMini").bind('click', function () {
+            $('#txtEndPointMini').val('');
+            $('#pnEndCityMini').toggle("fast", '');
+            $('#pnStartCityMini').hide();
+        });
+        SearchAutoCompleteStartPointMini();
+        SearchAutoCompleteEndPointMini();
+        SearchAutoCompleteStartPointopubMini();
+        SearchAutoCompleteEndPointpopubMini();
+    });
+     function SearchAutoCompleteStartPointopubMini() {
+        $("#txtStartPointSearchMini").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPointSearchMini").val(),
+                    data: "{searchParam:'" + $("#txtStartPointSearchMini").val() + "'}",
+                     success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#hdfStartPointMini').val(ui.item.value);
+                $("#txtStartPointMini").val(ui.item.labeldisplay);
+
+                $("#txtStartPointMini").val(ui.item.labeldisplay);
+                $('#txtStartPointSearchMini').val(ui.item.labeldisplay);
+
+                $('#pnStartCityMini').css('display', 'none');
+                $('#pnEndCityMini').css('display', 'block');
+                $('#txtEndPointSearchMini').focus();
+            },
+             minLength: 3
+        });
+    }
+    function SearchAutoCompleteEndPointpopubMini() {
+        $("#txtEndPointSearchMini").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointSearchMini").val(),
+                    dataType: "json",
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                    }
+                });
+            },
+            select: function (event, ui) {
+
+                $('#hdfEndPointMini').val(ui.item.value);
+                $('#hdfEndPointValueMini').val(ui.item.value);
+                $("#txtEndPointMini").val(ui.item.labeldisplay);
+                $('#pnEndCityMini').css('display', 'none');
+                $('#txtStartPointSearchMini').val('');
+                $("#txtDepartureDateMini").datepicker('show');
+            },
+            minLength: 3
+        });
+    }
+    function jScriptMini() {
+        var mdate = new Date();
+        var depart = $("#txtDepartureDateMini").val();
+        if (depart != "") {
+            var dsplit = depart.split("/");
+            mdate = new Date(dsplit[2], dsplit[1] - 1, dsplit[0]);
+        }
+        var d = new Date();
+        var strDate = $.datepicker.formatDate('dd/mm/yy', d);
+        $("#txtDepartureDateMini").val(strDate);
+        $("#txtReturnDateMini").val(strDate);
+        $("#txtDepartureDateMini").datepickerlunar({
+            numberOfMonths: 2,
+            minDate: "0",
+            maxDate: "+1Y",
+            showAnim: "show",
+            showButtonPanel: true,
+            defaultDate: new Date(),
+            dateFormat: "dd/mm/yy",
+            onSelect: function (selectedDate) {
+                var dsplit = selectedDate.split("/");
+                var m2date = new Date(dsplit[2], dsplit[1] - 1, dsplit[0]);
+                $("#txtReturnDateMini").datepickerlunar("option", "minDate", m2date);
+                var display = $("#divtxtReturnDateMini").css("visibility");
+                if (display == "hidden") {
+
+                }
+                else {
+
+                }
+
+            }
+        });
+        $("#txtReturnDateMini").datepickerlunar({
+            numberOfMonths: 2,
+            showButtonPanel: true,
+            minDate: mdate,
+            maxDate: "+1Y",
+            showAnim: "show",
+            dateFormat: "dd/mm/yy",
+            onSelect: function (selectedDate) {
+
+            }
+        });
+    };
+
+    function ToggleDatepickerMini() {
+        var check_value = $('.ItineraryRadioMini:checked').val();
+        if (check_value == 1) {
+            $("#divtxtReturnDateMini").attr('style', 'visibility: hidden;');
+            $("#ngayvetieudeMini").attr('style', 'visibility: hidden;');
+
+            $("#txtReturnDateMini").removeAttr("required");
+        }
+        else {
+            $("#divtxtReturnDateMini").attr('style', 'visibility: visible;');
+            $("#ngayvetieudeMini").attr('style', 'visibility: visible;');
+            $("#divtxtReturnDateMini").datepicker("option", "minDate", $("#txtDepartureDateMini").datepicker("getDate"));
+            $("#txtReturnDateMini").attr("required", "");
+        }
+    }
+
+    function airScriptMini() {
+        $(document.body).mousedown(function (event) {
+            var target = $(event.target);
+            if (!target.parents().andSelf().is('#pnStartCityMini') && !target.parents().andSelf().is('#ui-id-1') && !target.parents().andSelf().is("#txtStartPointMini")) { // Clicked outside
+                $('#pnStartCityMini').hide("fast", '');
+            }
+            if (!target.parents().andSelf().is('#pnEndCityMini') && !target.parents().andSelf().is('#ui-id-2') && !target.parents().andSelf().is("#txtEndPointMini")) { // Clicked outside
+                $('#pnEndCityMini').hide("fast", '');
+            }
+        });
+
+    }
+
+    function SearchAutoCompleteStartPointMini() {
+        $("#txtStartPointMini").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtStartPointMini").val(),
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                          $('#pnStartCityMini').hide();
+                    }
+                });
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#hdfStartPointMini').val(ui.item.value);
+                $("#txtStartPointMini").val(ui.item.labeldisplay);
+                $('#pnStartCityMini').hide();
+                $('#pnEndCityMini').show();
+            },
+            minLength: 3
+        });
+    }
+    function addRequestVerificationToken(data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    }
+    function SearchAutoCompleteEndPointMini() {
+        $("#txtEndPointMini").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["SearchAirportInSiteUrl"]"+"?key="+ $("#txtEndPointMini").val(),
+                    dataType: "json",
+                    success: function ( data ) {
+                        response( $.map( data, function ( item ) {
+                            var label = "<b>" + item.AirportName + " (" + item.AirportCode + ")</b> <b style='float:right;color:#FF6600;clear:both;white-space: nowrap;'>" + item.CountryName + "</b>"
+                            var labeldisplay = item.AirportName + ", " + item.CountryName + " - (" + item.AirportCode + ")";
+                            return { labeldisplay: labeldisplay, label: label, value: item.AirportCode };
+                        } ) );
+                          $('#pnEndCityMini').hide();
+                    }
+                });
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#hdfEndPointMini').val(ui.item.value);
+                $("#txtEndPointMini").val(ui.item.labeldisplay);
+                $('#pnEndCityMini').hide();
+                setTimeout(function () {
+                    $("#txtDepartureDateMini").datepicker('show');
+                }, 16);
+            },
+             minLength: 3
+        });
+    }
+
+
+    //function addGeoAirPort_GoMini(code, name) {
+    //    $("#txtStartPointMini").val(name);
+    //    $('#hdfStartPointMini').val(code);
+    //    $('#pnStartCityMini').hide();
+    //    $('#pnEndCityMini').show();
+    //}
+
+    //function addGeoAirPort_ToMini(code, name) {
+    //    $("#txtEndPointMini").val(name);
+    //    $('#hdfEndPointMini').val(code);
+    //    $('#pnEndCityMini').hide();
+    //    setTimeout(function () {
+    //        $("#txtDepartureDateMini").datepickerlunar('show');
+    //    }, 16);
+    //}
+</script>
+

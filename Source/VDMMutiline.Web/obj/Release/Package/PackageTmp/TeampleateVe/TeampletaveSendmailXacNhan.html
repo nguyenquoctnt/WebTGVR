@@ -1,0 +1,198 @@
+﻿<div>
+
+    <div style="max-width:750px;margin:0 auto;font-size:14px">
+        <div style="text-align: center;">
+            <h1 style="    padding-top: 0px;    margin: 0px;">
+                ELECTRONIC TICKET
+            </h1>
+            <h1 style="padding-top: 0px;margin: 0px;">*** ITINERARY / RECEIPT ***</h1>
+            <h2 style="padding-top: 0px;margin: 0px;color: red;font-size: 27px;">{tongdai}</h2>
+
+        </div>
+
+
+        <!--<div>
+        <img src="{linkbanner}" style="width:100%"><div style="opacity: 0.01; left: 724.5px; top: 262px;">
+        </div>
+    </div>-->
+        <p style="    font-size: 18px;margin-bottom:10px">
+            Kính gửi: <span style="font-size:14px;font-weight:bold">
+                <span>{TenKhachHang}</span>
+                -
+                <span>{Sodienthoai}</span>
+            </span>
+        </p>
+        <div style="line-height:25px">
+            Cảm ơn quý khách đã sử dụng dịch vụ tại <a href="" target="_blank">{tencongty}</a>.
+            Mã đơn hàng của quý khách là <span style="color:red;font-weight:bold">{Madonhang}</span><br>
+            Trạng thái: <span style="color:red;font-weight:bold">
+                {TrangThai}
+            </span> -  {thanhtoanngay}.
+            <br>
+            Thời gian giữ chỗ: <span style="color:red;font-weight:bold">
+                {THOIGIANGIUCHO}
+            </span><br>
+        </div>
+        <p style="text-align:left;font-size:24px;font-weight:bold;margin:12px;    margin-left: 0;">
+            AIRLINES CODE:            <span style="color:red;font-weight:bold">{Madonhang}</span><br>
+        </p>
+        <table style="border:1px solid grey; text-align:center;width:100%;border-spacing:0;margin:0 auto">
+            <tbody>
+                <tr>
+                    <td colspan="5" style="text-align:left;background:#00B0F0;color:#ffffff;padding:5px">
+                        TRAVELER INFORMATION
+                    </td>
+                </tr>
+                <tr style="font-weight:bold ">
+                    <td style="border: 1px solid gray;padding:5px;">
+                        No
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px;">
+                        Gender
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px;">
+                        Full Name
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px;">
+                        Carry-On
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px;">
+                        Baggage Allowance
+                    </td>
+                </tr>
+                {Danhsachkhachhang}
+            </tbody>
+        </table>
+        <table style="text-align:center;width:100%;border-spacing:0;margin:0 auto;border:1px solid grey">
+            <tbody>
+                <tr>
+                    <td colspan="5" style="text-align:left;background-color:#00B0F0;color:#ffffff;padding:5px">
+                        FLIGHT INFORMATION
+                    </td>
+                </tr>
+                <tr style="font-weight:bold">
+                    <td style="border: 1px solid gray;padding:5px;width:60px">
+                        Flight
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px;width:60px">
+                        Date
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px">
+                        Class
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px">
+                        Depart
+                    </td>
+                    <td style="border: 1px solid gray;padding:5px">
+                        Arrive
+                    </td>
+                </tr>
+                {ChiTietVe}
+
+            </tbody>
+        </table>
+        <p style="text-align:left;font-size:24px;font-weight:bold;margin:12px;    margin-left: 0;"> Itinerary And Receipt</p>
+        <table style="border:1px solid grey;text-align:left ;width:100%;border-spacing:0;margin:0 auto">
+            <tbody>
+                <tr style="background:#00B0F0;font-weight:bold">
+                    <td style="border:1px solid grey;padding:5px;color:#fff">
+                        Gender
+                    </td>
+                    <td style="border:1px solid grey;padding:5px;color:#fff">
+                        PRICE
+                    </td>
+                    <td style="border:1px solid grey;padding:5px;color:#fff">
+                        QUANTITY
+                    </td>
+                    <td style="border:1px solid grey;padding:5px;color:#fff">
+                        AMOUNT
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:5px;font-weight:bold;d">
+                        Người lớn
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Gianguoilon}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Soluongnguoilon}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{TongTienNguoiLon}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:5px;font-weight:bold;">
+                        Trẻ em
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Giatreem}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Soluongtreem}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{TongTientreem}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:5px;font-weight:bold;">
+                        Em bé
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Giaembe}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{Soluongembe}</span>
+                    </td>
+                    <td style="padding:5px">
+                        <span>{TongTienembe}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:5px;font-weight:bold;">
+                        Tổng tiền hành lý
+                    </td>
+                    <td style="padding:5px"></td>
+                    <td style="padding:5px"></td>
+                    <td style="padding:5px">
+                        <span>{TienHanhLy}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="text-align:right;font-size:28px;font-weight:bold;margin:12px;    margin-left: 0;">
+            Tổng giá: {TongCongTien}
+        </p>
+        <table style="border-spacing:0;text-align:left;width:100%;margin:0 auto;margin-bottom:10px">
+            <tbody>
+                <tr>
+                    <td style="padding:5px">
+                        <span style="color:red">
+                            # Những vé đặt cách giờ khởi khách trên 48h sẽ có thời gian giữ chỗ tối thiểu 24h.<br />
+                            # Vé đặt cách giờ bay trên 24h giữ chỗ được khoảng thời gian còn lại sau khi trừ đi 24h.<br />
+                            # Những vé không có mã đặt chỗ hiển thị là những vé đặt chưa thành công<br />
+                            # Vé sẽ chỉ được chúng tôi xác nhận qua email, điện thoại khi đã xác nhận thanh toán thành công<br />
+                        </span><br />
+                        Thông tin quan trọng:<br />
+                        * Giờ hiển thị là giờ địa phương tại các sân bay<br />
+                        * Hành lý: 7kg xách tay (tương ứng 56 x 36 x 23 cm) , Hành lý ký gửi: Liên hệ nhân viên đặt vé, không được vượt quá 158 cm (62 in)/kiện, tổng kích thước ba chiều không quá 273cm<br />
+                        * Hoàn vé / Đổi vé: Áp dụng theo điều kiện vé<br />
+                        * Làm thủ tục chuyến bay: Quầy được mở trước thời gian dự định cất cánh 150 phút. Quầy quốc nội đóng trước 40 phút, quầy quốc tế đóng trước 50 phút trước thời gian dự định cất cánh. trong nước có mặt trước ít nhất 90 phút, Quốc tế trước 120 phút<br />
+                        * Giấy tờ tùy thân: Quý khách mang giấy tờ tùy thân (Bản chính) hợp lệ là các giấy tờ sau: CMND (dưới 15 năm), GPLX, giấy khai sinh (trẻ em < 14 tuổi), Hộ chiếu, Visa (đối với chặng bay quốc tế). Chúng tôi không chịu trách nhiệm về tính hợp lệ của giấy tờ tùy thân của quý khách với cơ quan an ninh sân bay.<br />
+                        * Sau khi thanh toán vui lòng liên hệ nhân viên hỗ trợ để được kích hoạt vé. Trường hợp không thông báo chúng tôi hoàn toàn không chịu trách nhiệm.<br />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p style="font-style:italic">
+                *Khi chuyển khoản vui lòng ghi ở mục nội dung là:
+                <b style="color:red">Thanh Toan ma code: {MaDatCho} </b>
+                theo mã vé thực tế, và thông báo chuyển khoản cho tổng đài trước time xuất vé ít nhất 20 phút theo số
+                {tongdai}
+            </p>
+        </div>
+    </div>
+</div>

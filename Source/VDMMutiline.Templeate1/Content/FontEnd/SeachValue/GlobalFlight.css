@@ -1,0 +1,948 @@
+.Clear {
+    clear: both;
+}
+
+.Left {
+    float: left;
+    margin-right: 10px;
+    width: 250px;
+}
+
+.Right {
+    float: left;
+}
+
+.BoxFareOption {
+    margin-bottom: 20px;
+    width: 750px;
+    background-color: White;
+}
+
+.FareHeader .Price {
+    float: right;
+    margin-left: 10px;
+}
+
+    .FareHeader .Price .TotalPriceTitle {
+        color: #fff;
+        text-transform: uppercase;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+.FareHeader .GDS {
+}
+
+.FareHeader .Lowcost {
+    background-image: url(/Styles/lowcost.jpg);
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 30px;
+    float: left;
+}
+
+.FareHeader .PriceDetailLink {
+    float: right;
+    margin-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+    .FareHeader .PriceDetailLink a:link, a:visited {
+        color: White;
+    }
+
+.details {
+    background-position: right center;
+    padding: 0px 15px 0px 0px;
+    background-image: url('Styles/detail_arrow.png');
+    cursor: pointer;
+    text-decoration: none;
+    background-repeat: no-repeat;
+}
+
+.details_selected {
+    background-position: right center;
+    padding: 0px 15px 0px 0px;
+    background-image: url('Styles/detail_arrow_s.png');
+    cursor: pointer;
+    text-decoration: none;
+    background-repeat: no-repeat;
+}
+
+.PriceDetail {
+    padding: 10px;
+    border: 1px solid #cacaca;
+    border-top: none;
+    border-bottom: none;
+}
+
+.TablePrice {
+}
+
+    .TablePrice .ItemHeader {
+        font-weight: bold;
+        line-height: 20px;
+        padding-top: 5px;
+    }
+
+    .TablePrice .ItemPrice {
+        color: Red;
+        text-align: right;
+        font-weight: bold;
+        line-height: 20px;
+        padding-top: 5px;
+    }
+
+        .TablePrice .ItemPrice .Currency {
+            color: #666666;
+            font-weight: bold;
+        }
+
+.TotalPrice {
+}
+
+    .TotalPrice .Price {
+        color: #FF6600;
+        font-weight: bold;
+    }
+
+.Currency {
+    color: #666666;
+    font-weight: bold;
+}
+
+.GrandPrice {
+    color: #FF6600;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right;
+}
+
+
+/*FareFlightContent*/
+.FareFlightContent {
+    border: 1px solid #cacaca;
+    border-top: none;
+}
+
+    .FareFlightContent .FilghtItem {
+    }
+
+        .FareFlightContent .FilghtItem .FlightDirection {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            height: auto;
+            background-color: #e0e0e0;
+            padding-left: 10px;
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo {
+            padding: 5px;
+            border-top: 1px solid #cacaca;
+        }
+            /*FilghtInfoSummary*/
+            .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary {
+                float: left;
+                width: 100%;
+            }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline {
+                    text-align: center;
+                    width: 80px;
+                    padding-right: 20px;
+                }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline img {
+                        max-width: 80px;
+                        max-height: 30px;
+                    }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline .AirlineName {
+                        font-size: 10px;
+                    }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point {
+                    width: 170px;
+                }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .City {
+                        color: #0066CC;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .Time {
+                        color: #006699;
+                        font-size: 15px;
+                        background-repeat: no-repeat;
+                        margin-top: 2px;
+                    }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .AirportName {
+                        font-size: 11px;
+                    }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail {
+                }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail a {
+                    }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail a:hover {
+                        }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .SelectRadioButton {
+                text-align: center;
+                float: right;
+                width: 30px;
+                vertical-align: middle;
+                line-height: 50px;
+            }
+
+            /*FlightInfoDetails*/
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetailsMaster {
+                padding: 10px;
+            }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails {
+                margin-top: 5px;
+                padding: 0px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                border: 1px solid #e0e0e0;
+                background-color: White;
+            }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsTitle {
+                    background-color: #e0e0e0;
+                    height: auto;
+                    line-height: 25px;
+                    vertical-align: middle;
+                    padding-left: 10px;
+                    font-weight: bold;
+                }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .NonRefundMessage {
+                    float: right;
+                    padding-right: 10px;
+                    font-weight: normal;
+                }
+
+.NonRefundMessage {
+    float: right;
+    padding-right: 10px;
+    font-weight: normal;
+}
+
+.FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent {
+    padding: 5px;
+}
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline {
+        text-align: center;
+        width: 90px;
+        padding-right: 10px;
+    }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline img {
+            max-width: 80px;
+            max-height: 30px;
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline .AirlineName {
+            font-size: 10px;
+        }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart {
+        width: 180px;
+        padding-left: 0px;
+    }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .City {
+            color: #0066CC;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .FlightInfoDetailsContent .Depart .Time {
+    }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .Time .TimeTitle {
+        font-weight: normal;
+        font-weight: bold;
+    }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .Time .TimeDetail {
+        font-size: 15px;
+        font-weight: bold;
+        background-repeat: no-repeat;
+        margin-top: 2px;
+        color: #006699;
+    }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .AirportName {
+    }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail {
+        font-size: 11px;
+    }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail a {
+            color: #838383;
+            text-decoration: none; /*font-size: 14px;*/ /*font-weight: bold;*/
+        }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail a:hover {
+            }
+
+.FareFlightContent .FilghtItem .StopBar {
+    background-color: #e0e0e0;
+    border: 1px solid #cacaca;
+    font-size: 11px;
+    text-align: center;
+    padding: 2px 0px 2px 15px;
+    border-left: none !important;
+    border-right: none !important;
+    margin-left: -5px;
+    margin-right: -5px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.FareFlightContent .FilghtItem .NoBottom {
+    border-bottom: 0;
+}
+
+.FareFlightContent .FilghtItem .NoTop {
+    border-top: 0;
+}
+
+.FareFlightContent .FilghtItem .StopBar img {
+    margin-bottom: -1px;
+}
+
+
+.FareFooter {
+    padding: 5px;
+    border: 1px solid #cacaca;
+    border-top: none;
+}
+
+    .FareFooter .ContinueButton {
+        text-align: right;
+    }
+
+        .FareFooter .ContinueButton .ButtonContinue {
+            color: #fff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),0 1px 1px rgba(0,0,0,0.075);
+            border: 0;
+            font-size: 14px;
+            padding: 5px 25px;
+            background-color: #216cbd;
+            background-image: linear-gradient(to bottom, #216cbd 0px, #056BA9 100%);
+            background-repeat: repeat-x;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+/*Paging*/
+.PageNumber {
+    float: right;
+}
+
+    .PageNumber a {
+        padding: 3px 3px;
+        margin: 2px;
+    }
+
+        .PageNumber a.visited {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .PageNumber a:hover {
+        }
+
+/*Sorting*/
+.SortLink {
+    padding: 0px 10px 0px 10px;
+    color: #8C030A;
+    height: 22px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.Ascending {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 14px;
+    background-image: url(Styles/sort_arrows.gif);
+    background-position: right top;
+    background-repeat: no-repeat;
+}
+
+.Descending {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 14px;
+    background-image: url(Styles/sort_arrows.gif);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.TotalPrice {
+    color: #7db921;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.Next {
+    text-align: right;
+    margin-top: 10px;
+}
+
+    .Next a {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+.Previous {
+}
+
+    .Previous a {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+.TravelBuddy {
+    float: right;
+}
+
+.RemarkTextBox {
+    max-width: 450px;
+}
+
+.PaxInfo {
+    float: left;
+    padding: 5px 10px 5px 0px;
+}
+
+.Gender {
+    width: 80px;
+}
+
+.TextBox {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.FullName {
+    width: 200px;
+}
+
+.Phone {
+    width: 150px;
+}
+
+.Email {
+    clear:both;
+    width: 450px;
+}
+
+.Address {
+    clear:both;
+    width: 450px;
+}
+
+.Requirement {
+    clear:both;
+    width: 450px;
+}
+
+.PaxInfo .PaxInfoLabel {
+}
+
+@media only screen and (max-width:1199px) {
+}
+
+@media only screen and (max-width:979px) {
+}
+
+@media only screen and (max-width:767px) {
+    .BoxFareOption {
+        margin-bottom: 20px;
+        width: 100%;
+        background-color: White;
+    }
+
+    .FareHeader .Price {
+        float: right;
+        margin-left: 10px;
+    }
+
+        .FareHeader .Price .TotalPriceTitle {
+            color: #fff;
+            text-transform: uppercase;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+    .FareHeader .GDS {
+    }
+
+    .FareHeader .Lowcost {
+        background-image: url(/Images/lowcost.jpg);
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 30px;
+        float: left;
+    }
+
+    .FareHeader .PriceDetailLink {
+        float: right;
+        margin-left: 10px;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+        .FareHeader .PriceDetailLink a:link, a:visited {
+            color: White;
+        }
+
+    .details {
+        background-position: right center;
+        padding: 0px 15px 0px 0px;
+        background-image: url('Images/detail_arrow.png');
+        cursor: pointer;
+        text-decoration: none;
+        background-repeat: no-repeat;
+    }
+
+    .details_selected {
+        background-position: right center;
+        padding: 0px 15px 0px 0px;
+        background-image: url('Images/detail_arrow_s.png');
+        cursor: pointer;
+        text-decoration: none;
+        background-repeat: no-repeat;
+    }
+
+    .PriceDetail {
+        padding: 10px;
+        border: 1px solid #cacaca;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .TablePrice {
+    }
+
+        .TablePrice .ItemHeader {
+            font-weight: bold;
+            line-height: 20px;
+            padding-top: 5px;
+        }
+
+        .TablePrice .ItemPrice {
+            color: Red;
+            text-align: right;
+            font-weight: bold;
+            line-height: 20px;
+            padding-top: 5px;
+        }
+
+            .TablePrice .ItemPrice .Currency {
+                color: #666666;
+                font-weight: bold;
+            }
+
+    .TotalPrice {
+    }
+
+        .TotalPrice .Price {
+            color: #FF6600;
+            font-weight: bold;
+        }
+
+    .Currency {
+        color: #666666;
+        font-weight: bold;
+    }
+
+    .GrandPrice {
+        color: #FF6600;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: right;
+    }
+
+
+    /*FareFlightContent*/
+    .FareFlightContent {
+        border: 1px solid #cacaca;
+        border-top: none;
+    }
+
+        .FareFlightContent .FilghtItem {
+        }
+
+            .FareFlightContent .FilghtItem .FlightDirection {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                height: auto;
+                background-color: #e0e0e0;
+                padding-left: 10px;
+            }
+
+            .FareFlightContent .FilghtItem .FilghtInfo {
+                padding: 5px;
+                border-top: 1px solid #cacaca;
+            }
+                /*FilghtInfoSummary*/
+                .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary {
+                    float: left;
+                    width: 100%;
+                }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline {
+                        text-align: center;
+                        width: 60px;
+                        padding-right: 10px;
+                    }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline img {
+                            max-width: 60px;
+                            max-height: 30px;
+                        }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Airline .AirlineName {
+                            font-size: 10px;
+                        }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point {
+                        width: auto;
+                        text-align: center;
+                    }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .City {
+                            color: #0066CC;
+                            font-size: 15px;
+                            font-weight: bold;
+                        }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .Time {
+                            color: #006699;
+                            font-size: 15px;
+                            background-repeat: no-repeat;
+                            margin-top: 2px;
+                        }
+
+                            .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .Time .TimeHour {
+                                width: 100%;
+                            }
+
+                            .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .Time .TimeDate {
+                                width: 100%;
+                                clear: both;
+                                font-size: 11px;
+                            }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Point .AirportName {
+                            font-size: 11px;
+                        }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail {
+                        display: none;
+                    }
+
+                        .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail a {
+                        }
+
+                            .FareFlightContent .FilghtItem .FilghtInfo .FilghtInfoSummary .Detail a:hover {
+                            }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .SelectRadioButton {
+                    text-align: center;
+                    float: none;
+                    width: 30px;
+                    vertical-align: middle;
+                    line-height: inherit;
+                }
+
+                /*FlightInfoDetails*/
+                .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetailsMaster {
+                    padding: 10px;
+                }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails {
+                    padding: 0px;
+                    border: none;
+                    background-color: White;
+                }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsTitle {
+                        background-color: #e0e0e0;
+                        height: auto;
+                        line-height: 25px;
+                        vertical-align: middle;
+                        padding-left: 10px;
+                        font-weight: bold;
+                    }
+
+                    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .NonRefundMessage {
+                        float: right;
+                        padding-right: 10px;
+                        font-weight: normal;
+                    }
+
+    .NonRefundMessage {
+        float: right;
+        padding-right: 10px;
+        font-weight: normal;
+    }
+
+    .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent {
+        padding: 0px;
+    }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline {
+            text-align: center;
+            width: 50px;
+            padding-right: 5px;
+        }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline img {
+                max-width: 50px;
+                max-height: 30px;
+            }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Airline .AirlineName {
+                font-size: 10px;
+            }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart {
+            width: auto;
+            padding-left: 0px;
+            text-align: center;
+        }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .City {
+                color: #0066CC;
+                font-size: inherit;
+                font-weight: bold;
+            }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .FlightInfoDetailsContent .Depart .Time {
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .Time .TimeTitle {
+            font-weight: normal;
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .Time .TimeDetail {
+            font-size: 15px;
+            font-weight: bold;
+            background-repeat: no-repeat;
+            margin-top: 2px;
+            color: #006699;
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Depart .AirportName {
+            display: none;
+        }
+
+        .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail {
+            font-size: 11px;
+        }
+
+            .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail a {
+                color: #838383;
+                text-decoration: none; /*font-size: 14px;*/ /*font-weight: bold;*/
+            }
+
+                .FareFlightContent .FilghtItem .FilghtInfo .FlightInfoDetails .FlightInfoDetailsContent .Detail a:hover {
+                }
+
+    .FareFlightContent .FilghtItem .StopBar {
+        background-color: #e0e0e0;
+        border: 1px solid #cacaca;
+        font-size: 11px;
+        text-align: center;
+        padding: 2px 0px 2px 15px;
+        border-left: none !important;
+        border-right: none !important;
+        margin-left: -5px;
+        margin-right: -5px;
+        line-height: 20px;
+        vertical-align: middle;
+    }
+
+    .FareFlightContent .FilghtItem .NoBottom {
+        border-bottom: 0;
+    }
+
+    .FareFlightContent .FilghtItem .NoTop {
+        border-top: 0;
+    }
+
+    .FareFlightContent .FilghtItem .StopBar img {
+        margin-bottom: -1px;
+    }
+
+    span.DetailLabel {
+        display: none;
+    }
+
+    .FareFooter {
+        padding: 5px;
+        border: 1px solid #cacaca;
+        border-top: none;
+    }
+
+        .FareFooter .ContinueButton {
+            text-align: right;
+        }
+
+            .FareFooter .ContinueButton .ButtonContinue {
+                color: #fff;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),0 1px 1px rgba(0,0,0,0.075);
+                border: 0;
+                font-size: 14px;
+                padding: 5px 25px;
+                background-color: #216cbd;
+                background-image: linear-gradient(to bottom, #216cbd 0px, #056BA9 100%);
+                background-repeat: repeat-x;
+                border-radius: 5px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+    /*Paging*/
+    .PageNumber {
+        float: right;
+    }
+
+        .PageNumber a {
+            padding: 3px 3px;
+            margin: 2px;
+        }
+
+            .PageNumber a.visited {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .PageNumber a:hover {
+            }
+
+    /*Sorting*/
+    .SortLink {
+        padding: 0px 10px 0px 10px;
+        color: #8C030A;
+        height: 22px;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .Ascending {
+        font-weight: bold;
+        text-decoration: underline;
+        padding-right: 14px;
+        background-image: url(Styles/sort_arrows.gif);
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    .Descending {
+        font-weight: bold;
+        text-decoration: underline;
+        padding-right: 14px;
+        background-image: url(Styles/sort_arrows.gif);
+        background-position: right bottom;
+        background-repeat: no-repeat;
+    }
+
+    .TotalPrice {
+        color: #7db921;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        text-align: right;
+    }
+
+    .Next {
+        text-align: right;
+        margin-top: 10px;
+    }
+
+        .Next a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+    .Previous {
+    }
+
+        .Previous a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+    .TravelBuddy {
+        float: right;
+    }
+
+    .RemarkTextBox {
+        max-width: 450px;
+    }
+
+    .PaxInfo {
+        float: none;
+        padding-right: 0px;
+        width: 100%;
+        padding: 5px 0px;
+    }
+
+    .Gender {
+        width: 100%;
+    }
+
+    .TextBox {
+        width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .PaxInfo .PaxInfoLabel {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width:479px) {
+}

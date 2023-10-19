@@ -1,0 +1,315 @@
+﻿@model VDMMutiline.SharedComponent.EntityInfo.BK_BookingInfo
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Entities
+@using Microsoft.Ajax.Utilities
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.UI
+@using VDMMutiline.Core.Common
+@using VDMMutiline.SeachAndBook
+@functions{
+    private List<VDMMutiline.SharedComponent.EntityInfo.BK_PassengerInfo> GetbyBooking(int id)
+    {
+        var dao = new BK_PassengerDao();
+        var param = new VDMMutiline.SharedComponent.Params.BK_PassengerParam() { BookingID = id };
+        dao.GetbyBooking(param);
+        return param.BK_PassengerInfos;
+    }
+    private List<BK_TicketInfo> GetListByBooking(int id)
+    {
+        var dao = new BK_TicketDao();
+        return dao.GetListByBooking(id);
+    }
+    private List<BK_PassengerInfo> GetPassengerByBooking(int bokingid)
+    {
+        var dao = new BK_PassengerDao();
+        return dao.GetbyBookingId(bokingid);
+    }
+    private tbl_PaymentInfo GetpaymentInfo(int bokingid)
+    {
+        var dao = new BK_BookingDao();
+        return dao.GetInfoThanhToan(bokingid);
+    }
+}
+
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+
+    var getlistticket = GetListByBooking(Model.ID);
+    var DepartureFlight = getlistticket.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotDi);
+    var ReturnFlight = getlistticket.FirstOrDefault(z => z.TypeID == Constant.Typeve.LuotVe);
+    var listPassengerByBooking = GetPassengerByBooking(Model.ID);
+
+
+    decimal nguoilon = 0;
+    decimal tongtiennguoilon = 0;
+    decimal treem = 0;
+    decimal tongtientrem = 0;
+    decimal embe = 0;
+    decimal congtienembe = 0;
+    decimal tonggia = 0;
+    decimal tongtiennguoilon1 = 0;
+    decimal tongtientrem1 = 0;
+    decimal congtienembe1 = 0;
+    string hangbay = "";
+    string donvi = UIUty.GetDonViTienTe();
+    nguoilon = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.NguoiLon);
+    treem = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.TreEm);
+    embe = listPassengerByBooking.Count(z => z.TypeID == Constant.TypePassenger.EmBe);
+    if (DepartureFlight != null)
+    {
+        var PriceAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.FareAdt ?? 0);
+        var PriceChild = UIUty.ChuyenDoiTienTe(DepartureFlight.FareChd ?? 0);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.FareInf ?? 0);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeAdt ?? 0);
+        var FeeChild = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeChd ?? 0);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.FeeInf ?? 0);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxAdt ?? 0);
+        var TaxChild = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxChd ?? 0);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(DepartureFlight.TaxInf ?? 0);
+        tongtiennguoilon += (nguoilon * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (treem * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (embe * (PriceInfant + FeeInfant + TaxInfant));
+        tongtiennguoilon1 += ((PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem1 += ((PriceChild + FeeChild + TaxChild));
+        congtienembe1 += ((PriceInfant + FeeInfant + TaxInfant));
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+        tonggia += TotalPrice;
+        hangbay += DepartureFlight.Code;
+    }
+    if (ReturnFlight != null)
+    {
+        if (ReturnFlight.Code != hangbay)
+        {
+            hangbay += (" - " + ReturnFlight.Code);
+        }
+        var PriceAdult = UIUty.ChuyenDoiTienTe(ReturnFlight.FareAdt ?? 0);
+        var PriceChild = UIUty.ChuyenDoiTienTe(ReturnFlight.FareChd ?? 0);
+        var PriceInfant = UIUty.ChuyenDoiTienTe(ReturnFlight.FareInf ?? 0);
+        var FeeAdult = UIUty.ChuyenDoiTienTe(ReturnFlight.FeeAdt ?? 0);
+        var FeeChild = UIUty.ChuyenDoiTienTe(ReturnFlight.FeeChd ?? 0);
+        var FeeInfant = UIUty.ChuyenDoiTienTe(ReturnFlight.FeeInf ?? 0);
+        var TaxAdult = UIUty.ChuyenDoiTienTe(ReturnFlight.TaxAdt ?? 0);
+        var TaxChild = UIUty.ChuyenDoiTienTe(ReturnFlight.TaxChd ?? 0);
+        var TaxInfant = UIUty.ChuyenDoiTienTe(ReturnFlight.TaxInf ?? 0);
+        tongtiennguoilon += (nguoilon * (PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem += (treem * (PriceChild + FeeChild + TaxChild));
+        congtienembe += (embe * (PriceInfant + FeeInfant + TaxInfant));
+        var TotalPrice = tongtiennguoilon + tongtientrem + congtienembe;
+        tongtiennguoilon1 += ((PriceAdult + FeeAdult + TaxAdult));
+        tongtientrem1 += ((PriceChild + FeeChild + TaxChild));
+        congtienembe1 += ((PriceInfant + FeeInfant + TaxInfant));
+        tonggia = TotalPrice;
+    }
+    var indexHanhLy = 0;
+    var index = 0;
+    decimal TongTienHanhLy = 0;
+
+    var daoticket = new BK_TicketDao();
+
+
+    var seachparam = new SeachParam();
+    seachparam.Infant = int.Parse(embe.ToString());
+    seachparam.Adult = int.Parse(nguoilon.ToString());
+    seachparam.Children = int.Parse(treem.ToString());
+    seachparam.Itinerary = ReturnFlight != null ? 2 : 1;
+    if (DepartureFlight != null)
+    {
+        seachparam.DepartureAirportCode = DepartureFlight.FromCity;
+        seachparam.DestinationAirportCode = DepartureFlight.ToCity;
+        seachparam.DepartureDate = DepartureFlight.StartDate.HasValue ? DepartureFlight.StartDate.Value.ToString("dd/MM/yyyy") : "";
+    }
+    if (ReturnFlight != null)
+    { seachparam.ReturnDate = ReturnFlight.StartDate.HasValue ? ReturnFlight.StartDate.Value.ToString("dd/MM/yyyy") : ""; }
+    var listCheckBaggageVnJq = new List<ApiClient.Models.BaggageVnJq>();
+}
+<div class="selected bgSelect1" style="margin-bottom: 50px; margin-top: 65px">
+    <div class="hidden1" style="background-color: #f4f4f4;">
+        <div class="row  top log" style="">
+
+            <div class="col-xs-12 cb ">
+                XÁC NHẬN ĐẶT CHỖ
+            </div>
+        </div>
+        <div class="row namecity" style="margin: 7px 0px;">
+            <span class="citygo">
+                Tóm tắt đặt chỗ
+            </span>
+            <span class="cityto">
+                <a style="padding: 4px 20px;" class="radair" id="copy" href="javascript:void(0)">Copy</a>
+            </span>
+        </div>
+        <div id="to-copy">
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                Xác nhận đặt vé: @hangbay
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                Code: @Model.BookCode
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                @{
+                    var incontrail = "";
+                    foreach (var item in listPassengerByBooking)
+                    {
+                        if (!incontrail.Contains(item.ID + ";"))
+                        {
+                            <p style="padding-bottom: 0px; padding-top: 0px; margin-bottom: 0px; margin-top: 0px">
+                                @Utility.ConvertToUnsign(item.FirstName + " " + item.Name).ToUpper()
+
+                                (@((!string.IsNullOrEmpty(item.BaggageDepartValue) ? item.BaggageDepartValue : "0") + "kg")
+                                @if (ReturnFlight != null)
+                                {
+                                    @((!string.IsNullOrEmpty(item.BaggageReturnValue) ? " - " + item.BaggageReturnValue : " - 0") + "kg")
+                                }
+                                )
+                            </p>
+                        }
+                        incontrail += item.ID + ";";
+                    }
+                }
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                @{
+                    var listAirlineCode = new List<string>();
+                    var listTicketDetail = new List<BK_TicketDetail>();
+                    if (DepartureFlight != null)
+                    {
+                        var lidetial = daoticket.GetDetailByTicket(DepartureFlight.ID);
+                        listTicketDetail.AddRange(lidetial);
+                        foreach (var item in lidetial)
+                        {
+                            listAirlineCode.Add(item.airlineCode);
+                            var Departure = item;
+                            <p style="font-weight: bold; margin-bottom: 0px;">
+                                <span id="lblPhone">@Departure.flight @Departure.FromCity @Departure.ToCity @Departure.StartDate.Value.ToString("dd/MM") @Departure.StartDate.Value.ToString("HH:mm") </span>
+                            </p>
+                        }
+                    }
+                }
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 15px; border-bottom: 0;">
+                @{
+
+                    if (ReturnFlight != null)
+                    {
+                        var lidetial = daoticket.GetDetailByTicket(ReturnFlight.ID);
+                        listTicketDetail.AddRange(lidetial);
+                        foreach (var item in lidetial)
+                        {
+                            listAirlineCode.Add(item.airlineCode);
+                            var Departure = item;
+                            <p style="font-weight: bold; margin-bottom: 0px;">
+                                <span id="lblPhone">@Departure.flight @Departure.FromCity @Departure.ToCity @Departure.StartDate.Value.ToString("dd/MM") @Departure.StartDate.Value.ToString("HH:mm") </span>
+                            </p>
+                        }
+                    }
+                }
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0 !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                @if (listAirlineCode.Count(z => z != "VN") > 0)
+                {
+                    <span id="lblEmail">Xtay <b> 7Kg</b></span>
+                }
+                else
+                {
+                    ApiClient.Common.ApiClient apiClient = new ApiClient.Common.ApiClient();
+
+                    if (DepartureFlight != null)
+                    {
+                        listCheckBaggageVnJq.AddRange(apiClient.GetBaggageVnJq(DepartureFlight.FromCity, DepartureFlight.ToCity));
+                    }
+                    if (ReturnFlight != null)
+                    {
+                        listCheckBaggageVnJq.AddRange(apiClient.GetBaggageVnJq(ReturnFlight.FromCity, ReturnFlight.ToCity));
+                    }
+
+                    var ishow12kg = true;
+                    foreach (var item in listTicketDetail)
+                    {
+                        var lst = listCheckBaggageVnJq.Where(z => z.StartPoind == item.FromCity && z.EndPoind == item.ToCity);
+                        if (WebProject.Ultilities.BaggageVnUti.CheckBaggageVnJq(lst.ToList(), item.flight))
+                        {
+                            ishow12kg = false;
+                        }
+                    }
+                    if (ishow12kg)
+                    {
+                        <span id="lblEmail">Xtay <b> 12Kg</b></span>
+                    }
+                    else
+                    {
+                        <span id="lblEmail">Xtay <b> 7Kg</b></span>
+                    }
+                }
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0 !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                <span id="lblEmail">@VDMMutiline.Resource.App_GlobalResources.weblanguage.Please_has_a_front_90P</span>
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0 !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                <span id="lblEmail">Gia:</span>@{
+                    var gia = Model.TotalPrice.Value.ToString("n0");
+                    var gialent = gia.Length;
+                }
+                @(Model.TotalPrice.HasValue ? (gialent > 4 ? gia.Remove(gialent - 4, 4) + "K" : gia) : "")
+            </div>
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                <span id="lblNote">@Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.Status_Book)</span>
+            </div>
+            @if (Model.Status == Constant.StatusVe.DangGiuCho)
+            {
+                <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                    Han thanh toan:
+                    <span id="lblPaymentDeadline">@(Model.Expireddate.HasValue ? Model.Expireddate.Value.ToString("dd/MM/yyyy HH:mm") : "")</span>
+                </div>
+            }
+            <div class="row bgSelect1 airgo" style="margin-top: 0px !important; padding-left: 10px; padding-right: 10px; border-bottom: 0;">
+                Lhe:
+                <span id="lblPaymentDeadline">@(CurentUser.PhoneNumber)</span>
+            </div>
+
+        </div>
+
+        <div class="row  log3 ">
+            <a id="Button1" text="" style="color: #fff; font-size: 12px" href="/SeachHome/Seach" cssclass="btt">TIẾP TỤC ĐẶT VÉ KHÁC</a>
+        </div>
+        <div class="row bgSelect1 airgo" style="margin-top: 10px !important;">
+            <div class="row hk  ">
+                <span class="">THÔNG TIN LIÊN HỆ</span>
+                <input type="button" class="but minusp2" value="" />
+            </div>
+            <div class="addp2">
+                <div class="row bbot btop" style="padding-top: 5px;padding-bottom: 5px;">
+                    <span class="money">HỌ VÀ TÊN: </span>
+                    @(Utility.ConvertToUnsign(Model.Name).ToUpper())
+                </div>
+                <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                    <span class="money">ĐIỆN THOẠI: </span>
+                    @Model.Phone
+
+                </div>
+                <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                    <span class="money">EMAIL: </span>
+                    @Model.Email
+                </div>
+                <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                    <span class="money">ĐỊA CHỈ: </span>
+                    @Model.Address
+                </div>
+                <div class="row bbot" style="padding-top: 5px;padding-bottom: 5px;">
+                    <span class="money">Ghi chú: </span>
+                    @Model.Note
+                </div>
+
+            </div>
+        </div>
+        <div class="row  log3 ">
+            <a id="Button1" text="" style="color: #fff; font-size: 12px" href="/SeachHome/Seach" cssclass="btt">ĐẶT VÉ KHÁC</a>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,44 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.Dao
+@using VDMMutiline.Ultilities
+@{
+    ViewBag.Title = "Nghiệp vụ vé";
+    ViewBag.Description = "Thêm hành lý";
+    List<SelectListItem> datatree = Constant.AirlineDomestic.dctName.Select(z => new SelectListItem { Value = z.Key, Text = z.Value }).Where(z => z.Value == "VJ" || z.Value == "QH").ToList();
+}
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            @using (Html.BeginForm("CheckCode", "AddOnService", FormMethod.Post, new { @class = "form form-horizontal", @data_parsley_validate = "", @role = "form" }))
+            {
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group ">
+                            @Html.DropDownList("Airline", datatree, new { @class = "form-control border-primary" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            @Html.TextBox("bookingCode", "", new { @required = "required", @class = "form-control border-primary", @placeholder = "NHẬP MÃ ĐẶT CHỖ (PNR)/SỐ VÉ (TICKET NUMBER)" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group ">
+                            <button type="submit" id="btnSearch" class="btn btn-info btn-block"><span class="ace-icon fa fa-search icon-on-right bigger-110"></span>Xem thông tin</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

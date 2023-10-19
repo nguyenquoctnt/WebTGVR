@@ -1,0 +1,348 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@model VDMMutiline.SharedComponent.EntityInfo.BK_BookingInfo
+@{
+    VDMMutiline.Core.Models.VDMUser userinfor = null;
+    userinfor = (VDMMutiline.Core.Models.VDMUser)ViewBag.userinfor;
+    ViewBag.Title = "Quản lý vé";
+    ViewBag.Description = "Chi tiết vé" + ViewBag.codes;
+}
+    <div class="alert alert-icon-right alert-arrow-right alert-warning alert-dismissible mb-2" role="alert">
+        <span class="alert-icon"><i class="fa fa-warning"></i></span>
+        <strong>Vui lòng kiểm tra kĩ lại mọi thông tin trước khi xuất vé. </strong>
+    </div>
+<div class="card">
+    <div class="card-header danhsach">
+        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li class="addnew">
+                </li>
+                <li class="fullscree"><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body card-dashboard">
+            @if (Model != null)
+            {
+                <form class="form form-horizontal form-bordered">
+                    <div class="form-body">
+                        <h4 class="form-section"><i class="fa fa-user"></i> Thông tin</h4>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left" for="projectinput1">Mã đơn hàng</label>
+                            <div class="col-md-2">
+                                <input type="text" id="rCode" class="form-control" value="@Model.rCode" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a onclick="findcode($('#rCode').val())" class="btn btn-primary btn-min-width btn-glow"> <i class="ft-search"></i> </a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left" for="projectinput1">Code</label>
+                            <div class="col-md-2">
+                                <input type="text" id="bookcode" class="form-control" value="@Model.BookCode" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a onclick="findcode($('#bookcode').val())" class="btn btn-primary btn-min-width btn-glow"> <i class="ft-search"></i> </a>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a href="@Url.Action("Inve", "Booking", new { bookingid = @Model.ID })" class="btn btn-success btn-min-width btn-glow"><i class="ft-printer"></i> In vé </a>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a style="" onclick="$('#xuathd').modal('show');" class="btn @(!string.IsNullOrEmpty(Model.xhdtencongty) ? (Model.Daxuathoadon == true ? "btn-warning" : "btn-danger") : "btn-info") btn-min-width btn-glow">Yêu cầu xuất HD</a>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a style="" onclick="$('#hinhthucthanhtoan').modal('show');" class="btn  btn-purple btn-min-width btn-glow">Hình thức thanh toán</a>
+                                @Html.Action("Updatehinhthucthanhtoan", "Booking", new { bookingid = Model.ID })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Họ tên</label>
+                            <div class="col-md-9">
+                                <label class="form-control no-border"> @Model.Name </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Điện thoại</label>
+                            <div class="col-md-2">
+                                <label class="form-control no-border"> @Model.Phone </label>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a onclick="$('#TomTatVe').modal('show');" class="btn btn-primary btn-min-width btn-glow"> Tóm tắt vé </a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Mail</label>
+                            <div class="col-md-3">
+                                <label class="form-control no-border"> @Model.Email </label>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a onclick="$('#GuiMail').modal('show');" class="btn btn-warning  btn-min-width btn-glow"> Gửi Mail </a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Địa chỉ</label>
+                            <div class="col-md-9">
+                                <label class="form-control no-border"> @Model.Address </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Ngày Đặt</label>
+                            <div class="col-md-9">
+                                <label class="form-control no-border">   @(Model.CreatedDate.HasValue ? Model.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "") </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Thời gian giữ chỗ</label>
+                            <div class="col-md-9">
+                                <label class="form-control no-border"> @(Model.Expireddate.HasValue ? Model.Expireddate.Value.ToString("dd/MM/yyyy HH:mm") : "")</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 label-control text-left">Trạng thái</label>
+                            <div class="col-md-3">
+                                <label class="form-control no-border">  @Utility.GetDictionaryValue(Constant.StatusVe.dctName, Model.Status)</label>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a onclick="$('#CapNhapTrangThai').modal('show');" class="btn btn-warning  btn-min-width btn-glow"> Cập nhập trạng thái </a>
+                            </div>
+                            @if (Model.Status == 2 || Model.Status == 9)
+                            {
+                                <div class="col-md-2 text-center">
+                                    <a onclick=" $('#Hoanvepopub').modal('show'); " class="btn btn-primary btn-min-width btn-glow">Yêu cầu hoàn vé</a>
+                                </div>
+                            }
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.DiscountCode))
+                        {
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Tổng tiền</label>
+                                <div class="col-md-9">
+                                    <label class="form-control no-border">  @(((decimal)Model.TotalPrice + Model.DiscountPrice).HasValue ? ((decimal)Model.TotalPrice + Model.DiscountPrice).Value.ToString("n0") : "")</label>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Code giảm giá</label>
+                                <div class="col-md-9">
+                                    <label class="form-control no-border"> @Model.DiscountCode, Số tiền:@(Model.DiscountPrice.HasValue ? Model.DiscountPrice.Value.ToString("n0") : "")</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Thanh toán</label>
+                                <div class="col-md-9">
+                                    <label class="form-control no-border">  @(Model.TotalPrice.HasValue ? Model.TotalPrice.Value.ToString("n0") : "")</label>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="form-group row">
+                                <label class="col-md-2 label-control text-left">Tổng tiền</label>
+                                <div class="col-md-9">
+                                    <label class="form-control no-border">  @(Model.TotalPrice.HasValue ? Model.TotalPrice.Value.ToString("n0") : "")</label>
+                                </div>
+
+                            </div>
+                        }
+
+                        @Html.Action("CapNhapghichu", "Booking", new { bookingid = @Model.ID, note = @Model.Note })
+                        @{Html.RenderPartial("~/Areas/QuanLyVe/Views/Booking/_PartialPageThongTinChuyenBay.cshtml", Model);
+                            Html.RenderPartial("~/Areas/QuanLyVe/Views/Booking/_PartialPageChiTietDatVe.cshtml", Model);}
+                    </div>
+                </form>
+            }
+            else
+            {
+                <p>Không tìm thấy vé</p>
+            }
+
+        </div>
+    </div>
+</div>
+@{
+    Html.RenderAction("sendsms", "Booking", new { bookingid = Model.ID });
+    Html.RenderAction("sendmail", "Booking", new { bookingid = Model.ID, Email = Model.Email });
+    Html.RenderAction("CapNhapTrangThai", "Booking", new { bookingid = Model.ID, Code = Model.BookCode, TrangThai = Model.Status, TaiKhoan = Model.UserId, ngay = (Model.Expireddate.HasValue ? Model.Expireddate.Value.ToString("dd/MM/yyyy") : ""), gio = (Model.Expireddate.HasValue ? Model.Expireddate.Value.ToString("HH:mm") : "") });
+
+
+}
+<div class="modal fade text-left" id="Hoanvepopub" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark white">
+                <h4 class="modal-title white" id="myModalLabel17">Yêu cầu hoản vé</h4>
+                <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("HoanVe", "Booking", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @data_parsley_validate = "", id = "frCreate", @role = "form" }))
+                {<input type="hidden" name="bookingid" value="@Model.ID" />
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right text-left">Code </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="code" value="@Model.BookCode" class="form-control ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right text-left"> Người cần hoàn </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="nguoicanhoan" class="form-control ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right text-left"> Chặng cần hoàn </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="changcanhoan" class="form-control ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right text-left"> Kiểu hoàn </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="kieuhoan" placeholder="">
+                                <option value="Mất phí">Mất phí</option>
+                                <option value="Hoàn do hủy/ đổi chuyến bay">Hoàn do hủy/ đổi chuyến bay</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info"><i class="ace-icon fa fa-check bigger-110"></i>Yêu cầu</button>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left" id="xuathd" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark white">
+                <h4 class="modal-title white" id="myModalLabel17">Yêu cầu xuất hóa đơn</h4>
+                <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table style="width: 100%;font-size: 18px;" border="0" cellpadding="3" cellspacing="3">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span id="lblName"><b> Nơi nhận hóa đơn: </b></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblName">Tên công ty:<b> @Model.xhdtencongty </b></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblEmail">
+                                    Địa chỉ:<b>
+                                        @Model.xhddiachi
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblNote">
+                                    Thành phố:<b>
+                                        @Model.xhdthanhpho
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblNote">
+                                    Người nhận:<b>
+                                        @Model.xhdnguoinhanhd
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblNote">
+                                    Mã số thuế VAT:<b>
+                                        @Model.xhdvat
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        @if (!string.IsNullOrEmpty(Model.xhdktencongty))
+                        {
+                            <tr>
+                                <td>
+                                    <span id="lblName"><b> Nơi nhận hóa đơn khác </b></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span id="lblName">Tên công ty:<b> @Model.xhdktencongty </b></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span id="lblEmail">
+                                        Địa chỉ:<b>
+                                            @Model.xhdkdiachi
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span id="lblNote">
+                                        Thành phố:<b>
+                                            @Model.xhdktp
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span id="lblNote">
+                                        Người nhận:<b>
+                                            @Model.xhdknguoinhanhd
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col-md-12">
+                    @Html.Action("Yeucauxuathoadon", "Booking", new { bookingid = Model.ID, Hotennguoixuly = Model.Hotenguoixuly, ngayxuly = (Model.Ngayxuly.HasValue ? Model.Ngayxuly.Value.ToString("dd/MM/yyyy") : ""), Daxuly = Model.Daxuathoadon ?? false })
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Content/js/CreateModel.js"></script>
+<script>
+
+    function findcode( value ) {
+        var link = ( '/QuanLyVe/Booking/seachCreate?code=' + value );
+        window.location = link;
+    }
+    $( "#bookcode" ).keypress( function ( e ) {
+        if ( e.keyCode === 13 ) {
+            findcode();
+        }
+    } );
+    function addRequestVerificationToken( data ) {
+        data.__RequestVerificationToken = $( 'input[name=__RequestVerificationToken]' ).val();
+        return data;
+    };
+</script>

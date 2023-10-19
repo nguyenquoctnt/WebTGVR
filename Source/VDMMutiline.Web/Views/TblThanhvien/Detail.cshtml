@@ -1,0 +1,259 @@
+﻿@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.Core.Helper;
+@model VDMMutiline.SharedComponent.Params.TblThanhvienParam
+@{
+    // Layout = null;
+    ViewBag.Title = "Quản lý thành viên";
+    ViewBag.Description = "";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.TblThanhvien.Id)
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#ttchung"><i class="green bigger-125 ace-icon fa fa-users"></i> Thông tin thành viên</a></li>
+            <li><a data-toggle="tab" href="#gianhang"> <i class="green bigger-125 ace-icon glyphicon glyphicon-list"></i>Thông tin gian hàng</a></li>
+            <li><a data-toggle="tab" href="#lichsudathang"><i class="green bigger-125 ace-icon fa fa-book"></i>Lịch sử đặt hàng</a></li>
+            <li><a data-toggle="tab" href="#tindang"><i class="green bigger-125 ace-icon fa fa-pencil-square-o"></i>Tin đăng</a></li>
+            <li><a data-toggle="tab" href="#lichsugach"><i class="green bigger-125 ace-icon fa fa-credit-card"></i>Lịch sử thu chi gạch</a></li>
+            <li><a data-toggle="tab" href="#dauthau"><i class="green bigger-125 ace-icon fa fa-gavel"></i>Đấu thầu</a></li>
+        
+        </ul>
+        <div class="tab-content">
+            <div id="ttchung" class="tab-pane fade in active">
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Tên thành viên </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.TenThanhvien
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Tên Đăng nhập </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Tendangnhap
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Loại thành viên </div>
+                            <div class="profile-info-value">
+                                @EnumerableHelper.GetDictionaryValue(Constant.LoaiThanhvien.dctName, Model.TblThanhvien.LoaiThanhvien)
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Điểm thưởng </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Diemthuong
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Đăng nhập? </div>
+                            <div class="profile-info-value">
+                                @if (Model.TblThanhvien.ChophepDangnhap == null)
+                                {
+                                    Model.TblThanhvien.ChophepDangnhap = false;
+                                }
+                                @Html.CheckBox("TblThanhvien.ChophepDangnhap", Model.TblThanhvien.ChophepDangnhap == true, new { @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Có gian hàng </div>
+                            <div class="profile-info-value">
+                                @if (Model.TblThanhvien.CoGianhang == null)
+                                {
+                                    Model.TblThanhvien.CoGianhang = false;
+                                }
+                                @Html.CheckBox("TblThanhvien.CoGianhang", Model.TblThanhvien.CoGianhang == true, new { @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Điện thoại </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Dienthoai
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Email </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Gạch </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Gach
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padding-left ">
+                            <div class="profile-info-name"> Mức triết khấu</div>
+                            <div class="profile-info-value">
+                                @EnumerableHelper.GetDictionaryValue(Constant.MucTrieuKhau.dctName, Model.TblThanhvien.MucTrietkhau)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-12 no-padding-left ">
+                            <div class="profile-info-name"> Mô tả </div>
+                            <div class="profile-info-value">
+                                @Model.TblThanhvien.Mota
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-12 no-padding-left ">
+                            <div class="profile-info-name"> Trạng thái</div>
+                            <div class="profile-info-value">
+                                <span id="spStatus">@EnumerableHelper.GetDictionaryValue(Constant.TrangthaiKichhoat.dctName, Model.TblThanhvien.TrangThai)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="col-sm-12 no-padding-left ">
+                            <div class="profile-info-value">
+                                @if (Model.TblThanhvien.TrangThai == 2)
+                                {
+                                    <a id="btnAprove" onclick="UpdateStatusUser(1,@Model.TblThanhvien.Id)" class="btn-action btn btn-primary"><i class="ace-icon fa fa-check bigger-125"></i>Duyệt</a>
+                                }
+                                @if (Model.TblThanhvienInfo.LockoutEnabled)
+                                {
+                                    <a id="btnLock" style="display:none;" onclick="UpdateStatusUser(3,@Model.TblThanhvien.Id)" class="btn-action btn btn-warning"><i class="ace-icon fa fa-lock bigger-125"></i>Khóa</a>
+                                    <a id="btnUnLock" onclick="UpdateStatusUser(2,@Model.TblThanhvien.Id)" class="btn-action btn btn-warning"><i class="ace-icon fa fa-key bigger-125"></i>Mở khóa</a>
+                                }
+                                else
+                                {
+                                    <a id="btnLock" onclick="UpdateStatusUser(3,@Model.TblThanhvien.Id)" class="btn-action btn btn-warning"><i class="ace-icon fa fa-lock bigger-125"></i>Khóa</a>
+                                    <a id="btnUnLock" style="display:none;" onclick="UpdateStatusUser(2,@Model.TblThanhvien.Id)" class="btn-action btn btn-warning"><i class="ace-icon fa fa-key bigger-125"></i>Mở khóa</a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="gianhang" class="tab-pane fade">
+                @Html.Action("DetailThanhvien", "TblGianhang", new { area = "", id = Model.TblThanhvien.Id })
+            </div>
+            <div id="lichsudathang" class="tab-pane fade">
+                @Html.Action("DonhangThanhvienDat", "TblDonhang", new { area = "", IdThanhvien = Model.TblThanhvien.Id })
+            </div>
+            <div id="tindang" class="tab-pane fade">
+                @Html.Action("TindangThanhvien", "TblTindang", new { area = "", IdThanhvien = Model.TblThanhvien.Id })
+            </div>
+            <div id="lichsugach" class="tab-pane fade">
+                @Html.Action("LichSuThanhvienGach", "TblThanhvienChiGach", new { area = "", IdThanhvien = Model.TblThanhvien.Id })
+            </div>
+            <div id="dauthau" class="tab-pane fade">
+                @Html.Action("DauthauThanhvien", "TblDauthau", new { area = "Dauthau", IdThanhvien = Model.TblThanhvien.Id })
+                @Html.Action("DangKyDuThauThanhvien", "TblGianhangDangkyDuthau", new { area = "Dauthau", IdThanhvien = Model.TblThanhvien.Id })
+            </div>
+        </div>
+    </div>
+</div>
+<div id="aproveModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cập nhật trạng thái</h4>
+            </div>
+            <div class="modal-body" id="contenaprove">
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+
+    function editinfo(id) {
+        var url = "@Url.Action("Create","TblGianhang")" + "/" + id
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+    function UpdateStatusUser(status, Id) {
+        var url = ""
+        switch (status) {
+            case 1:
+                url = "@Url.Action("Aprove", "TblThanhvien")" + "/" + Id;
+                break;
+            case 2:
+                url = "@Url.Action("Unlock", "TblThanhvien")" + "/" + Id;
+                break;
+            case 3:
+                url = "@Url.Action("Lock", "TblThanhvien")" + "/" + Id;
+                break;
+        }
+        _lwfunc.AjaxGet(url, function (data) {
+            $("#contenaprove").html(data);
+            $("#aproveModel").modal();
+        });
+    }
+    function submitfomrAprove() {
+        _lwfunc.Ajax("@Url.Action("Aprove", "TblThanhvien")", $("#fraproveTblThanhvien").serialize(), function (data) {
+            if (data.isSuccess === true) {
+                $("#aproveModel").modal('hide');
+                $('#btnAprove').hide();
+                $('#spStatus').html('@Constant.TrangthaiKichhoat.dctName[1]')
+
+            } else {
+                toastr.error(data.mess, "Thông báo!");
+            }
+
+        });
+    }
+
+    function submitfomrLock() {
+        _lwfunc.Ajax("@Url.Action("Lock", "TblThanhvien")", $("#frLockTblThanhvien").serialize(), function (data) {
+            if (data.isSuccess === true) {
+                $("#aproveModel").modal('hide');
+                $('#btnUnLock').show();
+                $('#btnLock').hide();
+                $('#spStatus').html('@Constant.TrangthaiKichhoat.dctName[3]')
+
+            } else {
+                toastr.error(data.mess, "Thông báo!");
+            }
+
+        });
+    }
+    function submitfomrUnlock() {
+        _lwfunc.Ajax("@Url.Action("UnLock", "TblThanhvien")", $("#frUnLockTblThanhvien").serialize(), function (data) {
+            if (data.isSuccess === true) {
+                $("#aproveModel").modal('hide');
+                $('#btnLock').show();
+                $('#btnUnLock').hide();
+                $('#spStatus').html('@Constant.TrangthaiKichhoat.dctName[2]')
+            } else {
+                toastr.error(data.mess, "Thông báo!");
+            }
+
+        });
+    }
+</script>

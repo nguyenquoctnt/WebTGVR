@@ -1,0 +1,215 @@
+﻿@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+<!DOCTYPE html>
+@{
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    String strPathAndQuery = HttpContext.Current.Request.Url.PathAndQuery;
+    String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(strPathAndQuery, "/");
+    var commonHeader = CommonUI.GetlistTempleate(13);
+    var commonbody = CommonUI.GetlistTempleate(14);
+    var commonFooter = CommonUI.GetlistTempleate(15);
+    var commonHome = CommonUI.GetlistTempleate(5);
+}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+<head>
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="refresh" content="5400" />
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="rating" content="General">
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow">
+    <meta name="revisit-after" content="1 days" />
+    <meta property=fb:app_id content="164566120964750">
+    <meta property="og:url" content="@strUrl">
+    <meta property="og:image" content="@strUrl/@CurentUser.LogoUrl">
+    <meta property="og:site_name" content="@strUrl">
+    <meta property="og:type" content="product" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta itemprop="image" content="@strUrl/@CurentUser.LogoUrl">
+    <meta property="article:author" content="@strUrl" />
+    @{
+        var seokey = CurentUser.SeoKey;
+        var seodes = CurentUser.SeoDes;
+        var SeoTitle = CurentUser.SeoTitle;
+        <meta name="keywords" content="@(string.IsNullOrEmpty(seokey)?"ve may bay, ve may bay gia re, ve may bay khuyen mai":seokey)" />
+        <meta name="description" content="@(string.IsNullOrEmpty(seodes) ? "Ve may bay, đại lý bán vé máy bay chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế." : seodes)" />
+        <meta name="generator" content="@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)" />
+        <meta property="og:description" content="@(string.IsNullOrEmpty(seodes) ? "Ve may bay, đại lý bán vé máy bay chuyên cung cấp vé máy bay giá rẻ của 300 hãng hàng không trong nước và quốc tế." : seodes)">
+        <meta property="og:title" content="@(string.IsNullOrEmpty(SeoTitle) ? "Vé máy bay, đại lý vé máy bay giá rẻ" : SeoTitle)">
+        <meta property="article:section" content="@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)" />
+        <meta property="article:tag" content="@(string.IsNullOrEmpty(seokey)?"ve may bay, ve may bay gia re, ve may bay khuyen mai":seokey)" />
+        <title>@(string.IsNullOrEmpty(SeoTitle) ? @VDMMutiline.Core.Common.SiteMuti.Getsitename() : SeoTitle)</title>
+
+    }
+    @Scripts.Render("~/FontEnd/jquery")
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/style.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/animate.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/FontEnd/VDM/theme/responsive.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/FontEnd/VDM/theme/elines/custom.css" />
+    <link href="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="/Content/FontEnd/EditSeach.css" rel="stylesheet" />
+    <link href="/Content/FontEnd/VDM/theme/owl.carousel.css" rel="stylesheet" />
+
+    @RenderSection("HeaderIndex", required: false)
+    @{
+        var js_head_1 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_1}");
+        var js_head_2 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_2}");
+        var js_head_3 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_3}");
+        var js_head_4 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_4}");
+        var js_head_5 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_5}");
+        var js_head_6 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_6}");
+        var js_head_7 = CommonUI.Getsettingtempleatebykey(commonHeader, "{js_head_7}");
+        if (!string.IsNullOrEmpty(js_head_1.Replace("-", "")))
+        {
+            @Html.Raw(js_head_1)
+        }
+        if (!string.IsNullOrEmpty(js_head_2.Replace("-", "")))
+        {
+            @Html.Raw(js_head_2)
+        }
+        if (!string.IsNullOrEmpty(js_head_3.Replace("-", "")))
+        {
+            @Html.Raw(js_head_3)
+        }
+        if (!string.IsNullOrEmpty(js_head_4.Replace("-", "")))
+        {
+            @Html.Raw(js_head_4)
+        }
+        if (!string.IsNullOrEmpty(js_head_5.Replace("-", "")))
+        {
+            @Html.Raw(js_head_5)
+        }
+        if (!string.IsNullOrEmpty(js_head_6.Replace("-", "")))
+        {
+            @Html.Raw(js_head_6)
+        }
+        if (!string.IsNullOrEmpty(js_head_7.Replace("-", "")))
+        {
+            @Html.Raw(js_head_7)
+        }
+    }
+</head>
+<body style="padding: 0 !important">
+    @Html.Partial("_Topbar")
+    @Html.Action("Header", "Control")
+    <div id="slideshow" class="slide">
+        @Html.Action("SliderHome", "Home")
+        <div class="hometop">
+            <div class="container ">
+                <div class="row ">
+                    <div class="topnav">
+                        <div class="row" style="margin-top: 5px;">
+                            <div class="col-md-12">
+                                @Html.Action("Seach", "SeachHome")
+                                <div class="col-md-6 seachcel2 hidden-xs">
+                                    @if (CommonUI.Getsettingtempleatebykey(commonHome, "{Is_Show_SupportEmployee}") == "1")
+                                    {
+                                        @Html.Action("NhanVienHotro", "Control")
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenthome">
+        @RenderBody()
+    </div>
+    @Html.Action("Footer", "Control")
+
+    <img src="@strUrl/@CurentUser.LogoUrl" style="display:none" />
+
+    @RenderSection("scripts", required: false)
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/jquery.placeholder.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/lazyload.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/owl.carousel.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForest/theme-scripts.js"></script>
+    <script src="/Content/FontEnd/VDM/Scripts/themeForestComponents/flexslider/jquery.flexslider-min.js"></script>
+    <script>
+        window.ParsleyConfig = {
+            errorClass: 'has-error'
+            , excluded: 'input[type=hidden]'
+            , trigger: false
+            , animate: true
+            , focus: 'first'
+            , validationMinlength: 3
+            , validators: {}
+            , errorElem: '<span></span>'
+            , errorsWrapper: '<span class="help-block"></span>'
+            , errorTemplate: "<div></div>"
+            , classHandler: function ( el ) {
+                return el.$element.closest( ".form-control" );
+            }
+        };
+    </script>
+    <script src="/Content/form-parsley/parsley.js"></script>
+    @{
+        var js_body_1 = CommonUI.Getsettingtempleatebykey(commonbody, "{js_body_1}");
+        var js_body_2 = CommonUI.Getsettingtempleatebykey(commonbody, "{js_body_2}");
+        var js_body_3 = CommonUI.Getsettingtempleatebykey(commonbody, "{js_body_3}");
+        var js_body_4 = CommonUI.Getsettingtempleatebykey(commonbody, "{js_body_4}");
+        var js_body_5 = CommonUI.Getsettingtempleatebykey(commonbody, "{js_body_5}");
+        if (!string.IsNullOrEmpty(js_body_1.Replace("-", "")))
+        {
+            @Html.Raw(js_body_1)
+        }
+        if (!string.IsNullOrEmpty(js_body_2.Replace("-", "")))
+        {
+            @Html.Raw(js_body_2)
+        }
+        if (!string.IsNullOrEmpty(js_body_3.Replace("-", "")))
+        {
+            @Html.Raw(js_body_3)
+        }
+        if (!string.IsNullOrEmpty(js_body_4.Replace("-", "")))
+        {
+            @Html.Raw(js_body_4)
+        }
+        if (!string.IsNullOrEmpty(js_body_5.Replace("-", "")))
+        {
+            @Html.Raw(js_body_5)
+        }
+    }
+    @{
+        var js_footer_1 = CommonUI.Getsettingtempleatebykey(commonFooter, "{js_footer_1}");
+        var js_footer_2 = CommonUI.Getsettingtempleatebykey(commonFooter, "{js_footer_2}");
+        var js_footer_3 = CommonUI.Getsettingtempleatebykey(commonFooter, "{js_footer_3}");
+        var js_footer_4 = CommonUI.Getsettingtempleatebykey(commonFooter, "{js_footer_4}");
+        var js_footer_5 = CommonUI.Getsettingtempleatebykey(commonFooter, "{js_footer_5}");
+
+        if (!string.IsNullOrEmpty(js_footer_1.Replace("-", "")))
+        {
+            @Html.Raw(js_footer_1)
+        }
+        if (!string.IsNullOrEmpty(js_footer_2.Replace("-", "")))
+        {
+            @Html.Raw(js_footer_2)
+        }
+        if (!string.IsNullOrEmpty(js_footer_3.Replace("-", "")))
+        {
+            @Html.Raw(js_footer_3)
+        }
+        if (!string.IsNullOrEmpty(js_footer_4.Replace("-", "")))
+        {
+            @Html.Raw(js_footer_4)
+        }
+        if (!string.IsNullOrEmpty(js_footer_5.Replace("-", "")))
+        {
+            @Html.Raw(js_footer_5)
+        }
+    }
+</body>
+</html>

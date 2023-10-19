@@ -1,0 +1,61 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@functions
+{
+    private List<TinTucInfo> Getkhuyenmai()
+    {
+        var model = new TinTucParam { TinTucInfos = null };
+        var filter = new TinTucFilter
+        {
+            Search = string.Empty
+        };
+        var param = new TinTucParam { TinTucFilter = filter, type = Constant.TinTucType.Khuyenmai, Take = 4 };
+        var biz = new TinTucDao();
+        biz.TinTucHot(param);
+        return param.TinTucInfos;
+    }
+}
+@{
+    int indexkhuyenmai = 1;
+    var listhot = new List<TinTucInfo>();
+    listhot.AddRange(Getkhuyenmai());
+}
+
+
+
+<div class='news-list left'>
+    <ul>
+        @if (lstNews.Count > 2)
+        {
+            int iLen = lstNews.Count > 13 ? 13 : lstNews.Count;
+            for (int i = 2; i < iLen; i++)
+            {
+                <li class='news-list-item'>
+                    <a href='@Url.Action("ChiTiet", "FontEndnew", new { key = lstNews[i].UrlHeper })'>
+                        <img title='@lstNews[i].Title' src='@lstNews[i].Image' />
+                    </a>
+                    <div class='news-list-item-content left'>
+                        <div class='news-list-item-date left'>
+                            @lstNews[i].CreatedDate.ToString("dd") @lang.MONTH.ToLower() @lstNews[i].CreatedDate.ToString("MM, yyyy")
+                        </div>
+                        <div class='news-list-item-date right'>
+                            | @lang.BY TGVR
+                        </div>
+                        <div class='news-list-item-title clear'>
+                            <a class='title' href='@Url.Action("ChiTiet", "FontEndnew", new { key = lstNews[i].UrlHeper })'>
+                                @lstNews[i].Title
+
+                            </a>
+                        </div>
+                        <div class='news-list-item-desc'>
+                            @Html.Raw(lstNews[i].Description)
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+

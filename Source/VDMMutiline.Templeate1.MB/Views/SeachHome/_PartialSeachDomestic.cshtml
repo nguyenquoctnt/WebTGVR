@@ -1,0 +1,1222 @@
+﻿@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SeachAndBook
+@using VDMMutiline.Dao
+@using VDMMutiline.SharedComponent.Constants
+@using VDMMutiline.SharedComponent.EntityInfo
+@using VDMMutiline.SharedComponent.Params
+@using VDMMutiline.Ultilities
+@using VDMMutiline.Core.Common
+@using VDMMutiline.Core.UI;
+@using Microsoft.AspNet.Identity
+@using VDMMutiline.Core
+@using Microsoft.AspNet.Identity.Owin
+@model SeachParam
+@functions{
+    private ApiClient.Models.Airport getbycode(string code)
+    {
+        return Station.Getbycode(code);
+    }
+    private string getsanbaycode(string code)
+    {
+        var obj = Station.Getbycode(code);
+        if (obj != null)
+            return obj.AirportName;
+        return "";
+    }
+}
+@{
+    var index = 0;
+    var indexDepartureFlight = 0;
+    var indexReturnFlights = 0;
+    var SelectedDepartFlightobjnamedi = getbycode(Model.DepartureAirportCode);
+    var objnameden = getbycode(Model.DestinationAirportCode);
+    var objnamedi = getbycode(Model.DepartureAirportCode);
+
+    var curentDomain = SiteMuti.Getsitename();
+    var CurentUser = CommonUI.GetInforByDomain(curentDomain);
+    var CurentUserlogin = HttpContext.Current.GetOwinContext().GetUserManager<VDMUserManager>().FindByName(User.Identity.Name);
+    var setting = CommonUI.GetSettingByDomain(curentDomain, true);
+    var logo = "";
+    if (CurentUser != null)
+    {
+        logo = CurentUser.LogoMbUrl;
+    }
+}
+<style>
+    #page-header {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        background: #216CBD;
+        box-shadow: 1px 0 0 #999;
+        background-size: 100% 100%;
+        width: 100%;
+        border-bottom: solid 1px #ffffff;
+    }
+
+    header > div > a.lo-go {
+        padding-left: 10px;
+    }
+
+    header > div > a.lo-go {
+        padding: 6px 0 10px 15px;
+        display: inline-block;
+        /* border-bottom: solid 1px #0a213a; */
+    }
+
+    .nav-tabs {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+</style>
+<div id="page-header">
+    <a class="lo-go" href="/">
+        <span>
+            @if (!string.IsNullOrEmpty(logo))
+            {
+                <img src="@logo" style="width: 180px ;height: 47px;" />
+            }
+            else
+            {
+                <img src="/Content/VDM/img/logo.png" style="height: 47px;" />
+            }
+        </span>
+    </a>
+    <a id="menu-link" style="        height: 47px;" onclick="showmenu()"></a>
+    <div style=" text-align: right;position: absolute;    right: 57px;bottom: 30px;">
+        <a class="call-center" href="/" style="        text-align: right;
+        font-size: 100%;
+        color: #fff;"><span><img src="~/Content/phone.png" style="        width: 24px;" /></span>@CurentUser.PhoneNumber</a>
+    </div>
+    <div class="clearfix" style="  position:relative;      width: 100%; /* border-bottom: 5px solid #fff; */
+        border-top: 1px solid #fff;
+        text-align: center;
+        color: #fff;
+        font-size: 18px;">
+        <div id="topchieudi">
+            <span> @(objnamedi != null ? objnamedi.AirportCode : "") @(objnameden != null ? objnameden.AirportCode : "")  </span>
+            <span>
+                @{
+                    var ngaydi = Utility.ConvertToDate(Model.DepartureDate);
+                    @Utility.GetDateStringshos(ngaydi)
+                }
+            </span>
+        </div>
+        <div id="topchieuve" style="        display: none">
+            @if (Model.Itinerary > 1)
+            {
+                var ngayve = Utility.ConvertToDate(Model.ReturnDate);
+
+                <span>@(objnameden != null ? objnameden.AirportCode : "")  @(objnamedi != null ? objnamedi.AirportCode : "")  </span>
+                <span>
+                    @{
+
+                        @Utility.GetDateStringshos(ngayve)
+                    }
+                </span>
+
+            }
+        </div>
+        <div id="toptomtat" style="        display: none">
+            <span> @(objnamedi != null ? objnamedi.AirportCode : "") @(objnameden != null ? objnameden.AirportCode : "")  </span>
+            <span>
+                @{
+                    @Utility.GetDateStringshos(ngaydi)
+                }
+            </span>
+            @if (Model.Itinerary > 1)
+            {
+                var ngayve = Utility.ConvertToDate(Model.ReturnDate);
+
+                <span> - @(objnameden != null ? objnameden.AirportCode : "")  @(objnamedi != null ? objnamedi.AirportCode : "")  </span>
+                <span>
+                    @{
+
+                        @Utility.GetDateStringshos(ngayve)
+                    }
+                </span>
+
+            }
+        </div>
+        <div class="left_re share2" style="margin: 0;margin-right:1px;margin-left:5px;float: right;position: absolute;top: 0;right: 0px;width: 56px;height: 27px;">
+            <a href="#" style="color:#fff" onclick="ShowCopy()" class="share4">
+                Copy
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="myModalloading" style="        display: none" class="bbpopub">
+    <div class="imageAjaxLoading">
+        <img src="~/Content/Popup/loading.gif" />
+    </div>
+</div>
+<link href="/Content/zipcontents/css/bootstrap.css" rel="stylesheet" />
+<script src="/Content/zipcontents/js/bootstrap.min.js"></script>
+<script src="/Content/Popup/jquery.bpopup.js"></script>
+<link href="/Content/Popup/Popubcss.css" rel="stylesheet" />
+<div id="myModalCopy" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 5px;padding-bottom: 5px; ">
+                <button type="button" class="close" data-dismiss="modal" style="    background: transparent !important;    color: #000 !important;    margin-top: -5px;">
+                    &times;
+                </button>
+                <h4 class="modal-title">Copy</h4>
+            </div>
+            <div id="contentmodalcopy"></div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginForm("SeachValue", "SeachHome", FormMethod.Post, new { @onsubmit = "return validateForm()", @id = "formvalueSeachdomtick", @class = "form-horizontal seach", @role = "form" }))
+{
+
+    <div class="bgSelect" style="margin-top: 65px;display: block;">
+        <section class="Wrapper">
+            @if (Model != null)
+            {
+                if (Model.countDepartureFlights > 0)
+                {
+                    <input type="hidden" name="hdfSelectedDepartFlt" id="hdfSelectedDepartFlt" />
+                    <input type="hidden" name="hdfSelectedReturnFlt" id="hdfSelectedReturnFlt" />
+                    <input type="hidden" name="hdhSearchArchiveId" id="hdhSearchArchiveId" />
+                    <input type="hidden" name="hdfItineraryType" id="hdfItineraryType" />
+                    <input type="hidden" name="hdfFareAdtDepart" id="hdfFareAdtDepart" />
+                    <input type="hidden" name="hdfFareChdDepart" id="hdfFareChdDepart" />
+                    <input type="hidden" name="hdfFareInfDepart" id="hdfFareInfDepart" />
+                    <input type="hidden" name="hdfTaxAdtDepart" id="hdfTaxAdtDepart" />
+                    <input type="hidden" name="hdfTaxChdDepart" id="hdfTaxChdDepart" />
+                    <input type="hidden" name="hdfTaxInfDepart" id="hdfTaxInfDepart" />
+                    <input type="hidden" name="hdfFareAdtReturn" id="hdfFareAdtReturn" />
+                    <input type="hidden" name="hdfFareChdReturn" id="hdfFareChdReturn" />
+                    <input type="hidden" name="hdfFareInfReturn" id="hdfFareInfReturn" />
+                    <input type="hidden" name="hdfTaxAdtReturn" id="hdfTaxAdtReturn" />
+                    <input type="hidden" name="hdfTaxChdReturn" id="hdfTaxChdReturn" />
+                    <input type="hidden" name="hdfTaxInfReturn" id="hdfTaxInfReturn" />
+                    <input type="hidden" name="hdhSession" id="hdhSession" />
+                    <input type="hidden" name="hdhCodeReturn" id="hdhCodeReturn" />
+                    <input type="hidden" name="hdhCodeDepart" id="hdhCodeDepart" />
+                    @Html.HiddenFor(z => Model.Itinerary)
+                    @Html.HiddenFor(z => Model.DepartureAirportCode)
+                    @Html.HiddenFor(z => Model.DestinationAirportCode)
+                    @Html.HiddenFor(z => Model.DepartureDate)
+                    @Html.HiddenFor(z => Model.ReturnDate)
+                    @Html.HiddenFor(z => Model.Adult)
+                    @Html.HiddenFor(z => Model.Children)
+                    @Html.HiddenFor(z => Model.Infant)
+                    @Html.HiddenFor(z => Model.AirlineCode)
+                    @Html.HiddenFor(z => Model.Adult)
+
+                    <div class="tab">
+                        <ul class="nav nav-tabs">
+                            <li class="active" style="        margin-left: -2px;">
+                                <a onclick="clickchieudi()" data-toggle="tab" href="#home">Chiều đi </a>
+                            </li>
+                            <li><a onclick="clickchieuve()" data-toggle="tab" href="#menu1">Chiều về</a></li>
+                            <li><a onclick="clicktomtat()" data-toggle="tab" href="#menu2">Tóm tắt</a></li>
+                            <li><a data-toggle="tab" href="#menu3">Bộ lọc </a></li>
+                        </ul>
+                        <div id="ContentDepartureFlight" class="FlightContent NoTop">
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="trip-result">
+                                        <div style="        display: block;">
+                                            <div id="ContentPlaceHolder1_pnlInfoDepart">
+                                                <div class="trip-result-header text-center">
+                                                    <h4>
+                                                        <b>
+                                                            <span id="ContentPlaceHolder1_lblDepartFrom">@(objnamedi != null ? objnamedi.AirportName : "")  ( @(objnamedi != null ? objnamedi.AirportCode : "") )</span>
+                                                            <span>-&gt;</span>
+                                                            <span id="ContentPlaceHolder1_lblDepartTo">@(objnameden != null ? objnameden.AirportName : "") ( @(objnameden != null ? objnameden.AirportCode : "") )</span>
+                                                            <span id="ContentPlaceHolder1_lblDepartDate">@Utility.GetDateString(Utility.ConvertToDate(Model.DepartureDate))</span>
+                                                        </b>
+                                                        <br />
+                                                        <b style="        font-size: 10px;
+        color: red;">( GIÁ VÉ ĐÃ BAO GỒM THUẾ VÀ PHÍ )</b>
+                                                    </h4>
+
+                                                </div>
+                                                <div class="list-tabs-wrap">
+                                                    <ul class="list-tabs">
+                                                        @{
+                                                            var DepartureDate = Utility.ConvertToDate(Model.DepartureDate);
+                                                            if (DepartureDate.HasValue)
+                                                            {
+                                                                var indexngay = 1;
+                                                                for (var day = DepartureDate.Value.AddDays(-3); day.Date <= DepartureDate.Value.Date.AddDays(3); day = day.AddDays(1))
+                                                                {
+                                                                    <li class="@(day == DepartureDate ? "active" : "")">
+                                                                        <button class="btn btn-primary">
+                                                                            <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                                                           {
+                                                                               @itinerary = Model.Itinerary,
+                                                                               @departureairportcode = Model.DepartureAirportCode, @DestinationAirportCode = Model.DestinationAirportCode,
+                                                                               @departuredate = Utility.GetDateString(day),
+                                                                               @returndate = Model.ReturnDate,
+                                                                               @adult = Model.Adult, @Children = Model.Children, @Infant = Model.Infant, @AirlineCode = Model.AirlineCode,
+                                                                               @currency = Model.Currency,
+                                                                               @older = Constant.Olderve.Gia,
+                                                                               @typeolder = Constant.Typeolder.Ascending
+                                                                           })))" style="        color: #fff !important;">
+                                                                                @UIUty.getnamedayshos(day)<br>
+                                                                                @Utility.GetDateStringshos(day)
+                                                                            </a>
+                                                                        </button>
+                                                                    </li>
+                                                                    indexngay++;
+                                                                }
+                                                            }
+                                                        }
+
+
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div id="ContentDepartureFlightvalue" class="FlightContent NoTop">
+
+                                        </div>
+                                        <div></div>
+                                        <div id="ContentDepartureFlightNew1" class="FlightContent NoTop">
+
+                                        </div>
+                                        <div></div>
+                                        <div id="ContentDepartureFlightNew2" class="FlightContent NoTop">
+
+                                        </div>
+                                        <div id="loadingDepartureFlight" style="text-align:center">
+                                            <img src="/Content/images/ajax-loading.gif" style="max-width:100%" />
+                                            <p style="padding: 3px; margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="menu1" class="tab-pane fade">
+                                    @if (Model.Itinerary > 1)
+                                    {
+                                        <div id="ContentDepartureFlight" class="FlightContent NoTop">
+                                            <div class="trip-result">
+                                                <div style="        display: block;">
+                                                    <div id="ContentPlaceHolder1_pnlInfoDepart">
+                                                        <div class="trip-result-header text-center">
+                                                            <h4>
+                                                                <b>
+                                                                    <span id="ContentPlaceHolder1_lblDepartTo">@(objnameden != null ? objnameden.AirportName : "") ( @(objnameden != null ? objnameden.AirportCode : "") )</span>
+                                                                    <span>-&gt;</span>
+                                                                    <span id="ContentPlaceHolder1_lblDepartFrom">@(objnamedi != null ? objnamedi.AirportName : "") ( @(objnamedi != null ? objnamedi.AirportCode : "") )</span>
+                                                                    <span id="ContentPlaceHolder1_lblDepartDate">@Utility.GetDateString(Utility.ConvertToDate(Model.ReturnDate))</span>
+                                                                </b>
+                                                                <br />
+                                                                <b style="        font-size: 10px;
+        color: red;">( GIÁ VÉ ĐÃ BAO GỒM THUẾ VÀ PHÍ )</b>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="list-tabs-wrap">
+                                                            <ul class="list-tabs">
+                                                                @{
+                                                                    var ReturnDates = Utility.ConvertToDate(Model.ReturnDate);
+                                                                    if (ReturnDates.HasValue)
+                                                                    {
+                                                                        var indexngay = 1;
+                                                                        for (var day = ReturnDates.Value.AddDays(-3); day.Date <= ReturnDates.Value.Date.AddDays(3); day = day.AddDays(1))
+                                                                        {
+                                                                            <li class="@(day == ReturnDates ? "active" : "")">
+                                                                                <button class="btn btn-primary">
+                                                                                    <a href="@(Html.Raw(Url.Action("SeachMain", "SeachHome", new
+                                                                                     {
+                                                                                         @itinerary = Model.Itinerary,
+                                                                                         @departureairportcode = Model.DepartureAirportCode,
+                                                                                         @DestinationAirportCode = Model.DestinationAirportCode,
+                                                                                         @departuredate = Model.DepartureDate,
+                                                                                         @returndate = Utility.GetDateString(day),
+                                                                                         @adult = Model.Adult,
+                                                                                         @Children = Model.Children,
+                                                                                         @Infant = Model.Infant,
+                                                                                         @AirlineCode = Model.AirlineCode,
+                                                                                         @currency = Model.Currency,
+                                                                                         @older = Constant.Olderve.Gia,
+                                                                                         @typeolder = Constant.Typeolder.Ascending
+                                                                                     })))" style="        color: #fff !important;">
+                                                                                        @UIUty.getnamedayshos(day)<br>
+                                                                                        @Utility.GetDateStringshos(day)
+                                                                                    </a>
+                                                                                </button>
+                                                                            </li>
+                                                                            indexngay++;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <div id="contenReturnFlight" class="FlightContent NoTop" style="margin-top: 0px;">
+
+                                                </div>
+                                                <div></div>
+                                                <div id="contenReturnFlightNew1" class="FlightContent NoTop" style="margin-top: 0px;">
+
+                                                </div>
+                                                <div></div>
+                                                <div id="contenReturnFlightNew2" class="FlightContent NoTop" style="margin-top: 0px;">
+
+                                                </div>
+                                                <div id="loadingReturnFlight" style="text-align:center">
+                                                    <img src="/Content/images/ajax-loading.gif" style="max-width:100%" />
+                                                    <p style="padding: 3px; margin-top: 5px;">Đang tìm kết quả các chuyến bay...</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div id="menu2" class="tab-pane fade">
+                                    <div class="tab" id="giohang">
+                                        <div class="BasketFlightResult">
+                                            <div class="" style="color: #000;padding-left: 11px;font-size: 14px;font-weight: bold;">
+                                                <div class="fa fa-shopping-cart"></div>Giỏ hàng của bạn
+                                            </div>
+                                            <div class="WhiteBox NoTop border-radius-bottom">
+                                                <div class="Pad10 BorderTop BasketPrice" style="        padding-top: 0px">
+                                                    <div style="    margin-top: 10px;font-size: 14px;width: 70px;color: #fb7604;border-bottom: 1px solid;width: 100%;">
+                                                        Chuyến đi
+                                                    </div>
+                                                    <div id="DetailDepartureFlight" style="width:100%">
+
+                                                    </div>
+                                                </div>
+                                                <div class="Pad10 " style="padding-top: 0px">
+                                                    <table style="line-height: 25px;width: 100%;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <b style="font-size: 12px;">Hành khách</b>
+                                                                </td>
+                                                                <td>
+                                                                    <b style="font-size: 12px;">Giá vé</b>
+                                                                </td>
+                                                                <td>
+                                                                    <b style="font-size: 12px;">Số lượng</b>
+                                                                </td>
+                                                                <td style="text-align: right;">
+                                                                    <b style="font-size: 12px;">Tổng giá</b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-size: 14px">
+                                                                    Người lớn
+                                                                </td>
+                                                                <td style="font-size: 14px">
+                                                                    <label id="lblFareAdt" class="ItemPrice"></label>
+                                                                    <label id="lblTaxAdt" style="        display: none" class="ItemPrice"></label>
+                                                                </td>
+                                                                <td style="font-size: 14px;text-align: center;">
+                                                                    <span id="lblTotalAdt">@Model.Adult</span>
+                                                                </td>
+                                                                <td style="font-size: 14px;text-align: right;">
+                                                                    <label id="lblTotalPriceAdt" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                </td>
+                                                            </tr>
+                                                            @if (Model.Children > 0)
+                                                            {
+
+                                                                <tr>
+                                                                    <td style="font-size: 14px">
+                                                                        Trẻ em
+                                                                    </td>
+                                                                    <td style="font-size: 14px">
+                                                                        <label id="lblFareChd" class="ItemPrice"></label>
+                                                                        <label id="lblTaxChd" style="        display: none" class="ItemPrice"></label>
+                                                                    </td>
+                                                                    <td style="font-size: 14px;text-align: center;">
+                                                                        <span id="lblTotalChd">@Model.Children</span>
+                                                                    </td>
+                                                                    <td style="font-size: 14px;text-align: right;">
+                                                                        <label id="lblTotalPriceChd" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (Model.Infant > 0)
+                                                            {
+                                                                <tr>
+                                                                    <td style="font-size: 13px">
+                                                                        Em bé
+                                                                    </td>
+                                                                    <td style="font-size: 14px">
+                                                                        <label id="lblFareInf" class="ItemPrice"></label>
+                                                                        <label id="lblTaxInf" style="        display: none" class="ItemPrice"></label>
+                                                                    </td>
+                                                                    <td style="font-size: 14px;text-align: center;">
+                                                                        <span id="lblTotalInf">@Model.Infant</span>
+                                                                    </td>
+                                                                    <td style="font-size: 14px;text-align: right;">
+                                                                        <label id="lblTotalPriceInf" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td style="font-size: 13px"></td>
+                                                                <td style="font-size: 14px"></td>
+                                                                <td style="font-size: 14px;text-align: center;"></td>
+                                                                <td style="font-size: 14px;text-align: right;">
+                                                                    <label id="lblTotaldi" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @if (Model.Itinerary > 1)
+                                                {
+                                                    <div class="Pad10 BorderTop BasketPrice" style="padding-top: 0px">
+                                                        <div style="    margin-top: 10px;font-size: 14px;width: 70px;color: #fb7604;border-bottom: 1px solid;width: 100%;">
+                                                            Chuyến về
+                                                        </div>
+                                                        <div id="GetDetailReturnFlight" style="width:100%">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="Pad10 " style="padding-top: 0px">
+                                                        <table style="line-height: 25px;width: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b style="        font-size: 12px;">Hành khách</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <b style="        font-size: 12px;">Giá vé</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <b style="        font-size: 12px;">Số lượng</b>
+                                                                    </td>
+                                                                    <td style="        text-align: right;">
+                                                                        <b style="        font-size: 12px;
+        text-align: right;">Tổng giá</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="        font-size: 14px">
+                                                                        Người lớn
+                                                                    </td>
+                                                                    <td style="        font-size: 14px">
+                                                                        <label id="lblFareAdtve" class="ItemPrice"></label>
+                                                                        <label id="lblTaxAdtve" style="        display: none" class="ItemPrice"></label>
+                                                                    </td>
+                                                                    <td style="        font-size: 14px;
+        text-align: center;">
+                                                                        <span id="lblTotalAdtve">@Model.Adult</span>
+                                                                    </td>
+                                                                    <td style="        font-size: 14px;
+        text-align: right;">
+                                                                        <label id="lblTotalPriceAdtve" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                    </td>
+                                                                </tr>
+                                                                @if (Model.Children > 0)
+                                                                {
+
+                                                                    <tr>
+                                                                        <td style="        font-size: 14px">
+                                                                            Trẻ em
+                                                                        </td>
+                                                                        <td style="        font-size: 14px">
+                                                                            <label id="lblFareChdve" class="ItemPrice"></label>
+                                                                            <label id="lblTaxChdve" style="        display: none" class="ItemPrice"></label>
+                                                                        </td>
+                                                                        <td style="        font-size: 14px;
+        text-align: center;">
+                                                                            <span id="lblTotalChdve">@Model.Children</span>
+                                                                        </td>
+                                                                        <td style="        font-size: 14px;
+        text-align: right;">
+                                                                            <label id="lblTotalPriceChdve" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                @if (Model.Infant > 0)
+                                                                {
+                                                                    <tr>
+                                                                        <td style="        font-size: 13px">
+                                                                            Em bé
+                                                                        </td>
+                                                                        <td style="        font-size: 14px">
+                                                                            <label id="lblFareInfve" class="ItemPrice"></label>
+                                                                            <label id="lblTaxInfve" style="        display: none" class="ItemPrice"></label>
+                                                                        </td>
+                                                                        <td style="        font-size: 14px;
+        text-align: center;">
+                                                                            <span id="lblTotalInfve">@Model.Infant</span>
+                                                                        </td>
+                                                                        <td style="        font-size: 14px;
+        text-align: right;">
+                                                                            <label id="lblTotalPriceInfve" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                <tr>
+                                                                    <td style="        font-size: 13px"></td>
+                                                                    <td style="        font-size: 14px"></td>
+                                                                    <td style="        font-size: 14px;
+        text-align: center;"></td>
+                                                                    <td style="        font-size: 14px;
+        text-align: right;">
+                                                                        <label id="lblTotalve" class="ItemPrice"></label> <span class="Currency">@Model.Currency</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                }
+                                                <div class="Pad10 BorderTop BasketPrice">
+                                                    <table style="        width: 100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    ∑ <strong>Tổng chi phí</strong>
+                                                                </td>
+                                                                <td class="GrandPrice" style="        text-align: right;
+        border-top: none;">
+                                                                    <label id="lblGrandTotal" style="        color: #fb7604;"></label> <span class="Currency">@Model.Currency</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="Pad10 BorderTop BasketPrice">
+                                                    <span id="lblMsg" style="        color: Red;"></span><br>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab" style="background-color: #f4f4f4;margin-bottom: 0px;border: none;">
+                                        <div style="padding-top: 10px;padding-bottom: 10px"><span id="lblMsg"></span></div>
+                                        <div class="row bottom log3">
+                                            <button type="submit" onclick="$('#formvalueSeachdomtick').submit()" value="Đặt chỗ" class="btt" style="        color: #fff;">Tiếp tục</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="menu3" class="tab-pane fade">
+                                    @{
+                                        Html.RenderPartial("_PartialFilterDomestic", Model);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="NormalBox">
+                        <div class="Title">
+                            @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                        </div>
+                        <div class="Content">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="NormalBox">
+                    <div class="Title">
+                        @VDMMutiline.Resource.App_GlobalResources.weblanguage.No_flights_found
+                    </div>
+                    <div class="Content">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.Raw(VDMMutiline.Resource.App_GlobalResources.weblanguage.MSG_No_flights_found)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+
+}
+<script src="/Content/Scripts/format.js"></script>
+<style>
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+        background: #ccc;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-radius: 5px;
+    }
+
+    .nav > li {
+        position: relative;
+        display: block;
+        margin-left: 7px;
+        margin-top: 5px;
+    }
+
+    div.tab a {
+        display: inline-block;
+        width: 100%;
+        height: 36px;
+        padding: 5px 0;
+        text-align: center;
+        background-color: #fff;
+        color: #fda813;
+        text-decoration: none;
+        line-height: 1.15;
+        border-bottom: 1px solid #d6d6d6;
+        box-sizing: border-box;
+        line-height: 1.15;
+        padding-top: 11px;
+        margin-left: 7px;
+        padding-right: 5px;
+        font-size: 16px;
+        background: #e6e6e6;
+        color: #000 !important;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent;
+        cursor: default;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent;
+        background: #FFFFE0 !important;
+        color: #00428b;
+        text-decoration: none;
+        line-height: 1.15;
+        padding-top: 10px;
+        font-size: 16px;
+        padding-left: 5px;
+        margin-left: 7px;
+        padding-right: 5px;
+        background: #fff !important;
+    }
+
+    h4, .h4 {
+        font-size: 12px;
+    }
+
+    .tab-content {
+        padding: 10px;
+        background: #fff !important;
+        margin-top: 10px;
+    }
+
+        .tab-content > .active {
+            display: block;
+            background: #fff !important;
+        }
+
+    .list-tabs li {
+        list-style: none;
+        float: left;
+        font-size: 9px;
+        width: 14.28%;
+    }
+
+    .list-tabs button {
+        padding-left: 0;
+        padding-right: 0;
+        width: 40px;
+    }
+
+    .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+        font-family: Verdana,Arial,sans-serif;
+        font-size: 1em;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+    }
+
+    a, a:hover, a:active {
+        text-decoration: none;
+        list-style: none;
+    }
+
+    ul.list-tabs a {
+        font-size: 10px;
+    }
+
+    ul.list-tabs a {
+        font-size: 10px;
+        background: transparent;
+        margin-left: 0px;
+        height: 25px;
+        padding-top: 0px;
+        border-bottom: none;
+    }
+
+    ul.list-tabs {
+        -webkit-padding-start: 4px;
+    }
+
+    .list-tabs li {
+        list-style: none;
+        float: left;
+        font-size: 9px;
+        width: 14.28%;
+        margin-bottom: 8px;
+    }
+
+        .list-tabs li.active button {
+            background: #ff814e;
+        }
+</style>
+<script>
+    function ShowCopy() {
+        $( '#myModalloading' ).bPopup( {
+            modalClose: false,
+            opacity: 0.6,
+            positionStyle: 'fixed'
+        } );
+    jQuery.ajax({
+        url: '@Url.Action("Copy","SeachHome")',
+        type: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function ( data ) {
+            $( '#contentmodalcopy' ).html( data );
+             $('#myModalCopy').modal('show');
+             $('#myModalloading').bPopup().close();
+        },
+        error: function (jqXhr, errorCode, error) {
+             $('#myModalloading').bPopup().close();
+        }
+    });
+    }
+    $( document ).ready( function () {
+        $( '#ckbAllAirlinedi' ).change( function () {
+            var n = jQuery( ".checkboxaldi:checked" ).length;
+            if ( n > 0 ) {
+                jQuery( ".checkboxaldi" ).each( function () {
+                    $( this ).prop( 'checked', false );
+                    $( "." + $( this ).attr( "name" ) + "di" ).each( function () {
+                        $( this ).css( "display", "block" );
+                    } );
+                } );
+            }
+        } );
+        $( '.checkboxaldi' ).change( function () {
+            $( "#ckbAllAirlinedi" ).prop( 'checked', false );
+            jQuery( ".checkboxaldi" ).each( function () {
+                var valuecheck = $( this ).is( ":checked" );
+                $( "." + $( this ).attr( "name" ) + "di" ).each( function () {
+                    if ( valuecheck == true ) {
+                        $( this ).css( "display", "block" );
+                    } else {
+                        $( this ).css( "display", "none" );
+                    }
+                } );
+            } );
+
+        } );
+    } );
+    function Alcheck() {
+        var stringvaluecheck = "";
+        if ( $( '#ckbAllAirlinedi:checked' ).val() == true ) {
+            stringvaluecheck = "";
+        } else {
+            var n = jQuery( ".checkboxaldi:checked" ).length;
+            if ( n > 0 ) {
+                jQuery( ".checkboxaldi:checked" ).each( function () {
+                    stringvaluecheck += $( this ).attr( "name" ) + ";";
+                } );
+            }
+        }
+    }
+</script>
+<script>
+    $( document ).ready( function () {
+        $( '#ckbAllAirlineve' ).change( function () {
+            var n = jQuery( ".checkboxalve:checked" ).length;
+            if ( n > 0 ) {
+                jQuery( ".checkboxalve" ).each( function () {
+                    $( this ).prop( 'checked', false );
+                    $( "." + $( this ).attr( "name" ) + "ve" ).each( function () {
+                        $( this ).css( "display", "block" );
+                    } );
+                } );
+            }
+        } );
+        $( '.checkboxalve' ).change( function () {
+            $( "#ckbAllAirlineve" ).prop( 'checked', false );
+            jQuery( ".checkboxalve" ).each( function () {
+                var valuecheck = $( this ).is( ":checked" );
+                $( "." + $( this ).attr( "name" ) + "ve" ).each( function () {
+                    if ( valuecheck == true ) {
+                        $( this ).css( "display", "block" );
+                    } else {
+                        $( this ).css( "display", "none" );
+                    }
+                } );
+            } );
+
+        } );
+        ChangeDate();
+    } );
+    function Alcheck() {
+        var stringvaluecheck = "";
+        if ( $( '#ckbAllAirlineve:checked' ).val() == true ) {
+            stringvaluecheck = "";
+        } else {
+            var n = jQuery( ".checkboxalve:checked" ).length;
+            if ( n > 0 ) {
+                jQuery( ".checkboxalve:checked" ).each( function () {
+                    stringvaluecheck += $( this ).attr( "name" ) + ";";
+                } );
+            }
+        }
+    }
+</script>
+<script>
+
+    function showandhidendiv(control) {
+
+        if ($(control).css("display") == "block") {
+            $(control).css("display", "none");
+        } else {
+            $(control).css("display", "block");
+        }
+    }
+    function ChangeDate() {
+
+        $('#changedateve .first').click(function () {
+            var prev = $('#changedateve .change-date-item').prev();
+            if (prev.hasClass('hide')) {
+                prev.removeClass('hide');
+                prev.addClass('change-date-item');
+                var last = $('#changedateve .change-date-item').last();
+                last.removeClass('change-date-item');
+                last.addClass('hide');
+            }
+        });
+        $('#changedateve .last').click(function () {
+            var next = $('#changedateve .change-date-item').next();
+            if (next.hasClass('hide')) {
+                var first = $('#changedateve .change-date-item').first();
+                first.removeClass('change-date-item');
+                first.addClass('hide');
+                next.removeClass('hide');
+                next.addClass('change-date-item');
+            }
+        });
+
+
+
+        $('#changedatedi .first').click(function () {
+            var prev = $('#changedatedi .change-date-item').prev();
+            if (prev.hasClass('hide')) {
+                prev.removeClass('hide');
+                prev.addClass('change-date-item');
+                var last = $('#changedatedi .change-date-item').last();
+                last.removeClass('change-date-item');
+                last.addClass('hide');
+            }
+        });
+        $('#changedatedi .last').click(function () {
+            var next = $('#changedatedi .change-date-item').next();
+            if (next.hasClass('hide')) {
+                var first = $('#changedatedi .change-date-item').first();
+                first.removeClass('change-date-item');
+                first.addClass('hide');
+                next.removeClass('hide');
+                next.addClass('change-date-item');
+            }
+        });
+
+    }
+    function clickchieudi() {
+        var itinerarys = @Model.Itinerary;
+        if (itinerarys == 2) {
+            $('#topchieudi').css("display", "block");
+            $('#topchieuve').css("display", "none");
+            $('#toptomtat').css("display", "none");
+            $('.nav-tabs a[href="#home"]').tab('show');
+        }
+    }
+    function clickchieuve() {
+        $('#topchieudi').css("display", "none");
+        $('#toptomtat').css("display", "none");
+        $('#topchieuve').css("display", "block");
+        $('.nav-tabs a[href="#menu1"]').tab('show');
+    }
+    function clicktomtat() {
+        $('#topchieudi').css("display", "none");
+        $('#topchieuve').css("display", "none");
+        $('#toptomtat').css("display", "block");
+        $('.nav-tabs a[href="#menu2"]').tab('show');
+    }
+</script>
+<script>
+    function SelectedDepartFlight(
+        value,
+        fareAdtDepart,
+        taxAdtDepart,
+        fareChdDepart,
+        taxChdDepart,
+        fareInfDepart,
+        taxInfDepart,
+        hdhSession,
+        CodeDepart) {
+        $.ajax({
+             type: "Get",
+             url: '@Url.Action("GetDetailDepartureFlight", "SeachHome")',
+             dataType: "html",
+             data: {
+                 index: value
+             },
+             success: function ( content ) {
+                 $('#DetailDepartureFlight').html( content );
+             },
+             error: function ( e ) { }
+         });
+
+        $("#hdfSelectedReturnFlt").val('');
+        $("#hdfFareAdtDepart").val(fareAdtDepart);
+        $("#hdfFareChdDepart").val(fareChdDepart);
+        $("#hdfFareInfDepart").val(fareInfDepart);
+        $("#hdhSession").val(hdhSession);
+        $("#hdfTaxAdtDepart").val(taxAdtDepart);
+        $("#hdfTaxChdDepart").val(taxChdDepart);
+        $("#hdfTaxInfDepart").val(taxInfDepart);
+        $("#hdhCodeDepart").val(CodeDepart);
+
+
+
+        fareAdtDepart = Number(fareAdtDepart.replace(",", "."));
+        fareChdDepart = Number(fareChdDepart.replace(",", "."));
+        fareInfDepart = Number(fareInfDepart.replace(",", "."));
+
+        taxAdtDepart = Number(taxAdtDepart.replace(",", "."));
+        taxChdDepart = Number(taxChdDepart.replace(",", "."));
+        taxInfDepart = Number(taxInfDepart.replace(",", "."));
+
+        //Get return price from hidden field
+        var fareAdtReturn = Number($("#hdfFareAdtReturn").val().replace(",", "."));
+        var fareChdReturn = Number($("#hdfFareChdReturn").val().replace(",", "."));
+        var fareInfReturn = Number($("#hdfFareInfReturn").val().replace(",", "."));
+
+        var taxAdtReturn = Number($("#hdfTaxAdtReturn").val().replace(",", "."));
+        var taxChdReturn = Number($("#hdfTaxChdReturn").val().replace(",", "."));
+        var taxInfReturn = Number($("#hdfTaxInfReturn").val().replace(",", "."));
+
+        //Calculate sum of depart price and return price
+        var fareAdt = fareAdtDepart ;
+        var fareChd = fareChdDepart ;
+        var fareInf = fareInfDepart ;
+
+        var taxAdt = taxAdtDepart ;
+        var taxChd = taxChdDepart ;
+        var taxInf = taxInfDepart ;
+
+        SetPrice(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf);
+
+        $("#hdfSelectedDepartFlt").val(value);
+        var adt = Number($("#lblTotalAdt").text());
+        var chd = Number($("#lblTotalChd").text());
+        var inf = Number($("#lblTotalInf").text());
+
+        //Set price for each passenger type
+        $("#lblFareAdt").text(format("#.##0,####", fareAdt + taxAdt));
+        $("#lblFareChd").text(format("#.##0,####", fareChd + taxChd));
+        $("#lblFareInf").text(format("#.##0,####", fareInf + taxInf));
+
+        $("#lblTaxAdt").text(format("#.##0,####", taxAdt));
+        $("#lblTaxChd").text(format("#.##0,####", taxChd));
+        $("#lblTaxInf").text(format("#.##0,####", taxInf));
+
+        //Set total price for each passenger type
+        $("#lblTotalPriceAdt").text(format("#.##0,####", adt * (fareAdt + taxAdt)));
+        $("#lblTotalPriceChd").text(format("#.##0,####", chd * (fareChd + taxChd)));
+        $("#lblTotalPriceInf").text(format("#.##0,####", inf * (fareInf + taxInf)));
+
+
+        //Grand total price
+        var grandTotal = adt * (fareAdt + taxAdt) + chd * (fareChd + taxChd) + inf * (fareInf + taxInf);
+        $("#lblTotaldi").text(format("#.##0,####", grandTotal));
+        $("#lblGrandTotal").text(format("#.##0,####", grandTotal));
+
+        var itinerarys = @Model.Itinerary;
+        if (itinerarys != 2) {
+           $('.nav-tabs a[href="#menu2"]').tab('show');
+            $('#topchieudi').css("display", "none");
+            $('#topchieuve').css("display", "none");
+            $('#toptomtat').css("display", "block");
+        } else {
+             clickchieuve();
+            var grandTotlall = adt * (fareAdtReturn + taxAdtReturn) +
+                chd * (fareChdReturn + taxChdReturn) +
+                inf * (fareInfReturn + taxInfReturn);
+            $("#lblGrandTotal").text(format("#.##0,####", grandTotlall + grandTotal));
+        }
+
+    }
+
+    function SelectedReturnFlight( value, fareAdtReturn, taxAdtReturn,
+        fareChdReturn, taxChdReturn, fareInfReturn, taxInfReturn, CodeReturn) {
+
+        $.ajax({
+             type: "Get",
+             url: '@Url.Action("GetDetailReturnFlight", "SeachHome")',
+             dataType: "html",
+             data: {
+                 index: value
+             },
+             success: function ( content ) {
+                 $('#GetDetailReturnFlight').html( content );
+             },
+             error: function ( e ) { }
+         });
+        //Set depart price to hidden field
+        $("#hdfFareAdtReturn").val(fareAdtReturn);
+        $("#hdfFareChdReturn").val(fareChdReturn);
+        $("#hdfFareInfReturn").val(fareInfReturn);
+
+        $("#hdfTaxAdtReturn").val(taxAdtReturn);
+        $("#hdfTaxChdReturn").val(taxChdReturn);
+        $("#hdfTaxInfReturn").val(taxInfReturn);
+        $("#hdhCodeReturn").val(CodeReturn);
+
+
+        fareAdtReturn = Number(fareAdtReturn.replace(",", "."));
+        fareChdReturn = Number(fareChdReturn.replace(",", "."));
+        fareInfReturn = Number(fareInfReturn.replace(",", "."));
+
+        taxAdtReturn = Number(taxAdtReturn.replace(",", "."));
+        taxChdReturn = Number(taxChdReturn.replace(",", "."));
+        taxInfReturn = Number(taxInfReturn.replace(",", "."));
+
+
+
+        //Calculate sum of depart price and return price
+        var fareAdt =  fareAdtReturn;
+        var fareChd =  fareChdReturn;
+        var fareInf =  fareInfReturn;
+
+        var taxAdt =  taxAdtReturn;
+        var taxChd =  taxChdReturn;
+        var taxInf =  taxInfReturn;
+
+        var adt = Number($("#lblTotalAdtve").text());
+        var chd = Number($("#lblTotalChdve").text());
+        var inf = Number($("#lblTotalInfve").text());
+
+        //Set price for each passenger type
+        $("#lblFareAdtve").text(format("#.##0,####", fareAdt + taxAdt));
+        $("#lblFareChdve").text(format("#.##0,####", fareChd + taxChd));
+        $("#lblFareInfve").text(format("#.##0,####", fareInf + taxInf));
+
+        $("#lblTaxAdtve").text(format("#.##0,####", taxAdt));
+        $("#lblTaxChdve").text(format("#.##0,####", taxChd));
+        $("#lblTaxInfve").text(format("#.##0,####", taxInf));
+
+        //Set total price for each passenger type
+        $("#lblTotalPriceAdtve").text(format("#.##0,####", adt * (fareAdt + taxAdt)));
+        $("#lblTotalPriceChdve").text(format("#.##0,####", chd * (fareChd + taxChd)));
+        $("#lblTotalPriceInfve").text(format("#.##0,####", inf * (fareInf + taxInf)));
+
+        //Grand total price
+        var grandTotal = adt * (fareAdt + taxAdt) + chd * (fareChd + taxChd) + inf * (fareInf + taxInf);
+        $("#lblTotalve").text(format("#.##0,####", grandTotal));
+
+
+        var fareAdtDepart = Number($("#hdfFareAdtDepart").val().replace(",", "."));
+        var fareChdDepart = Number($("#hdfFareChdDepart").val().replace(",", "."));
+        var fareInfDepart = Number($("#hdfFareInfDepart").val().replace(",", "."));
+
+        var taxAdtDepart = Number($("#hdfTaxAdtDepart").val().replace(",", "."));
+        var taxChdDepart = Number($("#hdfTaxChdDepart").val().replace(",", "."));
+        var taxInfDepart = Number($("#hdfTaxInfDepart").val().replace(",", "."));
+
+        var grandTotalall = adt * (fareAdtDepart + taxAdtDepart) + chd * (fareChdDepart + taxChdDepart) + inf * (fareInfDepart + taxInfDepart);
+
+
+
+        $("#lblGrandTotal").text(format("#.##0,####", grandTotalall + grandTotal));
+
+
+        $("#hdfSelectedReturnFlt").val(value);
+        var DepartFlt = $("#hdfSelectedDepartFlt").val();
+         $("#hdfSelectedReturnFlt").val(value);
+        if (DepartFlt != "") {
+            $('.nav-tabs a[href="#menu2"]').tab('show');
+            $('#topchieudi').css("display", "none");
+            $('#topchieuve').css("display", "none");
+            $('#toptomtat').css("display", "block");
+        } else {
+            $('#topchieudi').css("display", "block");
+            $('#topchieuve').css("display", "none");
+            $('#toptomtat').css("display", "none");
+            $('.nav-tabs a[href="#home"]').tab('show');
+        }
+       // ScrollToControlById('giohang');
+
+    }
+
+    function SetPrice(fareAdt, taxAdt, fareChd, taxChd, fareInf, taxInf) {
+
+        //$("#lblGrandTotal").text(format("#.##0,####", grandTotal));
+    }
+    function ScrollToControlById(controlId) {
+        control = document.getElementById(controlId);
+        var targetOffset = $(control).offset().top;
+        window.scrollTo(0, targetOffset); return false;
+    }
+</script>
+<script>
+    function validateForm() {
+        var check = true;
+        var Itinerary = @Model.Itinerary;
+        if (Itinerary > 1) {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            var ReturnFlt = $("#hdfSelectedReturnFlt").val();
+            if (DepartFlt == "" || ReturnFlt == "") {
+                check = false;
+                //ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+
+            }
+        } else {
+            var DepartFlt = $("#hdfSelectedDepartFlt").val();
+            if (DepartFlt == "" ) {
+                check = false;
+                //ScrollToControlById('SearchParamDomesticDepart');
+                $("#lblMsg").text("Bạn hãy chọn vé đi và vé về.");
+            }
+        }
+        return check;
+
+    }
+
+
+</script>
