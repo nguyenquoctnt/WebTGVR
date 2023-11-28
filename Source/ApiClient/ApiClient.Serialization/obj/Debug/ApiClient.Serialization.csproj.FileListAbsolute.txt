@@ -26,3 +26,9 @@ D:\Project\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ApiCl
 D:\Project\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.dll
 D:\Project\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.pdb
 D:\Project\Project\WebSite\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.csproj.AssemblyReference.cache
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\bin\Debug\ApiClient.Serialization.dll
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\bin\Debug\ApiClient.Serialization.pdb
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.csproj.AssemblyReference.cache
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.csproj.CoreCompileInputs.cache
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.dll
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Serialization\obj\Debug\ApiClient.Serialization.pdb

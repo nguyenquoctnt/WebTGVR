@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Vdm_Mutiline_TGVR" Class="BookingDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=thegioivere.net,8079;Initial Catalog=Vdm_Mutiline_TGVR;Persist Security Info=True;User ID=thegoiverenew" SettingsObjectName="BookingResponse.Database.Properties.Settings" SettingsPropertyName="Vdm_Mutiline_TGVRConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=14.225.19.67,8012;Initial Catalog=Vdm_Mutiline_TGVR_DevTest03;Persist Security Info=True;User ID=thegoiverenew" SettingsObjectName="BookingResponse.Database.Properties.Settings" SettingsPropertyName="Vdm_Mutiline_TGVRConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tblBookResponseFareData" Member="tblBookResponseFareDatas">
     <Type Name="tblBookResponseFareData">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

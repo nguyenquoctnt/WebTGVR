@@ -1,2 +1,13 @@
 D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csprojAssemblyReference.cache
 D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csproj.CoreCompileInputs.cache
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csproj.AssemblyReference.cache
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csproj.CoreCompileInputs.cache
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\NLog.config
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\ApiClient.Logger.dll
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\ApiClient.Logger.pdb
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\ApiClient.Serialization.dll
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\NLog.dll
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\bin\Release\ApiClient.Serialization.pdb
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.csproj.CopyComplete
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.dll
+D:\_CODE\WebTGVR\Source\ApiClient\ApiClient.Logger\obj\Release\ApiClient.Logger.pdb

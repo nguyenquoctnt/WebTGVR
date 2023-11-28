@@ -38,3 +38,13 @@ D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiCli
 D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.csproj.CopyComplete
 D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.dll
 D:\Project\Project\WebSite\VeMayBay\TGVR\SourceNEW\TGVR\Project\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.pdb
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\bin\Debug\NLog.config
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\bin\Debug\ApiClient.Logger.dll
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\bin\Debug\ApiClient.Logger.pdb
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\bin\Debug\ApiClient.Serialization.dll
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\bin\Debug\ApiClient.Serialization.pdb
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.csproj.AssemblyReference.cache
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.csproj.CoreCompileInputs.cache
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.csproj.CopyComplete
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.dll
+D:\_CODE\WebTGVR01\Src\ApiClient\ApiClient.Logger\obj\Debug\ApiClient.Logger.pdb

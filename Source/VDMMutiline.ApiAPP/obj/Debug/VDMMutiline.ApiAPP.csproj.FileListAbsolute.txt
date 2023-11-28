@@ -164,3 +164,7 @@ D:\MyProject\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\VDMMutiline.ApiAPP\
 D:\MyProject\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.csproj.CoreCompileInputs.cache
 D:\MyProject\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.dll
 D:\MyProject\VeMayBay\MutilineSiteCore\TGVRVaTongDaiCore\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.pdb
+D:\_CODE\WebTGVR01\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.csproj.AssemblyReference.cache
+D:\_CODE\WebTGVR01\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.csproj.CoreCompileInputs.cache
+D:\_CODE\WebTGVR01\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.dll
+D:\_CODE\WebTGVR01\Src\VDMMutiline.ApiAPP\obj\Debug\VDMMutiline.ApiAPP.pdb

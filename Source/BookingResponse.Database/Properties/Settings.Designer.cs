@@ -12,7 +12,7 @@ namespace BookingResponse.Database.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,7 +26,7 @@ namespace BookingResponse.Database.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tgvr.net,8079;Initial Catalog=Vdm_Mutiline_TGVR;Persist Security Info" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=14.225.19.67,8012;Initial Catalog=Vdm_Mutiline_TGVR_DevTest03;Persist Security Info" +
             "=True;User ID=thegoiverenew;Password=admin@123")]
         public string Vdm_Mutiline_TGVRConnectionString {
             get {
@@ -37,7 +37,7 @@ namespace BookingResponse.Database.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=thegioivere.net,8079;Initial Catalog=Vdm_Mutiline_TGVR;Persist Securi" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=14.225.19.67,8012;Initial Catalog=Vdm_Mutiline_TGVR_DevTest03;Persist Securi" +
             "ty Info=True;User ID=thegoiverenew")]
         public string Vdm_Mutiline_TGVRConnectionString1 {
             get {

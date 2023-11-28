@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\PublicSite\tgvr.net\Admin</_PublishTargetUrl>
-    <History>True|2023-10-18T15:30:32.4880842Z;True|2023-05-18T16:48:19.8490693+07:00;</History>
+    <History>True|2023-11-28T12:19:46.6369559Z;True|2023-11-08T23:54:45.4168443+07:00;True|2023-10-18T22:30:32.4880842+07:00;True|2023-05-18T16:48:19.8490693+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -809,25 +809,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiClient.Common.dll">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApiClient.Common.dll.config">
-      <publishTime>08/27/2019 10:58:42</publishTime>
+      <publishTime>11/08/2023 22:08:27</publishTime>
     </File>
     <File Include="bin/ApiClient.Common.pdb">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApiClient.Models.dll">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApiClient.Models.pdb">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApiClient.Serialization.dll">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApiClient.Serialization.pdb">
-      <publishTime>10/18/2023 22:30:14</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>11/15/2017 14:47:42</publishTime>
@@ -839,13 +839,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/16/2018 12:03:39</publishTime>
     </File>
     <File Include="bin/BookingResponse.Database.dll">
-      <publishTime>10/18/2023 22:30:15</publishTime>
+      <publishTime>11/28/2023 19:16:53</publishTime>
     </File>
     <File Include="bin/BookingResponse.Database.dll.config">
-      <publishTime>07/09/2020 23:23:56</publishTime>
+      <publishTime>11/28/2023 19:16:41</publishTime>
     </File>
     <File Include="bin/BookingResponse.Database.pdb">
-      <publishTime>10/18/2023 22:30:15</publishTime>
+      <publishTime>11/28/2023 19:16:53</publishTime>
     </File>
     <File Include="bin/CaptchaMvc.dll">
       <publishTime>11/27/2017 12:13:46</publishTime>
@@ -1337,58 +1337,58 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Biz.dll">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Biz.dll.config">
-      <publishTime>01/09/2020 22:50:26</publishTime>
+      <publishTime>11/08/2023 22:10:10</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Biz.pdb">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Core.dll">
-      <publishTime>10/18/2023 22:30:18</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Core.dll.config">
-      <publishTime>01/09/2020 22:51:50</publishTime>
+      <publishTime>11/08/2023 22:10:18</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Core.pdb">
-      <publishTime>10/18/2023 22:30:18</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Dao.dll">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Dao.pdb">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:45</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SendMailAndSMS.dll">
-      <publishTime>10/18/2023 22:30:21</publishTime>
+      <publishTime>11/28/2023 19:07:50</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SendMailAndSMS.dll.config">
-      <publishTime>04/11/2019 15:53:12</publishTime>
+      <publishTime>11/08/2023 22:10:56</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SendMailAndSMS.pdb">
-      <publishTime>10/18/2023 22:30:21</publishTime>
+      <publishTime>11/28/2023 19:07:50</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SharedComponent.dll">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:44</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SharedComponent.dll.config">
-      <publishTime>07/18/2020 22:50:30</publishTime>
+      <publishTime>11/28/2023 19:16:41</publishTime>
     </File>
     <File Include="bin/VDMMutiline.SharedComponent.pdb">
-      <publishTime>10/18/2023 22:30:17</publishTime>
+      <publishTime>11/28/2023 19:07:44</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Ultilities.dll">
-      <publishTime>10/18/2023 22:30:15</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/VDMMutiline.Ultilities.pdb">
-      <publishTime>10/18/2023 22:30:15</publishTime>
+      <publishTime>11/28/2023 19:07:39</publishTime>
     </File>
     <File Include="bin/VDMMutiline.WebBackEnd.dll">
-      <publishTime>10/18/2023 22:30:27</publishTime>
+      <publishTime>11/28/2023 19:18:53</publishTime>
     </File>
     <File Include="bin/VDMMutiline.WebBackEnd.pdb">
-      <publishTime>10/18/2023 22:30:27</publishTime>
+      <publishTime>11/28/2023 19:18:53</publishTime>
     </File>
     <File Include="bin/VDMNV.Biz.dll">
       <publishTime>05/11/2018 10:33:21</publishTime>
@@ -25919,7 +25919,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/07/2017 14:52:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/18/2023 22:30:29</publishTime>
+      <publishTime>11/28/2023 19:18:56</publishTime>
     </File>
   </ItemGroup>
 </Project>
